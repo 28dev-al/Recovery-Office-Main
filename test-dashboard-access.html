@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Access Test</title>
+</head>
+<body>
+    <h1>Testing Dashboard Access</h1>
+    <p>Click the links below to test dashboard routing:</p>
+    
+    <ul>
+        <li><a href="http://localhost:3000/" target="_blank">Home Page (should work)</a></li>
+        <li><a href="http://localhost:3000/dashboard" target="_blank">Dashboard Overview</a></li>
+        <li><a href="http://localhost:3000/dashboard/bookings" target="_blank">Dashboard Bookings</a></li>
+        <li><a href="http://localhost:3000/dashboard/services" target="_blank">Dashboard Services</a></li>
+        <li><a href="http://localhost:3000/dashboard/analytics" target="_blank">Dashboard Analytics</a></li>
+        <li><a href="http://localhost:3000/dashboard/clients" target="_blank">Dashboard Clients</a></li>
+    </ul>
+
+    <h2>Expected Results:</h2>
+    <ul>
+        <li>✅ Home page should show the Recovery Office website</li>
+        <li>✅ All dashboard pages should show the admin interface (no main site navigation)</li>
+        <li>❌ If you see 404 errors, the routing is still broken</li>
+    </ul>
+
+    <script>
+        console.log('Dashboard access test page loaded');
+        console.log('Server should be running on http://localhost:3000');
+        
+        // Test if server is accessible
+        fetch('http://localhost:3000/')
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Server is accessible');
+                } else {
+                    console.error('❌ Server returned error:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('❌ Server is not accessible:', error);
+            });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,28 @@
+{
+  "short_name": "Recovery Office",
+  "name": "Recovery Office - Financial Recovery Specialists",
+  "description": "Professional financial recovery services including cryptocurrency recovery and investment fraud assistance",
+  "icons": [
+    {
+      "src": "https://images2.imgbox.com/86/72/GE2VLjan_o.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "https://images2.imgbox.com/86/72/GE2VLjan_o.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://images2.imgbox.com/86/72/GE2VLjan_o.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1a365d",
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "categories": ["finance", "recovery", "services"]
+} 

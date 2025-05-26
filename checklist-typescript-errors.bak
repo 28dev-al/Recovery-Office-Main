@@ -1,0 +1,356 @@
+# TypeScript and ESLint Error Checklist
+
+This document tracks all TypeScript and ESLint errors in the codebase that need to be fixed.
+Each file with errors is listed below with its specific issues. As issues are fixed, they'll be checked off.
+
+## Animation Components
+
+### src/animation/Morph.tsx
+- [x] Line 66:55: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/animation/ParallaxLayer.tsx- [x] Line 29:5: 'useGoldenRatio' is assigned a value but never used - @typescript-eslint/no-unused-vars- [x] Line 31:5: 'offset' is assigned a value but never used - @typescript-eslint/no-unused-vars- [x] Line 33:5: 'as' is defined but never used - @typescript-eslint/no-unused-vars- [x] Line 82:14: React Hook "useTransform" is called in function "calculateYTransform" that is neither a React function component nor a custom React Hook function - react-hooks/rules-of-hooks
+
+### src/animation/ScrollReveal.tsx
+- [ ] Line 37:5: 'as' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/animation/Sequence.tsx
+- [ ] Line 112:5: 'containerElement' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 113:5: 'allowOverlap' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/animation/animation.d.ts
+- [ ] Line 8:20: 'AsProps' is defined but never used - @typescript-eslint/no-unused-vars
+
+## Components - Awards
+
+### src/components/awards/AwardBadge.tsx
+- [ ] Line 335:7: 'getBotanicalSize' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+## Components - Booking
+
+### src/components/booking/BookingNavigation.tsx
+- [ ] Line 93:11: 'goToStep' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 93:53: 'state' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [x] Line 98:50: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/components/booking/BookingStepper.tsx
+- [ ] Line 3:10: 'DefaultTheme' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/components/booking/steps/ClientInfoStep.tsx
+- [ ] Line 22:41: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+- [x] Line 105:21: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [x] Line 110:36: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/components/booking/steps/ConfirmationStep.tsx
+- [ ] Line 11:8: 'Card' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 15:10: 'confirmationStepSchema' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 19:10: 'Alert' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 38:11: 'LocalConfirmationStepProps' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 69:7: 'InfoValue' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 84:3: 'bookingData' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 88:5: 'createPaymentIntent' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 90:5: 'hasApiError' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 148:14: 'error' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/components/booking/steps/DateSelectionStep.tsx
+- [ ] Line 20:10: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 21:10: 'getFibonacciByIndex' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 126:3: 'initialData' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 129:46: 'fetchAvailableTimeSlots' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 204:13: 'currentDate' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 306:21: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/components/booking/steps/ServiceSelection.tsx
+- [ ] Line 5:44: 'FIBONACCI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 171:3: 'onBack' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 214:62: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 225:21: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/components/booking/steps/ServiceSelectionStep.tsx
+- [ ] Line 20:10: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 47:3: 'onBack' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 88:21: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/components/booking/validation/clientInfo.schema.ts
+- [ ] Line 258:67: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 269:58: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/components/booking/validation/confirmationStep.schema.ts
+- [ ] Line 172:73: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 190:68: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/components/booking/validation/dateSelection.schema.ts
+- [ ] Line 2:10: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 2:26: 'ANIMATION_TIMING' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 134:70: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 137:61: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/components/booking/validation/serviceSelection.schema.ts
+- [ ] Line 2:10: 'FIBONACCI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 138:73: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 141:64: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+## Components - Premium Sections
+
+### src/components/sections/premium/PremiumLayout.tsx
+- [ ] Line 3:10: 'Box' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/components/sections/premium/PremiumNavbar.tsx
+- [ ] Line 4:10: 'PREMIUM_SPACING' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 27:20: 'theme' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 60:7: 'LogoImg' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 76:7: 'MobileLogo' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 317:7: 'NAV_LINKS' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/components/sections/premium/PremiumServicesSection.tsx
+- [ ] Line 4:10: 'Box' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 9:10: 'Text' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/components/sections/premium/PremiumTeam.tsx
+- [ ] Line 5:10: 'Grid' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 6:10: 'GridItem' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 8:10: 'FadeIn' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 205:7: 'CredentialIcon' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 351:33: 'index' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/components/sections/premium/PremiumTestimonials.tsx
+- [ ] Line 4:10: 'Box' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 6:18: 'DSGrid' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 7:10: 'GridItem' is defined but never used - @typescript-eslint/no-unused-vars
+- [x] Line 546:6: React Hook useEffect has missing dependencies: 'goToNextPage' and 'goToPrevPage' - react-hooks/exhaustive-deps
+- [x] Line 580:32: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+
+### src/components/sections/premium/RecoveryTimeline.tsx
+- [ ] Line 5:10: 'Box' is defined but never used - @typescript-eslint/no-unused-vars
+
+## Context
+
+### src/context/BookingContext.tsx
+- [ ] Line 16:3: 'useState' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 30:3: 'isStepComplete' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 31:3: 'ExtendedBookingAction' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 32:3: 'Service' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 35:10: 'bookingService' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 35:26: 'ServiceDetails' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 36:10: 'ApiError' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 36:20: 'ApiErrorCode' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 37:10: 'formatErrorMessage' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 39:10: 'debounce' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 63:28: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 319:11: 'showToast' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 504:46: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+## Design System - Botanical
+
+### src/design-system/botanical/BotanicalBackground.tsx
+- [ ] Line 15:10: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 89:3: 'animated' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/BotanicalDecorator.tsx
+- [ ] Line 68:3: 'colorScheme' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/BotanicalElement.tsx
+- [ ] Line 163:36: Expected a `const` instead of a literal type assertion - @typescript-eslint/prefer-as-const
+- [ ] Line 164:26: Expected a `const` instead of a literal type assertion - @typescript-eslint/prefer-as-const
+
+### src/design-system/botanical/LeafPattern.tsx
+- [ ] Line 18:28: 'FIBONACCI' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/OliveBranch.tsx
+- [ ] Line 13:28: 'FIBONACCI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 83:9: 'centerX' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/PentaFlower.tsx
+- [ ] Line 16:7: 'PHI' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 86:7: 'calculatePentagramPoints' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 151:13: 'prevPoint' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 152:13: 'nextPoint' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/SeedOfLife.tsx
+- [ ] Line 3:10: 'getFibonacciByIndex' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 4:10: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/SmallFlourish.tsx
+- [ ] Line 277:13: 'length' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 281:13: 'endY' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/TreeOfLife.tsx
+- [ ] Line 3:10: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/VesicaPiscis.tsx
+- [ ] Line 126:11: 'vesicaWidth' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/design-system/botanical/botanicalUtils.ts
+- [ ] Line 3:10: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+
+## Pages
+
+### src/pages/About/About.tsx
+- [ ] Line 4:26: 'GoldenSection' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 5:33: 'SectionContent' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 6:16: 'Paragraph' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 7:10: 'Button' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 8:10: 'Card' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 9:24: 'FadeIn' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 11:24: 'VesicaPiscis' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 11:38: 'OliveBranch' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 11:51: 'LeafPattern' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 11:64: 'SmallFlourish' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 13:10: 'RecoveryOfficeTheme' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 17:3: 'PhilosophySection' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/pages/About/AboutPageWrapper.tsx
+- [x] Line 17:23: React Hook "useTheme" is called conditionally - react-hooks/rules-of-hooks
+
+### src/pages/About/sections/PhilosophySection.tsx
+- [ ] Line 17:10: 'FadeIn' is defined but never used - @typescript-eslint/no-unused-vars
+- [x] Line 127:84: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [x] Line 128:23: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [x] Line 179:15: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 179:113: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+
+### src/pages/About/sections/TestimonialsSection.tsx
+- [x] Line 158:30: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+
+### src/pages/About/sections/TimelineSection.tsx
+- [x] Line 232:37: React Hook "useInView" cannot be called inside a callback - react-hooks/rules-of-hooks
+
+### src/pages/About/sections/ValuesSection.tsx
+- [ ] Line 12:16: 'Heading' is defined but never used - @typescript-eslint/no-unused-vars
+- [x] Line 132:15: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 132:79: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [x] Line 132:97: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [x] Line 132:170: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+
+### src/pages/Blog/Blog.tsx
+- [ ] Line 7:10: 'motion' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 11:10: 'Link' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 15:10: 'Section' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 20:8: 'Grid' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 37:10: 'ThemedProps' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 444:21: 'headerInView' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 449:19: 'gridInView' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 518:38: 'index' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/pages/Booking/BookingPage.tsx
+- [x] Line 46:14: React Hook "useBooking" cannot be called inside a callback - react-hooks/rules-of-hooks
+- [x] Line 99:20: React Hook "useNavigate" is called conditionally - react-hooks/rules-of-hooks
+- [x] Line 100:20: React Hook "useLocation" is called conditionally - react-hooks/rules-of-hooks
+- [x] Line 101:24: 'loading' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [x] Line 104:33: React Hook "React.useMemo" is called conditionally - react-hooks/rules-of-hooks
+- [x] Line 112:32: React Hook "React.useMemo" is called conditionally - react-hooks/rules-of-hooks
+- [x] Line 136:3: React Hook "useEffect" is called conditionally - react-hooks/rules-of-hooks
+- [x] Line 157:9: 'activeStep' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [x] Line 186:59: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+
+### src/pages/Booking/BookingPageWrapper.tsx
+- [x] Line 18:23: React Hook "useTheme" is called conditionally - react-hooks/rules-of-hooks
+
+### src/pages/Contact/Contact.tsx
+- [ ] Line 2:27: 'ContactSection' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 34:9: 'contactFormSchema' is assigned a value but only used as a type - @typescript-eslint/no-unused-vars
+- [ ] Line 380:86: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [ ] Line 391:42: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+
+### src/pages/FAQ/FAQ.tsx
+- [ ] Line 3:10: 'Link' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 311:30: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [ ] Line 312:43: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+
+### src/pages/Home/sections/HomeCallToAction.tsx
+- [ ] Line 12:10: 'FadeIn' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/pages/NotFound/NotFound.tsx
+- [ ] Line 7:8: 'styled' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 8:10: 'motion' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 66:31: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [ ] Line 66:81: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [ ] Line 68:35: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+
+### src/pages/Services/Services.tsx
+- [ ] Line 2:10: 'SEO' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/pages/Services/detail-template.tsx
+- [ ] Line 4:10: 'motion' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 12:8: 'Card' is defined but never used - @typescript-eslint/no-unused-vars
+
+### src/pages/Services/sections/ServicesOverview.tsx
+- [ ] Line 111:28: 'animated' is assigned a value but never used - @typescript-eslint/no-unused-vars
+
+### src/pages/legal/Accessibility.tsx
+- [ ] Line 9:43: 'AssetRecovery' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 10:28: 'SACRED_TIMING' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 207:100: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+
+### src/pages/legal/HIPAA.tsx
+- [x] Line 78:17: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 78:46: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 167:52: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 167:79: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+
+### src/pages/legal/Privacy.tsx
+- [x] Line 72:68: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 72:72: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 72:74: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 72:78: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 72:83: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 72:87: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 74:63: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 74:72: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+
+### src/pages/legal/Terms.tsx
+- [x] Line 5:33: 'SectionContent' is defined but never used - @typescript-eslint/no-unused-vars
+- [x] Line 66:69: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 66:75: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 67:70: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 67:79: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 74:63: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 74:76: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;` - react/no-unescaped-entities
+- [x] Line 130:253: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [x] Line 177:92: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+- [x] Line 305:191: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` - react/no-unescaped-entities
+
+## Services and Types
+
+### src/services/api.client.ts
+- [ ] Line 2:47: 'ApiErrorResponse' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 102:62: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 190:15: 'endTime' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 310:10: Unexpected constant condition - no-constant-condition
+
+### src/services/booking.service.ts
+- [ ] Line 1:41: 'TimeSlot' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 1:51: 'ServiceType' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 1:64: 'BookingStatus' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 2:10: 'FIBONACCI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 19:7: 'API_BASE_PATH' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 22:7: 'REQUEST_TIMEOUT' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 418:44: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 419:36: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/types/api.types.ts
+- [ ] Line 29:30: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 95:44: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 101:30: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 353:46: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 366:51: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 378:50: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/types/booking.types.ts
+- [ ] Line 11:10: 'PHI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 11:15: 'FIBONACCI' is defined but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 469:26: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+### src/utils/sacredGeometry.ts
+- [ ] Line 171:57: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+- [ ] Line 288:9: 'fibKeys' is assigned a value but never used - @typescript-eslint/no-unused-vars
+- [ ] Line 401:57: Unexpected any. Specify a different type - @typescript-eslint/no-explicit-any
+
+## Design System Components
+
+There are numerous errors in design system components which will be listed in a separate section of this document. The errors primarily include:
+- Unused imports/variables
+- Type issues with 'any'
+- React hooks rule violations
+- Unescaped entities in JSX
+
+The most critical issues to address first are React Hook rule violations, followed by explicit any types, and then unescaped entities. 

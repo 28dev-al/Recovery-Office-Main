@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="https://images2.imgbox.com/86/72/GE2VLjan_o.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1a365d" />
+    <meta
+      name="description"
+      content="Recovery Office - Professional financial recovery specialists. Expert cryptocurrency recovery, investment fraud assistance, and financial scam resolution services."
+    />
+    <!-- CSP removed for development - allows localhost API connections -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="..."> -->
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://images2.imgbox.com/86/72/GE2VLjan_o.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://images2.imgbox.com/86/72/GE2VLjan_o.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://images2.imgbox.com/86/72/GE2VLjan_o.png">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://recovery-office.com/">
+    <meta property="og:title" content="Recovery Office - Financial Recovery Specialists">
+    <meta property="og:description" content="Professional financial recovery services. Expert assistance with cryptocurrency recovery, investment fraud, and financial scam resolution.">
+    <meta property="og:image" content="https://images2.imgbox.com/86/72/GE2VLjan_o.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://recovery-office.com/">
+    <meta property="twitter:title" content="Recovery Office - Financial Recovery Specialists">
+    <meta property="twitter:description" content="Professional financial recovery services. Expert assistance with cryptocurrency recovery, investment fraud, and financial scam resolution.">
+    <meta property="twitter:image" content="https://images2.imgbox.com/86/72/GE2VLjan_o.png">
+    
+    <!-- Google Fonts preconnect - for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts imports - load directly instead of hosting locally -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Inline critical CSS -->
+    <style>
+      /* Define base variables and styles */
+      :root {
+        --phi: 1.618033988749895;
+        --phi-inverse: 0.618033988749895;
+        --spacing-base: 8px;
+        --primary-color: #4a6eb3;
+        --secondary-color: #7A9EA7;
+        --background-color: #FCFBF8;
+        --text-color: #353632;
+      }
+      
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+      
+      /* Golden ratio based critical layout */
+      #root {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* Splash screen with logo animation */
+      .splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--background-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+      }
+      
+      .splash-logo {
+        width: calc(100px * var(--phi));
+        height: 100px;
+        animation: pulse 2s infinite ease-in-out;
+      }
+      
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(calc(1 * var(--phi-inverse))); }
+        100% { transform: scale(1); }
+      }
+      
+      /* Loading spinner animation - prevents styled-components keyframes crashes */
+      @keyframes spin-loading {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Prevent FOUC */
+      .js-loading *, .js-loading *:before, .js-loading *:after {
+        animation-play-state: paused !important;
+      }
+    </style>
+
+    <title>Recovery Office - Financial Recovery Specialists</title>
+    
+    <!-- Structured data for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Recovery Office",
+        "url": "https://recoveryoffice.com",
+        "logo": "https://images2.imgbox.com/35/e0/Cif1Ufej_o.png",
+        "description": "Professional financial asset recovery services specializing in investment fraud recovery, cryptocurrency recovery, and regulatory assistance.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "123 Financial District",
+          "addressLocality": "London",
+          "addressRegion": "Greater London",
+          "postalCode": "EC2V 6DN",
+          "addressCountry": "GB"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 51.5074,
+          "longitude": 0.1278
+        },
+        "openingHours": "Mo,Tu,We,Th,Fr 09:00-17:00",
+        "telephone": "+44-20-1234-5678",
+        "sameAs": [
+          "https://www.facebook.com/recoveryoffice",
+          "https://www.twitter.com/recoveryoffice",
+          "https://www.linkedin.com/company/recoveryoffice"
+        ]
+      }
+    </script>
+    
+    <!-- Prevent FOUC -->
+    <script>
+      document.documentElement.classList.add('js-loading');
+      window.addEventListener('load', function() {
+        document.documentElement.classList.remove('js-loading');
+        
+        // Hide splash screen after delay
+        setTimeout(function() {
+          const splash = document.getElementById('splash-screen');
+          if (splash) {
+            splash.style.opacity = '0';
+            setTimeout(function() {
+              splash.style.visibility = 'hidden';
+            }, 800);
+          }
+        }, 1300); // Fibonacci based timing (13 * 100ms)
+      });
+      
+      // Respect user's motion preferences
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('reduced-motion');
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <div style="padding: 2rem; text-align: center; max-width: 61.8vw; margin: 0 auto;">
+        <h1>JavaScript Required</h1>
+        <p>Recovery Office requires JavaScript to provide you with the best financial recovery experience. Please enable JavaScript to continue.</p>
+        <p>Our financial recovery center offers a variety of services including asset recovery, investment fraud recovery, and regulatory assistance.</p>
+        <p>Contact us at: <a href="tel:+1234567890">123-456-7890</a> or <a href="mailto:info@recoveryoffice.com">info@recoveryoffice.com</a></p>
+      </div>
+    </noscript>
+    
+    <!-- Splash screen with logo animation -->
+    <div id="splash-screen" class="splash-screen">
+      <img class="splash-logo" src="https://thumbs2.imgbox.com/1b/40/YB4BLzkU_t.png" alt="Recovery Office Logo" />
+    </div>
+    
+    <div id="root"></div>
+
+    <!-- Accessibility enhancements -->
+    <div id="a11y-announcer" 
+         class="sr-only" 
+         role="status" 
+         aria-live="polite" 
+         aria-atomic="true"></div>
+    
+    <!-- Provide fallback for old browsers -->
+    <script nomodule>
+      document.getElementById('root').innerHTML = 
+        '<div style="padding: 2rem; text-align: center; max-width: 61.8vw; margin: 0 auto;">' +
+        '<h1>Browser Not Supported</h1>' +
+        '<p>Recovery Office requires a modern browser to provide you with the best financial recovery experience. ' +
+        'Please upgrade your browser to continue.</p>' +
+        '<p>Contact us at: <a href="tel:+1234567890">123-456-7890</a> or ' +
+        '<a href="mailto:info@recoveryoffice.com">info@recoveryoffice.com</a></p>' +
+        '</div>';
+      
+      // Hide splash screen
+      const splash = document.getElementById('splash-screen');
+      if (splash) {
+        splash.style.display = 'none';
+      }
+    </script>
+  </body>
+</html> 

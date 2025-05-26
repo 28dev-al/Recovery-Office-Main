@@ -1,0 +1,60 @@
+headersOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\Rober\\Videos\\RecoveryOffice\\recovery-office\\build"
+publishOrigin = "config"
+commandOrigin = "config"
+base = "C:\\Users\\Rober\\Videos\\RecoveryOffice\\recovery-office"
+command = "npm run build:netlify"
+
+[build.environment]
+SKIP_TYPESCRIPT_CHECK = "true"
+TSC_COMPILE_ON_ERROR = "true"
+CI = "false"
+DISABLE_ESLINT_PLUGIN = "true"
+PUBLIC_URL = "/"
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[headers]]
+for = "/assets/*"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;"
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "no-referrer-when-downgrade"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
