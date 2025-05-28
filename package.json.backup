@@ -1,0 +1,92 @@
+{
+  "name": "recovery-office",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "/",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@hookform/resolvers": "^5.0.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.11",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/styled-components": "^5.1.26",
+    "axios": "^1.9.0",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^9.0.1",
+    "glob": "^11.0.2",
+    "mongodb": "^6.16.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-focus-lock": "^2.13.6",
+    "react-helmet-async": "^2.0.5",
+    "react-hook-form": "^7.43.0",
+    "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0",
+    "react-remove-scroll": "^2.6.3",
+    "react-router-dom": "^6.8.0",
+    "react-scripts": "5.0.1",
+    "styled-components": "^5.3.6",
+    "zod": "^3.20.2",
+    "mongoose": "^7.6.0"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=development REACT_APP_API_URL=http://localhost:5000/api REACT_APP_ENVIRONMENT=development DISABLE_ESLINT_PLUGIN=true CI=false react-scripts start",
+    "start:dev": "cross-env NODE_ENV=development REACT_APP_API_URL=http://localhost:5000/api REACT_APP_ENVIRONMENT=development REACT_APP_DEBUG=true DISABLE_ESLINT_PLUGIN=true CI=false react-scripts start",
+    "start:clean": "npm run clean && npm run start:dev",
+    "start:test": "cross-env NODE_ENV=development REACT_APP_API_URL=http://localhost:5000/api REACT_APP_ENVIRONMENT=development REACT_APP_DEBUG=true DISABLE_ESLINT_PLUGIN=true CI=false FAST_REFRESH=true react-scripts start",
+    "start:debug": "powershell -ExecutionPolicy Bypass -File ./start-servers.ps1",
+    "start:debug-clean": "powershell -ExecutionPolicy Bypass -File ./start-servers.ps1 -Mode clean",
+    "start:debug-minimal": "cross-env REACT_APP_ENTRY=debug NODE_ENV=development REACT_APP_API_URL=http://localhost:5000/api react-scripts start",
+    "clean": "rimraf node_modules/.cache && rimraf build && npm cache clean --force",
+    "clean:all": "rimraf node_modules/.cache && rimraf build && rimraf node_modules && npm cache clean --force && npm install",
+    "build": "cross-env DISABLE_ESLINT_PLUGIN=true CI=false TSC_COMPILE_ON_ERROR=true react-scripts build",
+    "build:debug": "cross-env GENERATE_SOURCEMAP=true NODE_ENV=development DISABLE_ESLINT_PLUGIN=true CI=false TSC_COMPILE_ON_ERROR=true react-scripts build",
+    "build:netlify": "rimraf build && node deploy-netlify.js",
+    "build:quick": "cross-env DISABLE_ESLINT_PLUGIN=true CI=false TSC_COMPILE_ON_ERROR=true SKIP_TYPESCRIPT_CHECK=true react-scripts build",
+    "deploy": "node deploy.js",
+    "deploy:final": "node deploy-final.js",
+    "deploy:netlify": "node deploy-netlify.js",
+    "test": "cross-env NODE_ENV=test react-scripts test",
+    "test:syntax": "npm run type-check && npm run build:debug",
+    "eject": "react-scripts eject",
+    "lint": "eslint --config eslint.config.mjs .",
+    "lint:fix": "eslint --config eslint.config.mjs . --fix",
+    "type-check": "node ts-check.js",
+    "type-check:theme": "node ts-check.js src/design-system/theme/theme.ts",
+    "type-check:all": "node ts-check.js src/**/*.{ts,tsx}"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.1.0",
+    "rimraf": "^5.0.10",
+    "typescript": "^4.9.5",
+    "typescript-eslint": "^8.32.1"
+  }
+}

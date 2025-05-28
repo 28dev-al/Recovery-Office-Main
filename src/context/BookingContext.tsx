@@ -607,24 +607,47 @@ export const BookingProvider: React.FC<BookingProviderProps> = ({
         console.log(`[BookingContext] Processing ${servicesArray.length} services from API`);
         
         // Convert ServicesAPI format to ServiceOption format
-        const processedServices: ServiceOption[] = servicesArray.map((service) => ({
-          id: service.id,
-          _id: service._id,
-          mongoObjectId: service._id,
-          name: service.name,
-          description: service.description,
-          duration: service.duration,
-          price: service.price,
-          formattedPrice: service.formattedPrice || `£${service.price}`,
-          formattedDuration: service.formattedDuration || `${service.duration} minutes`,
-          icon: service.icon || '/icons/services/default.svg',
-          category: service.category,
-          type: service.type || UnifiedServiceType.INITIAL_CONSULTATION,
-          isActive: service.isActive !== false,
-          availableForNewClients: service.availableForNewClients !== false,
-          isValidObjectId: service.isValidObjectId || false,
-          isDevelopmentFallback: service.isDevelopmentFallback || false
-        }));
+        const processedServices: ServiceOption[] = servicesArray.map((service) => {
+          // CRITICAL: Verify we have real MongoDB ObjectIds
+          const realObjectId = service._id;
+          const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(realObjectId);
+          
+          console.log(`[BookingContext] Processing service: ${service.name}`, {
+            _id: service._id,
+            id: service.id,
+            realObjectId,
+            isValidObjectId,
+            isDevelopmentFallback: service.isDevelopmentFallback
+          });
+          
+          // CRITICAL: Ensure we only use services with real MongoDB ObjectIds
+          if (!isValidObjectId) {
+            console.error(`[BookingContext] Invalid MongoDB ObjectId for service: ${service.name}`, {
+              receivedId: realObjectId,
+              expectedFormat: '24-character hex string'
+            });
+            throw new Error(`Invalid MongoDB ObjectId for service: ${service.name}`);
+          }
+          
+          return {
+            id: realObjectId,                    // ← Use REAL MongoDB ObjectId
+            _id: realObjectId,                   // ← Use REAL MongoDB ObjectId
+            mongoObjectId: realObjectId,         // ← Explicit reference to real ID
+            name: service.name,
+            description: service.description,
+            duration: service.duration,
+            price: service.price,
+            formattedPrice: service.formattedPrice || `£${service.price}`,
+            formattedDuration: service.formattedDuration || `${service.duration} minutes`,
+            icon: service.icon || '/icons/services/default.svg',
+            category: service.category,
+            type: service.type || UnifiedServiceType.INITIAL_CONSULTATION,
+            isActive: service.isActive !== false,
+            availableForNewClients: service.availableForNewClients !== false,
+            isValidObjectId: true,               // ← Confirmed valid
+            isDevelopmentFallback: false         // ← Real service from MongoDB
+          };
+        });
         
         console.log('[BookingContext] === PROCESSED SERVICES DEBUG ===');
         processedServices.forEach((service, index) => {
@@ -651,14 +674,63 @@ export const BookingProvider: React.FC<BookingProviderProps> = ({
     } catch (err: unknown) {
       console.error('❌ [BookingContext] Service fetch failed:', err);
       
-      // CRITICAL: Don't crash on fetch errors
+      // CRITICAL: Better error handling for CORS and API issues
       const errorMessage = err instanceof Error ? err.message : String(err);
+      
+      // Check if this is a CORS error
+      if (errorMessage.includes('CORS_ERROR') || errorMessage.includes('Failed to fetch') || errorMessage.includes('CORS')) {
+        console.error('🚨 [BookingContext] CORS ERROR DETECTED - Backend not allowing frontend domain');
+        errorToast(
+          'Connection Error', 
+          'Unable to connect to booking system. Please contact support if this persists.'
+        );
+        
+        // Set a specific API error for CORS issues
+        dispatch({
+          type: ExtendedBookingActionType.SET_API_ERROR,
+          payload: {
+            code: 'CORS_ERROR',
+            message: 'Backend CORS configuration needs to be updated for this domain',
+            details: { 
+              frontendDomain: window.location.origin,
+              backendUrl: 'https://recovery-office-backend-production.up.railway.app',
+              solution: 'Update Railway backend CORS to allow this domain'
+            },
+            resource: 'services'
+          }
+        });
+        
+        // Don't use fallback services for CORS errors - this masks the real issue
+        throw new Error(`CORS_ERROR: Backend not configured for domain: ${window.location.origin}`);
+      }
+      
+      // Check if this is a backend server error
+      if (errorMessage.includes('BACKEND_ERROR') || errorMessage.includes('HTTP 500')) {
+        console.error('🚨 [BookingContext] Backend server error detected');
+        errorToast(
+          'Server Error', 
+          'Our booking system is temporarily unavailable. Please try again in a few minutes.'
+        );
+        
+        dispatch({
+          type: ExtendedBookingActionType.SET_API_ERROR,
+          payload: {
+            code: 'BACKEND_ERROR',
+            message: 'Backend server error - Railway deployment may be down',
+            resource: 'services'
+          }
+        });
+        
+        throw new Error('BACKEND_ERROR: Railway backend server error');
+      }
+      
+      // For other errors, provide fallback services only as last resort
       if (!errorMessage.includes('Rate limited')) {
-        errorToast('Failed to load services', 'Using fallback services for now');
+        console.warn('⚠️ [BookingContext] Using fallback services due to API error:', errorMessage);
+        errorToast('Failed to load services', 'Using offline services for now');
         
         // Provide fallback services for development
         const fallbackServices = createFallbackServices();
-        // Use dispatch directly instead of setAvailableServices
         dispatch({ type: ExtendedBookingActionType.SET_AVAILABLE_SERVICES, payload: fallbackServices });
         setIsInitialized(true);
       }

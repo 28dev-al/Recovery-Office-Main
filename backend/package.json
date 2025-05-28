@@ -1,26 +1,13 @@
 {
   "name": "recovery-office-backend",
   "version": "1.0.0",
-  "description": "Backend API server for Recovery Office booking system",
+  "description": "Recovery Office API server for financial recovery services",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "test": "jest --runInBand --detectOpenHandles",
-    "test:watch": "jest --watch --runInBand",
-    "test:coverage": "jest --coverage --runInBand",
-    "seed": "node src/scripts/seed.js",
-    "seed:admin": "node src/scripts/seedAdmin.js",
-    "lint": "eslint src/",
-    "security-check": "npm audit"
+    "dev": "nodemon src/server.js"
   },
-  "keywords": [
-    "booking",
-    "api",
-    "recovery",
-    "financial",
-    "services"
-  ],
+  "keywords": ["recovery-office", "financial-services", "booking-api", "mongodb"],
   "author": "Recovery Office",
   "license": "ISC",
   "dependencies": {
@@ -51,23 +38,11 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
-    "eslint": "^8.39.0",
-    "jest": "^29.5.0",
     "mongodb-memory-server": "^8.12.2",
     "nodemon": "^2.0.22",
     "supertest": "^6.3.3"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "testTimeout": 10000,
-    "verbose": true,
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/scripts/**",
-      "!src/server.js"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/dist/"
-    ]
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

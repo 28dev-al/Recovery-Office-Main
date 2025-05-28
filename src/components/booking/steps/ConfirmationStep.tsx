@@ -830,9 +830,18 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
       const timeSlotString = formatTime(finalBookingData.selectedTimeSlot);
       console.log('[DEBUG] Time slot formatted:', timeSlotString);
       
+      // Use _id if available, fallback to id for backward compatibility
+      const serviceId = finalBookingData.selectedService._id || finalBookingData.selectedService.id;
+      
+      // Add debug logging to verify correct ID format
+      console.log('[DEBUG] Using serviceId:', serviceId);
+      console.log('[DEBUG] serviceId type:', typeof serviceId);
+      console.log('[DEBUG] serviceId length:', serviceId?.length);
+      console.log('[DEBUG] Selected service object:', finalBookingData.selectedService);
+      
       const bookingPayload = {
         clientId: clientId,
-        serviceId: finalBookingData.selectedService.id,
+        serviceId: serviceId,
         serviceName: finalBookingData.selectedService.name,
         date: finalBookingData.selectedDate,
         timeSlot: timeSlotString,

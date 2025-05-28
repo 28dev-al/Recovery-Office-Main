@@ -7,9 +7,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useBookingState } from '../../../hooks/useBookingState';
+import { useBooking } from '../../../context/BookingContext';
+
+interface ServiceData {
+  _id: string;
+  id: string;
+  name: string;
+  description: string;
+  duration: number;
+  price: number;
+  category: string;
+  isDevelopmentFallback?: boolean;
+}
 
 interface ServiceSelectionStepProps {
-  onServiceSelect: (service: any) => void;
+  onServiceSelect: (service: ServiceData) => void;
   onNext?: () => void;
   onComplete?: () => void;
 }
@@ -20,57 +32,46 @@ export const ServiceSelectionStep: React.FC<ServiceSelectionStepProps> = ({
   onComplete
 }) => {
   const bookingState = useBookingState();
+  const { state: bookingContext } = useBooking();
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
 
-    // Use fallback services directly
-  const services = [
-      {
-        _id: '507f1f77bcf86cd799439011',
-        id: 'cryptocurrency-recovery',
-        name: 'Cryptocurrency Recovery',
-        description: 'Expert recovery of stolen Bitcoin, Ethereum, and other digital assets',
-        duration: 60,
-        price: 750,
-        category: 'crypto'
-      },
-      {
-        _id: '507f1f77bcf86cd799439012',
-        id: 'investment-fraud-recovery',
-        name: 'Investment Fraud Recovery',
-        description: 'Recovery services for victims of investment scams and Ponzi schemes',
-        duration: 60,
-        price: 750,
-        category: 'fraud'
-      },
-      {
-        _id: '507f1f77bcf86cd799439013',
-        id: 'regulatory-assistance',
-        name: 'Regulatory Assistance',
-        description: 'Professional assistance with financial regulatory matters',
-        duration: 45,
-        price: 500,
-        category: 'regulatory'
-      },
-      {
-        _id: '507f1f77bcf86cd799439014',
-        id: 'professional-negligence',
-        name: 'Professional Negligence',
-        description: 'Legal action against negligent financial professionals',
-        duration: 90,
-        price: 950,
-        category: 'legal'
-      }
-    ];
+  // CRITICAL FIX: Use real services from BookingContext instead of hardcoded fake ones
+  const services = bookingContext.availableServices || [];
 
-    console.log('[ServiceSelection] Available services:', services);
-    console.log('[ServiceSelection] Services count:', services.length);
+  console.log('[ServiceSelection] Available services:', services);
+  console.log('[ServiceSelection] Services count:', services.length);
 
-    const handleServiceSelection = (service: any) => {
-      console.log('[ServiceSelection] Service selected:', service.name);
+  // CRITICAL: Add validation to ensure we have real MongoDB ObjectIds
+  const validateService = (service: ServiceData) => {
+    const hasValidObjectId = service._id && /^[0-9a-fA-F]{24}$/.test(service._id);
+    const isNotFallback = !service.isDevelopmentFallback;
+    
+    console.log('[ServiceSelection] Validating service:', {
+      name: service.name,
+      _id: service._id,
+      hasValidObjectId,
+      isNotFallback,
+      isValid: hasValidObjectId && isNotFallback
+    });
+    
+    return hasValidObjectId && isNotFallback;
+  };
 
-      setSelectedServiceId(service._id);
-      bookingState.setSelectedService(service);
-      onServiceSelect(service);
+  const handleServiceSelection = (service: ServiceData) => {
+    console.log('[ServiceSelection] Service selected:', service.name);
+    
+    // CRITICAL: Validate that we're using a real service with valid MongoDB ObjectId
+    if (!validateService(service)) {
+      console.error('[ServiceSelection] Invalid service selected - not a real MongoDB service:', service);
+      alert('Error: Invalid service selected. Please refresh the page and try again.');
+      return;
+    }
+    
+    console.log('[ServiceSelection] Service validation passed - using real MongoDB ObjectId:', service._id);
+
+    setSelectedServiceId(service._id);
+    bookingState.setSelectedService(service);
+    onServiceSelect(service);
 
     // Move to next step
     setTimeout(() => {
@@ -82,12 +83,27 @@ export const ServiceSelectionStep: React.FC<ServiceSelectionStepProps> = ({
     }, 100);
   };
 
+  // Show loading while services are being fetched
   if (services.length === 0) {
     return (
       <LoadingContainer>
         <LoadingSpinner />
-        <LoadingText>Loading services...</LoadingText>
+        <LoadingText>Loading services from database...</LoadingText>
       </LoadingContainer>
+    );
+  }
+
+  // Filter out any fallback services to ensure we only show real ones
+  const realServices = services.filter(service => validateService(service));
+  
+  if (realServices.length === 0) {
+    return (
+      <ErrorContainer>
+        <ErrorText>Unable to load services from database. Please refresh the page.</ErrorText>
+        <RetryButton onClick={() => window.location.reload()}>
+          Refresh Page
+        </RetryButton>
+      </ErrorContainer>
     );
   }
 
@@ -99,7 +115,7 @@ export const ServiceSelectionStep: React.FC<ServiceSelectionStepProps> = ({
       </StepHeader>
 
       <ServicesGrid>
-        {services.map((service) => (
+        {realServices.map((service) => (
           <ServiceCard
             key={service._id}
             onClick={() => handleServiceSelection(service)}
@@ -112,15 +128,15 @@ export const ServiceSelectionStep: React.FC<ServiceSelectionStepProps> = ({
               <ServiceDuration>{service.duration} minutes</ServiceDuration>
               <ServicePrice>£{service.price.toLocaleString()}</ServicePrice>
             </ServiceDetails>
+            {/* Debug info in development */}
+            {process.env.NODE_ENV === 'development' && (
+              <DebugInfo>
+                ID: {service._id} (Real: {validateService(service) ? 'Yes' : 'No'})
+              </DebugInfo>
+            )}
           </ServiceCard>
         ))}
       </ServicesGrid>
-
-      {services.length === 0 && (
-        <NoServicesMessage>
-          No services available at the moment. Please try again later.
-        </NoServicesMessage>
-      )}
     </SelectionContainer>
   );
 };
@@ -311,11 +327,10 @@ const RetryButton = styled.button`
   }
 `;
 
-const NoServicesMessage = styled.div`
-  text-align: center;
-  padding: 40px;
+const DebugInfo = styled.div`
+  font-size: 12px;
   color: #6b7280;
-  font-size: 16px;
+  margin-top: 8px;
 `;
 
 export default ServiceSelectionStep; 

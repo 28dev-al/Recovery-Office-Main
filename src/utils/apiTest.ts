@@ -9,11 +9,11 @@ export const testBackendConnection = async () => {
   
   try {
     // Test 1: Health check
-    const healthResponse = await fetch('http://localhost:5000/api/health');
+    const healthResponse = await fetch('https://recovery-office-backend-production.up.railway.app/api/health');
     console.log('✅ Health check:', healthResponse.status);
     
     // Test 2: Services endpoint
-    const servicesResponse = await fetch('http://localhost:5000/api/services');
+    const servicesResponse = await fetch('https://recovery-office-backend-production.up.railway.app/api/services');
     console.log('✅ Services endpoint:', servicesResponse.status);
     
     if (servicesResponse.ok) {
@@ -82,7 +82,7 @@ export async function testAllEndpoints(): Promise<ApiTestResult[]> {
   
   // Test 1: Health Check
   tests.push(await testEndpoint('Health Check', async () => {
-    const response = await fetch('http://localhost:5000/api/health', {
+    const response = await fetch('https://recovery-office-backend-production.up.railway.app/api/health', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -100,7 +100,7 @@ export async function testAllEndpoints(): Promise<ApiTestResult[]> {
   
   // Test 2: Services
   tests.push(await testEndpoint('Get Services', async () => {
-    const response = await fetch('http://localhost:5000/api/services', {
+    const response = await fetch('https://recovery-office-backend-production.up.railway.app/api/services', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -119,7 +119,7 @@ export async function testAllEndpoints(): Promise<ApiTestResult[]> {
   // Test 3: Backend Availability
   tests.push(await testEndpoint('Backend Availability', async () => {
     try {
-      const response = await fetch('http://localhost:5000/', {
+      const response = await fetch('https://recovery-office-backend-production.up.railway.app/', {
         method: 'HEAD',
         mode: 'no-cors'
       });
@@ -150,7 +150,7 @@ export async function testAllEndpoints(): Promise<ApiTestResult[]> {
  */
 export async function isBackendAccessible(): Promise<boolean> {
   try {
-    const response = await fetch('http://localhost:5000/api/health', {
+    const response = await fetch('https://recovery-office-backend-production.up.railway.app/api/health', {
       method: 'GET',
       mode: 'cors'
     });

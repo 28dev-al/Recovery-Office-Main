@@ -21,7 +21,7 @@ const getEnvironmentConfig = () => {
   // SAFE: Create configuration object instead of direct assignment
   const config = {
     NODE_ENV: isDevelopment ? 'development' : currentNodeEnv,
-    REACT_APP_API_URL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+    REACT_APP_API_URL: process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api',
     REACT_APP_ENVIRONMENT: process.env.REACT_APP_ENVIRONMENT || 'development',
     isDevelopment
   };
@@ -59,7 +59,7 @@ if (!envConfig.REACT_APP_API_URL) {
     <div style="padding: 40px; text-align: center; color: #dc3545; background: #fff8f8; border: 1px solid #ffdddd; border-radius: 8px; margin: 20px; font-family: Arial, sans-serif;">
       <h2>Configuration Error</h2>
       <p>Environment variables failed to load. Please check your .env file.</p>
-      <p><strong>Expected:</strong> REACT_APP_API_URL=http://localhost:5000/api</p>
+      <p><strong>Expected:</strong> REACT_APP_API_URL=https://recovery-office-backend-production.up.railway.app/api</p>
       <button onclick="window.location.reload()" style="background: #0A214F; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">
         Retry
       </button>

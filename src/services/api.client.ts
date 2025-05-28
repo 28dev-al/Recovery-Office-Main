@@ -19,7 +19,7 @@ import { PHI, SACRED_TIMING } from '../constants/sacred-geometry';
 
 // Default base URL - fallback to localhost in development
 const API_BASE_URL = process.env.REACT_APP_API_URL || 
-  (process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api' : '/api');
+  (process.env.NODE_ENV === 'development' ? 'https://recovery-office-backend-production.up.railway.app/api' : '/api');
 
 // Default request timeout in milliseconds (based on sacred timing constants)
 const DEFAULT_TIMEOUT = SACRED_TIMING.slow;

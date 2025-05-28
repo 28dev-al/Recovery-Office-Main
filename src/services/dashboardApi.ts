@@ -92,7 +92,7 @@ export interface ChartData {
 
 // Helper function to make HTTP requests to real dashboard API
 async function makeDashboardRequest<T>(endpoint: string): Promise<{ data: T } | null> {
-  const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  const baseUrl = process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api';
   const url = `${baseUrl}/dashboard${endpoint}`;
   
   try {
@@ -124,7 +124,7 @@ async function makeDashboardRequest<T>(endpoint: string): Promise<{ data: T } | 
 
 // Dashboard API Class
 class DashboardAPI {
-  private baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  private baseUrl = process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api';
   private eventSource: EventSource | null = null;
 
   /**

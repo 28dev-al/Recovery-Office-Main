@@ -23,7 +23,7 @@ interface TestResult {
 export const ServiceTest: React.FC<ServiceTestProps> = ({ autoStart = false }) => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [isRunning, setIsRunning] = useState(false);
-  const [apiEndpoint, setApiEndpoint] = useState('http://localhost:5000/api/services');
+  const [apiEndpoint, setApiEndpoint] = useState('https://recovery-office-backend-production.up.railway.app/api/services');
 
   const addResult = (message: string, type: TestResult['type'] = 'info') => {
     const result: TestResult = {
@@ -146,7 +146,7 @@ export const ServiceTest: React.FC<ServiceTestProps> = ({ autoStart = false }) =
 
   const testAlternativeEndpoints = async () => {
     const endpoints = [
-      'http://localhost:5000/api/services',
+      'https://recovery-office-backend-production.up.railway.app/api/services',
       'http://localhost:3000/api/services',
       'http://localhost:8000/api/services',
       '/api/services' // Relative URL

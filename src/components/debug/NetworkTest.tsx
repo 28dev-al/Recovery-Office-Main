@@ -50,7 +50,7 @@ export const NetworkTest: React.FC = () => {
     // Test 1: Basic connectivity
     try {
       addResult('Testing backend health endpoint...', 'info');
-      const response = await fetch('http://localhost:5000/api/health');
+      const response = await fetch('https://recovery-office-backend-production.up.railway.app/api/health');
       addResult(`✅ Backend health: ${response.status} ${response.statusText}`, 'success');
     } catch (error) {
       addResult(`❌ Backend unreachable: ${(error as Error).message}`, 'error');
@@ -59,7 +59,7 @@ export const NetworkTest: React.FC = () => {
     // Test 2: CORS preflight
     try {
       addResult('Testing CORS preflight...', 'info');
-      const response = await fetch('http://localhost:5000/api/services', {
+      const response = await fetch('https://recovery-office-backend-production.up.railway.app/api/services', {
         method: 'OPTIONS'
       });
       addResult(`✅ CORS preflight: ${response.status}`, 'success');
@@ -70,7 +70,7 @@ export const NetworkTest: React.FC = () => {
     // Test 3: Actual data fetch
     try {
       addResult('Fetching services data...', 'info');
-      const response = await fetch('http://localhost:5000/api/services');
+      const response = await fetch('https://recovery-office-backend-production.up.railway.app/api/services');
       const data = await response.json();
       addResult(`✅ Services data: ${data.results} services found`, 'success');
       
@@ -87,7 +87,7 @@ export const NetworkTest: React.FC = () => {
     // Test 4: Check response headers
     try {
       addResult('Checking response headers...', 'info');
-      const response = await fetch('http://localhost:5000/api/services');
+      const response = await fetch('https://recovery-office-backend-production.up.railway.app/api/services');
       const corsHeaders = {
         'access-control-allow-origin': response.headers.get('access-control-allow-origin'),
         'access-control-allow-methods': response.headers.get('access-control-allow-methods'),

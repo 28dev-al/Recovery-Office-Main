@@ -1,12 +1,6 @@
 const getApiBaseUrl = (): string => {
-  // Production environment detection
-  if (process.env.NODE_ENV === 'production') {
-    // Use Netlify Functions for production
-    return `${window.location.origin}/.netlify/functions`;
-  }
-
-  // Development environment
-  return process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  // Always use Railway backend URL for both development and production
+  return 'https://recovery-office-backend-production.up.railway.app/api';
 };
 
 export const API_CONFIG = {
@@ -34,6 +28,8 @@ export const apiRequest = async <T = unknown>(
 ): Promise<T> => {
   const url = `${API_CONFIG.BASE_URL}${endpoint}`;
   
+  console.log(`[API-TS] Making request to: ${url}`);
+  
   const defaultHeaders = {
     'Content-Type': 'application/json',
     ...options.headers
@@ -50,12 +46,11 @@ export const apiRequest = async <T = unknown>(
       throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log(`[API-TS] Success:`, data);
+    return data;
   } catch (error) {
-    // Only log errors in development
-    if (process.env.NODE_ENV === 'development') {
-      console.error('API Request failed:', error);
-    }
+    console.error('[API-TS] Request failed:', error);
     throw error;
   }
 };
@@ -83,4 +78,4 @@ export const bookingApi = {
       body: JSON.stringify(clientData)
     });
   }
-}; 
+};

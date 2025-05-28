@@ -369,7 +369,7 @@ export const ClientsPage: React.FC = () => {
     const fetchClients = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/clients`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api'}/clients`, {
           method: 'GET',
           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
           mode: 'cors',

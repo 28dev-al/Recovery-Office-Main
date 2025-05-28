@@ -34,13 +34,13 @@
     "mongoose": "^7.6.0"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development REACT_APP_API_URL=http://localhost:5000/api REACT_APP_ENVIRONMENT=development DISABLE_ESLINT_PLUGIN=true CI=false react-scripts start",
-    "start:dev": "cross-env NODE_ENV=development REACT_APP_API_URL=http://localhost:5000/api REACT_APP_ENVIRONMENT=development REACT_APP_DEBUG=true DISABLE_ESLINT_PLUGIN=true CI=false react-scripts start",
+    "start": "cross-env NODE_ENV=development REACT_APP_API_URL=https://recovery-office-backend-production.up.railway.app/api REACT_APP_ENVIRONMENT=development DISABLE_ESLINT_PLUGIN=true CI=false react-scripts start",
+    "start:dev": "cross-env NODE_ENV=development REACT_APP_API_URL=https://recovery-office-backend-production.up.railway.app/api REACT_APP_ENVIRONMENT=development REACT_APP_DEBUG=true DISABLE_ESLINT_PLUGIN=true CI=false react-scripts start",
     "start:clean": "npm run clean && npm run start:dev",
-    "start:test": "cross-env NODE_ENV=development REACT_APP_API_URL=http://localhost:5000/api REACT_APP_ENVIRONMENT=development REACT_APP_DEBUG=true DISABLE_ESLINT_PLUGIN=true CI=false FAST_REFRESH=true react-scripts start",
+    "start:test": "cross-env NODE_ENV=development REACT_APP_API_URL=https://recovery-office-backend-production.up.railway.app/api REACT_APP_ENVIRONMENT=development REACT_APP_DEBUG=true DISABLE_ESLINT_PLUGIN=true CI=false FAST_REFRESH=true react-scripts start",
     "start:debug": "powershell -ExecutionPolicy Bypass -File ./start-servers.ps1",
     "start:debug-clean": "powershell -ExecutionPolicy Bypass -File ./start-servers.ps1 -Mode clean",
-    "start:debug-minimal": "cross-env REACT_APP_ENTRY=debug NODE_ENV=development REACT_APP_API_URL=http://localhost:5000/api react-scripts start",
+    "start:debug-minimal": "cross-env REACT_APP_ENTRY=debug NODE_ENV=development REACT_APP_API_URL=https://recovery-office-backend-production.up.railway.app/api react-scripts start",
     "clean": "rimraf node_modules/.cache && rimraf build && npm cache clean --force",
     "clean:all": "rimraf node_modules/.cache && rimraf build && rimraf node_modules && npm cache clean --force && npm install",
     "build": "cross-env DISABLE_ESLINT_PLUGIN=true CI=false TSC_COMPILE_ON_ERROR=true react-scripts build",

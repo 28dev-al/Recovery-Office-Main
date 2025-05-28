@@ -11,15 +11,15 @@ export const testConnection = async () => {
   const tests = [
     {
       name: 'Direct fetch to backend',
-      url: 'http://localhost:5000/api/services'
+      url: 'https://recovery-office-backend-production.up.railway.app/api/services'
     },
     {
       name: 'Health check',
-      url: 'http://localhost:5000/api/health'
+      url: 'https://recovery-office-backend-production.up.railway.app/api/health'
     },
     {
       name: 'CORS preflight test',
-      url: 'http://localhost:5000/api/services',
+      url: 'https://recovery-office-backend-production.up.railway.app/api/services',
       method: 'OPTIONS'
     }
   ];
@@ -89,10 +89,10 @@ export const runNetworkDiagnostics = async () => {
   
   // Test basic connectivity
   const tests = [
-    'http://localhost:5000',
-    'http://localhost:5000/api',
-    'http://localhost:5000/api/health',
-    'http://localhost:5000/api/services'
+    'https://recovery-office-backend-production.up.railway.app',
+    'https://recovery-office-backend-production.up.railway.app/api',
+    'https://recovery-office-backend-production.up.railway.app/api/health',
+    'https://recovery-office-backend-production.up.railway.app/api/services'
   ];
   
   for (const url of tests) {

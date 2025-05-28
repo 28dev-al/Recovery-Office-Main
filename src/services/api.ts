@@ -20,7 +20,7 @@ const getBaseURL = (): string => {
     // Use relative URLs for Netlify deployment - the netlify.toml redirects will handle routing
     return '/api';
   }
-  return process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+  return process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api';
 };
 
 const API_BASE_URL = getBaseURL();

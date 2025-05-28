@@ -23,10 +23,12 @@ export interface ServiceData {
   availableForNewClients?: boolean;
   isValidObjectId?: boolean;
   isDevelopmentFallback?: boolean;
+  originalMongoId?: string;
+  debugInfo?: string;
 }
 
 export class ServicesAPI {
-  private baseURL = 'http://localhost:5000/api';
+  private baseURL = 'https://recovery-office-backend-production.up.railway.app/api';
 
   constructor() {
     console.log(`[ServicesAPI] Environment: ${process.env.NODE_ENV}`);
@@ -44,7 +46,7 @@ export class ServicesAPI {
       }
 
       const responseData = await response.json();
-      console.log('[ServicesAPI] Raw response:', responseData);
+      console.log('[ServicesAPI] Raw MongoDB response:', responseData);
       
       // CRITICAL FIX: Handle the {status, results, data} structure from backend
       let services;
@@ -61,30 +63,75 @@ export class ServicesAPI {
       console.log('[ServicesAPI] Extracted services array:', services);
       console.log('[ServicesAPI] Services count:', services.length);
       
-      // Validate and format services for frontend
-      const formattedServices = services.map((service: any) => ({
-        _id: service._id,
-        id: service._id, // Use _id as id for consistency
-        name: service.name, // PRESERVE EXACT NAME
-        description: service.description,
-        duration: service.duration,
-        price: service.price,
-        category: service.category || 'recovery',
-        type: this.mapCategoryToServiceType(service.category || 'recovery'),
-        formattedPrice: `£${service.price}`,
-        formattedDuration: `${service.duration} minutes`,
-        icon: service.icon || this.getDefaultIcon(service.category || 'recovery'),
-        isActive: service.isActive !== false,
-        availableForNewClients: true,
-        isValidObjectId: /^[0-9a-fA-F]{24}$/.test(service._id),
-        isDevelopmentFallback: false
-      }));
+      // CRITICAL: Validate and format services with REAL MongoDB ObjectIds
+      const formattedServices = services.map((service: Record<string, unknown>, index: number) => {
+        const realMongoId = service._id as string;
+        const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(realMongoId);
+        
+        console.log(`[ServicesAPI] Processing service ${index + 1}:`, {
+          name: service.name,
+          mongoId: realMongoId,
+          isValidObjectId,
+          rawService: service
+        });
+        
+        // CRITICAL: Ensure we're using REAL MongoDB ObjectIds
+        if (!isValidObjectId) {
+          console.error(`[ServicesAPI] Invalid MongoDB ObjectId for service: ${service.name}`, {
+            receivedId: realMongoId,
+            expectedFormat: '24-character hex string'
+          });
+          throw new Error(`Invalid MongoDB ObjectId for service: ${service.name}`);
+        }
+        
+        return {
+          _id: realMongoId,           // ← REAL MongoDB ObjectId from database
+          id: realMongoId,            // ← Use REAL MongoDB ID, not fake ID
+          name: service.name as string,
+          description: service.description as string,
+          duration: service.duration as number,
+          price: service.price as number,
+          category: (service.category as string) || 'recovery',
+          type: this.mapCategoryToServiceType((service.category as string) || 'recovery'),
+          formattedPrice: `£${service.price}`,
+          formattedDuration: `${service.duration} minutes`,
+          icon: (service.icon as string) || this.getDefaultIcon((service.category as string) || 'recovery'),
+          isActive: service.isActive !== false,
+          availableForNewClients: true,
+          isValidObjectId: true,      // ← Confirmed valid
+          isDevelopmentFallback: false, // ← Real service from MongoDB
+          // Debug info
+          originalMongoId: realMongoId,
+          debugInfo: 'Real MongoDB ObjectId preserved from database'
+        };
+      });
       
-      console.log('[ServicesAPI] Formatted services:', formattedServices);
+      console.log('[ServicesAPI] Final formatted services with REAL MongoDB IDs:', formattedServices);
+      console.log('[ServicesAPI] ID verification:', formattedServices.map((s: ServiceData) => ({
+        name: s.name,
+        _id: s._id,
+        idLength: s._id.length,
+        isValidObjectId: s.isValidObjectId
+      })));
+      
       return formattedServices;
       
     } catch (error) {
-      console.error('[ServicesAPI] Error:', error);
+      console.error('[ServicesAPI] Error fetching services:', error);
+      
+      // CRITICAL: Don't use fallback services - let the error bubble up
+      // This ensures we know when the API is failing due to CORS
+      if (error instanceof Error) {
+        if (error.message.includes('Failed to fetch') || error.message.includes('CORS')) {
+          console.error('[ServicesAPI] CORS ERROR DETECTED - Backend not allowing frontend domain');
+          throw new Error('CORS_ERROR: Backend not configured for this domain. Check Railway CORS settings.');
+        }
+        if (error.message.includes('HTTP 500')) {
+          console.error('[ServicesAPI] Backend server error');
+          throw new Error('BACKEND_ERROR: Server error on Railway backend');
+        }
+      }
+      
       throw error;
     }
   }

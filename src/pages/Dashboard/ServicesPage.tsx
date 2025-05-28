@@ -396,14 +396,14 @@ export const ServicesPage: React.FC = () => {
       try {
         setLoading(true);
         const [servicesResponse, analyticsResponse] = await Promise.all([
-          fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/services`, {
+          fetch(`${process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api'}/services`, {
             method: 'GET',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             mode: 'cors',
             cache: 'no-cache',
             credentials: 'omit',
           }).then(res => res.json()),
-          fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/analytics/service-popularity`, {
+          fetch(`${process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api'}/analytics/service-popularity`, {
             method: 'GET',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             mode: 'cors',
@@ -488,7 +488,7 @@ export const ServicesPage: React.FC = () => {
   const handleToggleService = async (serviceId: string, currentStatus: boolean) => {
     try {
       // Toggle service active status using the API client
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/services/${serviceId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api'}/services/${serviceId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -516,7 +516,7 @@ export const ServicesPage: React.FC = () => {
     if (!window.confirm('Are you sure you want to delete this service?')) return;
     
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/services/${serviceId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api'}/services/${serviceId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

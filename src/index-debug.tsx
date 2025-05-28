@@ -8,7 +8,7 @@ console.log('🔧 DEBUG: Starting minimal Recovery Office...');
 // Safe environment configuration (no direct process.env assignment)
 const getDebugConfig = () => {
   const config = {
-    apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+    apiUrl: process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api',
     nodeEnv: process.env.NODE_ENV || 'development',
     isDebug: true
   };

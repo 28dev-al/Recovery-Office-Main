@@ -1,6 +1,6 @@
 export const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? `${window.location.origin}/.netlify/functions`
-  : 'http://localhost:5000/api';
+  ? 'https://recovery-office-backend-production.up.railway.app/api'  // Railway backend
+  : 'https://recovery-office-backend-production.up.railway.app/api'; // Use Railway for dev too
 
 console.log('[API Config] Environment:', process.env.NODE_ENV);
 console.log('[API Config] API Base URL:', API_BASE_URL);
@@ -54,5 +54,10 @@ export const bookingApi = {
   getBooking: async (bookingId) => {
     console.log('[BookingAPI] Fetching booking:', bookingId);
     return await apiRequest(`/bookings/${bookingId}`);
+  },
+
+  getServices: async () => {
+    console.log('[BookingAPI] Fetching services');
+    return await apiRequest('/services');
   }
-}; 
+};
