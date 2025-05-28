@@ -10,7 +10,7 @@ import { useBookingState } from '../../../hooks/useBookingState';
 import { useBooking } from '../../../context/BookingContext';
 
 interface ServiceData {
-  _id: string;
+  _id?: string;
   id: string;
   name: string;
   description: string;
@@ -121,7 +121,7 @@ export const ServiceSelectionStep: React.FC<ServiceSelectionStepProps> = ({
             onClick={() => handleServiceSelection(service)}
             selected={selectedServiceId === service._id}
           >
-            <ServiceIcon>{getServiceIcon(service.id, service.category)}</ServiceIcon>
+            <ServiceIcon>{getServiceIcon(service.id, service.name, service.category)}</ServiceIcon>
             <ServiceName>{service.name}</ServiceName>
             <ServiceDescription>{service.description}</ServiceDescription>
             <ServiceDetails>
@@ -141,39 +141,31 @@ export const ServiceSelectionStep: React.FC<ServiceSelectionStepProps> = ({
   );
 };
 
-const getServiceIcon = (serviceId: string | undefined, category: string | undefined): string => {
-  // First check by specific service ID for exact matches
+const getServiceIcon = (serviceId: string | undefined, serviceName: string | undefined, category: string | undefined): string => {
+  console.log('[ServiceSelection] Getting icon for:', { serviceId, serviceName, category });
+
+  // Professional icons based on actual MongoDB service data
   switch (serviceId) {
-    case 'cryptocurrency-recovery':
-      return '₿'; // Bitcoin symbol
-    case 'investment-fraud-recovery':
-    case 'financial-scam-recovery':
-      return '🛡️'; // Shield for fraud protection
-    case 'regulatory-assistance':
-    case 'regulatory-complaint-assistance':
-      return '⚖️'; // Scales of justice
-    case 'professional-negligence':
-      return '📋'; // Professional documents
+    case '6833842b0a231982cf5ed0fe': // Cryptocurrency Recovery
+      return '₿'; // Bitcoin symbol - instantly recognizable for crypto recovery
+      
+    case '6833842b0a231982cf5ed0ff': // Investment Fraud Recovery  
+      return '🛡️'; // Shield - represents protection and fraud prevention
+      
+    case '6833842b0a231982cf5ed100': // Financial Scam Recovery
+      return '🔒'; // Lock - represents security and protection from scams
+      
+    case '6833842b0a231982cf5ed101': // Regulatory Complaint Assistance
+      return '⚖️'; // Scales of justice - represents legal/regulatory matters
+      
     default:
-      break;
-  }
-  
-  // Fallback to category-based matching
-  switch (category) {
-    case 'crypto':
-    case 'cryptocurrency':
-      return '₿';
-    case 'fraud':
-    case 'investment-fraud':
-    case 'scam':
-      return '🛡️';
-    case 'regulatory':
-      return '⚖️';
-    case 'legal':
-    case 'professional-negligence':
-      return '📋';
-    default:
-      return '🏢'; // Default icon for undefined or unknown categories
+      // Fallback based on service name if ObjectId doesn't match
+      if (serviceName?.toLowerCase().includes('crypto')) return '₿';
+      if (serviceName?.toLowerCase().includes('investment') && serviceName?.toLowerCase().includes('fraud')) return '🛡️';
+      if (serviceName?.toLowerCase().includes('scam')) return '🔒';
+      if (serviceName?.toLowerCase().includes('regulatory') || serviceName?.toLowerCase().includes('complaint')) return '⚖️';
+      
+      return '🏢'; // Fallback
   }
 };
 
@@ -235,7 +227,24 @@ const ServiceCard = styled.div<{ selected: boolean }>`
 
 const ServiceIcon = styled.div`
   font-size: 48px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+  color: #d69e2e;
+  box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
+  transition: all 0.3s ease;
+
+  /* Professional hover effect */
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(214, 158, 46, 0.4);
+  }
 `;
 
 const ServiceName = styled.h3`

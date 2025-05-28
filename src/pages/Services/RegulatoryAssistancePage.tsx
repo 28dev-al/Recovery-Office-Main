@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PremiumLayout } from '../../components/navigation/PremiumLayout'; // Assuming this exists
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 export const RegulatoryAssistancePage: React.FC = () => {
   return (
-    <PremiumLayout> {/* Assuming PremiumLayout wraps content and provides theme */}
+    <>
       <Helmet>
         <title>Regulatory Assistance & Compliance Support | Recovery Office UK</title>
         <meta name="description" content="Expert regulatory compliance assistance, FCA complaint filing, and financial ombudsman representation by Recovery Office. Firm Reference: 836358. Call +44 7451 263372." />
@@ -448,7 +447,7 @@ export const RegulatoryAssistancePage: React.FC = () => {
           </ContentWrapper>
         </UrgentCTA>
       </Container>
-    </PremiumLayout>
+    </>
   );
 };
 
