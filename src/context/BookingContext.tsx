@@ -23,11 +23,11 @@ import {
   BookingStepId,
   ServiceOption,
   BookingTimeSlot,
-  ClientInformation,
   BookingDate,
   CompleteBookingData,
   canProceedToNextStep
 } from '../types/booking.types';
+import { ClientInformation } from '../types/booking';
 
 import { TimeSlot } from '../types/api.types';
 import { ServiceType as UnifiedServiceType, mapCategoryToServiceType } from '../types/service.types';
@@ -597,82 +597,55 @@ export const BookingProvider: React.FC<BookingProviderProps> = ({
       console.log('[BookingContext] === FETCHING SERVICES START ===');
       console.log('[BookingContext] 📡 Fetching services from API...');
       
-      const { apiClient } = await import('../services/api');
-      const response = await apiClient.getServices();
+      const { servicesAPI } = await import('../services/servicesApi');
+      const servicesArray = await servicesAPI.getServices();
       
-      console.log('[BookingContext] Raw API response:', response);
-      console.log('[BookingContext] Response structure check:');
-      console.log('  - response.data exists:', !!(response && typeof response === 'object' && 'data' in response));
-      console.log('  - response.data.data exists:', !!(response && typeof response === 'object' && 'data' in response && 
-                  response.data && typeof response.data === 'object' && 'data' in response.data));
-      console.log('  - response.data type:', response && typeof response === 'object' && 'data' in response ? 
-                  typeof (response as any).data : 'undefined');
-
-      // FIX: Handle both possible response formats
-      let servicesArray: any[] | null = null;
-
-      // Check if services are in response.data.data (wrapped format)
-      if (response && typeof response === 'object' && 'data' in response && 
-          response.data && typeof response.data === 'object' && 'data' in response.data && 
-          Array.isArray((response.data as any).data)) {
-        console.log('[BookingContext] ✅ Found services in response.data.data format');
-        servicesArray = (response.data as any).data;
-      }
-      // Check if services are directly in response.data (direct format)  
-      else if (response && typeof response === 'object' && 'data' in response && 
-               Array.isArray((response as any).data)) {
-        console.log('[BookingContext] ✅ Found services in response.data format');
-        servicesArray = (response as any).data;
-      }
-      // Check if the entire response is the services array
-      else if (Array.isArray(response)) {
-        console.log('[BookingContext] ✅ Found services in direct response format');
-        servicesArray = response;
-      }
+      console.log('[BookingContext] Services API response:', servicesArray);
+      console.log('[BookingContext] Services count:', servicesArray.length);
 
       if (servicesArray && servicesArray.length > 0) {
         console.log(`[BookingContext] Processing ${servicesArray.length} services from API`);
         
-        // Validate first service has MongoDB ObjectId
-        const firstService = servicesArray[0];
-        console.log('[BookingContext] First service validation:', {
-          hasId: !!firstService.id,
-          hasMongoId: !!firstService._id,
-          idLength: firstService.id?.length,
-          isValidObjectId: /^[0-9a-fA-F]{24}$/.test(firstService.id || firstService._id)
+        // Convert ServicesAPI format to ServiceOption format
+        const processedServices: ServiceOption[] = servicesArray.map((service) => ({
+          id: service.id,
+          _id: service._id,
+          mongoObjectId: service._id,
+          name: service.name,
+          description: service.description,
+          duration: service.duration,
+          price: service.price,
+          formattedPrice: service.formattedPrice || `£${service.price}`,
+          formattedDuration: service.formattedDuration || `${service.duration} minutes`,
+          icon: service.icon || '/icons/services/default.svg',
+          category: service.category,
+          type: service.type || UnifiedServiceType.INITIAL_CONSULTATION,
+          isActive: service.isActive !== false,
+          availableForNewClients: service.availableForNewClients !== false,
+          isValidObjectId: service.isValidObjectId || false,
+          isDevelopmentFallback: service.isDevelopmentFallback || false
+        }));
+        
+        console.log('[BookingContext] === PROCESSED SERVICES DEBUG ===');
+        processedServices.forEach((service, index) => {
+          console.log(`[BookingContext] Service ${index + 1}:`, {
+            name: service.name,
+            id: service.id,
+            isValidObjectId: service.isValidObjectId,
+            isDevelopmentFallback: service.isDevelopmentFallback
+          });
         });
         
-        // Process services with graceful fallbacks
-        const backendServices = servicesArray;
+        console.log(`✅ [BookingContext] Services processed: ${processedServices.length}`);
         
-        if (backendServices.length > 0) {
-          console.log('[BookingContext] Processing backend services...');
-          const processedServices = processBackendServices(backendServices);
-          
-          console.log('[BookingContext] === PROCESSED SERVICES DEBUG ===');
-          processedServices.forEach((service, index) => {
-            console.log(`[BookingContext] Service ${index + 1}:`, {
-              name: service.name,
-              id: service.id,
-              isValidObjectId: service.isValidObjectId,
-              isDevelopmentFallback: service.isDevelopmentFallback
-            });
-          });
-          
-          console.log(`✅ [BookingContext] Services processed: ${processedServices.length}`);
-          
-          // Use dispatch directly instead of setAvailableServices
-          dispatch({ type: ExtendedBookingActionType.SET_AVAILABLE_SERVICES, payload: processedServices });
-          console.log('[BookingContext] Services set in state:', processedServices.length);
-          setIsInitialized(true);
-          setLastFetchTime(Date.now());
-        } else {
-          console.warn('[BookingContext] No services returned from API');
-          throw new Error('No services available');
-        }
+        // Use dispatch directly instead of setAvailableServices
+        dispatch({ type: ExtendedBookingActionType.SET_AVAILABLE_SERVICES, payload: processedServices });
+        console.log('[BookingContext] Services set in state:', processedServices.length);
+        setIsInitialized(true);
+        setLastFetchTime(Date.now());
       } else {
-        console.warn('[BookingContext] Invalid response data format:', response);
-        throw new Error(`No valid services found in API response. Response structure: ${JSON.stringify(response, null, 2)}`);
+        console.warn('[BookingContext] No services returned from API');
+        throw new Error('No services available');
       }
 
     } catch (err: unknown) {
@@ -861,7 +834,27 @@ export const BookingProvider: React.FC<BookingProviderProps> = ({
   
   // Data action methods
   const selectService = useCallback((service: ServiceOption) => {
-    dispatch({ type: BookingActionType.SELECT_SERVICE, payload: service });
+    console.log('[BookingContext] Setting selected service:', service);
+
+    // Ensure service data is preserved exactly as selected
+    const preservedService = {
+      _id: service._id,
+      id: service.id,
+      name: service.name, // This should stay "Investment Fraud Recovery"
+      description: service.description,
+      duration: service.duration,
+      price: service.price,
+      category: service.category,
+      type: service.type,
+      formattedPrice: service.formattedPrice,
+      formattedDuration: service.formattedDuration,
+      icon: service.icon,
+      isActive: service.isActive,
+      availableForNewClients: service.availableForNewClients
+    };
+
+    dispatch({ type: BookingActionType.SELECT_SERVICE, payload: preservedService });
+    console.log('[BookingContext] Service set in state:', preservedService);
   }, []);
   
   const selectDate = useCallback((date: string) => {

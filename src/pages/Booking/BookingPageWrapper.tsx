@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { BookingProvider } from '../../context/BookingContext';
 import { ThemeProvider, useTheme } from '../../design-system/theme/ThemeProvider';
 import PremiumBookingPage from './BookingPage';
 import { ErrorBoundary } from '../../components/common/ErrorBoundary';
@@ -375,9 +374,7 @@ export const BookingPageWrapper: React.FC = () => {
             </>
           )}
           
-          <BookingProvider>
-            <PremiumBookingPage />
-          </BookingProvider>
+          <PremiumBookingPage />
         </Box>
       </ErrorBoundary>
     </ThemeProvider>

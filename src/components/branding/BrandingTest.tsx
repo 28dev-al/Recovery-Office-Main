@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RecoveryOfficeLogo } from './RecoveryOfficeLogo';
+import RecoveryOfficeLogo from './RecoveryOfficeLogo';
 import { AppIcon } from './AppIcon';
 
 const TestContainer = styled.div`
@@ -66,8 +66,8 @@ export const BrandingTest: React.FC = () => {
           </LogoItem>
           
           <LogoItem>
-            <h4>Dark Variant</h4>
-            <RecoveryOfficeLogo variant="dark" size="large" showText={true} />
+            <h4>Symbol Only</h4>
+            <RecoveryOfficeLogo variant="symbol" size="large" showText={false} />
           </LogoItem>
           
           <LogoItem>

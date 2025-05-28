@@ -5,7 +5,7 @@ import { PREMIUM_SPACING } from '../../../design-system/tokens';
 import { Button } from '../../../design-system/components/button/Button';
 import { Box } from '../../../design-system/components/layout/Box';
 import { Container } from '../../../design-system/components/layout/Container';
-import { PREMIUM_COLORS } from '../../../design-system/tokens/colors.premium';
+import { RecoveryOfficeLogo } from '../../branding';
 
 // Abstract background pattern using premium colors
 const BackgroundPattern = styled.div`
@@ -14,13 +14,15 @@ const BackgroundPattern = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    linear-gradient(135deg, 
-      ${PREMIUM_COLORS.BASE_COLORS.forest[700]} 0%,
-      ${PREMIUM_COLORS.BASE_COLORS.forest[800]} 100%);
-  opacity: 0.9;
+  background: linear-gradient(135deg,
+    #1a365d 0%,    /* Primary Navy */
+    #2c5282 50%,   /* Lighter Navy */
+    #1a365d 100%   /* Back to Primary Navy */
+  );
+  opacity: 1;
   z-index: 1;
 
+  /* Add subtle financial pattern overlay */
   &::before {
     content: '';
     position: absolute;
@@ -28,10 +30,15 @@ const BackgroundPattern = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23${PREMIUM_COLORS.BASE_COLORS.gold[500].replace('#', '')}' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.2;
+    background:
+      radial-gradient(circle at 25% 25%, rgba(214, 158, 46, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(214, 158, 46, 0.05) 0%, transparent 50%),
+      linear-gradient(90deg, transparent 24%, rgba(214, 158, 46, 0.03) 25%, rgba(214, 158, 46, 0.03) 26%, transparent 27%, transparent 74%, rgba(214, 158, 46, 0.03) 75%, rgba(214, 158, 46, 0.03) 76%, transparent 77%, transparent);
+    background-size: 60px 60px, 80px 80px, 40px 40px;
+    z-index: 1;
   }
 
+  /* Add professional geometric overlay */
   &::after {
     content: '';
     position: absolute;
@@ -39,8 +46,12 @@ const BackgroundPattern = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 30% 40%, rgba(10, 64, 33, 0.4) 0%, rgba(10, 33, 64, 0) 70%),
-               radial-gradient(circle at 70% 60%, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0) 70%);
+    background-image:
+      linear-gradient(30deg, rgba(214, 158, 46, 0.1) 12%, transparent 12.5%, transparent 87%, rgba(214, 158, 46, 0.1) 87.5%),
+      linear-gradient(150deg, rgba(214, 158, 46, 0.05) 12%, transparent 12.5%, transparent 87%, rgba(214, 158, 46, 0.05) 87.5%);
+    background-size: 60px 104px, 120px 208px;
+    pointer-events: none;
+    z-index: 2;
   }
 `;
 
@@ -52,7 +63,7 @@ const HeroSection = styled.section`
   overflow: hidden;
   display: flex;
   align-items: center;
-  background-color: ${PREMIUM_COLORS.BASE_COLORS.gray[800]};
+  background-color: #1a365d; /* Fallback to primary navy */
   
   @media (max-width: ${props => props.theme.breakpoints.md}px) {
     min-height: 70vh;
@@ -66,26 +77,16 @@ const HeroSection = styled.section`
 
 const ContentWrapper = styled.div`
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
+  
+  /* Ensure text is always readable */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 `;
 
 const HeroContent = styled(motion.div)`
   max-width: 750px;
   position: relative;
-`;
-
-const HeroLogo = styled(motion.img)`
-  width: 180px;
-  max-width: 100%;
-  height: auto;
-  margin-bottom: ${PREMIUM_SPACING.xl}px;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}px) {
-    width: 150px;
-    margin-bottom: ${PREMIUM_SPACING.lg}px;
-  }
 `;
 
 const HeroTitle = styled(motion.h1)`
@@ -94,7 +95,13 @@ const HeroTitle = styled(motion.h1)`
   font-weight: 700;
   margin-bottom: ${PREMIUM_SPACING.md}px;
   line-height: 1.2;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  
+  /* Add gold accent to key words */
+  .accent {
+    color: #d69e2e;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
   
   @media (max-width: ${props => props.theme.breakpoints.md}px) {
     font-size: 3.5rem;
@@ -109,9 +116,10 @@ const HeroSubtitle = styled(motion.p)`
   font-size: 1.4rem;
   line-height: 1.6;
   margin-bottom: ${PREMIUM_SPACING.xl}px;
-  opacity: 0.9;
+  opacity: 0.95;
   max-width: 700px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.ivory[100]};
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   
   @media (max-width: ${props => props.theme.breakpoints.sm}px) {
     font-size: 1.2rem;
@@ -129,25 +137,33 @@ const HeroButtons = styled(motion.div)`
 `;
 
 const PrimaryCTA = styled(Button)`
-  background: linear-gradient(to right, ${PREMIUM_COLORS.BASE_COLORS.gold[500]}, ${PREMIUM_COLORS.BASE_COLORS.gold[400]});
+  background: linear-gradient(135deg, #d69e2e 0%, #f6d55c 100%);
+  color: #1a365d;
   border: none;
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 4px 15px rgba(214, 158, 46, 0.3);
   transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(214, 158, 46, 0.4);
   }
 `;
 
 const SecondaryButton = styled(Button)`
-  border: 2px solid ${PREMIUM_COLORS.BASE_COLORS.ivory[100]};
+  border: 2px solid rgba(255, 255, 255, 0.3);
   background-color: transparent;
-  color: ${PREMIUM_COLORS.BASE_COLORS.ivory[100]};
+  color: white;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  font-weight: 600;
   
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #d69e2e;
+    background: rgba(214, 158, 46, 0.1);
+    transform: translateY(-2px);
   }
 `;
 
@@ -160,18 +176,45 @@ const AccentLine = styled(motion.div)`
   height: 2px;
   background: linear-gradient(90deg, 
     transparent, 
-    ${PREMIUM_COLORS.BASE_COLORS.gold[500]}, 
+    #d69e2e, 
     transparent
   );
   opacity: 0.5;
   z-index: 1;
 `;
 
+// Trust badges for credibility
+const TrustBadges = styled(motion.div)`
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  align-items: center;
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}px) {
+    gap: 16px;
+    margin-top: 32px;
+  }
+`;
+
+const TrustBadge = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  
+  .icon {
+    color: #d69e2e;
+    font-size: 16px;
+  }
+`;
+
 interface PremiumHeroProps {
   /**
-   * Hero title
+   * Hero title - can be string or JSX for styled text
    */
-  title: string;
+  title: string | React.ReactNode;
   
   /**
    * Hero subtitle/description
@@ -255,11 +298,17 @@ const PremiumHero: React.FC<PremiumHeroProps> = ({
               variants={containerVariants}
             >
               {showLogo && (
-                <HeroLogo 
-                  src="https://images2.imgbox.com/86/72/GE2VLjan_o.png" 
-                  alt="Recovery Office – Financial Asset Recovery" 
+                <motion.div 
                   variants={itemVariants}
-                />
+                  style={{ marginBottom: PREMIUM_SPACING.xl }}
+                >
+                  <RecoveryOfficeLogo 
+                    size="xl" 
+                    variant="white"
+                    showText={true}
+                    showCredentials={false}
+                  />
+                </motion.div>
               )}
               
               <HeroTitle variants={itemVariants}>
@@ -291,6 +340,25 @@ const PremiumHero: React.FC<PremiumHeroProps> = ({
                   </SecondaryButton>
                 )}
               </HeroButtons>
+              
+              <TrustBadges variants={itemVariants}>
+                <TrustBadge>
+                  <span className="icon">🛡️</span>
+                  FCA Regulated
+                </TrustBadge>
+                <TrustBadge>
+                  <span className="icon">⚖️</span>
+                  Legal Compliance
+                </TrustBadge>
+                <TrustBadge>
+                  <span className="icon">🏢</span>
+                  Manchester Based
+                </TrustBadge>
+                <TrustBadge>
+                  <span className="icon">💰</span>
+                  No Recovery, No Fee
+                </TrustBadge>
+              </TrustBadges>
             </HeroContent>
           </Box>
         </Container>

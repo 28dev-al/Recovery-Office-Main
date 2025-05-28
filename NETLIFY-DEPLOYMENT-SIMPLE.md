@@ -83,3 +83,6 @@
 
 ## Yay! You Did It! 🎉
 Your Recovery Office website is now online for everyone to see! 
+
+npm run build:netlify
+netlify deploy --prod

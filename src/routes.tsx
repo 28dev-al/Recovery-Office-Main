@@ -5,8 +5,10 @@ import ErrorBoundary from './components/common/ErrorBoundary';
 // Import pages
 import Home from './pages/Home/Home';
 import Services from './pages/Services/Services';
-import InvestmentFraudRecovery from './pages/Services/InvestmentFraudRecovery';
-import CryptocurrencyRecovery from './pages/Services/CryptocurrencyRecovery';
+import { InvestmentFraudRecoveryPage } from './pages/Services/InvestmentFraudRecoveryPage';
+import { CryptocurrencyRecoveryPage } from './pages/Services/CryptocurrencyRecoveryPage';
+import { FinancialScamRecoveryPage } from './pages/Services/FinancialScamRecoveryPage';
+import { RegulatoryComplaintPage } from './pages/Services/RegulatoryComplaintPage';
 import About from './pages/About';
 import Contact from './pages/Contact/Contact';
 import Blog from './pages/Blog/Blog';
@@ -52,7 +54,7 @@ const AppRoutes: React.FC = () => {
         path="/services/investment-fraud-recovery"
         element={
           <ErrorBoundary>
-            <InvestmentFraudRecovery />
+            <InvestmentFraudRecoveryPage />
           </ErrorBoundary>
         }
       />
@@ -60,7 +62,23 @@ const AppRoutes: React.FC = () => {
         path="/services/cryptocurrency-recovery"
         element={
           <ErrorBoundary>
-            <CryptocurrencyRecovery />
+            <CryptocurrencyRecoveryPage />
+          </ErrorBoundary>
+        }
+      />
+      <Route
+        path="/services/financial-scam-recovery"
+        element={
+          <ErrorBoundary>
+            <FinancialScamRecoveryPage />
+          </ErrorBoundary>
+        }
+      />
+      <Route
+        path="/services/regulatory-assistance"
+        element={
+          <ErrorBoundary>
+            <RegulatoryComplaintPage />
           </ErrorBoundary>
         }
       />

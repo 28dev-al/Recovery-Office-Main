@@ -370,7 +370,15 @@ const CustomerInformation: React.FC = () => {
     if (validateForm()) {
       // Save customer information to context
       setCustomerInfo({
-        ...formData
+        ...formData,
+        // Add missing required properties with default values
+        preferredContact: formData.preferredContactMethod === 'text' ? 'phone' : formData.preferredContactMethod,
+        caseType: 'investment-fraud',
+        estimatedLoss: 'under-10k',
+        urgencyLevel: 'medium',
+        consentToContact: true,
+        privacyPolicyAccepted: true,
+        dataProcessingAgreed: true,
       });
       
       // Move to next step

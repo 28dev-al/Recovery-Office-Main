@@ -172,7 +172,15 @@ const TestComponent = ({ testId = 'test-component' }) => {
           fraudType: 'investment_fraud',
           caseDescription: 'Test case description for unit testing',
           approximateLossAmount: '5000',
-          hasReportedToAuthorities: false
+          hasReportedToAuthorities: false,
+          // Add missing required properties
+          preferredContact: 'email',
+          caseType: 'investment-fraud',
+          estimatedLoss: 'under-10k',
+          urgencyLevel: 'medium',
+          consentToContact: true,
+          privacyPolicyAccepted: true,
+          dataProcessingAgreed: true
         })}
       >
         Set Client Info

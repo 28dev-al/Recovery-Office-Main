@@ -804,29 +804,19 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
       console.log('[DEBUG] Making client creation request...');
       
       // Make client creation request with proper error handling
-      const clientResponse = await fetch('http://localhost:5000/api/clients', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify(clientPayload),
-        mode: 'cors'
-      });
+      const { bookingApi } = await import('../../../config/api');
+      const clientData = await bookingApi.createClient(clientPayload);
       
-      console.log('[DEBUG] Client response status:', clientResponse.status);
-      
-      if (!clientResponse.ok) {
-        const errorText = await clientResponse.text();
-        console.error('[DEBUG] Client creation failed:', errorText);
-        throw new Error(`Client creation failed: ${clientResponse.status} - ${errorText}`);
-      }
-      
-      const clientData = await clientResponse.json();
       console.log('[DEBUG] Client created successfully:', clientData);
       
-      // Extract client ID from response
-      const clientId = clientData.data?._id || clientData.data?.id || clientData._id || clientData.id;
+      // Extract client ID from response with type safety
+      const clientId = (() => {
+        if (typeof clientData === 'object' && clientData !== null) {
+          const data = clientData as any;
+          return data.data?._id || data.data?.id || data._id || data.id;
+        }
+        return null;
+      })();
       
       if (!clientId) {
         console.error('[DEBUG] No client ID returned:', clientData);
@@ -856,35 +846,23 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
       console.log('[DEBUG] Making booking creation request...');
       
       // Make booking creation request
-      const bookingResponse = await fetch('http://localhost:5000/api/bookings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify(bookingPayload),
-        mode: 'cors'
-      });
-      
-      console.log('[DEBUG] Booking response status:', bookingResponse.status);
-      
-      if (!bookingResponse.ok) {
-        const errorText = await bookingResponse.text();
-        console.error('[DEBUG] Booking creation failed:', errorText);
-        throw new Error(`Booking creation failed: ${bookingResponse.status} - ${errorText}`);
-      }
-      
-      const bookingData = await bookingResponse.json();
+      const bookingData = await bookingApi.createBooking(bookingPayload);
       console.log('[DEBUG] Booking created successfully:', bookingData);
       
-      // Extract booking reference
-      const bookingRef = bookingData.data?.reference || 
-                        bookingData.data?._id || 
-                        bookingData.data?.id ||
-                        bookingData.reference ||
-                        bookingData._id ||
-                        bookingData.id ||
-                        `RO-${Date.now()}`;
+      // Extract booking reference with type safety
+      const bookingRef = (() => {
+        if (typeof bookingData === 'object' && bookingData !== null) {
+          const data = bookingData as any;
+          return data.data?.reference || 
+                 data.data?._id || 
+                 data.data?.id ||
+                 data.reference ||
+                 data._id ||
+                 data.id ||
+                 `RO-${Date.now()}`;
+        }
+        return `RO-${Date.now()}`;
+      })();
       
       console.log('[DEBUG] Booking reference extracted:', bookingRef);
       

@@ -14,10 +14,19 @@ import {
   isApiSuccessResponse
 } from '../types/api.types';
 
-// API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// API Configuration for Netlify deployment
+const getBaseURL = (): string => {
+  if (process.env.NODE_ENV === 'production') {
+    // Use relative URLs for Netlify deployment - the netlify.toml redirects will handle routing
+    return '/api';
+  }
+  return process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getBaseURL();
 
 console.log('[API] Base URL configured as:', API_BASE_URL);
+console.log('[API] Environment:', process.env.NODE_ENV);
 
 // Local interfaces for request handling
 interface RequestOptions {

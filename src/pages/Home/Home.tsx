@@ -43,8 +43,8 @@ const Home: React.FC = () => {
       
       {/* Premium Hero Section */}
       <PremiumHero
-        title="Financial Asset Recovery Experts"
-        subtitle="Professional services helping individuals and businesses recover lost financial assets with regulatory expertise and proven methodology."
+        title={<><span className="accent">Financial Asset</span> Recovery Experts</>}
+        subtitle="UK's premier financial recovery specialists. We help victims of cryptocurrency theft, investment fraud, and financial scams recover their stolen assets through expert legal strategies and advanced forensic techniques."
         primaryButtonText="Book a Consultation"
         primaryButtonUrl="/booking"
         secondaryButtonText="Learn More"

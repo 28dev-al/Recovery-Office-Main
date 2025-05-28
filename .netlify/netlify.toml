@@ -1,19 +1,20 @@
+functionsDirectory = "C:\\recovery-office\\netlify\\functions"
+functionsDirectoryOrigin = "config-v1"
 headersOrigin = "config"
 redirectsOrigin = "config"
 plugins = []
 
-[functions]
-
-[functions."*"]
-
 [build]
-publish = "C:\\Users\\Rober\\Videos\\RecoveryOffice\\recovery-office\\build"
+publish = "C:\\recovery-office\\build"
 publishOrigin = "config"
 commandOrigin = "config"
-base = "C:\\Users\\Rober\\Videos\\RecoveryOffice\\recovery-office"
-command = "npm run build:netlify"
+command = "npm run build"
+base = "C:\\recovery-office"
+functions = "C:\\recovery-office\\netlify\\functions"
 
 [build.environment]
+NODE_VERSION = "18"
+NPM_VERSION = "8"
 SKIP_TYPESCRIPT_CHECK = "true"
 TSC_COMPILE_ON_ERROR = "true"
 CI = "false"
@@ -32,20 +33,103 @@ PUBLIC_URL = "/"
 
 [build.services]
 
+[functions]
+
+[functions."*"]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.netlify.com https:;"
+
+[[headers]]
+for = "/static/*"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
 [[headers]]
 for = "/assets/*"
 
 [headers.values]
 Cache-Control = "public, max-age=31536000, immutable"
 
-[[headers]]
-for = "/*"
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200.0
+force = false
 
-[headers.values]
-Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;"
-X-Frame-Options = "DENY"
-X-Content-Type-Options = "nosniff"
-Referrer-Policy = "no-referrer-when-downgrade"
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/services"
+to = "/.netlify/functions/services"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/clients"
+to = "/.netlify/functions/clients"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/bookings"
+to = "/.netlify/functions/bookings"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/dashboard/*"
+to = "/.netlify/functions/dashboard"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/health"
+to = "/.netlify/functions/health"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
 
 [[redirects]]
 from = "/*"

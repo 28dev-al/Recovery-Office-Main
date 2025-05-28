@@ -14,6 +14,7 @@ import { DetailedHTMLProps, ButtonHTMLAttributes, RefObject } from 'react';
  */
 export interface ThemeColors {
   border: any;
+  light: string;
   primary: {
     50: string;
     100: string;

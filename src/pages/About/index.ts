@@ -1,6 +1,6 @@
-import AboutPageWrapper from './AboutPageWrapper';
+import AboutPage from './AboutPage';
 
-export default AboutPageWrapper; 
+export default AboutPage; 
 
 
 

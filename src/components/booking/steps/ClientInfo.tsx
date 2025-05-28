@@ -150,7 +150,15 @@ const ClientInfo: React.FC<ClientInfoProps> = ({
     phone: initialData?.phone || '',
     preferredContactMethod: initialData?.preferredContactMethod || 'email',
     isNewClient: initialData?.isNewClient !== undefined ? initialData.isNewClient : true,
-    additionalNotes: initialData?.additionalNotes || ''
+    additionalNotes: initialData?.additionalNotes || '',
+    // Add missing required properties with default values
+    preferredContact: initialData?.preferredContact || 'email',
+    caseType: initialData?.caseType || 'investment-fraud',
+    estimatedLoss: initialData?.estimatedLoss || 'under-10k',
+    urgencyLevel: initialData?.urgencyLevel || 'medium',
+    consentToContact: initialData?.consentToContact || true,
+    privacyPolicyAccepted: initialData?.privacyPolicyAccepted || true,
+    dataProcessingAgreed: initialData?.dataProcessingAgreed || true
   });
   
   // Form validation errors

@@ -11,17 +11,57 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '../../../context/BookingContext';
-import { 
-  clientInfoSchema, 
-  ClientInformation, 
-  caseTypeOptions, 
-  urgencyLevelOptions, 
-  contactMethodOptions 
-} from '../../../types/clientValidation';
+import { ClientInformation } from '../../../types/booking';
+import { z } from 'zod';
+
+// Define the schema for form validation matching ClientInformation from booking.ts
+const clientInfoSchema = z.object({
+  firstName: z.string().min(2, 'First name must be at least 2 characters'),
+  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  phone: z.string().min(10, 'Please enter a valid phone number'),
+  company: z.string().optional(),
+  dateOfBirth: z.string().optional(),
+  
+  preferredContactMethod: z.enum(['text', 'email', 'phone']),
+  preferredContact: z.enum(['email', 'phone']),
+  contactPreference: z.string().optional(),
+  
+  isNewClient: z.boolean(),
+  
+  caseType: z.enum(['investment-fraud', 'cryptocurrency-recovery', 'financial-scam', 'regulatory-complaint']),
+  caseDescription: z.string().optional(),
+  estimatedLoss: z.enum(['under-10k', '10k-50k', '50k-100k', '100k-500k', '500k-1m', 'over-1m']),
+  urgencyLevel: z.enum(['low', 'medium', 'high', 'critical']),
+  
+  additionalNotes: z.string().optional(),
+  notes: z.string().optional(),
+  
+  consentToContact: z.boolean().refine(val => val === true, 'You must consent to contact'),
+  privacyPolicyAccepted: z.boolean().refine(val => val === true, 'You must accept the privacy policy'),
+  dataProcessingAgreed: z.boolean().refine(val => val === true, 'You must agree to data processing'),
+  
+  hasReportedToPolice: z.boolean().optional(),
+  hasReportedToAuthorities: z.boolean().optional(),
+  
+  totalLossAmount: z.number().optional(),
+  dateOfIncident: z.string().optional(),
+  approximateLossAmount: z.string().optional(),
+  incidentDate: z.string().optional(),
+  financialInstitution: z.string().optional(),
+  fraudType: z.enum(['investment_fraud', 'bank_fraud', 'credit_card_fraud', 'identity_theft', 'pension_scam', 'mortgage_fraud', 'insurance_fraud', 'tax_fraud', 'other']).optional()
+});
+
+// Define options for dropdowns
+const contactMethodOptions = [
+  { value: 'email', label: 'Email' },
+  { value: 'phone', label: 'Phone' },
+  { value: 'text', label: 'Text Message' }
+];
 import { PREMIUM_SPACING } from '../../../design-system/tokens/spacing';
 import { PREMIUM_COLORS } from '../../../design-system/tokens/colors.premium';
 import { LoadingOverlay } from '../../../design-system/components/feedback/LoadingOverlay';
-import { ErrorDisplay } from '../../../design-system/components/feedback/ErrorDisplay';
+
 import { 
   FiUser, 
   FiMail, 
@@ -30,7 +70,7 @@ import {
   FiAlertCircle, 
   FiCheckCircle, 
   FiDollarSign,
-  FiClock,
+
   FiMessageCircle
 } from 'react-icons/fi';
 import { vlog, verror, vsuccess } from '../../../utils/debugLogger';
@@ -38,16 +78,26 @@ import { vlog, verror, vsuccess } from '../../../utils/debugLogger';
 // Updated interface to support all usage patterns
 interface ClientInfoStepProps {
   // Required callback
-  onComplete: (data?: any) => void;
+  onComplete: (data?: ClientInformation) => void;
   
   // Optional callbacks
   onBack?: () => void;
-  onDataChange?: (data: any) => void;
+  onDataChange?: (data: ClientInformation) => void;
   
   // Data props (multiple patterns supported)
-  data?: any;
-  initialData?: any;
-  selectedService?: any;
+  data?: {
+    selectedService?: unknown;
+    selectedDate?: string;
+    selectedTimeSlot?: unknown;
+    clientInfo?: ClientInformation;
+  };
+  initialData?: {
+    selectedService?: unknown;
+    selectedDate?: string;
+    selectedTimeSlot?: unknown;
+    clientInfo?: ClientInformation;
+  };
+  selectedService?: unknown;
   
   // State props
   isLoading?: boolean;
@@ -61,7 +111,7 @@ const ShieldIcon: React.FC<{ size?: number }> = FiShield as React.FC<{ size?: nu
 const AlertCircleIcon: React.FC<{ size?: number }> = FiAlertCircle as React.FC<{ size?: number }>;
 const CheckCircleIcon: React.FC<{ size?: number }> = FiCheckCircle as React.FC<{ size?: number }>;
 const DollarSignIcon: React.FC<{ size?: number }> = FiDollarSign as React.FC<{ size?: number }>;
-const ClockIcon: React.FC<{ size?: number }> = FiClock as React.FC<{ size?: number }>;
+
 const MessageCircleIcon: React.FC<{ size?: number }> = FiMessageCircle as React.FC<{ size?: number }>;
 
 // Professional Styled Components
@@ -380,6 +430,49 @@ const DebugInfo = styled.div`
   }
 `;
 
+// Booking Summary Styled Components
+const BookingSummary = styled.div`
+  background: ${PREMIUM_COLORS.BASE_COLORS.forest[50]};
+  border: 1px solid ${PREMIUM_COLORS.BASE_COLORS.forest[200]};
+  border-radius: 12px;
+  padding: ${PREMIUM_SPACING.lg}px;
+  margin-bottom: ${PREMIUM_SPACING.xl}px;
+`;
+
+const SummaryTitle = styled.h3`
+  color: ${PREMIUM_COLORS.BASE_COLORS.forest[500]};
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 ${PREMIUM_SPACING.md}px 0;
+  display: flex;
+  align-items: center;
+  gap: ${PREMIUM_SPACING.sm}px;
+`;
+
+const SummaryItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: ${PREMIUM_SPACING.sm}px 0;
+  border-bottom: 1px solid ${PREMIUM_COLORS.BASE_COLORS.forest[100]};
+  
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const SummaryLabel = styled.span`
+  color: ${PREMIUM_COLORS.BASE_COLORS.gray[600]};
+  font-weight: 500;
+`;
+
+const SummaryValue = styled.span`
+  color: ${PREMIUM_COLORS.BASE_COLORS.forest[700]};
+  font-weight: 600;
+`;
+
+// Using the imported clientInfoSchema from validation module
+
 const ClientInfoStep: React.FC<ClientInfoStepProps> = ({ 
   onComplete,
   onBack, 
@@ -459,29 +552,39 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
     formState: { errors, isValid }
   } = useForm<ClientInformation>({
     resolver: zodResolver(clientInfoSchema),
-    defaultValues: initialData?.clientInfo || 
-                   data?.clientInfo || 
-                   state.clientInfo || {
+    defaultValues: {
       firstName: '',
       lastName: '',
       email: '',
       phone: '',
-      caseType: undefined,
-      estimatedLoss: undefined,
-      preferredContact: undefined,
-      urgencyLevel: undefined,
       company: '',
+      dateOfBirth: '',
+      preferredContactMethod: 'email' as const,
+      preferredContact: 'email' as const,
+      contactPreference: '',
+      isNewClient: true,
+      caseType: 'investment-fraud' as const,
+      caseDescription: '',
+      estimatedLoss: 'under-10k' as const,
+      urgencyLevel: 'medium' as const,
       additionalNotes: '',
+      notes: '',
       consentToContact: false,
       privacyPolicyAccepted: false,
-      dataProcessingAgreed: false
+      dataProcessingAgreed: false,
+      hasReportedToPolice: false,
+      hasReportedToAuthorities: false,
+      totalLossAmount: 0,
+      dateOfIncident: '',
+      approximateLossAmount: '',
+      incidentDate: '',
+      financialInstitution: '',
+      fraudType: undefined
     },
     mode: 'onChange' // Real-time validation
   });
 
-  // Watch case type for conditional fields
-  const selectedCaseType = watch('caseType');
-  const urgencyLevel = watch('urgencyLevel');
+  // Watch fields for conditional logic
   const additionalNotes = watch('additionalNotes');
 
   const onSubmit = async (formData: ClientInformation) => {
@@ -493,28 +596,41 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
       const validatedData = clientInfoSchema.parse(formData);
       
       // Transform data for booking context
-      const clientData = {
+      const clientData: ClientInformation = {
         firstName: validatedData.firstName,
         lastName: validatedData.lastName,
         email: validatedData.email,
         phone: validatedData.phone,
-        preferredContactMethod: validatedData.preferredContact as 'email' | 'phone' | 'text',
-        isNewClient: true,
-        additionalNotes: validatedData.additionalNotes || '',
-        // Financial recovery specific fields
-        caseDescription: `${validatedData.caseType} - Estimated loss: £${validatedData.estimatedLoss || 'Unknown'}`,
-        approximateLossAmount: validatedData.estimatedLoss?.toString() || '',
-        fraudType: 'other' as const,
-        hasReportedToAuthorities: false,
-        company: validatedData.company || '',
-        urgencyLevel: validatedData.urgencyLevel
+        company: validatedData.company,
+        dateOfBirth: validatedData.dateOfBirth,
+        preferredContactMethod: validatedData.preferredContactMethod,
+        preferredContact: validatedData.preferredContact,
+        contactPreference: validatedData.contactPreference,
+        isNewClient: validatedData.isNewClient,
+        caseType: validatedData.caseType,
+        caseDescription: validatedData.caseDescription,
+        estimatedLoss: validatedData.estimatedLoss,
+        urgencyLevel: validatedData.urgencyLevel,
+        additionalNotes: validatedData.additionalNotes,
+        notes: validatedData.notes,
+        consentToContact: validatedData.consentToContact,
+        privacyPolicyAccepted: validatedData.privacyPolicyAccepted,
+        dataProcessingAgreed: validatedData.dataProcessingAgreed,
+        hasReportedToPolice: validatedData.hasReportedToPolice,
+        hasReportedToAuthorities: validatedData.hasReportedToAuthorities,
+        totalLossAmount: validatedData.totalLossAmount,
+        dateOfIncident: validatedData.dateOfIncident,
+        approximateLossAmount: validatedData.approximateLossAmount,
+        incidentDate: validatedData.incidentDate,
+        financialInstitution: validatedData.financialInstitution,
+        fraudType: validatedData.fraudType
       };
       
       // Save to booking context
       setClientInfo(clientData);
       
       // Call onDataChange if provided
-      onDataChange?.({ clientInfo: validatedData });
+      onDataChange?.(validatedData);
       
       vlog('[ClientInfo] Data saved to booking context');
       
@@ -524,7 +640,7 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
       // Brief success display before proceeding
       setTimeout(() => {
         vsuccess('[ClientInfo] Form submission successful');
-        onComplete?.({ clientInfo: validatedData });
+        onComplete?.(validatedData);
       }, 1500);
       
     } catch (error) {
@@ -579,7 +695,7 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
                   hasInitialData: !!initialData,
                   dataKeys: data ? Object.keys(data) : [],
                   initialDataKeys: initialData ? Object.keys(initialData) : [],
-                  serviceFromProps: selectedService?.name,
+                  serviceFromProps: (selectedService as { name?: string })?.name,
                   dateFromData: data?.selectedDate,
                   timeFromData: data?.selectedTimeSlot
                 }
@@ -593,6 +709,37 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
 
   return (
     <FormContainer>
+      {/* Booking Summary */}
+      {state.selectedService && (
+        <BookingSummary>
+          <SummaryTitle>Booking Summary</SummaryTitle>
+          <SummaryItem>
+            <SummaryLabel>Service:</SummaryLabel>
+            <SummaryValue>{state.selectedService.name}</SummaryValue>
+          </SummaryItem>
+          <SummaryItem>
+            <SummaryLabel>Price:</SummaryLabel>
+            <SummaryValue>£{state.selectedService.price?.toLocaleString()}</SummaryValue>
+          </SummaryItem>
+          <SummaryItem>
+            <SummaryLabel>Duration:</SummaryLabel>
+            <SummaryValue>{state.selectedService.duration} minutes</SummaryValue>
+          </SummaryItem>
+          {state.selectedDate && (
+            <SummaryItem>
+              <SummaryLabel>Date:</SummaryLabel>
+              <SummaryValue>{state.selectedDate}</SummaryValue>
+            </SummaryItem>
+          )}
+          {state.selectedTimeSlot && (
+            <SummaryItem>
+              <SummaryLabel>Time:</SummaryLabel>
+              <SummaryValue>{state.selectedTimeSlot.startTime}</SummaryValue>
+            </SummaryItem>
+          )}
+        </BookingSummary>
+      )}
+
       <FormHeader>
         <FormTitle>Your Information</FormTitle>
         <FormSubtitle>
@@ -707,15 +854,13 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
           
           <FormField>
             <Label htmlFor="caseType">
-              Type of Case <RequiredMark>*</RequiredMark>
+              Case Type <RequiredMark>*</RequiredMark>
             </Label>
             <Select {...register('caseType')} id="caseType" hasError={!!errors.caseType}>
-              <option value="">Please select your case type</option>
-              {caseTypeOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
+              <option value="investment-fraud">Investment Fraud</option>
+              <option value="cryptocurrency-recovery">Cryptocurrency Recovery</option>
+              <option value="financial-scam">Financial Scam</option>
+              <option value="regulatory-complaint">Regulatory Complaint</option>
             </Select>
             {errors.caseType && (
               <ErrorMessage>
@@ -725,75 +870,36 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
             )}
           </FormField>
 
-          {/* Conditional field based on case type */}
-          <AnimatePresence>
-            {selectedCaseType && selectedCaseType !== 'regulatory-complaint' && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <FormField>
-                  <Label htmlFor="estimatedLoss">
-                    Estimated Financial Loss (£)
-                  </Label>
-                  <Input
-                    {...register('estimatedLoss', { valueAsNumber: true })}
-                    type="number"
-                    id="estimatedLoss"
-                    hasError={!!errors.estimatedLoss}
-                    placeholder="e.g., 50000"
-                    min="0"
-                    step="1000"
-                  />
-                  {errors.estimatedLoss && (
-                    <ErrorMessage>
-                      <AlertCircleIcon size={14} />
-                      {errors.estimatedLoss.message}
-                    </ErrorMessage>
-                  )}
-                  <HelpText>
-                    This helps us assign the most suitable specialist for your case
-                  </HelpText>
-                </FormField>
-              </motion.div>
+          <FormField>
+            <Label htmlFor="estimatedLoss">
+              Estimated Loss <RequiredMark>*</RequiredMark>
+            </Label>
+            <Select {...register('estimatedLoss')} id="estimatedLoss" hasError={!!errors.estimatedLoss}>
+              <option value="under-10k">Under £10,000</option>
+              <option value="10k-50k">£10,000 - £50,000</option>
+              <option value="50k-100k">£50,000 - £100,000</option>
+              <option value="100k-500k">£100,000 - £500,000</option>
+              <option value="500k-1m">£500,000 - £1,000,000</option>
+              <option value="over-1m">Over £1,000,000</option>
+            </Select>
+            {errors.estimatedLoss && (
+              <ErrorMessage>
+                <AlertCircleIcon size={14} />
+                {errors.estimatedLoss.message}
+              </ErrorMessage>
             )}
-          </AnimatePresence>
+            <HelpText>
+              This helps us assign the most suitable specialist for your case
+            </HelpText>
+          </FormField>
 
           <FormRow>
             <FormField>
-              <Label htmlFor="urgencyLevel">
-                <ClockIcon size={14} />
-                Urgency Level <RequiredMark>*</RequiredMark>
-              </Label>
-              <Select {...register('urgencyLevel')} id="urgencyLevel" hasError={!!errors.urgencyLevel}>
-                <option value="">Select urgency</option>
-                {urgencyLevelOptions.map(option => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </Select>
-              {errors.urgencyLevel && (
-                <ErrorMessage>
-                  <AlertCircleIcon size={14} />
-                  {errors.urgencyLevel.message}
-                </ErrorMessage>
-              )}
-              {urgencyLevel && (
-                <HelpText>
-                  {urgencyLevelOptions.find(opt => opt.value === urgencyLevel)?.description}
-                </HelpText>
-              )}
-            </FormField>
-
-            <FormField>
-              <Label htmlFor="preferredContact">
+              <Label htmlFor="preferredContactMethod">
                 <MessageCircleIcon size={14} />
                 Preferred Contact Method <RequiredMark>*</RequiredMark>
               </Label>
-              <Select {...register('preferredContact')} id="preferredContact" hasError={!!errors.preferredContact}>
+              <Select {...register('preferredContactMethod')} id="preferredContactMethod" hasError={!!errors.preferredContactMethod}>
                 <option value="">Select contact method</option>
                 {contactMethodOptions.map(option => (
                   <option key={option.value} value={option.value}>
@@ -801,10 +907,29 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
                   </option>
                 ))}
               </Select>
-              {errors.preferredContact && (
+              {errors.preferredContactMethod && (
                 <ErrorMessage>
                   <AlertCircleIcon size={14} />
-                  {errors.preferredContact.message}
+                  {errors.preferredContactMethod.message}
+                </ErrorMessage>
+              )}
+            </FormField>
+
+            <FormField>
+              <Label htmlFor="urgencyLevel">
+                <UserIcon size={14} />
+                Urgency Level <RequiredMark>*</RequiredMark>
+              </Label>
+              <Select {...register('urgencyLevel')} id="urgencyLevel" hasError={!!errors.urgencyLevel}>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="critical">Critical</option>
+              </Select>
+              {errors.urgencyLevel && (
+                <ErrorMessage>
+                  <AlertCircleIcon size={14} />
+                  {errors.urgencyLevel.message}
                 </ErrorMessage>
               )}
             </FormField>

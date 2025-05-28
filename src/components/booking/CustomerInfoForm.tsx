@@ -220,6 +220,14 @@ export const CustomerInfoForm: React.FC = () => {
         additionalNotes: formData.notes || '',
         preferredContactMethod: formData.preferredContactMethod,
         isNewClient: formData.isNewClient,
+        // Add missing required properties with default values
+        preferredContact: formData.preferredContactMethod === 'text' ? 'phone' : formData.preferredContactMethod,
+        caseType: 'investment-fraud',
+        estimatedLoss: 'under-10k',
+        urgencyLevel: 'medium',
+        consentToContact: true,
+        privacyPolicyAccepted: true,
+        dataProcessingAgreed: true,
       });
       goToNextStep();
     }

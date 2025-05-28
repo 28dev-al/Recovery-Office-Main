@@ -7,10 +7,10 @@ import { PREMIUM_SPACING } from '../../../design-system/tokens';
 import { useInView } from 'react-intersection-observer';
 import BotanicalDecorator from '../../../design-system/botanical/BotanicalDecorator';
 
-// Styled components
+// Styled components with safe theme access
 const TimelineContainer = styled.section`
   padding: ${PREMIUM_SPACING.xxl}px 0;
-  background-color: ${props => props.theme.colors.background.light};
+  background-color: ${props => props.theme?.colors?.background?.[100] || props.theme?.colors?.background?.light || '#f7fafc'};
   position: relative;
   overflow: hidden;
 `;
@@ -24,7 +24,7 @@ const TimelineHeader = styled.div`
 
 const TimelineDescription = styled.p`
   font-size: 1.125rem;
-  color: ${props => props.theme.colors.text.secondary};
+  color: ${props => props.theme?.colors?.text?.secondary || '#4a5568'};
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
@@ -44,9 +44,9 @@ const Timeline = styled.div`
     bottom: 0;
     width: 4px;
     margin-left: -2px;
-    background: ${props => props.theme.colors.primary[100]};
+    background: ${props => props.theme?.colors?.primary?.[100] || '#e2e8f0'};
     
-    @media (max-width: ${props => props.theme.breakpoints.md}px) {
+    @media (max-width: ${props => props.theme?.breakpoints?.md || 768}px) {
       left: 30px;
     }
   }
@@ -73,7 +73,7 @@ const TimelineItem = styled.div<TimelineItemProps>`
     margin-bottom: 0;
   }
   
-  @media (max-width: ${props => props.theme.breakpoints.md}px) {
+  @media (max-width: ${props => props.theme?.breakpoints?.md || 768}px) {
     width: 100%;
     padding-left: 70px;
     padding-right: 0;
@@ -87,7 +87,7 @@ const TimelineContent = styled(motion.div)`
   border-radius: 8px;
   background: white;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid ${props => props.theme.colors.border.light};
+  border: 1px solid ${props => props.theme?.colors?.border?.light || props.theme?.colors?.divider || '#e2e8f0'};
   
   &:before {
     content: '';
@@ -103,16 +103,16 @@ const TimelineContent = styled(motion.div)`
 const TimelineContentLeft = styled(TimelineContent)`
   &:before {
     right: -10px;
-    border-right: 1px solid ${props => props.theme.colors.border.light};
-    border-top: 1px solid ${props => props.theme.colors.border.light};
+    border-right: 1px solid ${props => props.theme?.colors?.border?.light || props.theme?.colors?.divider || '#e2e8f0'};
+    border-top: 1px solid ${props => props.theme?.colors?.border?.light || props.theme?.colors?.divider || '#e2e8f0'};
   }
   
-  @media (max-width: ${props => props.theme.breakpoints.md}px) {
+  @media (max-width: ${props => props.theme?.breakpoints?.md || 768}px) {
     &:before {
       left: -10px;
       right: auto;
-      border-left: 1px solid ${props => props.theme.colors.border.light};
-      border-bottom: 1px solid ${props => props.theme.colors.border.light};
+      border-left: 1px solid ${props => props.theme?.colors?.border?.light || props.theme?.colors?.divider || '#e2e8f0'};
+      border-bottom: 1px solid ${props => props.theme?.colors?.border?.light || props.theme?.colors?.divider || '#e2e8f0'};
       border-right: none;
       border-top: none;
     }
@@ -122,8 +122,8 @@ const TimelineContentLeft = styled(TimelineContent)`
 const TimelineContentRight = styled(TimelineContent)`
   &:before {
     left: -10px;
-    border-left: 1px solid ${props => props.theme.colors.border.light};
-    border-bottom: 1px solid ${props => props.theme.colors.border.light};
+    border-left: 1px solid ${props => props.theme?.colors?.border?.light || props.theme?.colors?.divider || '#e2e8f0'};
+    border-bottom: 1px solid ${props => props.theme?.colors?.border?.light || props.theme?.colors?.divider || '#e2e8f0'};
   }
 `;
 
@@ -131,7 +131,7 @@ const TimelineDot = styled.div`
   position: absolute;
   width: 24px;
   height: 24px;
-  background: ${props => props.theme.colors.primary[600]};
+  background: ${props => props.theme?.colors?.primary?.[600] || '#1a365d'};
   border-radius: 50%;
   top: 20px;
   
@@ -140,7 +140,7 @@ const TimelineDot = styled.div`
     position: absolute;
     width: 16px;
     height: 16px;
-    background: ${props => props.theme.colors.accent.gold};
+    background: #d69e2e;
     border-radius: 50%;
     top: 4px;
     left: 4px;
@@ -150,7 +150,7 @@ const TimelineDot = styled.div`
 const TimelineDotLeft = styled(TimelineDot)`
   right: -12px;
   
-  @media (max-width: ${props => props.theme.breakpoints.md}px) {
+  @media (max-width: ${props => props.theme?.breakpoints?.md || 768}px) {
     left: 24px;
     right: auto;
   }
@@ -163,19 +163,19 @@ const TimelineDotRight = styled(TimelineDot)`
 const TimelineYear = styled.div`
   font-size: 1.25rem;
   font-weight: 700;
-  color: ${props => props.theme.colors.primary[700]};
+  color: ${props => props.theme?.colors?.primary?.[700] || '#1a365d'};
   margin-bottom: ${PREMIUM_SPACING.xs}px;
 `;
 
 const TimelineTitle = styled.h3`
   font-size: 1.5rem;
   margin: 0 0 ${PREMIUM_SPACING.sm}px;
-  color: ${props => props.theme.colors.text.primary};
+  color: ${props => props.theme?.colors?.text?.primary || '#2d3748'};
 `;
 
 const TimelineText = styled.p`
   font-size: 1rem;
-  color: ${props => props.theme.colors.text.secondary};
+  color: ${props => props.theme?.colors?.text?.secondary || '#4a5568'};
   line-height: 1.6;
   margin: 0;
 `;

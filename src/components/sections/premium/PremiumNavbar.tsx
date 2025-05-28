@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { Container } from '../../../design-system/components/layout/Container';
-import { RecoveryOfficeLogo } from '../../branding/RecoveryOfficeLogo';
+import { RecoveryOfficeLogo } from '../../branding';
 
 // --- TopBar for regulatory info ---
 const TopBar = styled.div`
@@ -367,7 +367,7 @@ export const PremiumNavbar: React.FC = () => {
     <>
       {/* TopBar (optional, can be toggled off) */}
       <TopBar>
-        FCA Regulated • FCA #765432 • Contact: <a href="mailto:info@recoveryoffice.com" style={{ color: '#D4AF37', textDecoration: 'underline' }}>info@recoveryoffice.com</a>
+        FCA Regulated • Firm Reference: 836358 • Emergency: <a href="tel:+447451263372" style={{ color: '#D4AF37', textDecoration: 'underline' }}>+44 7451 263372</a>
       </TopBar>
       <NavbarWrapper $scrolled={scrolled}>
         <NavInner>

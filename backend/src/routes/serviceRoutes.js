@@ -104,4 +104,33 @@ router.get(
   serviceController.getServiceCategories
 );
 
+// GET /api/services - Return services from MongoDB exactly as stored
+router.get('/', async (req, res) => {
+  try {
+    console.log('[Services API] GET /api/services - Fetching from MongoDB Atlas');
+    
+    // Connect to your existing MongoDB collection
+    const db = req.app.locals.db || global.db;
+    
+    if (!db) {
+      throw new Error('Database connection not available');
+    }
+    
+    const services = await db.collection('services').find({ isActive: true }).toArray();
+
+    console.log(`[Services API] Found ${services.length} services in MongoDB:`, 
+      services.map(s => ({ _id: s._id, name: s.name }))
+    );
+
+    // CRITICAL FIX: Return services array directly (not wrapped in object)
+    res.json(services);
+  } catch (error) {
+    console.error('[Services API] MongoDB error:', error);
+    res.status(500).json({
+      error: 'Failed to fetch services from database',
+      message: error.message
+    });
+  }
+});
+
 module.exports = router; 

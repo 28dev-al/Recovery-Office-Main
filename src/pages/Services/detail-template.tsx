@@ -109,7 +109,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 
 // Service detail page header
 const ServiceHeader = styled.div`
-  background-color: ${props => props.theme.colors.primary[900]};
+  background-color: ${props => props.theme.colors.primary};
   color: white;
   padding: 6rem 0 4rem;
   position: relative;
@@ -149,7 +149,7 @@ const ServiceHeaderImage = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to right, ${props => props.theme.colors.primary[900]}, transparent);
+    background: linear-gradient(to right, ${props => props.theme.colors.primary}, transparent);
   }
   
   img {
@@ -162,7 +162,7 @@ const ServiceHeaderImage = styled.div`
 // Process section
 const ProcessSection = styled.section`
   padding: 5rem 0;
-  background-color: ${props => props.theme.colors.background.light};
+  background-color: #f7fafc;
 `;
 
 const ProcessStep = styled.div`
@@ -178,7 +178,7 @@ const StepNumber = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: ${props => props.theme.colors.primary[700]};
+  background-color: ${props => props.theme.colors.primary};
   color: white;
   display: flex;
   align-items: center;
@@ -222,7 +222,7 @@ const BenefitIcon = styled.div`
   width: 60px;
   height: 60px;
   margin-bottom: 1.5rem;
-  color: ${props => props.theme.colors.primary[600]};
+  color: ${props => props.theme.colors.primary};
 `;
 
 const BenefitTitle = styled.h3`
@@ -234,7 +234,7 @@ const BenefitTitle = styled.h3`
 // Pricing section
 const PricingSection = styled.section`
   padding: 5rem 0;
-  background-color: ${props => props.theme.colors.background.light};
+  background-color: #f7fafc;
 `;
 
 const PricingCard = styled.div`
@@ -242,7 +242,7 @@ const PricingCard = styled.div`
   border-radius: 8px;
   padding: 2.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid ${props => props.theme.colors.border.light};
+  border: 1px solid ${props => props.theme.colors.border};
   text-align: center;
 `;
 
@@ -254,7 +254,7 @@ const PricingTitle = styled.h3`
 const PricingRate = styled.div`
   font-size: 2.5rem;
   font-weight: 700;
-  color: ${props => props.theme.colors.primary[700]};
+  color: ${props => props.theme.colors.primary};
   margin: 1.5rem 0;
 `;
 
@@ -265,7 +265,7 @@ const PricingFeature = styled.div`
   
   svg {
     margin-right: 0.75rem;
-    color: ${props => props.theme.colors.primary[500]};
+    color: ${props => props.theme.colors.primary};
   }
 `;
 

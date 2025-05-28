@@ -8,15 +8,15 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
+import { useBookingState } from '../../../hooks/useBookingState';
 
 interface DateSelectionStepProps {
   // Required props
   selectedService: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   
   // Optional callback props  
-  onComplete?: (data?: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  onComplete?: () => void;
   onBack?: () => void;
-  onDataChange?: (data: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   
   // Optional data props
   initialData?: {
@@ -190,26 +190,32 @@ const SelectedServiceBadge = styled.div`
 export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
   onComplete,
   onBack,
-  onDataChange,
   selectedService,
   initialData,
   isLoading = false
 }) => {
-  // Helper functions to get initial values from props
+  // CRITICAL FIX: Use the global booking state
+  const {
+    selectedDate: globalSelectedDate,
+    selectedTimeSlot: globalSelectedTimeSlot,
+    setSelectedDate: setGlobalSelectedDate,
+    setSelectedTimeSlot: setGlobalSelectedTimeSlot
+  } = useBookingState();
+
+  // Helper functions to get initial values from props or global state
   const getInitialDate = () => {
+    if (globalSelectedDate) return new Date(globalSelectedDate);
     const dateValue = initialData?.selectedDate;
     return dateValue ? new Date(dateValue) : null;
   };
 
   const getInitialTimeSlot = () => {
-    return initialData?.selectedTimeSlot || null;
+    return globalSelectedTimeSlot || initialData?.selectedTimeSlot || null;
   };
 
-  // Initialize state with proper fallbacks from props
+  // Initialize local state with global state or fallbacks
   const [selectedDate, setSelectedDate] = useState<Date | null>(getInitialDate());
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(
-    typeof getInitialTimeSlot() === 'string' ? getInitialTimeSlot() : null
-  );
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(getInitialTimeSlot());
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [timeSlots, setTimeSlots] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -273,13 +279,20 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
   }
 
   const handleDateSelect = (date: Date) => {
-    console.log('[DateSelection] Date selected:', format(date, 'yyyy-MM-dd'));
+    const dateString = format(date, 'yyyy-MM-dd');
+    console.log('[DateSelection] Date selected:', dateString);
     setSelectedDate(date);
+    
+    // CRITICAL: Save to global state immediately
+    setGlobalSelectedDate(dateString);
   };
 
   const handleTimeSlotSelect = (timeSlot: string) => {
     console.log('[DateSelection] Time slot selected:', timeSlot);
     setSelectedTimeSlot(timeSlot);
+    
+    // CRITICAL: Save to global state immediately
+    setGlobalSelectedTimeSlot(timeSlot);
   };
 
   // Handle the case where onComplete might not be provided
@@ -293,11 +306,14 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
       
       console.log('[DateSelection] Completing with data:', stepData);
       
-      // Call onDataChange if provided
-      onDataChange?.(stepData);
+      // Double-check global state is saved before proceeding
+      console.log('[DateSelection] Global state before next:', {
+        savedDate: globalSelectedDate,
+        savedTimeSlot: globalSelectedTimeSlot
+      });
       
       // Call onComplete if provided
-      onComplete?.(stepData);
+      onComplete?.();
     }
   };
 

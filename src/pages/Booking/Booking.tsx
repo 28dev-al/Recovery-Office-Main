@@ -1,6 +1,5 @@
 import * as React from 'react';
 import BookingInterface from "../../components/booking/BookingInterface";
-import { BookingProvider } from '../../context/BookingContext';
 import styled from 'styled-components';
 
 const BookingPageContainer = styled.main`
@@ -12,9 +11,7 @@ const BookingPageContainer = styled.main`
 const BookingPage = () => {
   return (
     <BookingPageContainer>
-      <BookingProvider>
-        <BookingInterface />
-      </BookingProvider>
+      <BookingInterface />
     </BookingPageContainer>
   );
 };

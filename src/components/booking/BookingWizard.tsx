@@ -220,7 +220,15 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({
   const renderStep = () => {
     switch (currentStep) {
       case BookingStepId.SERVICE_SELECTION:
-        return <ServiceSelectionStep onServiceSelect={handleServiceSelect} />;
+        return (
+          <ServiceSelectionStep
+            onServiceSelect={handleServiceSelect}
+            onNext={() => {
+              setDirection(1);
+              goToNextStep();
+            }}
+          />
+        );
       case BookingStepId.DATE_SELECTION:
         if (!state.selectedService) {
           return <div>Please select a service first.</div>;

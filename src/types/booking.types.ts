@@ -10,6 +10,10 @@ import { z } from 'zod';
 import { getFibonacciByIndex } from '../utils/getFibonacciByIndex';
 import { BookingStatus } from './api.types';
 import { ServiceType } from './service.types'; // Import from single source of truth
+import { ClientInformation } from './booking'; // Import unified ClientInformation interface
+
+// Re-export ClientInformation for components that import from booking.types
+export type { ClientInformation };
 
 // ======================================================================
 // Base Booking Types
@@ -85,28 +89,7 @@ export interface ServiceOption {
   };
 }
 
-/**
- * Client Information
- */
-export interface ClientInformation {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  dateOfBirth?: string;
-  preferredContactMethod: 'email' | 'phone' | 'text';
-  isNewClient: boolean;
-  additionalNotes?: string;
-  notes?: string;
-  contactPreference?: string;
-  // Financial recovery specific fields
-  caseDescription?: string;
-  approximateLossAmount?: string;
-  incidentDate?: string;
-  financialInstitution?: string;
-  fraudType?: 'investment_fraud' | 'bank_fraud' | 'credit_card_fraud' | 'identity_theft' | 'pension_scam' | 'mortgage_fraud' | 'insurance_fraud' | 'tax_fraud' | 'other';
-  hasReportedToAuthorities?: boolean;
-}
+// ClientInformation interface moved to booking.ts for single source of truth
 
 // ======================================================================
 // Booking Component Props Interfaces

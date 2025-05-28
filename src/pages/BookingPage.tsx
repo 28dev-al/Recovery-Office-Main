@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { BookingProvider } from '../context/BookingContext';
 import ServiceSelection from '../components/booking/ServiceSelection';
 import DateTimeSelection from '../components/booking/DateTimeSelection';
 import CustomerInfoForm from '../components/booking/CustomerInfoForm';
@@ -55,21 +54,19 @@ const ContentContainer = styled.div`
 
 const BookingPage: React.FC = () => {
   return (
-    <BookingProvider>
-      <PageContainer>
-        <BookingContainer>
-          <Header>
-            <Title>Book Your Recovery Session</Title>
-            <Subtitle>Select services, choose a time, and confirm your appointment</Subtitle>
-          </Header>
-          
-          <ContentContainer>
-            <BookingStepContent />
-            <BookingNavigationWrapper />
-          </ContentContainer>
-        </BookingContainer>
-      </PageContainer>
-    </BookingProvider>
+    <PageContainer>
+      <BookingContainer>
+        <Header>
+          <Title>Book Your Recovery Session</Title>
+          <Subtitle>Select services, choose a time, and confirm your appointment</Subtitle>
+        </Header>
+        
+        <ContentContainer>
+          <BookingStepContent />
+          <BookingNavigationWrapper />
+        </ContentContainer>
+      </BookingContainer>
+    </PageContainer>
   );
 };
 

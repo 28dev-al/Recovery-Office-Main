@@ -474,7 +474,14 @@ const PremiumBookingPage: React.FC = () => {
       case BookingStepId.SERVICE_SELECTION:
           return (
             <BookingErrorBoundary componentName="ServiceSelectionStep" fallback={<SimpleLoader message="Loading services..." />}>
-              <ServiceSelectionStep onServiceSelect={handleServiceSelect} />
+              <ServiceSelectionStep
+                onServiceSelect={handleServiceSelect}
+                onNext={() => {
+                  // Move to next step after service selection
+                  console.log('[BookingPage] Moving to date selection');
+                  goToStep(BookingStepId.DATE_SELECTION);
+                }}
+              />
             </BookingErrorBoundary>
           );
         

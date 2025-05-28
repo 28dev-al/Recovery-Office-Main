@@ -6,8 +6,8 @@ import { SACRED_SPACING } from '../../constants/sacred-geometry';
 import { ErrorDisplay } from '../../design-system/components/feedback/ErrorDisplay';
 import { LoadingOverlay } from '../../design-system/components/feedback/LoadingOverlay';
 import { VisuallyHidden } from '../../design-system/components/utility/VisuallyHidden';
-import { BookingStepId } from '../../types/booking.types';
-import { ServiceOption } from '../../types/booking.types';
+import { BookingStepId, ServiceOption } from '../../types/booking.types';
+import { ClientInformation } from '../../types/booking';
 import { useBooking } from '../../context/BookingContext';
 import { Portal } from '../../design-system/components/utility/Portal';
 import { GlobalStyles } from '../../design-system/components/utility/GlobalStyles';
@@ -241,7 +241,7 @@ const BookingInterface: React.FC = () => {
           return (
             <ServiceSelectionStep
               onServiceSelect={handleServiceSelect}
-              onComplete={handleNext}
+              onNext={() => handleNext({})}
               onBack={handleBack}
               isLoading={isResourceLoading('services')}
               initialData={{ selectedService: selectedService }}

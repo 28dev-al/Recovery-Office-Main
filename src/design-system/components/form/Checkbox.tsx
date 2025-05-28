@@ -65,9 +65,9 @@ const getColorByScheme = (
       disabled: theme.colors.background[300] || '#e0e0e0',
     },
     accent: {
-      bg: theme.colors.accent.gold || '#d4a76a',
-      hover: theme.colors.accent.copper || '#ba8d5a',
-      focus: theme.colors.accent.teal || '#66b2b2',
+      bg: '#d4a76a',
+      hover: '#ba8d5a',
+      focus: '#66b2b2',
       disabled: theme.colors.background[300] || '#e0e0e0',
     },
   };
