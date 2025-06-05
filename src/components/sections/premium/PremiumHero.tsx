@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { PREMIUM_SPACING } from '../../../design-system/tokens';
 import { Button } from '../../../design-system/components/button/Button';
 import { Box } from '../../../design-system/components/layout/Box';
 import { Container } from '../../../design-system/components/layout/Container';
 import { RecoveryOfficeLogo } from '../../branding';
+import { scrollToSection } from '../../../utils/scrollUtils';
+import { debugLog } from '../../../utils/removeConsole';
 
 // Abstract background pattern using premium colors
 const BackgroundPattern = styled.div`
@@ -256,6 +259,8 @@ const PremiumHero: React.FC<PremiumHeroProps> = ({
   secondaryButtonUrl = '/services',
   showLogo = true
 }) => {
+  const navigate = useNavigate();
+  
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -274,6 +279,35 @@ const PremiumHero: React.FC<PremiumHeroProps> = ({
       y: 0,
       opacity: 1,
       transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1.0] }
+    }
+  };
+
+  const handlePrimaryClick = () => {
+    debugLog('[PremiumHero] Primary button clicked:', primaryButtonUrl);
+    if (primaryButtonUrl.startsWith('/')) {
+      navigate(primaryButtonUrl);
+    } else {
+      window.location.href = primaryButtonUrl;
+    }
+  };
+
+  const handleSecondaryClick = () => {
+    debugLog('[PremiumHero] Secondary button clicked:', secondaryButtonText);
+    
+    // If it's "Learn More", try to scroll to services section first
+    if (secondaryButtonText.toLowerCase().includes('learn more')) {
+      const servicesElement = document.getElementById('services-section');
+      if (servicesElement) {
+        scrollToSection('services-section');
+        return;
+      }
+    }
+    
+    // Fallback to navigation
+    if (secondaryButtonUrl.startsWith('/')) {
+      navigate(secondaryButtonUrl);
+    } else {
+      window.location.href = secondaryButtonUrl;
     }
   };
   
@@ -322,9 +356,8 @@ const PremiumHero: React.FC<PremiumHeroProps> = ({
               <HeroButtons variants={itemVariants}>
                 {primaryButtonText && (
                   <PrimaryCTA 
-                    to={primaryButtonUrl}
-                    variant="primary"
-                    size="lg"
+                    as="button"
+                    onClick={handlePrimaryClick}
                   >
                     {primaryButtonText}
                   </PrimaryCTA>
@@ -332,9 +365,8 @@ const PremiumHero: React.FC<PremiumHeroProps> = ({
                 
                 {secondaryButtonText && (
                   <SecondaryButton 
-                    to={secondaryButtonUrl}
-                    variant="outline"
-                    size="lg"
+                    as="button"
+                    onClick={handleSecondaryClick}
                   >
                     {secondaryButtonText}
                   </SecondaryButton>

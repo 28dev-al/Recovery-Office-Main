@@ -78,8 +78,8 @@ export const ServiceDetailTemplate: React.FC<ServiceDetailProps> = ({ serviceDat
             <PrimaryButton to="/booking">
               Book Consultation
             </PrimaryButton>
-            <SecondaryButton href="tel:+447451263372">
-              Call Now: +44 7451 263372
+            <SecondaryButton href="tel:+447451263472">
+              Call Now: +44 7451 263472
             </SecondaryButton>
           </HeroActions>
         </HeroContent>
@@ -171,8 +171,8 @@ export const ServiceDetailTemplate: React.FC<ServiceDetailProps> = ({ serviceDat
               <CTAButton to="/booking" $primary>
                 Book Free Consultation
               </CTAButton>
-              <CTAExternalLink href="tel:+447451263372">
-                Call Now: +44 7451 263372
+              <CTAExternalLink href="tel:+447451263472">
+                Call Now: +44 7451 263472
               </CTAExternalLink>
             </CTAButtons>
             <CTANote>
@@ -553,42 +553,35 @@ const PricingButton = styled(Link)<{ $primary?: boolean }>`
 const TestimonialSection = styled.section`
   padding: 80px 0;
   background: #f7fafc;
-  margin: 0 -24px;
-  padding-left: 24px;
-  padding-right: 24px;
 `;
 
 const TestimonialCard = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
   background: white;
   padding: 48px;
   border-radius: 16px;
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  text-align: center;
 `;
 
 const TestimonialText = styled.blockquote`
   font-size: 20px;
-  line-height: 1.6;
-  color: #4a5568;
   font-style: italic;
-  margin-bottom: 24px;
-
-  &::before, &::after {
-    content: '"';
-    font-size: 24px;
-    color: #d69e2e;
-  }
+  color: #4a5568;
+  line-height: 1.8;
+  margin-bottom: 32px;
 `;
 
-const TestimonialAuthor = styled.div``;
+const TestimonialAuthor = styled.div`
+  text-align: center;
+`;
 
 const AuthorName = styled.div`
   font-size: 18px;
   font-weight: 600;
   color: #1a365d;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 `;
 
 const RecoveryAmount = styled.div`
@@ -598,47 +591,49 @@ const RecoveryAmount = styled.div`
 `;
 
 const CTASection = styled.section`
-  padding: 80px 0;
+  padding: 120px 0;
   background: linear-gradient(135deg, #d69e2e 0%, #f6d55c 100%);
-  margin: 0 -24px;
-  padding-left: 24px;
-  padding-right: 24px;
+  color: #1a365d;
 `;
 
 const CTAContent = styled.div`
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
+  padding: 0 24px;
 `;
 
 const CTATitle = styled.h2`
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 700;
-  color: #1a365d;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
 `;
 
 const CTAText = styled.p`
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.6;
-  color: #1a365d;
+  margin-bottom: 48px;
   opacity: 0.9;
-  margin-bottom: 32px;
 `;
 
 const CTAButtons = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 24px;
   justify-content: center;
-  margin-bottom: 24px;
   flex-wrap: wrap;
+  margin-bottom: 24px;
 `;
 
 const CTAButton = styled(Link)<{ $primary?: boolean }>`
-  padding: 16px 32px;
+  padding: 18px 36px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
+  font-size: 16px;
   transition: all 0.3s ease;
 
   ${({ $primary }) => $primary ? `
@@ -648,6 +643,7 @@ const CTAButton = styled(Link)<{ $primary?: boolean }>`
     &:hover {
       background: #2c5282;
       transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(26, 54, 93, 0.3);
     }
   ` : `
     background: transparent;
@@ -662,14 +658,15 @@ const CTAButton = styled(Link)<{ $primary?: boolean }>`
 `;
 
 const CTAExternalLink = styled.a`
-  padding: 16px 32px;
+  padding: 18px 36px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.3s ease;
+  font-size: 16px;
   background: transparent;
   color: #1a365d;
   border: 2px solid #1a365d;
+  transition: all 0.3s ease;
 
   &:hover {
     background: #1a365d;
@@ -679,8 +676,7 @@ const CTAExternalLink = styled.a`
 
 const CTANote = styled.div`
   font-size: 14px;
-  color: #1a365d;
   opacity: 0.8;
 `;
 
-export default ServiceDetailTemplate; 
+export default ServiceDetailTemplate;

@@ -11,6 +11,7 @@ import { getFibonacciByIndex } from '../utils/getFibonacciByIndex';
 import { BookingStatus } from './api.types';
 import { ServiceType } from './service.types'; // Import from single source of truth
 import { ClientInformation } from './booking'; // Import unified ClientInformation interface
+import { ServiceData } from './service'; // Import unified ServiceData
 
 // Re-export ClientInformation for components that import from booking.types
 export type { ClientInformation };
@@ -53,41 +54,9 @@ export interface BookingDate {
 }
 
 /**
- * Service Option
+ * Service Option - alias for ServiceData for backward compatibility
  */
-export interface ServiceOption {
-  id: string;
-  _id?: string;
-  mongoObjectId?: string;
-  name: string;
-  description: string;
-  duration: number;
-  price: number;
-  formattedPrice?: string;
-  formattedDuration?: string;
-  icon?: string;
-  image?: string;
-  category?: string;
-  type: ServiceType; // Use unified ServiceType from service.types.ts
-  isActive?: boolean;
-  isValidObjectId?: boolean;
-  isDevelopmentFallback?: boolean;
-
-  // Additional properties that might be used
-  availableForNewClients?: boolean;
-  slug?: string;
-  createdAt?: string;
-  updatedAt?: string;
-
-  // Debug info
-  debugInfo?: {
-    originalId?: string;
-    mongoId?: string;
-    processedAt?: string;
-    fallbackUsed?: boolean;
-    fallbackService?: boolean;
-  };
-}
+export type ServiceOption = ServiceData;
 
 // ClientInformation interface moved to booking.ts for single source of truth
 

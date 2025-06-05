@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '../../../context/BookingContext';
@@ -52,11 +53,12 @@ const clientInfoSchema = z.object({
   fraudType: z.enum(['investment_fraud', 'bank_fraud', 'credit_card_fraud', 'identity_theft', 'pension_scam', 'mortgage_fraud', 'insurance_fraud', 'tax_fraud', 'other']).optional()
 });
 
-// Define options for dropdowns
-const contactMethodOptions = [
-  { value: 'email', label: 'Email' },
-  { value: 'phone', label: 'Phone' },
-  { value: 'text', label: 'Text Message' }
+// Define options for dropdowns with translation support
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getContactMethodOptions = (t: any) => [
+  { value: 'email', label: t('booking.clientInfo.options.contactMethods.email') },
+  { value: 'phone', label: t('booking.clientInfo.options.contactMethods.phone') },
+  { value: 'text', label: t('booking.clientInfo.options.contactMethods.text') }
 ];
 import { PREMIUM_SPACING } from '../../../design-system/tokens/spacing';
 import { PREMIUM_COLORS } from '../../../design-system/tokens/colors.premium';
@@ -478,6 +480,7 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
   onBack, 
   isLoading = false,
   initialData,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   data,
   selectedService,
   onDataChange
@@ -486,6 +489,28 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessFeedback, setShowSuccessFeedback] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const { t, i18n } = useTranslation();
+  const [, forceUpdate] = useState({});
+
+  // 🌍 DEBUG: Language switching debugging
+  console.log('🌍 LANGUAGE DEBUG - ClientInfoStep:');
+  console.log('🌍 Current language:', i18n.language);
+  console.log('🌍 Available languages:', Object.keys(i18n.services.resourceStore.data || {}));
+  console.log('🌍 German title translation:', t('clientInfo.formTitle'));
+  console.log('🌍 English title for comparison:', i18n.getResource('en', 'translation', 'clientInfo.formTitle'));
+  console.log('🌍 German title direct:', i18n.getResource('de', 'translation', 'clientInfo.formTitle'));
+  
+  // 🔄 Force re-render when language changes
+  useEffect(() => {
+    const handleLanguageChange = (lng: string) => {
+      console.log('🌍 Language changed to:', lng);
+      console.log('🌍 New translation for formTitle:', t('clientInfo.formTitle'));
+      forceUpdate({}); // Trigger re-render
+    };
+    
+    i18n.on('languageChanged', handleLanguageChange);
+    return () => i18n.off('languageChanged', handleLanguageChange);
+  }, [i18n, t]);
 
   // CRITICAL: Enhanced validation logic to check multiple data sources
   const validatePreviousSteps = () => {
@@ -662,24 +687,24 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
       <FormContainer>
         <ErrorContainer>
           <ErrorIcon>⚠️</ErrorIcon>
-          <ErrorTitle>Incomplete Booking Information</ErrorTitle>
+          <ErrorTitle>{t('clientInfo.errorTitle')}</ErrorTitle>
           <ErrorMessage>{validationError}</ErrorMessage>
           
           <ErrorActions>
             {onBack && (
               <BackButton onClick={onBack}>
-                Back to Date Selection
+                {t('clientInfo.backButton')}
               </BackButton>
             )}
             
             <SubmitButton onClick={() => window.location.reload()}>
-              Try Again
+              {t('clientInfo.tryAgainButton')}
             </SubmitButton>
           </ErrorActions>
 
           {process.env.NODE_ENV === 'development' && (
             <DebugInfo>
-              <h4>Debug Information:</h4>
+              <h4>{t('clientInfo.debugInfoTitle')}</h4>
               <pre>{JSON.stringify({
                 contextState: {
                   hasService: !!state.selectedService,
@@ -712,28 +737,28 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
       {/* Booking Summary */}
       {state.selectedService && (
         <BookingSummary>
-          <SummaryTitle>Booking Summary</SummaryTitle>
+          <SummaryTitle>{t('clientInfo.bookingSummaryTitle')}</SummaryTitle>
           <SummaryItem>
-            <SummaryLabel>Service:</SummaryLabel>
+            <SummaryLabel>{t('clientInfo.serviceLabel')}:</SummaryLabel>
             <SummaryValue>{state.selectedService.name}</SummaryValue>
           </SummaryItem>
           <SummaryItem>
-            <SummaryLabel>Price:</SummaryLabel>
+            <SummaryLabel>{t('clientInfo.priceLabel')}:</SummaryLabel>
             <SummaryValue>£{state.selectedService.price?.toLocaleString()}</SummaryValue>
           </SummaryItem>
           <SummaryItem>
-            <SummaryLabel>Duration:</SummaryLabel>
+            <SummaryLabel>{t('clientInfo.durationLabel')}:</SummaryLabel>
             <SummaryValue>{state.selectedService.duration} minutes</SummaryValue>
           </SummaryItem>
           {state.selectedDate && (
             <SummaryItem>
-              <SummaryLabel>Date:</SummaryLabel>
+              <SummaryLabel>{t('clientInfo.dateLabel')}:</SummaryLabel>
               <SummaryValue>{state.selectedDate}</SummaryValue>
             </SummaryItem>
           )}
           {state.selectedTimeSlot && (
             <SummaryItem>
-              <SummaryLabel>Time:</SummaryLabel>
+              <SummaryLabel>{t('clientInfo.timeLabel')}:</SummaryLabel>
               <SummaryValue>{state.selectedTimeSlot.startTime}</SummaryValue>
             </SummaryItem>
           )}
@@ -741,17 +766,16 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
       )}
 
       <FormHeader>
-        <FormTitle>Your Information</FormTitle>
+        <FormTitle>{t('clientInfo.formTitle')}</FormTitle>
         <FormSubtitle>
-          Please provide your details so we can prepare for your consultation. 
-          All information is securely encrypted and GDPR compliant.
+          {t('clientInfo.formSubtitle')}
         </FormSubtitle>
         
         <SecurityBadge>
           <ShieldIcon size={18} />
           <div>
-            <strong>Secure & Confidential:</strong> 256-bit encryption protects your data. 
-            We never share client information with third parties.
+            <strong>{t('clientInfo.secureConfidential')}:</strong> 256-bit encryption protects your data. 
+            {t('clientInfo.neverShare')}
           </div>
         </SecurityBadge>
       </FormHeader>
@@ -761,19 +785,19 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
         <FormSection>
           <SectionTitle>
             <UserIcon size={20} />
-            Personal Information
+            {t('clientInfo.personalInfoTitle')}
           </SectionTitle>
           
           <FormRow>
             <FormField>
               <Label htmlFor="firstName">
-                First Name <RequiredMark>*</RequiredMark>
+                {t('clientInfo.firstNameLabel')} <RequiredMark>*</RequiredMark>
               </Label>
               <Input
                 {...register('firstName')}
                 id="firstName"
                 hasError={!!errors.firstName}
-                placeholder="Enter your first name"
+                placeholder={t('clientInfo.firstNamePlaceholder')}
               />
               {errors.firstName && (
                 <ErrorMessage>
@@ -785,13 +809,13 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
 
             <FormField>
               <Label htmlFor="lastName">
-                Last Name <RequiredMark>*</RequiredMark>
+                {t('clientInfo.lastNameLabel')} <RequiredMark>*</RequiredMark>
               </Label>
               <Input
                 {...register('lastName')}
                 id="lastName"
                 hasError={!!errors.lastName}
-                placeholder="Enter your last name"
+                placeholder={t('clientInfo.lastNamePlaceholder')}
               />
               {errors.lastName && (
                 <ErrorMessage>
@@ -806,14 +830,14 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
             <FormField>
               <Label htmlFor="email">
                 <MailIcon size={14} />
-                Email Address <RequiredMark>*</RequiredMark>
+                {t('clientInfo.emailLabel')} <RequiredMark>*</RequiredMark>
               </Label>
               <Input
                 {...register('email')}
                 type="email"
                 id="email"
                 hasError={!!errors.email}
-                placeholder="your.email@example.com"
+                placeholder={t('clientInfo.emailPlaceholder')}
               />
               {errors.email && (
                 <ErrorMessage>
@@ -826,14 +850,14 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
             <FormField>
               <Label htmlFor="phone">
                 <PhoneIcon size={14} />
-                Phone Number <RequiredMark>*</RequiredMark>
+                {t('clientInfo.phoneLabel')} <RequiredMark>*</RequiredMark>
               </Label>
               <Input
                 {...register('phone')}
                 type="tel"
                 id="phone"
                 hasError={!!errors.phone}
-                placeholder="+44 1234 567890"
+                placeholder={t('clientInfo.phonePlaceholder')}
               />
               {errors.phone && (
                 <ErrorMessage>
@@ -849,18 +873,18 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
         <FormSection>
           <SectionTitle>
             <DollarSignIcon size={20} />
-            Case Information
+            {t('clientInfo.caseInfoTitle')}
           </SectionTitle>
           
           <FormField>
             <Label htmlFor="caseType">
-              Case Type <RequiredMark>*</RequiredMark>
+              {t('clientInfo.caseTypeLabel')} <RequiredMark>*</RequiredMark>
             </Label>
             <Select {...register('caseType')} id="caseType" hasError={!!errors.caseType}>
-              <option value="investment-fraud">Investment Fraud</option>
-              <option value="cryptocurrency-recovery">Cryptocurrency Recovery</option>
-              <option value="financial-scam">Financial Scam</option>
-              <option value="regulatory-complaint">Regulatory Complaint</option>
+              <option value="investment-fraud">{t('clientInfo.investmentFraud')}</option>
+              <option value="cryptocurrency-recovery">{t('clientInfo.cryptocurrencyRecovery')}</option>
+              <option value="financial-scam">{t('clientInfo.financialScam')}</option>
+              <option value="regulatory-complaint">{t('clientInfo.regulatoryComplaint')}</option>
             </Select>
             {errors.caseType && (
               <ErrorMessage>
@@ -872,15 +896,15 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
 
           <FormField>
             <Label htmlFor="estimatedLoss">
-              Estimated Loss <RequiredMark>*</RequiredMark>
+              {t('clientInfo.estimatedLossLabel')} <RequiredMark>*</RequiredMark>
             </Label>
             <Select {...register('estimatedLoss')} id="estimatedLoss" hasError={!!errors.estimatedLoss}>
-              <option value="under-10k">Under £10,000</option>
-              <option value="10k-50k">£10,000 - £50,000</option>
-              <option value="50k-100k">£50,000 - £100,000</option>
-              <option value="100k-500k">£100,000 - £500,000</option>
-              <option value="500k-1m">£500,000 - £1,000,000</option>
-              <option value="over-1m">Over £1,000,000</option>
+              <option value="under-10k">{t('clientInfo.under10k')}</option>
+              <option value="10k-50k">{t('clientInfo.10k50k')}</option>
+              <option value="50k-100k">{t('clientInfo.50k100k')}</option>
+              <option value="100k-500k">{t('clientInfo.100k500k')}</option>
+              <option value="500k-1m">{t('clientInfo.500k1m')}</option>
+              <option value="over-1m">{t('clientInfo.over1m')}</option>
             </Select>
             {errors.estimatedLoss && (
               <ErrorMessage>
@@ -889,7 +913,7 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
               </ErrorMessage>
             )}
             <HelpText>
-              This helps us assign the most suitable specialist for your case
+              {t('clientInfo.estimatedLossHelp')}
             </HelpText>
           </FormField>
 
@@ -897,11 +921,11 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
             <FormField>
               <Label htmlFor="preferredContactMethod">
                 <MessageCircleIcon size={14} />
-                Preferred Contact Method <RequiredMark>*</RequiredMark>
+                {t('clientInfo.preferredContactMethodLabel')} <RequiredMark>*</RequiredMark>
               </Label>
               <Select {...register('preferredContactMethod')} id="preferredContactMethod" hasError={!!errors.preferredContactMethod}>
-                <option value="">Select contact method</option>
-                {contactMethodOptions.map(option => (
+                <option value="">{t('clientInfo.selectContactMethod')}</option>
+                {getContactMethodOptions(t).map(option => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
@@ -918,13 +942,13 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
             <FormField>
               <Label htmlFor="urgencyLevel">
                 <UserIcon size={14} />
-                Urgency Level <RequiredMark>*</RequiredMark>
+                {t('clientInfo.urgencyLevelLabel')} <RequiredMark>*</RequiredMark>
               </Label>
               <Select {...register('urgencyLevel')} id="urgencyLevel" hasError={!!errors.urgencyLevel}>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-                <option value="critical">Critical</option>
+                <option value="low">{t('clientInfo.low')}</option>
+                <option value="medium">{t('clientInfo.medium')}</option>
+                <option value="high">{t('clientInfo.high')}</option>
+                <option value="critical">{t('clientInfo.critical')}</option>
               </Select>
               {errors.urgencyLevel && (
                 <ErrorMessage>
@@ -938,27 +962,27 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
 
         {/* Optional Information */}
         <FormSection>
-          <SectionTitle>Additional Information (Optional)</SectionTitle>
+          <SectionTitle>{t('clientInfo.additionalInfoTitle')}</SectionTitle>
           
           <FormField>
-            <Label htmlFor="company">Company/Organization</Label>
+            <Label htmlFor="company">{t('clientInfo.companyLabel')}</Label>
             <Input
               {...register('company')}
               id="company"
-              placeholder="Your company name (if applicable)"
+              placeholder={t('clientInfo.companyPlaceholder')}
             />
           </FormField>
 
           <FormField>
-            <Label htmlFor="additionalNotes">Additional Notes</Label>
+            <Label htmlFor="additionalNotes">{t('clientInfo.additionalNotesLabel')}</Label>
             <TextArea
               {...register('additionalNotes')}
               id="additionalNotes"
-              placeholder="Any additional information about your case that might be helpful..."
+              placeholder={t('clientInfo.additionalNotesPlaceholder')}
               rows={4}
             />
             <CharacterCount>
-              {additionalNotes?.length || 0}/1000 characters
+              {additionalNotes?.length || 0}/{t('clientInfo.characterLimit')}
             </CharacterCount>
           </FormField>
         </FormSection>
@@ -967,7 +991,7 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
         <FormSection>
           <SectionTitle>
             <ShieldIcon size={20} />
-            Legal Agreements
+            {t('clientInfo.legalAgreementsTitle')}
           </SectionTitle>
           
           <CheckboxField>
@@ -976,8 +1000,7 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
               id="consentToContact"
             />
             <CheckboxLabel htmlFor="consentToContact" hasError={!!errors.consentToContact}>
-              <RequiredMark>*</RequiredMark> I consent to being contacted by Recovery Office 
-              regarding my case via my preferred contact method
+              <RequiredMark>*</RequiredMark> {t('clientInfo.consentToContact')}
             </CheckboxLabel>
             {errors.consentToContact && (
               <ErrorMessage>
@@ -993,9 +1016,10 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
               id="privacyPolicyAccepted"
             />
             <CheckboxLabel htmlFor="privacyPolicyAccepted" hasError={!!errors.privacyPolicyAccepted}>
-              <RequiredMark>*</RequiredMark> I have read and accept the{' '}
+              <RequiredMark>*</RequiredMark> {t('booking.clientInfo.legal.privacy')}
+              {' '}
               <Link href="/privacy-policy" target="_blank" rel="noopener noreferrer">
-                Privacy Policy
+                {t('navigation.privacyPolicy')}
               </Link>
             </CheckboxLabel>
             {errors.privacyPolicyAccepted && (
@@ -1012,8 +1036,7 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
               id="dataProcessingAgreed"
             />
             <CheckboxLabel htmlFor="dataProcessingAgreed" hasError={!!errors.dataProcessingAgreed}>
-              <RequiredMark>*</RequiredMark> I agree to the processing of my personal 
-              data for case management and consultation purposes in accordance with GDPR
+              <RequiredMark>*</RequiredMark> {t('clientInfo.dataProcessingAgreed')}
             </CheckboxLabel>
             {errors.dataProcessingAgreed && (
               <ErrorMessage>
@@ -1036,8 +1059,8 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
               <SuccessFeedback>
                 <CheckCircleIcon size={24} />
                 <div>
-                  <strong>Information validated successfully!</strong>
-                  <div>Proceeding to booking confirmation...</div>
+                  <strong>{t('clientInfo.successTitle')}</strong>
+                  <div>{t('clientInfo.successSubtitle')}</div>
                 </div>
               </SuccessFeedback>
             </motion.div>
@@ -1052,7 +1075,7 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
               onClick={onBack}
               disabled={isSubmitting}
             >
-              ← Back to Date Selection
+              {t('clientInfo.backButton')}
             </BackButton>
           )}
           
@@ -1070,10 +1093,10 @@ const ClientInfoStep: React.FC<ClientInfoStepProps> = ({
                 >
                   ⏳
                 </motion.div>
-                Validating Information...
+                {t('clientInfo.validatingInfo')}
               </>
             ) : (
-              'Continue to Confirmation →'
+              t('clientInfo.continueButton')
             )}
           </SubmitButton>
         </FormActions>

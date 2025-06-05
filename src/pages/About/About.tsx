@@ -1,282 +1,606 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { Hero, Team } from '../../design-system/components/feature-sections';
-import { Box, Container } from '../../design-system/components/layout';
-import { Section, SectionTitle } from '../../design-system/components/layout/Section';
-import { Text, Heading } from '../../design-system/components/typography';
-import { PremiumButton } from '../../design-system/components/button';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { ScrollReveal } from '../../animation';
-import { PHI } from '../../constants/sacred-geometry';
-import { FlowerOfLife } from '../../design-system/botanical';
-import { useTheme } from '../../design-system/theme/ThemeProvider';
+import { Container } from '../../design-system/components/layout';
+import { Text, Heading } from '../../design-system/components/typography';
+import { Button } from '../../design-system/components/button';
+import { Card } from '../../design-system/components/data-display';
+import { PREMIUM_COLORS } from '../../design-system/tokens/colors.premium';
+import { PREMIUM_SPACING } from '../../design-system/tokens';
 
-// Import section components
-import { 
-  AwardsSection, 
-  TestimonialsSection, 
-  FAQSection, 
-  RegulatorySection, 
-  ValuesSection,
-  MissionSection,
-  TimelineSection
-} from './sections';
+// Premium Corporate Styled Components
+const AboutContainer = styled.main`
+  background: linear-gradient(135deg, ${PREMIUM_COLORS.BASE_COLORS.ivory[50]} 0%, ${PREMIUM_COLORS.BASE_COLORS.ivory[100]} 100%);
+  min-height: 100vh;
+`;
 
-// Define team member type
-interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  photoUrl: string;
-  bio: string;
-  specialties: string[];
-  links: Array<{ type: 'linkedin' | 'twitter' | 'website'; url: string }>;
-  accentColor: string;
-  credentials: string[];
-}
+const HeroSection = styled.section`
+  background: linear-gradient(135deg, ${PREMIUM_COLORS.BASE_COLORS.forest[800]} 0%, ${PREMIUM_COLORS.BASE_COLORS.forest[900]} 100%);
+  color: white;
+  padding: ${PREMIUM_SPACING.xxxl * 2}px 0;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23${PREMIUM_COLORS.BASE_COLORS.gold[500].replace('#', '')}' fill-opacity='0.08'%3E%3Cpath d='M50 0v100M0 50h100M75 0v100M25 0v100M0 75h100M0 25h100'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.2;
+  }
+`;
+
+const HeroContent = styled.div`
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const EstablishedBadge = styled.div`
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.15);
+  color: ${PREMIUM_COLORS.BASE_COLORS.gold[300]};
+  padding: 12px 32px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: ${PREMIUM_SPACING.xl}px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  backdrop-filter: blur(10px);
+`;
+
+const HeroTitle = styled(motion.h1)`
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  margin-bottom: ${PREMIUM_SPACING.lg}px;
+  font-family: 'Playfair Display', serif;
+  line-height: 1.1;
+`;
+
+const HeroSubtitle = styled(motion.h2)`
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  color: ${PREMIUM_COLORS.BASE_COLORS.gold[300]};
+  margin-bottom: ${PREMIUM_SPACING.xl}px;
+  font-weight: 400;
+`;
+
+const HeroDescription = styled(motion.p)`
+  font-size: 1.25rem;
+  line-height: 1.7;
+  margin-bottom: ${PREMIUM_SPACING.xxl}px;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const StatsGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: ${PREMIUM_SPACING.lg}px;
+  margin-top: ${PREMIUM_SPACING.xl}px;
+`;
+
+const StatCard = styled(Card)`
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  padding: ${PREMIUM_SPACING.xl}px;
+  color: white;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const StatValue = styled.div`
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: ${PREMIUM_COLORS.BASE_COLORS.gold[300]};
+  margin-bottom: ${PREMIUM_SPACING.sm}px;
+  font-family: 'Playfair Display', serif;
+`;
+
+const StatLabel = styled.div`
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+`;
+
+const CorporateSection = styled.section`
+  padding: ${PREMIUM_SPACING.xxxl * 1.5}px 0;
+  
+  &:nth-child(even) {
+    background-color: white;
+  }
+`;
+
+const SectionHeader = styled.div`
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto ${PREMIUM_SPACING.xxl}px;
+`;
+
+const SectionTitle = styled(Heading)`
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  color: ${PREMIUM_COLORS.BASE_COLORS.forest[700]};
+  margin-bottom: ${PREMIUM_SPACING.lg}px;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+`;
+
+const SectionSubtitle = styled(Text)`
+  font-size: 1.25rem;
+  color: ${PREMIUM_COLORS.BASE_COLORS.gray[600]};
+  line-height: 1.6;
+  text-align: center;
+`;
+
+const CorporateGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: ${PREMIUM_SPACING.xl}px;
+  margin-top: ${PREMIUM_SPACING.xl}px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const CorporateCard = styled(Card)`
+  padding: ${PREMIUM_SPACING.xxl}px;
+  height: 100%;
+  transition: all 0.3s ease;
+  border: 1px solid ${PREMIUM_COLORS.BASE_COLORS.gray[200]};
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-color: ${PREMIUM_COLORS.BASE_COLORS.gold[300]};
+  }
+`;
+
+const CapabilitiesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: ${PREMIUM_SPACING.xl}px;
+  margin-top: ${PREMIUM_SPACING.xl}px;
+`;
+
+const CapabilityCard = styled(Card)`
+  padding: ${PREMIUM_SPACING.xl}px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border-top: 4px solid ${PREMIUM_COLORS.BASE_COLORS.gold[500]};
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const CapabilityIcon = styled.div`
+  font-size: 3.5rem;
+  margin-bottom: ${PREMIUM_SPACING.lg}px;
+  color: ${PREMIUM_COLORS.BASE_COLORS.gold[500]};
+`;
+
+const ValuesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: ${PREMIUM_SPACING.lg}px;
+  margin-top: ${PREMIUM_SPACING.xl}px;
+`;
+
+const ValueCard = styled(Card)`
+  padding: ${PREMIUM_SPACING.lg}px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border-left: 4px solid ${PREMIUM_COLORS.BASE_COLORS.forest[600]};
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+`;
+
+const RegulatoryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: ${PREMIUM_SPACING.lg}px;
+  margin-top: ${PREMIUM_SPACING.xl}px;
+`;
+
+const RegulatoryCard = styled(Card)`
+  padding: ${PREMIUM_SPACING.lg}px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+`;
+
+const SectorsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: ${PREMIUM_SPACING.lg}px;
+  margin-top: ${PREMIUM_SPACING.xl}px;
+`;
+
+const SectorCard = styled(Card)`
+  padding: ${PREMIUM_SPACING.lg}px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+`;
+
+const GuaranteesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: ${PREMIUM_SPACING.lg}px;
+  margin-top: ${PREMIUM_SPACING.xl}px;
+`;
+
+const GuaranteeCard = styled(Card)`
+  padding: ${PREMIUM_SPACING.lg}px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border-top: 3px solid ${PREMIUM_COLORS.BASE_COLORS.forest[500]};
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+`;
+
+const CTASection = styled.section`
+  background: linear-gradient(135deg, ${PREMIUM_COLORS.BASE_COLORS.forest[700]} 0%, ${PREMIUM_COLORS.BASE_COLORS.forest[900]} 100%);
+  color: white;
+  padding: ${PREMIUM_SPACING.xxxl * 1.5}px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23${PREMIUM_COLORS.BASE_COLORS.gold[500].replace('#', '')}' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+`;
+
+const CTAContent = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+`;
+
+const CTAButton = styled(Button)`
+  background: linear-gradient(to right, ${PREMIUM_COLORS.BASE_COLORS.gold[500]}, ${PREMIUM_COLORS.BASE_COLORS.gold[400]});
+  border: none;
+  padding: 20px 40px;
+  font-size: 1.25rem;
+  margin-top: ${PREMIUM_SPACING.xl}px;
+  color: white;
+  font-weight: 600;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4);
+  }
+`;
 
 /**
- * About Page Component
+ * Premium Corporate About Page Component
  * 
- * This component represents the about page of the Recovery Office website.
- * It displays the company mission, values, team members, and regulatory compliance
- * information for the financial recovery services.
+ * Sophisticated corporate About page that positions Recovery Office
+ * as the UK's leading financial asset recovery consultancy.
+ * Focuses on institutional credibility, regulatory excellence,
+ * and corporate capabilities - NO TEAM INFORMATION.
  */
 const AboutPage: React.FC = () => {
-  // Access theme context
-  const { theme } = useTheme();
-  
-  // Verify theme is loaded correctly
-  useEffect(() => {
-    if (theme) {
-      console.log('Theme loaded in About page:', theme.mode);
-    }
-  }, [theme]);
-  
-  // Check if the theme is available to avoid errors
-  if (!theme) {
-    return (
-      <Box p={8} textAlign="center">
-        <Heading as="h2" variant="h3">
-          Loading theme...
-        </Heading>
-        <Text>Please wait while we initialize the theme.</Text>
-      </Box>
-    );
-  }
-  
-  // Team members data
-  const teamMembers: TeamMember[] = [
-    {
-      id: 'tm1',
-      name: 'Dr. Elizabeth Harper',
-      role: 'Financial Recovery Director',
-      photoUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80',
-      bio: 'With over 15 years of experience in financial recovery and regulatory compliance, Dr. Harper specializes in complex investment fraud cases. Her expertise has helped recover over $50 million in assets for clients across various sectors.',
-      specialties: ['Investment Fraud', 'Regulatory Compliance', 'Asset Recovery Strategy'],
-      links: [
-        { type: 'linkedin', url: 'https://linkedin.com' },
-        { type: 'twitter', url: 'https://twitter.com' }
-      ],
-      accentColor: '#4a6eb3',
-      credentials: ['Ph.D. in Financial Law', 'Certified Fraud Examiner (CFE)']
-    },
-    {
-      id: 'tm2',
-      name: 'James Anderson',
-      role: 'Technical Recovery Specialist',
-      photoUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80',
-      bio: 'James leads our technical recovery team, specializing in cryptocurrency tracing and digital forensics. His innovative approaches to tracking and recovering digital assets have made him a leader in this emerging field.',
-      specialties: ['Cryptocurrency Recovery', 'Digital Forensics', 'Blockchain Analysis'],
-      links: [
-        { type: 'linkedin', url: 'https://linkedin.com' },
-        { type: 'twitter', url: 'https://twitter.com' }
-      ],
-      accentColor: '#86b378',
-      credentials: ['M.S. in Computer Science', 'Certified Cryptocurrency Investigator']
-    },
-    {
-      id: 'tm3',
-      name: 'Sarah Williams',
-      role: 'Client Relations Manager',
-      photoUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80',
-      bio: 'Sarah ensures our clients receive clear communication throughout the recovery process. Her background in financial education helps clients understand the complex procedures involved in asset recovery.',
-      specialties: ['Client Advocacy', 'Recovery Planning', 'Financial Education'],
-      links: [
-        { type: 'linkedin', url: 'https://linkedin.com' },
-        { type: 'website', url: 'https://example.com' }
-      ],
-      accentColor: '#d4a76a',
-      credentials: ['Certified Financial Educator', 'Dispute Resolution Certified']
-    },
-    {
-      id: 'tm4',
-      name: 'Michael Chen',
-      role: 'Legal Recovery Advisor',
-      photoUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80',
-      bio: 'Michael specializes in the legal aspects of financial recovery, including court proceedings, regulatory filings, and cross-border asset recovery issues. His expertise is crucial for cases requiring legal intervention.',
-      specialties: ['Legal Proceedings', 'Cross-Border Recovery', 'Regulatory Filings'],
-      links: [
-        { type: 'linkedin', url: 'https://linkedin.com' },
-        { type: 'website', url: 'https://example.com/research' }
-      ],
-      accentColor: '#5d6e8f',
-      credentials: ['J.D. Financial Law', 'International Asset Recovery Certified']
-    }
-  ];
+  const { t } = useTranslation();
 
-  // Hero section background
-  const heroBackgroundUrl = 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=1920&q=80';
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1.0] }
+    }
+  };
 
   return (
-    <Box as="main">
-      {/* Hero Section */}
-      <Hero
-        heading="About Recovery Office"
-        subheading="Experts in financial asset recovery and investment fraud resolution"
-        background={{
-          image: heroBackgroundUrl,
-          overlay: 'rgba(21, 45, 85, 0.8)'
-        }}
-        align="center"
-        minHeight="60vh"
-        animated={true}
-        botanical={{
-          type: 'flowerOfLife',
-          position: 'bottomRight',
-          opacity: 0.15,
-          animated: true
-        }}
-      >
-        <Text variant="body1" style={{ maxWidth: `${PHI * 400}px`, margin: '0 auto', color: 'white' }}>
-          Recovery Office specializes in helping individuals and businesses recover 
-          financial assets lost to fraud, scams, and failed investments. Our team 
-          combines legal expertise, financial knowledge, and technical skills to 
-          maximize recovery potential.
-        </Text>
-      </Hero>
-
-      {/* Mission Section */}
-      <MissionSection />
-
-      {/* Core Values Section */}
-      <ValuesSection />
-
-      {/* Timeline Section */}
-      <ScrollReveal>
-        <div id="history">
-          <TimelineSection />
-        </div>
-      </ScrollReveal>
-
-      {/* Enhanced Regulatory Section */}
-      <ScrollReveal>
-        <div id="regulatory">
-          <Section backgroundColor="#ffffff">
-            <Container>
-              <SectionTitle 
-                title="Regulatory Compliance" 
-                subtitle="Operating to the highest standards of regulatory compliance"
-                align="center"
-              />
-              <Box maxWidth="800px" mx="auto" mb={5}>
-                <Text variant="body1" textAlign="center">
-                  We maintain strict compliance with all applicable financial regulations across multiple jurisdictions.
-                  Our services are authorized by relevant regulatory bodies, including the Financial Conduct Authority (FCA),
-                  which ensures we operate with transparency, fairness, and accountability.
-                </Text>
-              </Box>
-              <RegulatorySection />
-            </Container>
-          </Section>
-        </div>
-      </ScrollReveal>
-
-      {/* Team Section */}
-      <div id="team">
-        <Team 
-          title="Our Recovery Experts"
-          subtitle="Meet the specialists who will handle your case"
-          members={teamMembers}
-          backgroundColor="#f9fafb"
-          displayStyle="grid"
-          columns={4}
-          showDetailedBio={true}
-          animated={true}
-          botanical={{
-            type: 'flowerOfLife',
-            position: 'bottomRight',
-            opacity: 0.15
-          }}
-        />
-      </div>
-
-      {/* Testimonials Section - Reusing existing component */}
-      <TestimonialsSection />
-
-      {/* CTA Section */}
-      <ScrollReveal>
-        <Section 
-          backgroundColor="#0A214F"
-          style={{
-            padding: `${PHI * 48}px 0`,
-            position: 'relative',
-            overflow: 'hidden'
-          }}
-        >
-          <Box 
-            position="absolute" 
-            right={`${PHI * 16}px`} 
-            bottom={`-${PHI * 32}px`}
-            opacity={0.08}
-            zIndex={0}
-          >
-            <FlowerOfLife size="xxl" color="#ffffff" />
-          </Box>
-          
-          <Container centerContent>
-            <Box 
-              textAlign="center" 
-              maxWidth="800px" 
-              zIndex={1}
-              position="relative"
+    <AboutContainer>
+      {/* Premium Corporate Hero Section */}
+      <HeroSection>
+        <Container>
+          <HeroContent>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={containerVariants}
             >
-              <Heading 
-                as="h2" 
-                variant="h2"
-                mb={4}
-                color="white"
-              >
-                Ready to Recover Your Assets?
+              <motion.div variants={itemVariants}>
+                <EstablishedBadge>{t('about.hero.establishedBadge')}</EstablishedBadge>
+              </motion.div>
+              
+              <HeroTitle variants={itemVariants}>
+                {t('about.hero.title')}
+              </HeroTitle>
+              
+              <HeroSubtitle variants={itemVariants}>
+                {t('about.hero.subtitle')}
+              </HeroSubtitle>
+              
+              <HeroDescription variants={itemVariants}>
+                {t('about.hero.description')}
+              </HeroDescription>
+              
+              <StatsGrid variants={itemVariants}>
+                <StatCard>
+                  <StatValue>£500M+</StatValue>
+                  <StatLabel>{t('about.metrics.assetsUnderRecovery')}</StatLabel>
+                </StatCard>
+                <StatCard>
+                  <StatValue>98%</StatValue>
+                  <StatLabel>{t('about.metrics.clientSatisfaction')}</StatLabel>
+                </StatCard>
+                <StatCard>
+                  <StatValue>FCA</StatValue>
+                  <StatLabel>{t('about.metrics.fcaRegulated')}</StatLabel>
+                </StatCard>
+                <StatCard>
+                  <StatValue>24/7</StatValue>
+                  <StatLabel>{t('about.metrics.expertResponse')}</StatLabel>
+                </StatCard>
+                <StatCard>
+                  <StatValue>100%</StatValue>
+                  <StatLabel>{t('about.metrics.zeroBreach')}</StatLabel>
+                </StatCard>
+              </StatsGrid>
+            </motion.div>
+          </HeroContent>
+        </Container>
+      </HeroSection>
+
+      {/* Corporate Mission & Vision Section */}
+      <CorporateSection>
+        <Container>
+      <ScrollReveal>
+            <CorporateGrid>
+              <CorporateCard>
+                <Heading as="h2" mb={4} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                  {t('about.corporateMission.title')}
+                </Heading>
+                <Text size="lg" lineHeight={1.7} color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                  {t('about.corporateMission.content')}
+                </Text>
+              </CorporateCard>
+              
+              <CorporateCard>
+                <Heading as="h2" mb={4} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                  {t('about.vision.title')}
+                </Heading>
+                <Text size="lg" lineHeight={1.7} color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                  {t('about.vision.content')}
+                </Text>
+              </CorporateCard>
+            </CorporateGrid>
+      </ScrollReveal>
+        </Container>
+      </CorporateSection>
+
+      {/* Corporate Values Section */}
+      <CorporateSection>
+        <Container>
+      <ScrollReveal>
+            <SectionHeader>
+              <SectionTitle>{t('about.values.title')}</SectionTitle>
+            </SectionHeader>
+            
+            <ValuesGrid>
+              {Object.entries(t('about.values', { returnObjects: true }) as Record<string, { title?: string; description?: string }>)
+                .filter(([key]) => key !== 'title')
+                .map(([key, value]) => (
+                  <ValueCard key={key}>
+                    <Heading as="h3" mb={3} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                      {value.title}
+                    </Heading>
+                    <Text color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                      {value.description}
+                    </Text>
+                  </ValueCard>
+                ))}
+            </ValuesGrid>
+          </ScrollReveal>
+        </Container>
+      </CorporateSection>
+
+      {/* Core Capabilities Section */}
+      <CorporateSection>
+            <Container>
+          <ScrollReveal>
+            <SectionHeader>
+              <SectionTitle>{t('about.capabilities.title')}</SectionTitle>
+              <SectionSubtitle>{t('about.capabilities.subtitle')}</SectionSubtitle>
+            </SectionHeader>
+            
+            <CapabilitiesGrid>
+              <CapabilityCard>
+                <CapabilityIcon>🔍</CapabilityIcon>
+                <Heading as="h3" mb={3} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                  {t('about.capabilities.forensics.title')}
+                </Heading>
+                <Text color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                  {t('about.capabilities.forensics.description')}
+                </Text>
+              </CapabilityCard>
+              
+              <CapabilityCard>
+                <CapabilityIcon>⚖️</CapabilityIcon>
+                <Heading as="h3" mb={3} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                  {t('about.capabilities.advocacy.title')}
+                </Heading>
+                <Text color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                  {t('about.capabilities.advocacy.description')}
+                </Text>
+              </CapabilityCard>
+              
+              <CapabilityCard>
+                <CapabilityIcon>🏛️</CapabilityIcon>
+                <Heading as="h3" mb={3} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                  {t('about.capabilities.legal.title')}
+                </Heading>
+                <Text color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                  {t('about.capabilities.legal.description')}
+                </Text>
+              </CapabilityCard>
+              
+              <CapabilityCard>
+                <CapabilityIcon>🌍</CapabilityIcon>
+                <Heading as="h3" mb={3} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                  {t('about.capabilities.international.title')}
+                </Heading>
+                <Text color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                  {t('about.capabilities.international.description')}
+                </Text>
+              </CapabilityCard>
+            </CapabilitiesGrid>
+          </ScrollReveal>
+            </Container>
+      </CorporateSection>
+
+      {/* Regulatory Framework Section */}
+      <CorporateSection>
+        <Container>
+          <ScrollReveal>
+            <SectionHeader>
+              <SectionTitle>{t('about.regulatory.title')}</SectionTitle>
+              <SectionSubtitle>{t('about.regulatory.subtitle')}</SectionSubtitle>
+            </SectionHeader>
+            
+            <RegulatoryGrid>
+              {Object.entries(t('about.regulatory.frameworks', { returnObjects: true }) as Record<string, string>).map(([key, value]) => (
+                <RegulatoryCard key={key}>
+                  <Text weight="medium" color={PREMIUM_COLORS.BASE_COLORS.forest[700]} size="lg">
+                    ✓ {value}
+                  </Text>
+                </RegulatoryCard>
+              ))}
+            </RegulatoryGrid>
+      </ScrollReveal>
+        </Container>
+      </CorporateSection>
+
+      {/* Client Sectors Section */}
+      <CorporateSection>
+        <Container>
+          <ScrollReveal>
+            <SectionHeader>
+              <SectionTitle>{t('about.sectors.title')}</SectionTitle>
+              <SectionSubtitle>{t('about.sectors.subtitle')}</SectionSubtitle>
+            </SectionHeader>
+            
+            <SectorsGrid>
+              {Object.entries(t('about.sectors', { returnObjects: true }) as Record<string, { title?: string; description?: string }>)
+                .filter(([key]) => !['title', 'subtitle'].includes(key))
+                .map(([key, sector]) => (
+                  <SectorCard key={key}>
+                    <Heading as="h4" mb={3} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                      {sector.title}
+                    </Heading>
+                    <Text color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                      {sector.description}
+                    </Text>
+                  </SectorCard>
+                ))}
+            </SectorsGrid>
+          </ScrollReveal>
+        </Container>
+      </CorporateSection>
+
+      {/* Corporate Commitment Section */}
+      <CorporateSection>
+        <Container>
+      <ScrollReveal>
+            <SectionHeader>
+              <SectionTitle>{t('about.commitment.title')}</SectionTitle>
+              <SectionSubtitle>{t('about.commitment.subtitle')}</SectionSubtitle>
+            </SectionHeader>
+            
+            <GuaranteesGrid>
+              {Object.entries(t('about.commitment.guarantees', { returnObjects: true }) as Record<string, { title: string; description: string }>).map(([key, guarantee]) => (
+                <GuaranteeCard key={key}>
+                  <Heading as="h4" mb={3} color={PREMIUM_COLORS.BASE_COLORS.forest[700]}>
+                    {guarantee.title}
+                  </Heading>
+                  <Text color={PREMIUM_COLORS.BASE_COLORS.gray[700]}>
+                    {guarantee.description}
+                  </Text>
+                </GuaranteeCard>
+              ))}
+            </GuaranteesGrid>
+          </ScrollReveal>
+        </Container>
+      </CorporateSection>
+
+      {/* Premium CTA Section */}
+      <CTASection>
+        <Container>
+          <ScrollReveal>
+            <CTAContent>
+              <Heading as="h2" mb={4} color="white">
+                {t('about.cta.title')}
               </Heading>
-              
-              <Text 
-                variant="body1" 
-                mb={5}
-                color="rgba(255, 255, 255, 0.9)"
-              >
-                Our financial recovery experts are ready to evaluate your case and develop 
-                a strategic recovery plan. Schedule your confidential consultation today 
-                to take the first step toward recovering your assets.
+              <Text size="xl" color="rgba(255, 255, 255, 0.9)">
+                {t('about.cta.subtitle')}
               </Text>
-              
-              <PremiumButton 
+              <CTAButton 
+                variant="primary" 
                 size="lg" 
-                variant="gold" 
                 href="/booking"
               >
-                Book Your Consultation
-              </PremiumButton>
-            </Box>
+                {t('about.cta.button')}
+              </CTAButton>
+            </CTAContent>
+          </ScrollReveal>
           </Container>
-        </Section>
-      </ScrollReveal>
-
-      {/* Awards Section - Reusing existing component */}
-      <AwardsSection />
-
-      {/* FAQ Section - Reusing existing component */}
-      <FAQSection />
-    </Box>
+      </CTASection>
+    </AboutContainer>
   );
 };
 

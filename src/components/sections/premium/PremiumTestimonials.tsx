@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { PREMIUM_SPACING } from '../../../design-system/tokens';
 import { Container } from '../../../design-system/components/layout/Container';
 import { FadeIn } from '../../../animation';
+import { useTranslation } from 'react-i18next';
 
 const TestimonialsSection = styled.section`
   padding: ${PREMIUM_SPACING.xxl}px 0;
@@ -160,8 +161,12 @@ const ClientAvatarImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center 20%;
   transition: transform 0.3s ease;
+  
+  /* Enhanced image quality and positioning */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
   
   ${TestimonialCard}:hover & {
     transform: scale(1.05);
@@ -375,32 +380,41 @@ const StarIcon = ({ filled }: { filled: boolean }) => (
 const TESTIMONIALS = [
   {
     id: 1,
-    content: "The Recovery Office approach to recovering my lost investments has been transformative. Their regulatory process gave me confidence, and they recovered funds I thought were gone forever.",
+    contentKey: 'testimonials.testimonial1',
+    defaultContent: "The Recovery Office approach to recovering my lost investments has been transformative. Their regulatory process gave me confidence, and they recovered funds I thought were gone forever.",
     clientName: "Michael Thompson",
-    clientRole: "Investment Fraud Victim",
+    clientRoleKey: 'testimonials.investmentVictim',
+    defaultClientRole: "Investment Fraud Victim",
     rating: 5,
     verified: true,
-    recoveryResult: "80% Recovery",
+    recoveryResultKey: 'testimonials.recovery80',
+    defaultRecoveryResult: "80% Recovery",
     avatar: "https://images2.imgbox.com/96/8c/4AyJzKGD_o.jpg"
   },
   {
     id: 2,
-    content: "As a financial advisor, I was skeptical at first. But after seeing their recovery process firsthand, I now recommend Recovery Office to my own clients who face similar situations.",
+    contentKey: 'testimonials.testimonial2',
+    defaultContent: "As a financial advisor, I was skeptical at first. But after seeing their recovery process firsthand, I now recommend Recovery Office to my own clients who face similar situations.",
     clientName: "Sarah Johnson",
-    clientRole: "Financial Advisor",
+    clientRoleKey: 'testimonials.financialAdvisor',
+    defaultClientRole: "Financial Advisor",
     rating: 5,
     verified: true,
-    recoveryResult: "Full Settlement",
+    recoveryResultKey: 'testimonials.fullSettlement',
+    defaultRecoveryResult: "Full Settlement",
     avatar: "https://thumbs2.imgbox.com/85/83/6t4Dd0oN_t.jpg"
   },
   {
     id: 3,
-    content: "After losing significant cryptocurrency assets to a scam, the Recovery Office team provided expert guidance through the complex recovery process. They helped me recover a substantial portion of my assets.",
+    contentKey: 'testimonials.testimonial3',
+    defaultContent: "After losing significant cryptocurrency assets to a scam, the Recovery Office team provided expert guidance through the complex recovery process. They helped me recover a substantial portion of my assets.",
     clientName: "David Lee",
-    clientRole: "Crypto Investor",
+    clientRoleKey: 'testimonials.cryptoInvestor',
+    defaultClientRole: "Crypto Investor",
     rating: 5,
     verified: true,
-    recoveryResult: "65% Recovery",
+    recoveryResultKey: 'testimonials.recovery65',
+    defaultRecoveryResult: "65% Recovery",
     avatar: "https://images2.imgbox.com/71/95/3yc7WdRn_o.jpg"
   },
   {
@@ -488,11 +502,12 @@ const TestimonialGrid = styled.div<{ $itemCount?: number }>`
 `;
 
 export const PremiumTestimonials: React.FC<PremiumTestimonialsProps> = ({
-  title = "Client Experiences",
-  description = "Discover how our approach has helped others regain their financial assets",
+  title = "Client Success Stories",
+  description = "Real results from our financial recovery specialists",
   testimonials = TESTIMONIALS,
   itemsPerPage = 3
 }) => {
+  const { t } = useTranslation();
   const [activePage, setActivePage] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const pageCount = Math.ceil(testimonials.length / itemsPerPage);
@@ -567,10 +582,13 @@ export const PremiumTestimonials: React.FC<PremiumTestimonialsProps> = ({
               {displayTestimonials.map((testimonial, index) => (
                 <FadeIn key={testimonial.id} delay={index * 0.1}>
                   <TestimonialCard>
-                    {testimonial.recoveryResult && (
+                    {(testimonial.recoveryResultKey || testimonial.recoveryResult) && (
                       <ResultTag>
                         <RecoverySuccessIcon />
-                        {testimonial.recoveryResult}
+                        {testimonial.recoveryResultKey 
+                          ? t(testimonial.recoveryResultKey, testimonial.defaultRecoveryResult || '') 
+                          : testimonial.recoveryResult || ''
+                        }
                       </ResultTag>
                     )}
                   
@@ -580,7 +598,10 @@ export const PremiumTestimonials: React.FC<PremiumTestimonialsProps> = ({
                     </Rating>
                     
                     <TestimonialContent>
-                      {testimonial.content}
+                      {testimonial.contentKey 
+                        ? t(testimonial.contentKey, testimonial.defaultContent || '') 
+                        : testimonial.content || ''
+                      }
                     </TestimonialContent>
                     
                     <ClientInfo>
@@ -588,11 +609,16 @@ export const PremiumTestimonials: React.FC<PremiumTestimonialsProps> = ({
                       
                       <ClientDetails>
                         <ClientName>{testimonial.clientName}</ClientName>
-                        <ClientRole>{testimonial.clientRole}</ClientRole>
+                        <ClientRole>
+                          {testimonial.clientRoleKey 
+                            ? t(testimonial.clientRoleKey, testimonial.defaultClientRole || '') 
+                            : testimonial.clientRole || ''
+                          }
+                        </ClientRole>
                         {testimonial.verified && (
                           <VerificationBadge>
                             <VerifiedIcon />
-                            Verified Client
+                            <span>{t('testimonials.verifiedClient', 'Verified Client')}</span>
                           </VerificationBadge>
                         )}
                       </ClientDetails>

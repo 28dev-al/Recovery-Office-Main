@@ -50,7 +50,7 @@ export const InvestmentFraudRecoveryPage: React.FC = () => {
       amount: "£230,000"
     },
     seoTitle: "Investment Fraud Recovery Services | Recovery Office Manchester UK",
-    seoDescription: "Professional investment fraud recovery services by Recovery Office. 78% success rate recovering from Ponzi schemes, binary options, forex scams. Free consultation. Call +44 7451 263372.",
+    seoDescription: "Professional investment fraud recovery services by Recovery Office. Expert recovery from Ponzi schemes, fake trading platforms, forex scams. Free consultation. Call +44 7451 263472.",
     seoKeywords: "investment fraud recovery, Ponzi scheme recovery, binary options fraud, forex scam recovery, fraudulent trading platforms, investment scam help, UK financial recovery"
   };
 

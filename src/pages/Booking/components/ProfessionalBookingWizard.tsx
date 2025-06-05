@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useBookingState } from '../../../hooks/useBookingState';
-import ServiceSelectionStep from '../../../components/booking/steps/ServiceSelectionStep';
-import DateSelectionStep from '../../../components/booking/steps/DateSelectionStep';
+import { useTranslation } from 'react-i18next';
+import { ServiceSelectionStep } from '../../../components/booking/steps/ServiceSelectionStep';
+import { DateSelectionStep } from '../../../components/booking/steps/DateSelectionStep';
 import ClientInfoStep from '../../../components/booking/steps/ClientInfoStep';
-import ConfirmationStep from '../../../components/booking/steps/ConfirmationStep';
+import { ConfirmationStep } from '../../../components/booking/steps/ConfirmationStep';
+import { ServiceData } from '../../../types/service';
+import { ClientInformation } from '../../../types/client';
+import { BookingTimeSlot } from '../../../types/booking.types';
 
 interface Step {
   id: number;
@@ -15,53 +18,60 @@ interface Step {
 }
 
 export const ProfessionalBookingWizard: React.FC = () => {
-  const {
-    selectedService,
-    selectedDate,
-    selectedTimeSlot,
-    clientInfo,
-    currentStep,
-    setSelectedService,
-    setClientInfo,
-    setCurrentStep,
-    validateStep
-  } = useBookingState();
-  
-  // Always log current state for debugging
-  console.log('[Wizard] Current state:', {
-    step: currentStep,
-    hasService: !!selectedService,
-    serviceName: selectedService?.name,
-    hasDate: !!selectedDate,
-    hasTime: !!selectedTimeSlot,
-    hasClient: !!clientInfo
-  });
+  const { t, i18n } = useTranslation();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedService, setSelectedService] = useState<ServiceData | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+  const [clientInfo, setClientInfo] = useState<ClientInformation | null>(null);
+
+  // 🇬🇧 ENGLISH LANGUAGE VERIFICATION - Add console debugging
+  console.log('🇬🇧 LANGUAGE CHECK:', i18n.language);
+  console.log('🇬🇧 Step 1 text:', t('booking.steps.selectService'));
+  console.log('🇬🇧 Step 2 text:', t('booking.steps.dateTime'));
+
+  if (i18n.language === 'en') {
+    console.log('🇬🇧 ENGLISH MODE - Steps should show English text');
+  } else if (i18n.language === 'de') {
+    console.log('🇩🇪 GERMAN MODE - Steps should show German text');
+  }
+
+  // Enhanced validation function with proper state checking
+  const validateStep = (stepNumber: number): boolean => {
+    switch (stepNumber) {
+      case 1: return true; // Always allow going to service selection
+      case 2: return selectedService !== null && selectedService !== undefined; // Need service for date selection
+      case 3: return selectedDate !== null && selectedTimeSlot !== null; // Need date/time for client info
+      case 4: return !!(clientInfo && clientInfo.firstName && clientInfo.lastName && clientInfo.email && clientInfo.phone); // Need client info for confirmation
+      default: return false;
+    }
+  };
 
   const steps: Step[] = [
     {
       id: 1,
-      title: 'Select Service',
+      title: t('booking.steps.selectService', '1. Select Service'),
       subtitle: 'Choose your recovery service',
-      isCompleted: !!selectedService,
+      isCompleted: selectedService !== null,
       isActive: currentStep === 1
     },
     {
       id: 2,
-      title: 'Date & Time',
+      title: t('booking.steps.dateTime', '2. Date & Time'),
       subtitle: 'Schedule your consultation',
-      isCompleted: !!selectedDate && !!selectedTimeSlot,
+      isCompleted: !!(selectedDate && selectedTimeSlot),
       isActive: currentStep === 2
     },
     {
       id: 3,
-      title: 'Your Information',
+      title: t('booking.steps.information', '3. Your Information'),
       subtitle: 'Provide consultation details',
-      isCompleted: !!clientInfo?.firstName && !!clientInfo?.email,
+      isCompleted: !!(clientInfo?.firstName && clientInfo?.email),
       isActive: currentStep === 3
     },
     {
       id: 4,
-      title: 'Confirmation',
+      title: t('booking.steps.confirmation', '4. Confirmation'),
       subtitle: 'Review and confirm booking',
       isCompleted: false, // Will be completed when booking is submitted
       isActive: currentStep === 4
@@ -69,10 +79,10 @@ export const ProfessionalBookingWizard: React.FC = () => {
   ];
 
   const handleNext = () => {
-    if (currentStep < 4 && validateStep(currentStep + 1)) {
+    const canProceed = validateStep(currentStep + 1);
+    
+    if (currentStep < 4 && canProceed) {
       setCurrentStep(currentStep + 1);
-    } else {
-      console.error('[Wizard] Cannot proceed to next step. Validation failed.');
     }
   };
 
@@ -97,20 +107,54 @@ export const ProfessionalBookingWizard: React.FC = () => {
         );
 
       case 2:
-        return (
+        return selectedService ? (
           <DateSelectionStep
             selectedService={selectedService}
-            onComplete={() => {
-              handleNext();
+            onComplete={(data?: {
+              selectedDate?: string;
+              selectedTimeSlot?: string;
+              date?: string;
+              timeSlot?: string;
+              service?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+            }) => {
+              // Update state immediately and synchronously
+              let dateToSave: string | null = null;
+              let timeToSave: string | null = null;
+              
+              // Handle different data formats that might be passed
+              if (data) {
+                if (data.selectedDate) {
+                  dateToSave = data.selectedDate;
+                }
+                if (data.selectedTimeSlot) {
+                  timeToSave = data.selectedTimeSlot;
+                }
+                // Alternative property names
+                if (data.date && !data.selectedDate) {
+                  dateToSave = data.date;
+                }
+                if (data.timeSlot && !data.selectedTimeSlot) {
+                  timeToSave = data.timeSlot;
+                }
+              }
+              
+              // Update state
+              if (dateToSave) setSelectedDate(dateToSave);
+              if (timeToSave) setSelectedTimeSlot(timeToSave);
+              
+              // Auto-advance if we have both date and time
+              if (dateToSave && timeToSave) {
+                setTimeout(() => setCurrentStep(3), 100);
+              }
             }}
             onBack={handleBack}
           />
-        );
+        ) : null;
 
       case 3:
         return (
           <ClientInfoStep
-            onComplete={(info) => {
+            onComplete={(info?: ClientInformation) => {
               if (info) {
                 setClientInfo(info);
                 setCurrentStep(4);
@@ -118,28 +162,33 @@ export const ProfessionalBookingWizard: React.FC = () => {
             }}
             onBack={handleBack}
             data={{
-              selectedService,
+              selectedService: selectedService,
               selectedDate: selectedDate || undefined,
-              selectedTimeSlot,
-              clientInfo
+              selectedTimeSlot: selectedTimeSlot || undefined,
+              clientInfo: clientInfo as any // eslint-disable-line @typescript-eslint/no-explicit-any
             }}
           />
         );
 
       case 4:
+        // Only render confirmation if we have all required data
+        if (!selectedService || !selectedDate || !selectedTimeSlot) {
+          return <div>Missing required booking data. Please go back and complete all steps.</div>;
+        }
+
         return (
           <ConfirmationStep
             bookingData={{
               service: selectedService,
-              date: selectedDate || '',
+              date: selectedDate,
               timeSlot: { 
                 id: 'selected-slot',
-                startTime: selectedTimeSlot || '',
+                startTime: selectedTimeSlot,
                 endTime: '',
                 duration: 60,
                 available: true
-              },
-              clientInfo: clientInfo || {}
+              } as BookingTimeSlot,
+              clientInfo: clientInfo as any // eslint-disable-line @typescript-eslint/no-explicit-any
             }}
             onBack={handleBack}
           />
@@ -167,16 +216,6 @@ export const ProfessionalBookingWizard: React.FC = () => {
       <StepContainer>
         {renderStep()}
       </StepContainer>
-
-      {/* Debug Panel (remove in production) */}
-      <DebugPanel>
-        <h4>Debug Info:</h4>
-        <p>Step: {currentStep}</p>
-        <p>Service: {selectedService?.name || 'None'}</p>
-        <p>Date: {selectedDate || 'None'}</p>
-        <p>Time: {selectedTimeSlot || 'None'}</p>
-        <p>Valid Next: {validateStep(currentStep + 1) ? 'Yes' : 'No'}</p>
-      </DebugPanel>
     </WizardContainer>
   );
 };
@@ -215,22 +254,4 @@ const StepContainer = styled.div`
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-height: 500px;
-`;
-
-const DebugPanel = styled.div`
-  margin-top: 20px;
-  padding: 16px;
-  background: #f7fafc;
-  border-radius: 8px;
-  font-size: 12px;
-
-  h4 {
-    margin-bottom: 8px;
-    color: #1a365d;
-  }
-
-  p {
-    margin: 4px 0;
-    color: #4a5568;
-  }
 `; 

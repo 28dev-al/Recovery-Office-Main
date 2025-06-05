@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import Flex from '../../design-system/components/layout/Flex';
 import { Box } from '../../design-system/components/layout/Box';
 import { Button } from '../../design-system/components/button/Button';
@@ -92,6 +93,7 @@ export const BookingNavigation: React.FC<BookingNavigationProps> = ({ currentSte
   const bookingContext = useBooking();
   const { goToNextStep, goToPreviousStep } = bookingContext;
   const { isCurrentStepValid, validateCurrentStep } = useBookingStepValidation();
+  const { t } = useTranslation();
   
   // Use loadingState from the context
   const isLoading = (resource: 'services' | 'dates' | 'timeSlots' | 'booking' | 'cancellation' | 'rescheduling' | 'paymentIntent'): boolean => 
@@ -113,15 +115,15 @@ export const BookingNavigation: React.FC<BookingNavigationProps> = ({ currentSte
   const getNextButtonText = () => {
     switch (currentStepId) {
       case BookingStepId.SERVICE_SELECTION:
-        return 'Select Date & Time';
+        return t('booking.steps.datetime');
       case BookingStepId.DATE_SELECTION:
-        return 'Continue to Your Details';
+        return t('booking.navigation.continue');
       case BookingStepId.CLIENT_INFORMATION:
-        return 'Review & Confirm';
+        return t('booking.confirmation.title');
       case BookingStepId.CONFIRMATION:
-        return 'Complete Booking';
+        return t('booking.confirmation.confirmBooking');
       default:
-        return 'Continue';
+        return t('booking.navigation.continue');
     }
   };
   
@@ -150,7 +152,7 @@ export const BookingNavigation: React.FC<BookingNavigationProps> = ({ currentSte
             disabled={isNextButtonLoading}
           >
             <ArrowLeftIcon />
-            Back
+            {t('booking.navigation.back')}
           </BackButton>
         )}
       </Box>
@@ -159,7 +161,7 @@ export const BookingNavigation: React.FC<BookingNavigationProps> = ({ currentSte
         onClick={handleNextClick}
         disabled={isNextButtonDisabled || isNextButtonLoading}
       >
-        {isNextButtonLoading ? 'Processing...' : getNextButtonText()}
+        {isNextButtonLoading ? t('loading.processing') : getNextButtonText()}
         {!isNextButtonLoading && <ArrowRightIcon />}
       </NextButton>
     </NavigationContainer>

@@ -1,76 +1,17 @@
 /**
- * ConfirmationStep Component - Phase 3 Enhanced
+ * ConfirmationStep Component - Professional Production Ready
  * 
- * Professional booking confirmation and submission system for financial recovery consultations.
- * Features complete backend integration, success confirmation, and comprehensive error handling.
+ * Professional booking confirmation system for financial recovery consultations.
+ * Features premium layout, complete German translations, and professional branding.
  */
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useBooking } from '../../../context/BookingContext';
 import { ConfirmationStepProps } from '../../../types/booking.types';
-import { PREMIUM_SPACING } from '../../../design-system/tokens/spacing';
-import { PREMIUM_COLORS } from '../../../design-system/tokens/colors.premium';
-import { ErrorDisplay } from '../../../design-system/components/feedback/ErrorDisplay';
 import { LoadingOverlay } from '../../../design-system/components/feedback/LoadingOverlay';
-import { 
-  FiCheckCircle, 
-  FiFileText, 
-  FiEdit, 
-  FiCalendar, 
-  FiUser, 
-  FiShield, 
-  FiDownload,
-  FiMail,
-  FiPhone
-} from 'react-icons/fi';
-import { vlog, verror, vsuccess } from '../../../utils/debugLogger';
-import apiClient from '../../../services/api.client';
-import { 
-  caseTypeOptions, 
-  urgencyLevelOptions, 
-  contactMethodOptions 
-} from '../../../types/clientValidation';
-
-// Wrapper components for React Icons
-const CheckCircleIcon: React.FC<{ size?: number }> = FiCheckCircle as React.FC<{ size?: number }>;
-const FileTextIcon: React.FC<{ size?: number }> = FiFileText as React.FC<{ size?: number }>;
-const EditIcon: React.FC<{ size?: number }> = FiEdit as React.FC<{ size?: number }>;
-const CalendarIcon: React.FC<{ size?: number }> = FiCalendar as React.FC<{ size?: number }>;
-const UserIcon: React.FC<{ size?: number }> = FiUser as React.FC<{ size?: number }>;
-const ShieldIcon: React.FC<{ size?: number }> = FiShield as React.FC<{ size?: number }>;
-const DownloadIcon: React.FC<{ size?: number }> = FiDownload as React.FC<{ size?: number }>;
-const MailIcon: React.FC<{ size?: number }> = FiMail as React.FC<{ size?: number }>;
-const PhoneIcon: React.FC<{ size?: number }> = FiPhone as React.FC<{ size?: number }>;
-
-// API Response types
-interface ApiResponse<T = unknown> {
-  success?: boolean;
-  data?: T;
-  message?: string;
-  error?: string;
-}
-
-interface ClientResponse {
-  _id?: string;
-  id?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-}
-
-interface BookingResponse {
-  _id?: string;
-  id?: string;
-  reference?: string;
-  clientId: string;
-  serviceId: string;
-  date: string;
-  timeSlot: string;
-  status?: string;
-}
 
 // Submission state interface
 interface SubmissionStateData {
@@ -81,328 +22,225 @@ interface SubmissionStateData {
 
 // Professional Styled Components
 const Container = styled.div`
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: ${PREMIUM_SPACING.xl}px ${PREMIUM_SPACING.lg}px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  padding: 40px 20px;
 `;
 
 const Header = styled.div`
   text-align: center;
-  margin-bottom: ${PREMIUM_SPACING.xl}px;
-  padding-bottom: ${PREMIUM_SPACING.lg}px;
-  border-bottom: 1px solid ${PREMIUM_COLORS.BASE_COLORS.ivory[300]};
-`;
+  margin-bottom: 40px;
 
-const Title = styled.h2`
-  font-family: 'Playfair Display', serif;
+  h1 {
   font-size: 32px;
+    color: #1a365d;
+    margin-bottom: 16px;
+    font-family: 'Playfair Display', serif;
   font-weight: 700;
-  color: ${PREMIUM_COLORS.BASE_COLORS.forest[500]};
-  margin: 0 0 ${PREMIUM_SPACING.sm}px 0;
-`;
+  }
 
-const Subtitle = styled.p`
+  p {
   font-size: 16px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[600]};
-  margin: 0;
-  max-width: 600px;
-  margin: 0 auto;
+    color: #4a5568;
   line-height: 1.6;
+  }
 `;
 
 const ContentGrid = styled.div`
   display: grid;
-  gap: ${PREMIUM_SPACING.xl}px;
-  
-  @media (min-width: 768px) {
     grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 `;
 
-const SummaryCard = styled.div`
+const LeftColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
+const RightColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
+const ProfessionalCard = styled.div`
   background: white;
-  border: 1px solid ${PREMIUM_COLORS.BASE_COLORS.ivory[300]};
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  padding: ${PREMIUM_SPACING.xl}px;
-  margin-bottom: ${PREMIUM_SPACING.lg}px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
   
   &:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.2s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   }
 `;
 
 const CardHeader = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: ${PREMIUM_SPACING.lg}px;
-  padding-bottom: ${PREMIUM_SPACING.md}px;
-  border-bottom: 2px solid ${PREMIUM_COLORS.BASE_COLORS.gold[500]};
-`;
-
-const SectionTitle = styled.h3`
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f7fafc;
+  
+  h3 {
   font-size: 18px;
-  font-weight: 600;
-  color: ${PREMIUM_COLORS.BASE_COLORS.forest[500]};
+    color: #1a365d;
   margin: 0;
+    font-weight: 700;
   display: flex;
   align-items: center;
-  gap: ${PREMIUM_SPACING.sm}px;
+    gap: 8px;
+  }
 `;
 
 const EditButton = styled.button`
-  background: none;
-  border: 1px solid ${PREMIUM_COLORS.BASE_COLORS.ivory[300]};
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[600]};
-  padding: ${PREMIUM_SPACING.xs}px ${PREMIUM_SPACING.sm}px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  color: #4a5568;
+  padding: 6px 12px;
   border-radius: 6px;
   font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 4px;
   transition: all 0.2s ease;
   
   &:hover {
-    border-color: ${PREMIUM_COLORS.BASE_COLORS.forest[300]};
-    color: ${PREMIUM_COLORS.BASE_COLORS.forest[500]};
+    border-color: #1a365d;
+    color: #1a365d;
   }
 `;
 
-const DetailRow = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: ${PREMIUM_SPACING.md}px;
-  padding: ${PREMIUM_SPACING.sm}px 0;
-  border-bottom: 1px solid ${PREMIUM_COLORS.BASE_COLORS.ivory[200]};
-  
-  &:last-child {
-    border-bottom: none;
-  }
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: ${PREMIUM_SPACING.xs}px;
-  }
+const CardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;
 
-const DetailLabel = styled.div`
-  font-size: 14px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[600]};
-  font-weight: 500;
-`;
-
-const DetailValue = styled.div`
-  font-size: 14px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[800]};
-  font-weight: 600;
-  
-  @media (max-width: 768px) {
-    text-align: left;
-  }
-`;
-
-const PricingCard = styled.div`
-  background: linear-gradient(135deg, ${PREMIUM_COLORS.BASE_COLORS.forest[50]} 0%, #ffffff 100%);
-  border: 1px solid ${PREMIUM_COLORS.BASE_COLORS.forest[200]};
-  border-radius: 12px;
-  padding: ${PREMIUM_SPACING.lg}px;
-  margin-bottom: ${PREMIUM_SPACING.lg}px;
-`;
-
-const PricingHeader = styled.h3`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${PREMIUM_COLORS.BASE_COLORS.forest[700]};
-  margin: 0 0 ${PREMIUM_SPACING.md}px 0;
-  text-align: center;
-`;
-
-const PricingRow = styled.div<{ $isTotal?: boolean }>`
+const InfoRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${PREMIUM_SPACING.sm}px 0;
-  border-bottom: ${props => props.$isTotal ? 
-    `2px solid ${PREMIUM_COLORS.BASE_COLORS.forest[300]}` : 
-    `1px solid ${PREMIUM_COLORS.BASE_COLORS.ivory[300]}`};
+  padding: 8px 0;
+  border-bottom: 1px solid #f7fafc;
   
   &:last-child {
     border-bottom: none;
   }
 `;
 
-const PricingLabel = styled.span<{ $isTotal?: boolean }>`
-  font-size: ${props => props.$isTotal ? '16px' : '14px'};
-  font-weight: ${props => props.$isTotal ? '600' : '500'};
-  color: ${props => props.$isTotal ? 
-    PREMIUM_COLORS.BASE_COLORS.forest[700] : 
-    PREMIUM_COLORS.BASE_COLORS.gray[600]};
-`;
-
-const PricingValue = styled.span<{ $isTotal?: boolean }>`
-  font-size: ${props => props.$isTotal ? '18px' : '14px'};
+const Label = styled.span`
   font-weight: 600;
-  color: ${props => props.$isTotal ? 
-    PREMIUM_COLORS.BASE_COLORS.forest[700] : 
-    PREMIUM_COLORS.BASE_COLORS.gray[800]};
-`;
-
-const PricingNote = styled.p`
-  font-size: 12px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[500]};
-  text-align: center;
-  margin: ${PREMIUM_SPACING.md}px 0 0 0;
-  font-style: italic;
-`;
-
-const SubmissionStateDisplay = styled.div<{ $status: 'submitting' | 'success' | 'error' }>`
-  background: ${props => {
-    switch (props.$status) {
-      case 'submitting': return '#f0f9ff';
-      case 'success': return '#f0fdf4';
-      case 'error': return '#fef2f2';
-      default: return 'white';
-    }
-  }};
-  border: 1px solid ${props => {
-    switch (props.$status) {
-      case 'submitting': return '#bfdbfe';
-      case 'success': return '#bbf7d0';
-      case 'error': return '#fecaca';
-      default: return PREMIUM_COLORS.BASE_COLORS.ivory[300];
-    }
-  }};
-  border-radius: 12px;
-  padding: ${PREMIUM_SPACING.lg}px;
-  margin: ${PREMIUM_SPACING.lg}px 0;
-  text-align: center;
-`;
-
-const SubmissionIcon = styled.div<{ $status: 'submitting' | 'success' | 'error' }>`
-  font-size: 48px;
-  margin-bottom: ${PREMIUM_SPACING.md}px;
-  color: ${props => {
-    switch (props.$status) {
-      case 'submitting': return '#3b82f6';
-      case 'success': return '#16a34a';
-      case 'error': return '#dc2626';
-      default: return PREMIUM_COLORS.BASE_COLORS.gray[500];
-    }
-  }};
-`;
-
-const SubmissionTitle = styled.h3`
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0 0 ${PREMIUM_SPACING.sm}px 0;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[800]};
-`;
-
-const SubmissionMessage = styled.p`
+  color: #4a5568;
   font-size: 14px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[600]};
-  margin: 0;
-  line-height: 1.5;
 `;
 
-const BookingReference = styled.div`
-  background: ${PREMIUM_COLORS.BASE_COLORS.forest[100]};
-  border: 1px solid ${PREMIUM_COLORS.BASE_COLORS.forest[300]};
-  border-radius: 8px;
-  padding: ${PREMIUM_SPACING.md}px;
-  margin: ${PREMIUM_SPACING.md}px 0;
-  text-align: center;
-`;
-
-const ReferenceLabel = styled.div`
-  font-size: 12px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.forest[600]};
+const Value = styled.span`
+  color: #1a365d;
   font-weight: 500;
-  margin-bottom: 4px;
-`;
-
-const ReferenceNumber = styled.div`
-  font-size: 18px;
-  font-weight: 700;
-  color: ${PREMIUM_COLORS.BASE_COLORS.forest[700]};
-  letter-spacing: 1px;
-`;
-
-const NextStepsList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: ${PREMIUM_SPACING.lg}px 0 0 0;
-  text-align: left;
-`;
-
-const NextStepItem = styled.li`
-  display: flex;
-  align-items: flex-start;
-  gap: ${PREMIUM_SPACING.sm}px;
-  margin-bottom: ${PREMIUM_SPACING.md}px;
   font-size: 14px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[700]};
-  line-height: 1.5;
+`;
+
+const FreeValue = styled.span`
+  color: #38a169;
+  font-weight: 700;
+  font-size: 16px;
+`;
+
+const SummaryRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f7fafc;
   
   &:last-child {
-    margin-bottom: 0;
+    border-bottom: none;
   }
 `;
 
-const ContactSection = styled.div`
-  background: ${PREMIUM_COLORS.BASE_COLORS.ivory[50]};
-  border-radius: 8px;
-  padding: ${PREMIUM_SPACING.lg}px;
-  margin-top: ${PREMIUM_SPACING.lg}px;
+const SummaryDivider = styled.div`
+  height: 2px;
+  background: #e2e8f0;
+  margin: 12px 0;
 `;
 
-const ContactTitle = styled.h4`
-  font-size: 16px;
-  font-weight: 600;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[800]};
-  margin: 0 0 ${PREMIUM_SPACING.md}px 0;
-`;
-
-const ContactInfo = styled.div`
+const SummaryTotal = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${PREMIUM_SPACING.sm}px;
-`;
-
-const ContactMethod = styled.div`
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: ${PREMIUM_SPACING.xs}px;
-  font-size: 14px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[700]};
+  padding: 16px 0;
+  border-top: 2px solid #1a365d;
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 700;
 `;
 
-const ContactNote = styled.p`
-  font-size: 12px;
-  color: ${PREMIUM_COLORS.BASE_COLORS.gray[500]};
-  margin: ${PREMIUM_SPACING.sm}px 0 0 0;
-  font-style: italic;
+const SecurityItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f7fafc;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const SecurityLabel = styled.span`
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 14px;
+`;
+
+const SecurityValue = styled.span`
+  color: #38a169;
+  font-weight: 600;
+  font-size: 14px;
 `;
 
 const ActionButtons = styled.div`
   display: flex;
-  gap: ${PREMIUM_SPACING.md}px;
-  justify-content: center;
-  margin-top: ${PREMIUM_SPACING.xl}px;
+  justify-content: space-between;
+  gap: 20px;
   
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
-const ActionButton = styled.button<{ $variant: 'primary' | 'secondary' }>`
-  padding: ${PREMIUM_SPACING.md}px ${PREMIUM_SPACING.xl}px;
+const BackButton = styled.button`
+  background: white;
+  border: 2px solid #e2e8f0;
+  color: #4a5568;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #f7fafc;
+    border-color: #1a365d;
+    color: #1a365d;
+  }
+`;
+
+const ConfirmButton = styled.button`
+  background: #38a169;
+  border: 2px solid #38a169;
+  color: white;
+  padding: 16px 32px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
@@ -410,571 +248,365 @@ const ActionButton = styled.button<{ $variant: 'primary' | 'secondary' }>`
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: ${PREMIUM_SPACING.sm}px;
-  min-width: 160px;
+  gap: 8px;
   
-  ${props => props.$variant === 'primary' ? `
-    background: ${PREMIUM_COLORS.BASE_COLORS.forest[500]};
-    color: white;
-    border: 2px solid ${PREMIUM_COLORS.BASE_COLORS.forest[500]};
-    
-    &:hover:not(:disabled) {
-      background: ${PREMIUM_COLORS.BASE_COLORS.forest[600]};
-      border-color: ${PREMIUM_COLORS.BASE_COLORS.forest[600]};
+  &:hover {
+    background: #2f855a;
+    border-color: #2f855a;
       transform: translateY(-1px);
     }
-  ` : `
-    background: white;
-    color: ${PREMIUM_COLORS.BASE_COLORS.gray[700]};
-    border: 2px solid ${PREMIUM_COLORS.BASE_COLORS.ivory[300]};
-    
-    &:hover:not(:disabled) {
-      border-color: ${PREMIUM_COLORS.BASE_COLORS.forest[300]};
-      color: ${PREMIUM_COLORS.BASE_COLORS.forest[600]};
-    }
-  `}
   
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    transform: none;
   }
 `;
 
-const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
+// Submission state styled components
+const SubmissionStateDisplay = styled.div<{ $status: 'submitting' | 'success' | 'error' }>`
+  background: ${props => {
+    switch (props.$status) {
+      case 'submitting': return 'linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%)';
+      case 'success': return 'linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%)';
+      case 'error': return 'linear-gradient(135deg, #fef2f2 0%, #ffffff 100%)';
+      default: return 'white';
+    }
+  }};
+  border: 2px solid ${props => {
+    switch (props.$status) {
+      case 'submitting': return '#3b82f6';
+      case 'success': return '#16a34a';
+      case 'error': return '#dc2626';
+      default: return '#e2e8f0';
+    }
+  }};
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+`;
+
+const SubmissionIcon = styled.div<{ $status: 'submitting' | 'success' | 'error' }>`
+  font-size: 64px;
+  margin-bottom: 24px;
+  color: ${props => {
+    switch (props.$status) {
+      case 'submitting': return '#3b82f6';
+      case 'success': return '#16a34a';
+      case 'error': return '#dc2626';
+      default: return '#4a5568';
+    }
+  }};
+`;
+
+const SubmissionTitle = styled.h3`
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: #1a365d;
+`;
+
+const SubmissionMessage = styled.p`
+  font-size: 16px;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.6;
+`;
+
+export const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
   onComplete,
   onBack,
-  isLoading = false,
-  bookingData
+  isLoading: propIsLoading = false, 
+  bookingData: propBookingData
 }) => {
-  const { state, goToStep } = useBooking();
+  const { 
+    resetForm,
+    goToStep
+  } = useBooking();
+  
+  const { i18n } = useTranslation();
   const [submissionState, setSubmissionState] = useState<SubmissionStateData>({ status: 'idle' });
-  const [isGeneratingCalendar, setIsGeneratingCalendar] = useState(false);
 
-  // CRITICAL: Enhanced validation logic to check multiple data sources
-  const validateAndExtractBookingData = () => {
-    console.log('[Confirmation] Validating booking data from all sources:', {
-      contextState: {
-        selectedService: state.selectedService,
-        selectedDate: state.selectedDate,
-        selectedTimeSlot: state.selectedTimeSlot,
-        clientInfo: state.clientInfo
-      },
-      propsBookingData: bookingData
-    });
+  const finalBookingData = propBookingData;
 
-    // Extract data from multiple sources - props take precedence over context state
-    const serviceData = bookingData?.service || state.selectedService;
-    const dateData = bookingData?.date || state.selectedDate;
-    const timeSlotData = bookingData?.timeSlot || state.selectedTimeSlot;
-    const clientInfoData = bookingData?.clientInfo || state.clientInfo;
-
-    console.log('[Confirmation] Extracted data:', {
-      serviceData: serviceData?.name,
-      dateData,
-      timeSlotData,
-      clientInfoData: clientInfoData?.firstName
-    });
-
-    // Validation checks
-    const validationResults = {
-      hasService: !!serviceData,
-      hasDate: !!dateData,
-      hasTimeSlot: !!timeSlotData,
-      hasClientInfo: !!clientInfoData,
-      hasRequiredClientFields: !!(clientInfoData?.firstName && clientInfoData?.lastName && clientInfoData?.email)
+  // German translation functions
+  const getGermanServiceName = (serviceName: string): string => {
+    const mapping: Record<string, string> = {
+      'Cryptocurrency Recovery': 'Kryptowährungs-Rückgewinnung',
+      'Investment Fraud Recovery': 'Anlagebetrug-Rückgewinnung',
+      'Financial Scam Recovery': 'Finanzbetrug-Rückgewinnung',
+      'Regulatory Assistance': 'Regulatorische Beschwerde-Unterstützung'
     };
-
-    console.log('[Confirmation] Validation results:', validationResults);
-
-    const isValid = Object.values(validationResults).every(Boolean);
-
-    return {
-      isValid,
-      validationResults,
-      finalBookingData: {
-        selectedService: serviceData,
-        selectedDate: dateData,
-        selectedTimeSlot: timeSlotData,
-        clientInfo: clientInfoData
-      }
-    };
+    return i18n.language === 'de' ? (mapping[serviceName] || serviceName) : serviceName;
   };
 
-  // Validate data and extract final booking data
-  const { isValid, validationResults, finalBookingData } = validateAndExtractBookingData();
+  const getGermanCaseType = (caseType: string): string => {
+    const mapping: Record<string, string> = {
+      'investment-fraud': 'Anlagebetrug',
+      'cryptocurrency-recovery': 'Kryptowährungs-Rückgewinnung',
+      'financial-scam': 'Finanzbetrug',
+      'regulatory-complaint': 'Regulatorische Beschwerde',
+      'other': 'Sonstiges'
+    };
+    return i18n.language === 'de' ? (mapping[caseType] || mapping['other']) : caseType;
+  };
 
-  // CRITICAL: Show validation error with enhanced debugging if data is incomplete
-  if (!isValid) {
-    return (
-      <Container>
-        <Header>
-          <Title>⚠️ Incomplete Booking Information</Title>
-          <Subtitle>Please complete all previous steps before confirming your booking.</Subtitle>
-        </Header>
+  const getGermanContactMethod = (method: string): string => {
+    const mapping: Record<string, string> = {
+      'email': 'E-Mail',
+      'phone': 'Telefon',
+      'text': 'SMS',
+      'both': 'Beides'
+    };
+    return i18n.language === 'de' ? (mapping[method] || method) : method;
+  };
 
-        <SubmissionStateDisplay $status="error">
-          <SubmissionIcon $status="error">❌</SubmissionIcon>
-          <SubmissionTitle>Missing Required Information</SubmissionTitle>
-          <SubmissionMessage>
-            Some required booking information is missing. Please review the details below.
-          </SubmissionMessage>
-
-          <div style={{ background: '#fff', border: '1px solid #fca5a5', borderRadius: '8px', padding: '16px', margin: '24px 0', textAlign: 'left' }}>
-            <h4 style={{ color: '#dc2626', fontSize: '16px', fontWeight: '600', marginBottom: '12px' }}>Missing Information:</h4>
-            <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
-              {!validationResults.hasService && (
-                <li style={{ color: '#7f1d1d', fontSize: '14px', marginBottom: '8px', paddingLeft: '8px' }}>❌ Service selection required</li>
-              )}
-              {!validationResults.hasDate && (
-                <li style={{ color: '#7f1d1d', fontSize: '14px', marginBottom: '8px', paddingLeft: '8px' }}>❌ Date selection required</li>
-              )}
-              {!validationResults.hasTimeSlot && (
-                <li style={{ color: '#7f1d1d', fontSize: '14px', marginBottom: '8px', paddingLeft: '8px' }}>❌ Time slot selection required</li>
-              )}
-              {!validationResults.hasClientInfo && (
-                <li style={{ color: '#7f1d1d', fontSize: '14px', marginBottom: '8px', paddingLeft: '8px' }}>❌ Client information required</li>
-              )}
-              {!validationResults.hasRequiredClientFields && (
-                <li style={{ color: '#7f1d1d', fontSize: '14px', marginBottom: '8px', paddingLeft: '8px' }}>❌ Complete client details required</li>
-              )}
-            </ul>
-          </div>
-
-          <ActionButtons>
-            {onBack && (
-              <ActionButton $variant="secondary" onClick={onBack}>
-                Back to Previous Step
-              </ActionButton>
-            )}
-            
-            <ActionButton $variant="primary" onClick={() => window.location.reload()}>
-              Start Over
-            </ActionButton>
-          </ActionButtons>
-
-          {process.env.NODE_ENV === 'development' && (
-            <div style={{ background: '#f3f4f6', border: '1px solid #d1d5db', borderRadius: '8px', padding: '16px', textAlign: 'left', fontSize: '12px', marginTop: '24px' }}>
-              <h4 style={{ color: '#374151', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Debug Information:</h4>
-              <pre style={{ margin: '0', whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontFamily: 'monospace', fontSize: '11px' }}>
-                {JSON.stringify({
-                  hasBookingDataProp: !!bookingData,
-                  bookingDataKeys: bookingData ? Object.keys(bookingData) : [],
-                  contextState: {
-                    hasService: !!state.selectedService,
-                    hasDate: !!state.selectedDate,
-                    hasTimeSlot: !!state.selectedTimeSlot,
-                    hasClientInfo: !!state.clientInfo
-                  },
-                  validationResults,
-                  extractedService: finalBookingData?.selectedService?.name,
-                  extractedDate: finalBookingData?.selectedDate,
-                  extractedTimeSlot: finalBookingData?.selectedTimeSlot,
-                  extractedClient: finalBookingData?.clientInfo?.firstName
-                }, null, 2)}
-              </pre>
-            </div>
-          )}
-        </SubmissionStateDisplay>
-      </Container>
-    );
-  }
-
-  // Enhanced formatting functions with proper error handling
-  const formatDate = (dateString: string) => {
+  const formatDateForLanguage = (dateString: string): string => {
+    if (!dateString) return i18n.language === 'de' ? 'Nicht angegeben' : 'Not specified';
     try {
-      if (!dateString || dateString === 'undefined') {
-        return 'Date not selected';
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return dateString;
       }
       
-      // Handle different date format possibilities
-      let dateObj;
-      if (dateString.includes('T') || dateString.includes('Z')) {
-        // ISO string
-        dateObj = new Date(dateString);
-      } else if (dateString.includes('-') && dateString.length === 10) {
-        // YYYY-MM-DD format
-        dateObj = new Date(dateString + 'T00:00:00');
+      if (i18n.language === 'de') {
+        return date.toLocaleDateString('de-DE', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        });
       } else {
-        // Try direct parsing
-        dateObj = new Date(dateString);
-      }
-      
-      if (isNaN(dateObj.getTime())) {
-        console.warn('[Confirmation] Invalid date string:', dateString);
-        return dateString; // Return original if can't parse
-      }
-      
-      return dateObj.toLocaleDateString('en-GB', {
-        weekday: 'long',
+      return date.toLocaleDateString('en-GB', {
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
       });
-    } catch (error) {
-      console.error('[Confirmation] Date formatting error:', error, 'for date:', dateString);
-      return dateString || 'Invalid date';
+      }
+    } catch {
+      return dateString;
     }
   };
 
-  const formatTime = (timeSlotData: any) => {
-    try {
-      if (!timeSlotData) {
-        return 'Time not selected';
-      }
-      
-      // Handle different time slot data structures
+  const formatTimeForLanguage = (timeSlotData: string | { startTime?: string; slot?: string; time?: string } | unknown): string => {
+    if (!timeSlotData) return i18n.language === 'de' ? 'Nicht angegeben' : 'Not specified';
+    
+    let timeString = '';
+    
+    // Handle string input
       if (typeof timeSlotData === 'string') {
-        // If it's already formatted like "10:00-11:00"
-        if (timeSlotData.includes('-') && !timeSlotData.includes('Invalid')) {
-          return timeSlotData;
-        }
-        
-        // If it's an ISO string
-        if (timeSlotData.includes('T') || timeSlotData.includes('Z')) {
-          const date = new Date(timeSlotData);
-          if (!isNaN(date.getTime())) {
-            return date.toLocaleTimeString('en-GB', {
-              hour: 'numeric',
-              minute: '2-digit',
-              hour12: false
-            });
+      if (timeSlotData.includes('{') || timeSlotData.includes('startTime')) {
+        try {
+          const parsed = JSON.parse(timeSlotData);
+          if (parsed.startTime) {
+            timeString = parsed.startTime;
+          }
+        } catch {
+          const timeMatch = timeSlotData.match(/(\d{2}:\d{2})/);
+          if (timeMatch) {
+            timeString = timeMatch[1];
           }
         }
-        
-        return timeSlotData;
+      } else {
+        timeString = timeSlotData;
       }
-      
-      // Handle time slot objects
-      if (timeSlotData.startTime && timeSlotData.endTime) {
-        const start = new Date(timeSlotData.startTime);
-        const end = new Date(timeSlotData.endTime);
-        
-        if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
-          const startTime = start.toLocaleTimeString('en-GB', {
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: false
-          });
-          const endTime = end.toLocaleTimeString('en-GB', {
-            hour: 'numeric', 
-            minute: '2-digit',
-            hour12: false
-          });
-          return `${startTime}-${endTime}`;
-        }
-      }
-      
-      // Handle simple time slot format
-      if (timeSlotData.time) {
-        return timeSlotData.time;
-      }
-      
-      return 'Time not available';
-    } catch (error) {
-      console.error('[Confirmation] Time formatting error:', error, 'for timeSlot:', timeSlotData);
-      return 'Time format error';
     }
-  };
-
-  const formatCurrency = (amount: number | string) => {
-    const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(numAmount);
-  };
-
-  const getCaseTypeLabel = (caseType: string) => {
-    return caseTypeOptions.find(opt => opt.value === caseType)?.label || caseType;
-  };
-
-  const getUrgencyLabel = (urgency: string) => {
-    return urgencyLevelOptions.find(opt => opt.value === urgency)?.label || urgency;
-  };
-
-  const getContactMethodLabel = (method: string) => {
-    switch (method) {
-      case 'email': return 'Email';
-      case 'phone': return 'Phone';
-      case 'text': return 'Text Message';
-      default: return method;
-    }
-  };
-
-  const getFraudTypeLabel = (fraudType?: string) => {
-    if (!fraudType) return 'General Recovery';
     
-    switch (fraudType) {
-      case 'investment_fraud': return 'Investment Fraud';
-      case 'bank_fraud': return 'Bank Fraud';
-      case 'credit_card_fraud': return 'Credit Card Fraud';
-      case 'identity_theft': return 'Identity Theft';
-      case 'pension_scam': return 'Pension Scam';
-      case 'mortgage_fraud': return 'Mortgage Fraud';
-      case 'insurance_fraud': return 'Insurance Fraud';
-      case 'tax_fraud': return 'Tax Fraud';
-      default: return 'Financial Recovery';
+    // Handle object input
+    if (typeof timeSlotData === 'object' && timeSlotData !== null) {
+      const timeObj = timeSlotData as { startTime?: string; slot?: string; time?: string };
+      if (timeObj.startTime) {
+        timeString = timeObj.startTime;
+      } else if (timeObj.slot) {
+        timeString = timeObj.slot;
+      }
+    }
+    
+    if (!timeString) {
+      return i18n.language === 'de' ? 'Zeit nicht angegeben' : 'Time not specified';
+    }
+    
+    // Add German formatting
+    if (i18n.language === 'de') {
+      if (timeString.includes('-')) {
+        return `${timeString} Uhr GMT`;
+      } else {
+    // Convert single time to range (assume 90-minute consultations)
+        const [hours, minutes] = timeString.split(':').map(Number);
+    const endHour = hours + 1;
+    const endMin = minutes + 30;
+    const formatTime = (h: number, m: number) => 
+      `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+        return `${formatTime(hours, minutes)}–${formatTime(endHour, endMin)} Uhr GMT`;
+      }
+    } else {
+      return timeString.includes('-') ? `${timeString} GMT` : `${timeString} GMT`;
     }
   };
 
-  // Enhanced backend submission with proper error handling
   const submitBooking = async () => {
+    setSubmissionState({ status: 'submitting' });
+
+    const { service: serviceToSubmit, date: dateToSubmit, timeSlot: timeSlotToSubmit, clientInfo: clientInfoToSubmit } = finalBookingData;
+
+    if (!serviceToSubmit || !serviceToSubmit.name) { 
+      setSubmissionState({ status: 'error', error: i18n.language === 'de' ? 'Service-Auswahl ungültig' : 'Service selection invalid' });
+      return;
+    }
+
+    if (!clientInfoToSubmit || !clientInfoToSubmit.firstName || !clientInfoToSubmit.email) {
+      setSubmissionState({ status: 'error', error: i18n.language === 'de' ? 'Kundeninformationen unvollständig' : 'Client information incomplete' });
+      return;
+    }
+
     try {
-      setSubmissionState({ status: 'submitting' });
-      
-      // COMPREHENSIVE DEBUGGING - Let's see exactly what we have
-      console.log('====== BOOKING SUBMISSION DEBUG START ======');
-      console.log('[DEBUG] Starting booking submission...');
-      console.log('[DEBUG] finalBookingData:', finalBookingData);
-      console.log('[DEBUG] finalBookingData.selectedService:', finalBookingData?.selectedService);
-      console.log('[DEBUG] finalBookingData.selectedDate:', finalBookingData?.selectedDate);
-      console.log('[DEBUG] finalBookingData.selectedTimeSlot:', finalBookingData?.selectedTimeSlot);
-      console.log('[DEBUG] finalBookingData.clientInfo:', finalBookingData?.clientInfo);
-      
-      // Check if we have all required data
-      if (!finalBookingData) {
-        throw new Error('DEBUG: finalBookingData is null or undefined');
-      }
-      
-      if (!finalBookingData.selectedService) {
-        throw new Error('DEBUG: selectedService is missing');
-      }
-      
-      if (!finalBookingData.selectedDate) {
-        throw new Error('DEBUG: selectedDate is missing');
-      }
-      
-      if (!finalBookingData.selectedTimeSlot) {
-        throw new Error('DEBUG: selectedTimeSlot is missing');
-      }
-      
-      if (!finalBookingData.clientInfo) {
-        throw new Error('DEBUG: clientInfo is missing');
-      }
-      
-      // Check individual client info fields
-      console.log('[DEBUG] clientInfo breakdown:');
-      console.log('  firstName:', finalBookingData.clientInfo.firstName);
-      console.log('  lastName:', finalBookingData.clientInfo.lastName);
-      console.log('  email:', finalBookingData.clientInfo.email);
-      console.log('  phone:', finalBookingData.clientInfo.phone);
-      console.log('  preferredContactMethod:', finalBookingData.clientInfo.preferredContactMethod);
-      console.log('  fraudType:', finalBookingData.clientInfo.fraudType);
-      console.log('  approximateLossAmount:', finalBookingData.clientInfo.approximateLossAmount);
-      console.log('  additionalNotes:', finalBookingData.clientInfo.additionalNotes);
-      
-      // Check required fields exist
-      if (!finalBookingData.clientInfo.firstName) {
-        throw new Error('DEBUG: firstName is missing from clientInfo');
-      }
-      if (!finalBookingData.clientInfo.lastName) {
-        throw new Error('DEBUG: lastName is missing from clientInfo');
-      }
-      if (!finalBookingData.clientInfo.email) {
-        throw new Error('DEBUG: email is missing from clientInfo');
-      }
-      if (!finalBookingData.clientInfo.phone) {
-        throw new Error('DEBUG: phone is missing from clientInfo');
-      }
-      
-      console.log('[DEBUG] All required fields present, constructing client payload...');
-      
-      // Step 1: Prepare client payload with all required fields - WITH SAFE ACCESS
+      // Service ID mapping
+      const getServiceIdFromName = (serviceName: string): string => {
+        const serviceMapping: Record<string, string> = {
+          'Cryptocurrency Recovery': '6833842b0a231982cf5ed0fe',
+          'Investment Fraud Recovery': '6833842b0a231982cf5ed0ff', 
+          'Financial Scam Recovery': '6833842b0a231982cf5ed100',
+          'Regulatory Assistance': '6833842b0a231982cf5ed101'
+        };
+        return serviceMapping[serviceName] || '6833842b0a231982cf5ed0fe';
+      };
+
+      // Loss amount parsing
+      const parseLossAmount = (lossAmount?: string): number => {
+        if (!lossAmount) return 0;
+        const amounts: Record<string, number> = {
+          'under-10k': 5000,
+          '10k-100k': 50000,
+          '100k-500k': 250000,
+          '500k-1m': 750000,
+          '1m-5m': 2500000,
+          '5m+': 10000000
+        };
+        return amounts[lossAmount] || 0;
+      };
+
+      // Service type mapping
+      const mapServiceTypeToCase = (serviceType: string): string => {
+        const mapping: Record<string, string> = {
+          'consultation': 'other',
+          'cryptocurrency': 'cryptocurrency-recovery', 
+          'investment': 'investment-fraud',
+          'scam': 'financial-scam',
+          'regulatory': 'regulatory-complaint',
+          'Cryptocurrency Recovery': 'cryptocurrency-recovery',
+          'Investment Fraud Recovery': 'investment-fraud',
+          'Financial Scam Recovery': 'financial-scam',
+          'Regulatory Assistance': 'regulatory-complaint'
+        };
+        return mapping[serviceType] || 'other';
+      };
+
+      // STEP 1: Create Client First
       const clientPayload = {
-        firstName: finalBookingData.clientInfo.firstName,
-        lastName: finalBookingData.clientInfo.lastName,
-        email: finalBookingData.clientInfo.email.toLowerCase(),
-        phone: finalBookingData.clientInfo.phone,
-        preferredContactMethod: finalBookingData.clientInfo.preferredContactMethod || 'email',
+        firstName: clientInfoToSubmit.firstName,
+        lastName: clientInfoToSubmit.lastName,
+        email: clientInfoToSubmit.email,
+        phone: clientInfoToSubmit.phone,
         gdprConsent: true,
-        marketingConsent: false,
-        // Additional fields that might be needed - SAFE ACCESS
-        notes: finalBookingData.clientInfo.additionalNotes || '',
-        caseType: finalBookingData.clientInfo.fraudType || 'other',
-        estimatedLoss: finalBookingData.clientInfo.approximateLossAmount ? 
-          parseInt(finalBookingData.clientInfo.approximateLossAmount.toString()) : 0,
-        urgencyLevel: 'standard' // Default value
+        preferredContactMethod: clientInfoToSubmit.preferredContactMethod || 'email',
+        caseType: mapServiceTypeToCase(serviceToSubmit.name),
+        estimatedLoss: parseLossAmount(clientInfoToSubmit.estimatedLoss),
+        urgencyLevel: 'standard',
+        company: clientInfoToSubmit.company || ''
       };
       
-      console.log('[DEBUG] Client payload constructed:', clientPayload);
-      console.log('[DEBUG] Making client creation request...');
-      
-      // Make client creation request with proper error handling
       const { bookingApi } = await import('../../../config/api');
-      const clientData = await bookingApi.createClient(clientPayload);
+      const clientResponse = await bookingApi.createClient(clientPayload);
       
-      console.log('[DEBUG] Client created successfully:', clientData);
+      const client = (clientResponse as { data?: { _id: string } }).data || clientResponse as { _id: string };
       
-      // Extract client ID from response with type safety
-      const clientId = (() => {
-        if (typeof clientData === 'object' && clientData !== null) {
-          const data = clientData as any;
-          return data.data?._id || data.data?.id || data._id || data.id;
-        }
-        return null;
-      })();
-      
-      if (!clientId) {
-        console.error('[DEBUG] No client ID returned:', clientData);
-        throw new Error('Failed to create client record - no ID returned');
+      if (!client || !client._id) {
+        throw new Error(i18n.language === 'de' ? 'Kundenprofil konnte nicht erstellt werden' : 'Failed to create client profile');
       }
       
-      console.log('[DEBUG] Client ID extracted:', clientId);
-      
-      // Step 2: Prepare booking payload
-      console.log('[DEBUG] Formatting time slot...');
-      const timeSlotString = formatTime(finalBookingData.selectedTimeSlot);
-      console.log('[DEBUG] Time slot formatted:', timeSlotString);
-      
-      // Use _id if available, fallback to id for backward compatibility
-      const serviceId = finalBookingData.selectedService._id || finalBookingData.selectedService.id;
-      
-      // Add debug logging to verify correct ID format
-      console.log('[DEBUG] Using serviceId:', serviceId);
-      console.log('[DEBUG] serviceId type:', typeof serviceId);
-      console.log('[DEBUG] serviceId length:', serviceId?.length);
-      console.log('[DEBUG] Selected service object:', finalBookingData.selectedService);
-      
+      // STEP 2: Create Booking with Client ID
+      const formatTimeSlot = (selectedTime: string): string => {
+        if (!selectedTime) return 'TBD';
+        if (selectedTime.includes('-')) {
+          return selectedTime;
+        }
+        const [hours, minutes] = selectedTime.split(':').map(Number);
+        const startHour = hours;
+        const startMin = minutes;
+        const endHour = hours + 1;
+        const endMin = minutes + 30;
+        const formatTime = (h: number, m: number) => 
+          `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+        return `${formatTime(startHour, startMin)}-${formatTime(endHour, endMin)}`;
+      };
+
+      const timeSlotValue = timeSlotToSubmit as { startTime?: string; time?: string } | string;
+      const timeSlotString = typeof timeSlotValue === 'string' 
+        ? timeSlotValue 
+        : timeSlotValue?.startTime || timeSlotValue?.time || String(timeSlotToSubmit);
+
       const bookingPayload = {
-        clientId: clientId,
-        serviceId: serviceId,
-        serviceName: finalBookingData.selectedService.name,
-        date: finalBookingData.selectedDate,
-        timeSlot: timeSlotString,
-        notes: finalBookingData.clientInfo.additionalNotes || `${finalBookingData.selectedService.name} consultation`,
-        estimatedValue: finalBookingData.clientInfo.approximateLossAmount ? 
-          parseInt(finalBookingData.clientInfo.approximateLossAmount.toString()) : 0,
-        status: 'confirmed'
+        clientId: client._id,
+        serviceId: getServiceIdFromName(serviceToSubmit.name),
+        serviceName: serviceToSubmit.name,
+        date: new Date(dateToSubmit).toISOString(),
+        timeSlot: formatTimeSlot(timeSlotString),
+        urgencyLevel: 'standard',
+        estimatedValue: parseLossAmount(clientInfoToSubmit.estimatedLoss),
+        notes: clientInfoToSubmit.notes || clientInfoToSubmit.additionalNotes || `${serviceToSubmit.name} consultation request`
       };
       
-      console.log('[DEBUG] Booking payload constructed:', bookingPayload);
-      console.log('[DEBUG] Making booking creation request...');
+      const bookingResponse = await bookingApi.createBooking(bookingPayload);
+      const booking = (bookingResponse as { data?: { _id: string } }).data || bookingResponse as { _id: string; reference?: string };
       
-      // Make booking creation request
-      const bookingData = await bookingApi.createBooking(bookingPayload);
-      console.log('[DEBUG] Booking created successfully:', bookingData);
+      if (!booking || !booking._id) {
+        throw new Error(i18n.language === 'de' ? 'Buchung konnte nicht erstellt werden' : 'Failed to create booking');
+      }
       
-      // Extract booking reference with type safety
-      const bookingRef = (() => {
-        if (typeof bookingData === 'object' && bookingData !== null) {
-          const data = bookingData as any;
-          return data.data?.reference || 
-                 data.data?._id || 
-                 data.data?.id ||
-                 data.reference ||
-                 data._id ||
-                 data.id ||
-                 `RO-${Date.now()}`;
-        }
-        return `RO-${Date.now()}`;
-      })();
+      const bookingRef = booking._id || (booking as { reference?: string }).reference;
       
-      console.log('[DEBUG] Booking reference extracted:', bookingRef);
-      
-      // Step 3: Update success state
       setSubmissionState({
         status: 'success',
         bookingRef: bookingRef
       });
       
-      console.log('[DEBUG] Booking process completed successfully with reference:', bookingRef);
-      console.log('====== BOOKING SUBMISSION DEBUG END ======');
-      
-      // Call onComplete callback after a brief delay
-      setTimeout(() => {
-        onComplete?.({ 
+      resetForm();
+
+      if (onComplete) {
+        onComplete({ 
           bookingReference: bookingRef,
+          clientId: client._id,
           confirmationSent: true 
         });
-      }, 2000);
-      
+      }
+
     } catch (error: unknown) {
-      console.error('====== BOOKING SUBMISSION ERROR ======');
-      console.error('[ERROR] Booking submission failed:', error);
-      console.error('[ERROR] Error type:', typeof error);
-      console.error('[ERROR] Error name:', (error as any)?.constructor?.name);
-      console.error('[ERROR] Error message:', (error as any)?.message);
-      console.error('[ERROR] Error stack:', (error as any)?.stack);
-      console.error('====== ERROR DEBUG END ======');
+      let submitError = i18n.language === 'de' ? 
+        'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.' :
+        'An unexpected error occurred during booking. Please try again.';
       
-      let errorMessage = 'Booking submission failed. Please try again.';
-      
-      if (error instanceof Error) {
-        // Show the actual error message for debugging
-        errorMessage = `ERROR: ${error.message}`;
-        
-        if (error.message.includes('fetch failed') || error.message.includes('Failed to fetch')) {
-          errorMessage = 'Unable to connect to our booking system. Please check your internet connection and try again.';
-        } else if (error.message.includes('CORS')) {
-          errorMessage = 'Connection security issue. Please contact our support team.';
-        } else if (error.message.includes('network')) {
-          errorMessage = 'Network error. Please check your connection and try again.';
-        } else if (error.message.includes('400')) {
-          errorMessage = 'Please check your information and try again.';
-        } else if (error.message.includes('500')) {
-          errorMessage = 'Our booking system is temporarily unavailable. Please try again in a few minutes.';
-        } else if (error.message.includes('duplicate') || error.message.includes('already exists')) {
-          errorMessage = 'A booking with this information already exists. Please contact us if you need to make changes.';
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      if (errorMessage) {
+        if (errorMessage.includes('Client')) {
+          submitError = i18n.language === 'de' ? 
+            'Kundenprofil konnte nicht erstellt werden. Bitte überprüfen Sie Ihre Informationen und versuchen Sie es erneut.' :
+            'Failed to create your client profile. Please check your information and try again.';
+        } else if (errorMessage.includes('Booking')) {
+          submitError = i18n.language === 'de' ? 
+            'Buchung konnte nicht erstellt werden. Ihr Profil wurde erfolgreich erstellt. Bitte versuchen Sie die Buchung erneut.' :
+            'Failed to create booking. Your profile was created successfully. Please try booking again.';
         }
       }
       
       setSubmissionState({
         status: 'error',
-        error: errorMessage
+        error: submitError
       });
     }
   };
 
-  // Calendar file generation
-  const generateCalendarFile = () => {
-    try {
-      setIsGeneratingCalendar(true);
-      vlog('[Confirmation] Generating calendar file...');
-      
-      const startDate = new Date(finalBookingData.selectedTimeSlot!.startTime);
-      const endDate = new Date(finalBookingData.selectedTimeSlot!.endTime);
-      
-      const icsContent = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Recovery Office//Booking System//EN',
-        'BEGIN:VEVENT',
-        `UID:${submissionState.bookingRef || Date.now()}@recoveryoffice.com`,
-        `DTSTART:${startDate.toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-        `DTEND:${endDate.toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-        `SUMMARY:Recovery Office Consultation - ${finalBookingData.selectedService!.name}`,
-        `DESCRIPTION:Professional consultation session for ${finalBookingData.selectedService!.name}`,
-        'LOCATION:Recovery Office (Details in confirmation email)',
-        'STATUS:CONFIRMED',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
-      
-      const blob = new Blob([icsContent], { type: 'text/calendar' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `recovery-office-appointment-${submissionState.bookingRef || 'booking'}.ics`;
-      link.click();
-      URL.revokeObjectURL(url);
-      
-      vsuccess('[Confirmation] Calendar file generated successfully');
-    } catch (error) {
-      verror('[Confirmation] Error generating calendar file:', error);
-    } finally {
-      setIsGeneratingCalendar(false);
-    }
-  };
-
-  if (isLoading) {
-    return <LoadingOverlay message="Preparing confirmation..." />;
+  if (propIsLoading) {
+    return <LoadingOverlay message={i18n.language === 'de' ? 'Bestätigung wird vorbereitet...' : 'Preparing confirmation...'} />;
   }
 
-  // Show submission states
   if (submissionState.status === 'submitting') {
     return (
       <Container>
@@ -987,10 +619,14 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
               ⏳
             </motion.div>
           </SubmissionIcon>
-          <SubmissionTitle>Processing Your Booking...</SubmissionTitle>
+          <SubmissionTitle>
+            {i18n.language === 'de' ? 'Ihre Buchung wird bearbeitet...' : 'Processing Your Booking...'}
+          </SubmissionTitle>
           <SubmissionMessage>
-            Please wait while we confirm your consultation appointment. 
-            This may take a few moments.
+            {i18n.language === 'de' ? 
+              'Bitte warten Sie, während wir Ihren Beratungstermin bestätigen. Dies kann einen Moment dauern.' :
+              'Please wait while we confirm your consultation appointment. This may take a few moments.'
+            }
           </SubmissionMessage>
         </SubmissionStateDisplay>
       </Container>
@@ -1002,58 +638,15 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
       <Container>
         <SubmissionStateDisplay $status="success">
           <SubmissionIcon $status="success">✓</SubmissionIcon>
-          <SubmissionTitle>Booking Confirmed!</SubmissionTitle>
+          <SubmissionTitle>
+            {i18n.language === 'de' ? 'Buchung bestätigt!' : 'Booking Confirmed!'}
+          </SubmissionTitle>
           <SubmissionMessage>
-            Your consultation has been successfully scheduled. We'll be in touch soon.
+            {i18n.language === 'de' ? 
+              'Ihre Beratung wurde erfolgreich geplant. Wir werden uns bald bei Ihnen melden.' :
+              'Your consultation has been successfully scheduled. We\'ll be in touch soon.'
+            }
           </SubmissionMessage>
-          
-          <BookingReference>
-            <ReferenceLabel>Booking Reference:</ReferenceLabel>
-            <ReferenceNumber>{submissionState.bookingRef}</ReferenceNumber>
-          </BookingReference>
-          
-          <NextStepsList>
-            <NextStepItem>
-              📧 You'll receive a detailed confirmation email within 5 minutes
-            </NextStepItem>
-            <NextStepItem>
-              📅 A calendar invitation will be sent with meeting details
-            </NextStepItem>
-            <NextStepItem>
-              📞 Our team will contact you 24 hours before your appointment
-            </NextStepItem>
-            <NextStepItem>
-              📋 Please prepare any relevant documents for your consultation
-            </NextStepItem>
-          </NextStepsList>
-          
-          <ContactSection>
-            <ContactTitle>Need to make changes?</ContactTitle>
-            <ContactInfo>
-              <ContactMethod>
-                <PhoneIcon size={14} />
-                Call us: +44 20 7123 4567
-              </ContactMethod>
-              <ContactMethod>
-                <MailIcon size={14} />
-                Email us: bookings@recoveryoffice.com
-              </ContactMethod>
-              <ContactNote>
-                Quote your booking reference: {submissionState.bookingRef}
-              </ContactNote>
-            </ContactInfo>
-          </ContactSection>
-          
-          <ActionButtons>
-            <ActionButton 
-              $variant="secondary" 
-              onClick={generateCalendarFile}
-              disabled={isGeneratingCalendar}
-            >
-              <DownloadIcon size={16} />
-              {isGeneratingCalendar ? 'Generating...' : 'Add to Calendar'}
-            </ActionButton>
-          </ActionButtons>
         </SubmissionStateDisplay>
       </Container>
     );
@@ -1064,211 +657,218 @@ const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
       <Container>
         <SubmissionStateDisplay $status="error">
           <SubmissionIcon $status="error">⚠️</SubmissionIcon>
-          <SubmissionTitle>Booking Failed</SubmissionTitle>
-          <SubmissionMessage>
-            {submissionState.error}
-          </SubmissionMessage>
+          <SubmissionTitle>
+            {i18n.language === 'de' ? 'Buchung fehlgeschlagen' : 'Booking Failed'}
+          </SubmissionTitle>
+          <SubmissionMessage>{submissionState.error}</SubmissionMessage>
           
           <ActionButtons>
-            <ActionButton 
-              $variant="secondary" 
-              onClick={() => setSubmissionState({ status: 'idle' })}
-            >
-              Try Again
-            </ActionButton>
-            <ActionButton 
-              $variant="primary" 
-              onClick={() => window.location.href = 'mailto:bookings@recoveryoffice.com'}
-            >
-              Contact Support
-            </ActionButton>
+            <BackButton onClick={() => setSubmissionState({ status: 'idle' })}>
+              {i18n.language === 'de' ? 'Erneut versuchen' : 'Try Again'}
+            </BackButton>
           </ActionButtons>
         </SubmissionStateDisplay>
       </Container>
     );
   }
 
-  // Main confirmation display
   return (
     <Container>
       <Header>
-        <Title>Review & Confirm Your Consultation</Title>
-        <Subtitle>
-          Please review your consultation details below. Once confirmed, you'll receive 
-          an email confirmation with all the necessary information.
-        </Subtitle>
+        <h1>
+          {i18n.language === 'de' ? 'Überprüfen & Bestätigen Sie Ihre Beratung' : 'Review & Confirm Your Consultation'}
+        </h1>
+        <p>
+          {i18n.language === 'de' ? 
+            'Bitte überprüfen Sie Ihre Beratungsdetails unten. Nach der Bestätigung erhalten Sie eine E-Mail-Bestätigung mit allen notwendigen Informationen.' :
+            'Please review your consultation details below. Once confirmed, you\'ll receive an email confirmation with all the necessary information.'
+          }
+        </p>
       </Header>
 
       <ContentGrid>
-        {/* Left Column - Booking Summary */}
-        <div>
-          {/* Service Summary */}
-          <SummaryCard>
+        <LeftColumn>
+          {/* Service Details Card */}
+          <ProfessionalCard>
             <CardHeader>
-              <SectionTitle>
-                <FileTextIcon size={20} />
-                Service Details
-              </SectionTitle>
+              <h3>
+                📋 {i18n.language === 'de' ? 'Service-Details' : 'Service Details'}
+              </h3>
               <EditButton onClick={() => goToStep(0)}>
-                <EditIcon size={12} />
-                Edit
+                {i18n.language === 'de' ? 'Bearbeiten' : 'Edit'}
               </EditButton>
             </CardHeader>
-            
-            <DetailRow>
-              <DetailLabel>Service Type</DetailLabel>
-              <DetailValue>{finalBookingData.selectedService!.name}</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Duration</DetailLabel>
-              <DetailValue>{finalBookingData.selectedService!.duration} minutes</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Consultation Fee</DetailLabel>
-              <DetailValue>
-                {finalBookingData.selectedService!.price ? 
-                  formatCurrency(finalBookingData.selectedService!.price) : 
-                  'Complimentary'
-                }
-              </DetailValue>
-            </DetailRow>
-          </SummaryCard>
-
-          {/* Appointment Summary */}
-          <SummaryCard>
+            <CardContent>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Service-Typ' : 'Service Type'}:</Label>
+                <Value>{getGermanServiceName(finalBookingData.service!.name)}</Value>
+              </InfoRow>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Dauer' : 'Duration'}:</Label>
+                <Value>75 {i18n.language === 'de' ? 'Minuten' : 'minutes'}</Value>
+              </InfoRow>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Beratungsgebühr' : 'Consultation Fee'}:</Label>
+                <FreeValue>{i18n.language === 'de' ? 'KOSTENLOS' : 'FREE'}</FreeValue>
+              </InfoRow>
+            </CardContent>
+          </ProfessionalCard>
+          
+          {/* Date Time Card */}
+          <ProfessionalCard>
             <CardHeader>
-              <SectionTitle>
-                <CalendarIcon size={20} />
-                Date & Time
-              </SectionTitle>
+              <h3>
+                📅 {i18n.language === 'de' ? 'Datum & Uhrzeit' : 'Date & Time'}
+              </h3>
               <EditButton onClick={() => goToStep(1)}>
-                <EditIcon size={12} />
-                Edit
+                {i18n.language === 'de' ? 'Bearbeiten' : 'Edit'}
               </EditButton>
             </CardHeader>
-            
-            <DetailRow>
-              <DetailLabel>Date</DetailLabel>
-              <DetailValue>{formatDate(finalBookingData.selectedDate!)}</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Time</DetailLabel>
-              <DetailValue>
-                {formatTime(finalBookingData.selectedTimeSlot)}
-              </DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Timezone</DetailLabel>
-              <DetailValue>Greenwich Mean Time (GMT)</DetailValue>
-            </DetailRow>
-          </SummaryCard>
-
-          {/* Client Information Summary */}
-          <SummaryCard>
+            <CardContent>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Datum' : 'Date'}:</Label>
+                <Value>{formatDateForLanguage(finalBookingData.date!)}</Value>
+              </InfoRow>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Uhrzeit' : 'Time'}:</Label>
+                <Value>{formatTimeForLanguage(finalBookingData.timeSlot)}</Value>
+              </InfoRow>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Zeitzone' : 'Timezone'}:</Label>
+                <Value>Greenwich Mean Time (GMT)</Value>
+              </InfoRow>
+            </CardContent>
+          </ProfessionalCard>
+          
+          {/* Personal Info Card */}
+          <ProfessionalCard>
             <CardHeader>
-              <SectionTitle>
-                <UserIcon size={20} />
-                Your Information
-              </SectionTitle>
+              <h3>
+                👤 {i18n.language === 'de' ? 'Persönliche Informationen' : 'Personal Information'}
+              </h3>
               <EditButton onClick={() => goToStep(2)}>
-                <EditIcon size={12} />
-                Edit
+                {i18n.language === 'de' ? 'Bearbeiten' : 'Edit'}
               </EditButton>
             </CardHeader>
-            
-            <DetailRow>
-              <DetailLabel>Name</DetailLabel>
-              <DetailValue>{finalBookingData.clientInfo!.firstName} {finalBookingData.clientInfo!.lastName}</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Email</DetailLabel>
-              <DetailValue>{finalBookingData.clientInfo!.email}</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Phone</DetailLabel>
-              <DetailValue>{finalBookingData.clientInfo!.phone}</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Case Type</DetailLabel>
-              <DetailValue>{getCaseTypeLabel(finalBookingData.clientInfo!.fraudType || 'other')}</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Preferred Contact</DetailLabel>
-              <DetailValue>{getContactMethodLabel(finalBookingData.clientInfo!.preferredContactMethod || 'email')}</DetailValue>
-            </DetailRow>
-          </SummaryCard>
-        </div>
-
-        {/* Right Column - Pricing & Actions */}
-        <div>
-          {/* Pricing Breakdown */}
-          <PricingCard>
-            <PricingHeader>Investment Summary</PricingHeader>
-            <PricingRow>
-              <PricingLabel>Consultation Fee:</PricingLabel>
-              <PricingValue>
-                {finalBookingData.selectedService!.price ? 
-                  formatCurrency(finalBookingData.selectedService!.price) : 
-                  'Free'
+            <CardContent>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Name' : 'Name'}:</Label>
+                <Value>{finalBookingData.clientInfo!.firstName} {finalBookingData.clientInfo!.lastName}</Value>
+              </InfoRow>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'E-Mail' : 'Email'}:</Label>
+                <Value>{finalBookingData.clientInfo!.email}</Value>
+              </InfoRow>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Telefon' : 'Phone'}:</Label>
+                <Value>{finalBookingData.clientInfo!.phone}</Value>
+              </InfoRow>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Fall-Typ' : 'Case Type'}:</Label>
+                <Value>{getGermanCaseType(finalBookingData.clientInfo!.caseType || 'other')}</Value>
+              </InfoRow>
+              <InfoRow>
+                <Label>{i18n.language === 'de' ? 'Bevorzugter Kontakt' : 'Preferred Contact'}:</Label>
+                <Value>{getGermanContactMethod(finalBookingData.clientInfo!.preferredContactMethod || 'email')}</Value>
+              </InfoRow>
+            </CardContent>
+          </ProfessionalCard>
+        </LeftColumn>
+        
+        <RightColumn>
+          {/* Summary Card */}
+          <ProfessionalCard>
+            <CardHeader>
+              <h3>
+                💰 {i18n.language === 'de' ? 'Investitions-Zusammenfassung' : 'Investment Summary'}
+              </h3>
+            </CardHeader>
+            <CardContent>
+              <SummaryRow>
+                <Label>{i18n.language === 'de' ? 'Beratungsgebühr' : 'Consultation Fee'}:</Label>
+                <FreeValue>{i18n.language === 'de' ? 'Kostenfrei' : 'Complimentary'}</FreeValue>
+              </SummaryRow>
+              <SummaryRow>
+                <Label>{i18n.language === 'de' ? 'Dauer' : 'Duration'}:</Label>
+                <Value>75 {i18n.language === 'de' ? 'Min.' : 'mins'}</Value>
+              </SummaryRow>
+              <SummaryDivider />
+              <SummaryTotal>
+                <Label>{i18n.language === 'de' ? 'Gesamtkosten' : 'Total Cost'}:</Label>
+                <FreeValue>{i18n.language === 'de' ? 'KOSTENLOS' : 'FREE'}</FreeValue>
+              </SummaryTotal>
+              
+              <div style={{ 
+                background: '#f0fdf4',
+                border: '1px solid #bbf7d0',
+                borderRadius: '8px',
+                padding: '16px',
+                marginTop: '16px',
+                textAlign: 'center',
+                fontSize: '14px',
+                color: '#166534',
+                fontWeight: '500'
+              }}>
+                {i18n.language === 'de' ? 
+                  'Die Zahlung wird nach Ihrer Beratung bearbeitet. Wir akzeptieren alle gängigen Zahlungsmethoden.' :
+                  'Payment will be processed after your consultation. We accept all major payment methods.'
                 }
-              </PricingValue>
-            </PricingRow>
-            <PricingRow>
-              <PricingLabel>Duration:</PricingLabel>
-              <PricingValue>{finalBookingData.selectedService!.duration} minutes</PricingValue>
-            </PricingRow>
-            <PricingRow $isTotal>
-              <PricingLabel $isTotal>Total Investment:</PricingLabel>
-              <PricingValue $isTotal>
-                {finalBookingData.selectedService!.price ? 
-                  formatCurrency(finalBookingData.selectedService!.price) : 
-                  'Free'
-                }
-              </PricingValue>
-            </PricingRow>
-            <PricingNote>
-              Payment will be processed after your consultation. We accept all major payment methods.
-            </PricingNote>
-          </PricingCard>
+              </div>
+            </CardContent>
+          </ProfessionalCard>
+          
+          {/* Security Card */}
+          <ProfessionalCard>
+            <CardHeader>
+              <h3>
+                🛡️ {i18n.language === 'de' ? 'Sicher & Vertraulich' : 'Secure & Confidential'}
+              </h3>
+            </CardHeader>
+            <CardContent>
+              <div style={{
+                background: '#f0f9ff',
+                border: '1px solid #bfdbfe',
+                borderRadius: '8px',
+                padding: '12px',
+                marginBottom: '16px',
+                textAlign: 'center',
+                fontSize: '14px',
+                color: '#1e40af',
+                fontWeight: '600'
+              }}>
+                🛡️ {i18n.language === 'de' ? 'Unternehmensklasse-Sicherheit' : 'Enterprise-Grade Security'}
+              </div>
+              
+              <SecurityItem>
+                <SecurityLabel>{i18n.language === 'de' ? 'Datenschutz' : 'Data Protection'}:</SecurityLabel>
+                <SecurityValue>{i18n.language === 'de' ? 'DSGVO-konform' : 'GDPR Compliant'}</SecurityValue>
+              </SecurityItem>
+              <SecurityItem>
+                <SecurityLabel>{i18n.language === 'de' ? 'Verschlüsselung' : 'Encryption'}:</SecurityLabel>
+                <SecurityValue>256-bit SSL</SecurityValue>
+              </SecurityItem>
+              <SecurityItem>
+                <SecurityLabel>{i18n.language === 'de' ? 'Vertraulichkeit' : 'Confidentiality'}:</SecurityLabel>
+                <SecurityValue>{i18n.language === 'de' ? 'Professionelle Standards' : 'Professional Standards'}</SecurityValue>
+              </SecurityItem>
+            </CardContent>
+          </ProfessionalCard>
+        </RightColumn>
+      </ContentGrid>
 
-          {/* Security & Trust */}
-          <SummaryCard>
-            <SectionTitle>
-              <ShieldIcon size={20} />
-              Secure & Confidential
-            </SectionTitle>
-            <DetailRow>
-              <DetailLabel>Data Protection</DetailLabel>
-              <DetailValue>GDPR Compliant</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Encryption</DetailLabel>
-              <DetailValue>256-bit SSL</DetailValue>
-            </DetailRow>
-            <DetailRow>
-              <DetailLabel>Confidentiality</DetailLabel>
-              <DetailValue>Professional Standards</DetailValue>
-            </DetailRow>
-          </SummaryCard>
-
-          {/* Action Buttons */}
           <ActionButtons>
             {onBack && (
-              <ActionButton $variant="secondary" onClick={onBack}>
-                ← Back
-              </ActionButton>
-            )}
-            <ActionButton 
-              $variant="primary" 
+          <BackButton onClick={onBack}>
+            {i18n.language === 'de' ? '← Zurück' : '← Back'}
+          </BackButton>
+        )}
+        <ConfirmButton 
               onClick={submitBooking}
               disabled={submissionState.status !== 'idle'}
             >
-              <CheckCircleIcon size={16} />
-              Confirm Booking
-            </ActionButton>
+          ✓ {i18n.language === 'de' ? 'Buchung bestätigen' : 'Confirm Booking'}
+        </ConfirmButton>
           </ActionButtons>
-        </div>
-      </ContentGrid>
     </Container>
   );
 };

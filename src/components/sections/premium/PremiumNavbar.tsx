@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { Container } from '../../../design-system/components/layout/Container';
 import { RecoveryOfficeLogo } from '../../branding';
+import LanguageSwitcher from '../../common/LanguageSwitcher';
 
 // --- TopBar for regulatory info ---
 const TopBar = styled.div`
@@ -291,36 +293,9 @@ const MobileBookButton = styled(BookButton)`
   text-align: center;
 `;
 
-// --- Data ---
-const RECOVERY_DROPDOWN = [
-  {
-    label: 'Investment Fraud Recovery',
-    to: '/services#investment-fraud',
-    icon: 'https://images2.imgbox.com/76/6d/BSPbxZsR_o.png',
-    alt: 'Investment Fraud Recovery Icon'
-  },
-  {
-    label: 'Cryptocurrency Recovery',
-    to: '/services#crypto-recovery',
-    icon: 'https://images2.imgbox.com/ba/78/wNqfvrmO_o.png',
-    alt: 'Cryptocurrency Recovery Icon'
-  },
-  {
-    label: 'Financial Scam Recovery',
-    to: '/services#financial-scams',
-    icon: 'https://images2.imgbox.com/e7/0f/yfQ894Tl_o.png',
-    alt: 'Financial Scam Recovery Icon'
-  },
-  {
-    label: 'Regulatory Complaint Assistance',
-    to: '/services#regulatory-assistance',
-    icon: 'https://images2.imgbox.com/f2/e9/tDfdd3sR_o.png',
-    alt: 'Regulatory Complaint Assistance Icon'
-  },
-];
-
 // --- Main Component ---
 export const PremiumNavbar: React.FC = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -362,12 +337,40 @@ export const PremiumNavbar: React.FC = () => {
     if (e.key === 'Escape') setMobileDropdownOpen(false);
   };
 
+  // Recovery Process dropdown items with translations
+  const RECOVERY_DROPDOWN = [
+    {
+      label: t('services.cryptocurrency.title', 'Investment Fraud Recovery'),
+      to: '/services#investment-fraud',
+      icon: 'https://images2.imgbox.com/76/6d/BSPbxZsR_o.png',
+      alt: 'Investment Fraud Recovery Icon'
+    },
+    {
+      label: t('services.investment.title', 'Cryptocurrency Recovery'),
+      to: '/services#crypto-recovery',
+      icon: 'https://images2.imgbox.com/ba/78/wNqfvrmO_o.png',
+      alt: 'Cryptocurrency Recovery Icon'
+    },
+    {
+      label: t('services.scam.title', 'Financial Scam Recovery'),
+      to: '/services#financial-scams',
+      icon: 'https://images2.imgbox.com/e7/0f/yfQ894Tl_o.png',
+      alt: 'Financial Scam Recovery Icon'
+    },
+    {
+      label: t('services.regulatory.title', 'Regulatory Complaint Assistance'),
+      to: '/services#regulatory-assistance',
+      icon: 'https://images2.imgbox.com/f2/e9/tDfdd3sR_o.png',
+      alt: 'Regulatory Complaint Assistance Icon'
+    },
+  ];
+
   // --- Render ---
   return (
     <>
-      {/* TopBar (optional, can be toggled off) */}
+      {/* TopBar with emergency contact */}
       <TopBar>
-        FCA Regulated • Firm Reference: 836358 • Emergency: <a href="tel:+447451263372" style={{ color: '#D4AF37', textDecoration: 'underline' }}>+44 7451 263372</a>
+        FCA Regulated • Firm Reference: 836358 • Emergency: <a href="tel:+447451263472" style={{ color: '#D4AF37', textDecoration: 'underline' }}>+44 7451 263472</a>
       </TopBar>
       <NavbarWrapper $scrolled={scrolled}>
         <NavInner>
@@ -376,9 +379,11 @@ export const PremiumNavbar: React.FC = () => {
             <RecoveryOfficeLogo variant="white" size="medium" showText={true} />
           </LogoLink>
 
-          {/* Desktop Nav */}
+          {/* Desktop Nav with translations */}
           <NavLinks>
-            <NavLinkStyled to="/services" $active={location.pathname.startsWith('/services')}>Services</NavLinkStyled>
+            <NavLinkStyled to="/services" $active={location.pathname.startsWith('/services')}>
+              {t('navigation.services', 'Services')}
+            </NavLinkStyled>
             <DropdownWrapper ref={dropdownRef}>
               <DropdownToggle
                 $open={dropdownOpen}
@@ -388,7 +393,7 @@ export const PremiumNavbar: React.FC = () => {
                 onClick={() => setDropdownOpen((v) => !v)}
                 onKeyDown={handleDropdownKey}
               >
-                Recovery Process
+                {t('navigation.recoveryProcess', 'Recovery Process')}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: 4 }}>
                   <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -413,13 +418,24 @@ export const PremiumNavbar: React.FC = () => {
                 ))}
               </DropdownMenu>
             </DropdownWrapper>
-            <NavLinkStyled to="/about" $active={location.pathname.startsWith('/about')}>About</NavLinkStyled>
-            <NavLinkStyled to="/contact" $active={location.pathname.startsWith('/contact')}>Contact</NavLinkStyled>
+            <NavLinkStyled to="/about" $active={location.pathname.startsWith('/about')}>
+              {t('navigation.about', 'About')}
+            </NavLinkStyled>
+            <NavLinkStyled to="/contact" $active={location.pathname.startsWith('/contact')}>
+              {t('navigation.contact', 'Contact')}
+            </NavLinkStyled>
+            
+            {/* Language Switcher for Desktop */}
+            <LanguageSwitcherWrapper>
+              <Suspense fallback={<div>...</div>}>
+                <LanguageSwitcher />
+              </Suspense>
+            </LanguageSwitcherWrapper>
           </NavLinks>
 
-          {/* Book Consultation CTA */}
-          <BookButton to="/booking" tabIndex={0} aria-label="Book a Consultation">
-            Book Consultation
+          {/* Book Consultation CTA with translation */}
+          <BookButton to="/booking" tabIndex={0} aria-label={t('navigation.bookConsultation', 'Book a Consultation')}>
+            {t('navigation.bookConsultation', 'Book Consultation')}
           </BookButton>
 
           {/* Hamburger for mobile */}
@@ -437,14 +453,14 @@ export const PremiumNavbar: React.FC = () => {
           </Hamburger>
         </NavInner>
 
-        {/* Mobile Drawer */}
+        {/* Mobile Drawer with translations */}
         <MobileDrawer $open={mobileOpen} id="mobile-drawer" aria-hidden={!mobileOpen}>
           <LogoLink to="/" aria-label="Recovery Office - Financial Asset Recovery" style={{ margin: '0 0 0 24px' }}>
             <RecoveryOfficeLogo variant="white" size="small" showText={false} />
           </LogoLink>
           <MobileNavLinks>
             <NavLinkStyled to="/services" $active={location.pathname.startsWith('/services')} onClick={() => setMobileOpen(false)}>
-              Services
+              {t('navigation.services', 'Services')}
             </NavLinkStyled>
             <MobileDropdown>
               <MobileDropdownToggle
@@ -455,7 +471,7 @@ export const PremiumNavbar: React.FC = () => {
                 onClick={() => setMobileDropdownOpen((v) => !v)}
                 onKeyDown={handleMobileDropdownKey}
               >
-                Recovery Process
+                {t('navigation.recoveryProcess', 'Recovery Process')}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: 4 }}>
                   <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -480,14 +496,21 @@ export const PremiumNavbar: React.FC = () => {
               </MobileDropdownMenu>
             </MobileDropdown>
             <NavLinkStyled to="/about" $active={location.pathname.startsWith('/about')} onClick={() => setMobileOpen(false)}>
-              About
+              {t('navigation.about', 'About')}
             </NavLinkStyled>
             <NavLinkStyled to="/contact" $active={location.pathname.startsWith('/contact')} onClick={() => setMobileOpen(false)}>
-              Contact
+              {t('navigation.contact', 'Contact')}
             </NavLinkStyled>
+            
+            {/* Language Switcher for Mobile */}
+            <MobileLanguageSwitcherWrapper>
+              <Suspense fallback={<div>Loading...</div>}>
+                <LanguageSwitcher />
+              </Suspense>
+            </MobileLanguageSwitcherWrapper>
           </MobileNavLinks>
-          <MobileBookButton to="/booking" tabIndex={0} aria-label="Book a Consultation" onClick={() => setMobileOpen(false)}>
-            Book Consultation
+          <MobileBookButton to="/booking" tabIndex={0} aria-label={t('navigation.bookConsultation', 'Book a Consultation')} onClick={() => setMobileOpen(false)}>
+            {t('navigation.bookConsultation', 'Book Consultation')}
           </MobileBookButton>
         </MobileDrawer>
       </NavbarWrapper>
@@ -495,4 +518,25 @@ export const PremiumNavbar: React.FC = () => {
   );
 };
 
-export default PremiumNavbar; 
+export default PremiumNavbar;
+
+// Add new styled components after the existing ones
+const LanguageSwitcherWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  margin-right: 8px;
+  
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+const MobileLanguageSwitcherWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 16px;
+`; 

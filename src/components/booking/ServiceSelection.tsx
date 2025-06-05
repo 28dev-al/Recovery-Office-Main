@@ -1,54 +1,17 @@
 import * as React from 'react';
 import { useBooking } from '../../context/BookingContext';
-import { ServiceOption } from '../../types/booking.types';
-import { ServiceType } from '../../types/service.types';
+import { ServiceData } from '../../types/service';
+import { ServicesAPI } from '../../services/servicesApi';
 
 import styled from 'styled-components';
 import { RecoveryOfficeTheme } from '../../design-system/types/theme.types';
 import { getFibonacciByIndex } from '../../utils/getFibonacciByIndex';
 import { PHI } from '../../constants/sacred-geometry';
 
-
-// Mock services data (replace with API call in production)
-const mockServices: ServiceOption[] = [
-  {
-    id: '1',
-    name: 'Initial Consultation',
-    description: 'First-time assessment and treatment planning.',
-    duration: 60,
-    price: 120,
-    type: ServiceType.INITIAL_CONSULTATION
-  },
-  {
-    id: '2',
-    name: 'Follow-up Session',
-    description: 'Regular treatment session for existing clients.',
-    duration: 45, 
-    price: 90,
-    type: ServiceType.FOLLOW_UP
-  },
-  {
-    id: '3',
-    name: 'Deep Tissue Massage',
-    description: 'Focused massage therapy for chronic muscle tension.',
-    duration: 60,
-    price: 100,
-    type: ServiceType.SPECIALIZED_TREATMENT
-  },
-  {
-    id: '4',
-    name: 'Rehabilitation Package',
-    description: '5-session package for comprehensive rehabilitation.',
-    duration: 45,
-    price: 400,
-    type: ServiceType.COMPREHENSIVE_ASSESSMENT
-  }
-];
-
 // Styled components using sacred geometry
 const ServicesContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(${getFibonacciByIndex(8)}px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(${getFibonacciByIndex(8)}px, 1fr));
   gap: ${getFibonacciByIndex(5)}px;
   width: 100%;
   margin-bottom: ${getFibonacciByIndex(7)}px;
@@ -123,33 +86,51 @@ const ContinueButton = styled.button`
   }
 `;
 
+const LoadingContainer = styled.div`
+  text-align: center;
+  padding: ${getFibonacciByIndex(6)}px;
+`;
+
+const ErrorContainer = styled.div`
+  text-align: center;
+  padding: ${getFibonacciByIndex(6)}px;
+  color: #e53e3e;
+`;
+
 const ServiceSelection: React.FC = () => {
   const { selectedService, setSelectedService, currentStep, setCurrentStep } = useBooking();
-  const [services, setServices] = React.useState<ServiceOption[]>([]);
+  const [services, setServices] = React.useState<ServiceData[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   
   React.useEffect(() => {
-    // In a real application, this would be an API call
-    // For now, we'll simulate an API call with setTimeout
-    const fetchServices = async () => {
+    // PRODUCTION: Use real API call to Railway backend
+    const fetchRealServices = async () => {
       try {
         setLoading(true);
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, getFibonacciByIndex(7)));
-        setServices(mockServices);
         setError(null);
-      } catch (err) {
-        setError('Failed to load services. Please try again.');
+        
+        console.log('[ServiceSelection] Fetching real services from production backend...');
+        
+        const servicesAPI = new ServicesAPI();
+        const realServices = await servicesAPI.getServices();
+        
+        console.log('[ServiceSelection] Real services loaded:', realServices.length);
+        setServices(realServices);
+        
+      } catch (error) {
+        console.error('[ServiceSelection] Production error loading services:', error);
+        setError(`Production Error: ${error instanceof Error ? error.message : 'Failed to load services from backend'}`);
+        setServices([]); // No mock fallback - production should show error
       } finally {
         setLoading(false);
       }
     };
     
-    fetchServices();
+    fetchRealServices();
   }, []);
   
-  const handleServiceSelection = (service: ServiceOption) => {
+  const handleServiceSelection = (service: ServiceData) => {
     setSelectedService(service);
   };
   
@@ -158,11 +139,31 @@ const ServiceSelection: React.FC = () => {
   };
   
   if (loading) {
-    return <div>Loading services...</div>;
+    return (
+      <LoadingContainer>
+        <div>Loading services from production backend...</div>
+        <div>Connecting to Railway API...</div>
+      </LoadingContainer>
+    );
   }
   
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <ErrorContainer>
+        <div>{error}</div>
+        <div>Backend: https://recovery-office-backend-production.up.railway.app</div>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </ErrorContainer>
+    );
+  }
+  
+  if (services.length === 0) {
+    return (
+      <ErrorContainer>
+        <div>No services available from production backend</div>
+        <div>Please contact support if this issue persists</div>
+      </ErrorContainer>
+    );
   }
   
   return (
@@ -171,15 +172,15 @@ const ServiceSelection: React.FC = () => {
       <ServicesContainer>
         {services.map((service) => (
           <ServiceCard 
-            key={service.id}
-            $selected={selectedService?.id === service.id}
+            key={service._id}
+            $selected={selectedService?._id === service._id}
             onClick={() => handleServiceSelection(service)}
           >
             <ServiceName>{service.name}</ServiceName>
             <ServiceDescription>{service.description}</ServiceDescription>
             <ServiceDetails>
               <ServiceDuration>{service.duration} min</ServiceDuration>
-              <ServicePrice>${service.price}</ServicePrice>
+              <ServicePrice>£{service.price}</ServicePrice>
             </ServiceDetails>
           </ServiceCard>
         ))}

@@ -12,6 +12,54 @@ interface StatsGridProps {
   loading?: boolean;
 }
 
+// Helper functions to handle union types
+const getTotalBookingsValue = (totalBookings: OverviewStats['totalBookings']): number => {
+  return typeof totalBookings === 'number' ? totalBookings : totalBookings.thisMonth;
+};
+
+const getTotalBookingsSubValue = (totalBookings: OverviewStats['totalBookings']): string => {
+  if (typeof totalBookings === 'number') {
+    return 'Total bookings';
+  }
+  return `${formatNumber(totalBookings.today)} today, ${formatNumber(totalBookings.thisWeek)} this week`;
+};
+
+const getTotalBookingsChange = (totalBookings: OverviewStats['totalBookings']): number => {
+  return typeof totalBookings === 'number' ? 0 : totalBookings.change;
+};
+
+const getTotalRevenueValue = (totalRevenue: OverviewStats['totalRevenue']): number => {
+  return typeof totalRevenue === 'number' ? totalRevenue : totalRevenue.amount;
+};
+
+const getTotalRevenueCurrency = (totalRevenue: OverviewStats['totalRevenue']): string => {
+  return typeof totalRevenue === 'number' ? 'GBP' : (totalRevenue.currency || 'GBP');
+};
+
+const getTotalRevenueSubValue = (totalRevenue: OverviewStats['totalRevenue']): string => {
+  return typeof totalRevenue === 'number' ? 'Total revenue' : totalRevenue.period;
+};
+
+const getTotalRevenueChange = (totalRevenue: OverviewStats['totalRevenue']): number => {
+  return typeof totalRevenue === 'number' ? 0 : totalRevenue.change;
+};
+
+const getActiveClientsValue = (activeClients: OverviewStats['activeClients']): number => {
+  return typeof activeClients === 'number' ? activeClients : activeClients.count;
+};
+
+const getActiveClientsChange = (activeClients: OverviewStats['activeClients']): number => {
+  return typeof activeClients === 'number' ? 0 : activeClients.change;
+};
+
+const getSuccessRateValue = (successRate: OverviewStats['successRate']): number => {
+  return typeof successRate === 'number' ? successRate : successRate.percentage;
+};
+
+const getSuccessRateChange = (successRate: OverviewStats['successRate']): number => {
+  return typeof successRate === 'number' ? 0 : successRate.change;
+};
+
 // Styled Components
 const GridContainer = styled.div`
   display: grid;
@@ -165,41 +213,41 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ stats, loading = false }) 
   const statsConfig = [
     {
       title: 'Total Bookings',
-      value: formatNumber(stats.totalBookings.thisMonth),
-      subValue: `${formatNumber(stats.totalBookings.today)} today, ${formatNumber(stats.totalBookings.thisWeek)} this week`,
-      change: stats.totalBookings.change,
+      value: formatNumber(getTotalBookingsValue(stats.totalBookings)),
+      subValue: getTotalBookingsSubValue(stats.totalBookings),
+      change: getTotalBookingsChange(stats.totalBookings),
       icon: '📅',
       color: '#1a365d'
     },
     {
       title: 'Total Revenue',
-      value: formatCurrency(stats.totalRevenue.amount, stats.totalRevenue.currency),
-      subValue: stats.totalRevenue.period,
-      change: stats.totalRevenue.change,
+      value: formatCurrency(getTotalRevenueValue(stats.totalRevenue), getTotalRevenueCurrency(stats.totalRevenue)),
+      subValue: getTotalRevenueSubValue(stats.totalRevenue),
+      change: getTotalRevenueChange(stats.totalRevenue),
       icon: '💰',
       color: '#d69e2e'
     },
     {
       title: 'Active Clients',
-      value: formatNumber(stats.activeClients.count),
+      value: formatNumber(getActiveClientsValue(stats.activeClients)),
       subValue: 'Currently engaged',
-      change: stats.activeClients.change,
+      change: getActiveClientsChange(stats.activeClients),
       icon: '👥',
       color: '#38a169'
     },
     {
       title: 'Success Rate',
-      value: formatPercentage(stats.successRate.percentage),
+      value: formatPercentage(getSuccessRateValue(stats.successRate)),
       subValue: 'Completed cases',
-      change: stats.successRate.change,
+      change: getSuccessRateChange(stats.successRate),
       icon: '✅',
       color: '#805ad5'
     },
     {
       title: 'Avg Case Value',
-      value: formatCurrency(stats.averageCaseValue.amount, stats.averageCaseValue.currency),
+      value: formatCurrency(stats.averageCaseValue?.amount || 0, stats.averageCaseValue?.currency || 'GBP'),
       subValue: 'Per case',
-      change: stats.averageCaseValue.change,
+      change: stats.averageCaseValue?.change || 0,
       icon: '📊',
       color: '#e53e3e'
     }

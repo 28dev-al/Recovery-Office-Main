@@ -1,39 +1,67 @@
-import * as React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
-// Import pages
+// Keep only critical pages as direct imports for faster initial load
 import Home from './pages/Home/Home';
 import Services from './pages/Services/Services';
-import { InvestmentFraudRecoveryPage } from './pages/Services/InvestmentFraudRecoveryPage';
-import { CryptocurrencyRecoveryPage } from './pages/Services/CryptocurrencyRecoveryPage';
-import { FinancialScamRecoveryPage } from './pages/Services/FinancialScamRecoveryPage';
-import { RegulatoryComplaintPage } from './pages/Services/RegulatoryComplaintPage';
-import About from './pages/About';
-import Contact from './pages/Contact/Contact';
-import Blog from './pages/Blog/Blog';
-import FAQ from './pages/FAQ/FAQ';
-import Booking from './pages/Booking';
-import NotFound from './pages/NotFound/NotFound';
-import Privacy from './pages/legal/Privacy';
-import Terms from './pages/legal/Terms';
-import HIPAA from './pages/legal/HIPAA';
-import Accessibility from './pages/legal/Accessibility';
-import ComponentTest from './pages/ComponentTest/ComponentTest';
 
-// Import Dashboard pages
-import DashboardPage from './pages/Dashboard/DashboardPage';
-import BookingsPage from './pages/Dashboard/BookingsPage';
-import ClientsPage from './pages/Dashboard/ClientsPage';
-import ServicesPage from './pages/Dashboard/ServicesPage';
-import AnalyticsPage from './pages/Dashboard/AnalyticsPage';
+// Lazy load all other pages for performance
+const InvestmentFraudRecoveryPage = lazy(() => import('./pages/Services/InvestmentFraudRecoveryPage').then(module => ({ default: module.InvestmentFraudRecoveryPage })));
+const CryptocurrencyRecoveryPage = lazy(() => import('./pages/Services/CryptocurrencyRecoveryPage').then(module => ({ default: module.CryptocurrencyRecoveryPage })));
+const FinancialScamRecoveryPage = lazy(() => import('./pages/Services/FinancialScamRecoveryPage').then(module => ({ default: module.FinancialScamRecoveryPage })));
+const RegulatoryComplaintPage = lazy(() => import('./pages/Services/RegulatoryComplaintPage').then(module => ({ default: module.RegulatoryComplaintPage })));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact/Contact'));
+const BlogPage = lazy(() => import('./pages/Blog/BlogPage').then(module => ({ default: module.BlogPage })));
+const FAQPage = lazy(() => import('./pages/FAQ/FAQPage').then(module => ({ default: module.FAQPage })));
+const Booking = lazy(() => import('./pages/Booking'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+
+// Legal pages - lazy loaded
+const Privacy = lazy(() => import('./pages/legal/Privacy'));
+const PrivacyPolicyPageEnhanced = lazy(() => import('./pages/legal/PrivacyPolicy/PrivacyPolicyPageEnhanced').then(module => ({ default: module.PrivacyPolicyPageEnhanced })));
+const TermsOfServicePageEnhanced = lazy(() => import('./pages/legal/TermsOfService/TermsOfServicePageEnhanced').then(module => ({ default: module.TermsOfServicePageEnhanced })));
+const Terms = lazy(() => import('./pages/legal/Terms'));
+const DataSecurityPage = lazy(() => import('./pages/DataSecurity/DataSecurityPage').then(module => ({ default: module.DataSecurityPage })));
+const Accessibility = lazy(() => import('./pages/legal/Accessibility'));
+const ComponentTest = lazy(() => import('./pages/ComponentTest/ComponentTest'));
+
+// Auth pages - lazy loaded
+const LoginPage = lazy(() => import('./pages/Auth/LoginPage').then(module => ({ default: module.LoginPage })));
+
+// Dashboard pages - lazy loaded (admin only)
+const DashboardPage = lazy(() => import('./pages/Dashboard/DashboardPage').then(module => ({ default: module.DashboardPage })));
+const BookingsPage = lazy(() => import('./pages/Dashboard/BookingsPage').then(module => ({ default: module.BookingsPage })));
+const ClientsPage = lazy(() => import('./pages/Dashboard/ClientsPage'));
+const ServicesPage = lazy(() => import('./pages/Dashboard/ServicesPage'));
+const AnalyticsPage = lazy(() => import('./pages/Dashboard/AnalyticsPage'));
+
+// Google Ads Landing Pages - lazy loaded for performance
+const CryptocurrencyRecoveryLanding = lazy(() => import('./pages/landing/CryptocurrencyRecoveryLanding'));
+
+// Performance-optimized loading fallback
+const LoadingFallback: React.FC<{ message?: string }> = ({ message = 'Loading...' }) => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: '50vh',
+    fontSize: '16px',
+    color: '#1a365d',
+    backgroundColor: '#f7fafc'
+  }}>
+    {message}
+  </div>
+);
 
 const AppRoutes: React.FC = () => {
   const location = useLocation();
 
-  // Wrap pages in error boundaries to prevent entire app crashes
   return (
     <Routes location={location}>
+      {/* Main Pages */}
       <Route
         path="/"
         element={
@@ -54,7 +82,9 @@ const AppRoutes: React.FC = () => {
         path="/services/investment-fraud-recovery"
         element={
           <ErrorBoundary>
-            <InvestmentFraudRecoveryPage />
+            <Suspense fallback={<LoadingFallback message="Loading Investment Fraud Recovery..." />}>
+              <InvestmentFraudRecoveryPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -62,7 +92,9 @@ const AppRoutes: React.FC = () => {
         path="/services/cryptocurrency-recovery"
         element={
           <ErrorBoundary>
-            <CryptocurrencyRecoveryPage />
+            <Suspense fallback={<LoadingFallback message="Loading Cryptocurrency Recovery..." />}>
+              <CryptocurrencyRecoveryPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -70,7 +102,9 @@ const AppRoutes: React.FC = () => {
         path="/services/financial-scam-recovery"
         element={
           <ErrorBoundary>
-            <FinancialScamRecoveryPage />
+            <Suspense fallback={<LoadingFallback message="Loading Financial Scam Recovery..." />}>
+              <FinancialScamRecoveryPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -78,7 +112,9 @@ const AppRoutes: React.FC = () => {
         path="/services/regulatory-assistance"
         element={
           <ErrorBoundary>
-            <RegulatoryComplaintPage />
+            <Suspense fallback={<LoadingFallback message="Loading Regulatory Assistance..." />}>
+              <RegulatoryComplaintPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -86,7 +122,9 @@ const AppRoutes: React.FC = () => {
         path="/about"
         element={
           <ErrorBoundary>
-            <About />
+            <Suspense fallback={<LoadingFallback message="Loading About..." />}>
+              <About />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -94,7 +132,9 @@ const AppRoutes: React.FC = () => {
         path="/contact"
         element={
           <ErrorBoundary>
-            <Contact />
+            <Suspense fallback={<LoadingFallback message="Loading Contact..." />}>
+              <Contact />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -102,7 +142,9 @@ const AppRoutes: React.FC = () => {
         path="/blog"
         element={
           <ErrorBoundary>
-            <Blog />
+            <Suspense fallback={<LoadingFallback message="Loading Blog..." />}>
+              <BlogPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -110,7 +152,9 @@ const AppRoutes: React.FC = () => {
         path="/faq"
         element={
           <ErrorBoundary>
-            <FAQ />
+            <Suspense fallback={<LoadingFallback message="Loading FAQ..." />}>
+              <FAQPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -126,15 +170,31 @@ const AppRoutes: React.FC = () => {
               </div>
             }
           >
-            <Booking />
+            <Suspense fallback={<LoadingFallback message="Loading Booking System..." />}>
+              <Booking />
+            </Suspense>
           </ErrorBoundary>
         }
       />
+      
+      {/* Legal Pages */}
       <Route
         path="/privacy"
         element={
           <ErrorBoundary>
-            <Privacy />
+            <Suspense fallback={<LoadingFallback message="Loading Privacy Policy..." />}>
+              <Privacy />
+            </Suspense>
+          </ErrorBoundary>
+        }
+      />
+      <Route
+        path="/privacy-policy"
+        element={
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingFallback message="Loading Privacy Policy..." />}>
+              <PrivacyPolicyPageEnhanced />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -142,15 +202,33 @@ const AppRoutes: React.FC = () => {
         path="/terms"
         element={
           <ErrorBoundary>
-            <Terms />
+            <Suspense fallback={<LoadingFallback message="Loading Terms..." />}>
+              <Terms />
+            </Suspense>
+          </ErrorBoundary>
+        }
+      />
+      <Route
+        path="/terms-of-service"
+        element={
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingFallback message="Loading Terms of Service..." />}>
+              <TermsOfServicePageEnhanced />
+            </Suspense>
           </ErrorBoundary>
         }
       />
       <Route
         path="/hipaa"
+        element={<Navigate to="/data-security" replace />}
+      />
+      <Route
+        path="/data-security"
         element={
           <ErrorBoundary>
-            <HIPAA />
+            <Suspense fallback={<LoadingFallback message="Loading Data Security..." />}>
+              <DataSecurityPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -158,7 +236,9 @@ const AppRoutes: React.FC = () => {
         path="/accessibility"
         element={
           <ErrorBoundary>
-            <Accessibility />
+            <Suspense fallback={<LoadingFallback message="Loading Accessibility..." />}>
+              <Accessibility />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -166,7 +246,21 @@ const AppRoutes: React.FC = () => {
         path="/component-test"
         element={
           <ErrorBoundary>
-            <ComponentTest />
+            <Suspense fallback={<LoadingFallback message="Loading Component Test..." />}>
+              <ComponentTest />
+            </Suspense>
+          </ErrorBoundary>
+        }
+      />
+      
+      {/* Authentication Routes */}
+      <Route
+        path="/login"
+        element={
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingFallback message="Loading Login..." />}>
+              <LoginPage />
+            </Suspense>
           </ErrorBoundary>
         }
       />
@@ -176,7 +270,11 @@ const AppRoutes: React.FC = () => {
         path="/dashboard"
         element={
           <ErrorBoundary>
-            <DashboardPage />
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingFallback message="Loading Dashboard..." />}>
+                <DashboardPage />
+              </Suspense>
+            </ProtectedRoute>
           </ErrorBoundary>
         }
       />
@@ -184,7 +282,11 @@ const AppRoutes: React.FC = () => {
         path="/dashboard/bookings"
         element={
           <ErrorBoundary>
-            <BookingsPage />
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingFallback message="Loading Bookings..." />}>
+                <BookingsPage />
+              </Suspense>
+            </ProtectedRoute>
           </ErrorBoundary>
         }
       />
@@ -192,7 +294,11 @@ const AppRoutes: React.FC = () => {
         path="/dashboard/clients"
         element={
           <ErrorBoundary>
-            <ClientsPage />
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingFallback message="Loading Clients..." />}>
+                <ClientsPage />
+              </Suspense>
+            </ProtectedRoute>
           </ErrorBoundary>
         }
       />
@@ -200,7 +306,11 @@ const AppRoutes: React.FC = () => {
         path="/dashboard/services"
         element={
           <ErrorBoundary>
-            <ServicesPage />
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingFallback message="Loading Services..." />}>
+                <ServicesPage />
+              </Suspense>
+            </ProtectedRoute>
           </ErrorBoundary>
         }
       />
@@ -208,16 +318,35 @@ const AppRoutes: React.FC = () => {
         path="/dashboard/analytics"
         element={
           <ErrorBoundary>
-            <AnalyticsPage />
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingFallback message="Loading Analytics..." />}>
+                <AnalyticsPage />
+              </Suspense>
+            </ProtectedRoute>
           </ErrorBoundary>
         }
       />
       
+      {/* Google Ads Landing Pages - High Priority for Conversions */}
+      <Route
+        path="/cryptocurrency-recovery"
+        element={
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingFallback message="Loading Cryptocurrency Recovery Landing..." />}>
+              <CryptocurrencyRecoveryLanding />
+            </Suspense>
+          </ErrorBoundary>
+        }
+      />
+      
+      {/* 404 Page */}
       <Route
         path="*"
         element={
           <ErrorBoundary>
-            <NotFound />
+            <Suspense fallback={<LoadingFallback message="Loading..." />}>
+              <NotFound />
+            </Suspense>
           </ErrorBoundary>
         }
       />

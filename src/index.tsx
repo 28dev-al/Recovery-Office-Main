@@ -2,8 +2,21 @@
  * Recovery Office Frontend Application Entry Point
  */
 
-console.log('🔧 ENVIRONMENT VARIABLE FORCE LOADING START');
-console.log('====================================');
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import './design-system/theme/globalStyles';
+import { setupProductionConsole, debugLog, errorLog } from './utils/removeConsole';
+import LoadingTranslations from './components/common/LoadingTranslations';
+
+// Import i18n configuration
+import './i18n';
+
+// Setup production console log filtering
+setupProductionConsole();
+
+debugLog('🔧 ENVIRONMENT VARIABLE LOADING START');
 
 // CRITICAL: Safe environment variable handling to prevent syntax errors
 const getEnvironmentConfig = () => {
@@ -11,7 +24,7 @@ const getEnvironmentConfig = () => {
   const currentNodeEnv = process.env.NODE_ENV;
   const isDevelopment = !currentNodeEnv || currentNodeEnv === 'development';
   
-  console.log('📊 Environment Detection:', {
+  debugLog('📊 Environment Detection:', {
     NODE_ENV: currentNodeEnv,
     isDevelopment,
     processEnvKeys: Object.keys(process.env).length,
@@ -28,7 +41,7 @@ const getEnvironmentConfig = () => {
 
   // Force development mode flag on window object (safe)
   if (!isDevelopment) {
-    console.warn('🚨 FORCING DEVELOPMENT MODE');
+    debugLog('🚨 FORCING DEVELOPMENT MODE');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).__DEV__ = true;
   }
@@ -43,8 +56,7 @@ const getEnvironmentConfig = () => {
     reactAppVars: Object.keys(process.env).filter(key => key.startsWith('REACT_APP_'))
   };
 
-  console.log('✅ FINAL ENVIRONMENT CONFIGURATION:', finalConfig);
-  console.log('====================================');
+  debugLog('✅ FINAL ENVIRONMENT CONFIGURATION:', finalConfig);
 
   return finalConfig;
 };
@@ -54,7 +66,7 @@ const envConfig = getEnvironmentConfig();
 
 // Only proceed if we have basic configuration
 if (!envConfig.REACT_APP_API_URL) {
-  console.error('🚨 FATAL: Cannot start app without API URL');
+  errorLog('🚨 FATAL: Cannot start app without API URL');
   document.body.innerHTML = `
     <div style="padding: 40px; text-align: center; color: #dc3545; background: #fff8f8; border: 1px solid #ffdddd; border-radius: 8px; margin: 20px; font-family: Arial, sans-serif;">
       <h2>Configuration Error</h2>
@@ -68,13 +80,6 @@ if (!envConfig.REACT_APP_API_URL) {
   throw new Error('Environment configuration failed');
 }
 
-// Proceed with React initialization
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import './design-system/theme/globalStyles';
-
 // Global environment logging for debugging
 if (envConfig.isDevelopment) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -84,7 +89,7 @@ if (envConfig.isDevelopment) {
     REACT_APP_ENVIRONMENT: envConfig.REACT_APP_ENVIRONMENT,
     allReactEnvVars: Object.keys(process.env).filter(key => key.startsWith('REACT_APP_'))
   };
-  console.log('🐛 Environment debug object available at window.ENV_DEBUG');
+  debugLog('🐛 Environment debug object available at window.ENV_DEBUG');
 }
 
 // Disable styled-components 'eval' path for strict CSP
@@ -98,7 +103,7 @@ if (envConfig.isDevelopment) {
  * The application uses sacred geometry principles throughout its design.
  */
 
-console.log('🚀 Starting Recovery Office with configuration:', envConfig);
+debugLog('🚀 Starting Recovery Office with configuration:', envConfig);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -106,7 +111,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+    <Suspense fallback={<LoadingTranslations />}>
+      <App />
+    </Suspense>
   </React.StrictMode>
 ); 
 

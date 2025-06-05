@@ -50,7 +50,7 @@ export const FinancialScamRecoveryPage: React.FC = () => {
       amount: "£67,000"
     },
     seoTitle: "Financial Scam Recovery Services | Romance Scam Recovery | Recovery Office UK",
-    seoDescription: "Professional financial scam recovery services by Recovery Office. 71% success rate recovering from romance scams, advance fee fraud, wire transfer scams. Call +44 7451 263372.",
+    seoDescription: "Expert financial scam recovery services. Recover funds from romance scams, advance fee fraud, wire transfer scams. Call +44 7451 263472.",
     seoKeywords: "financial scam recovery, romance scam recovery, advance fee fraud, wire transfer fraud, business email compromise, online dating scam, lottery scam recovery"
   };
 

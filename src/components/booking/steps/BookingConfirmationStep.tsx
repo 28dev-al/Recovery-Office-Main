@@ -139,7 +139,7 @@ export const BookingConfirmationStep: React.FC<BookingConfirmationStepProps> = (
           <ContactInfo>
             <ContactTitle>Need to Contact Us?</ContactTitle>
             <ContactItem>
-              📞 Emergency Hotline: <strong>+44 7451 263372</strong>
+              📞 Emergency Hotline: <strong>+44 7451 263472</strong>
             </ContactItem>
             <ContactItem>
               📧 Email: <strong>info@recovery-office.com</strong>

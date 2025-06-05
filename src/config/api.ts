@@ -58,7 +58,43 @@ export const apiRequest = async <T = unknown>(
 // Specific API functions
 export const bookingApi = {
   createBooking: async (bookingData: Record<string, unknown>) => {
-    return apiRequest(API_CONFIG.ENDPOINTS.BOOKINGS, {
+    // Assuming the backend returns { success: boolean, data: BookingResponseType, message?: string }
+    // And BookingResponseType is compatible with ConfirmationStep.BookingResponse
+    // We need to define BookingResponseType or import it if it exists elsewhere.
+    // For now, let's assume it returns a structure compatible with ConfirmationStep's local BookingResponse.
+    // The key is that apiRequest will return THIS structure directly.
+    // So, ConfirmationStep.tsx expects ApiResponse<BookingResponse>.
+    // If apiRequest returns T directly, and T is what backend sends, then ConfirmationStep
+    // should expect BookingResponse from the backend, not ApiResponse<BookingResponse> if backend doesn't wrap.
+
+    // If backend sends: { _id: '...', reference: '...', ... }
+    // Then in ConfirmationStep: const bookingDetails: BookingResponse = await bookingApi.createBooking(...)
+    // bookingDetails._id
+
+    // If backend sends: { data: { _id: '...', reference: '...', ... }, success: true }
+    // Then in ConfirmationStep: const response: ApiResponse<BookingResponse> = await bookingApi.createBooking(...)
+    // response.data._id
+
+    // The current ConfirmationStep.tsx expects the latter. So apiRequest<ApiResponse<BookingResponse>>
+    // where ConfirmationStep.BookingResponse is the T for ApiResponse's data field.
+    type BackendBookingResponsePayload = {
+        _id?: string;
+        id?: string;
+        reference?: string;
+        clientId: string;
+        serviceId: string;
+        date: string;
+        timeSlot: string;
+        status?: string;
+    };
+    type BackendApiResponseWrapper = {
+        success?: boolean;
+        data?: BackendBookingResponsePayload; // This is the T for apiRequest
+        message?: string;
+        error?: string;
+    };
+
+    return apiRequest<BackendApiResponseWrapper>(API_CONFIG.ENDPOINTS.BOOKINGS, {
       method: 'POST',
       body: JSON.stringify(bookingData)
     });

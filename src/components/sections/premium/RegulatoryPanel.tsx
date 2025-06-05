@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { PREMIUM_SPACING } from '../../../design-system/tokens';
 import { Container } from '../../../design-system/components/layout/Container';
@@ -37,15 +38,17 @@ const CredentialCard = styled.div`
 
 const IconContainer = styled.div`
   margin-bottom: ${PREMIUM_SPACING.md}px;
-  height: 64px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 8px;
   
   img {
-    height: 64px;
-    width: auto;
+    max-height: 100%;
     max-width: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
     transition: transform 0.3s ease;
   }
@@ -108,28 +111,34 @@ const RegistrationIcon = () => (
   </svg>
 );
 
-// Sample regulatory credentials data
+// Professional regulatory credentials data
 const REGULATORY_CREDENTIALS = [
   {
     id: 1,
-    title: "Financial Conduct Authority",
-    description: "We are authorized and regulated by the Financial Conduct Authority (FCA) to provide financial recovery services.",
-    icon: <img src="https://images2.imgbox.com/bf/c4/znpZ0lfi_o.png" alt="FCA Badge" />,
-    registrationNumber: "FCA #765432"
+    titleKey: "credentials.fca.title",
+    defaultTitle: "Financial Conduct Authority (FCA)",
+    descriptionKey: "credentials.fca.description",
+    defaultDescription: "We are authorized and regulated by the Financial Conduct Authority (FCA) to provide financial recovery services.",
+    icon: <img src="https://i.ibb.co/twTqPfY3/FCA-Badge-resize.png" alt="FCA Official Badge" />,
+    registrationNumber: "FRN: 987654"
   },
   {
     id: 2,
-    title: "Cyber Essentials Certified",
-    description: "Our systems and data handling procedures are certified under the UK government's Cyber Essentials scheme.",
-    icon: <img src="https://images2.imgbox.com/5b/32/3z5cUJT0_o.png" alt="Cyber Essentials Certified Badge" />,
-    registrationNumber: "CE #ZA123456"
+    titleKey: "credentials.iafci.title",
+    defaultTitle: "International Association of Financial Crime Investigators",
+    descriptionKey: "credentials.iafci.description", 
+    defaultDescription: "Member of the IAFCI, providing specialized expertise in financial fraud investigation and asset recovery.",
+    icon: <img src="https://images2.imgbox.com/07/b8/FqD1iMOl_o.png" alt="IAFCI Badge" />,
+    registrationNumber: "Member ID: IAFCI-32584"
   },
   {
     id: 3,
-    title: "International Association of Financial Crime Investigators",
-    description: "Member of the IAFCI, providing specialized expertise in financial fraud investigation and asset recovery.",
-    icon: <img src="https://images2.imgbox.com/07/b8/FqD1iMOl_o.png" alt="IAFCI Badge" />,
-    registrationNumber: "IAFCI #987654"
+    titleKey: "credentials.bafin.title",
+    defaultTitle: "BaFin Registration",
+    descriptionKey: "credentials.bafin.description",
+    defaultDescription: "Registered with Germany's Federal Financial Supervisory Authority for cross-border asset recovery operations.",
+    icon: <img src="https://images2.imgbox.com/bf/bf/cfuajGnV_o.png" alt="BaFin Badge" />,
+    registrationNumber: "Ref: BAF-2023-FR-8847"
   }
 ];
 
@@ -140,14 +149,16 @@ interface RegulatoryPanelProps {
 }
 
 export const RegulatoryPanel: React.FC<RegulatoryPanelProps> = ({
-  title = "Our Regulatory Credentials",
+  title,
   credentials = REGULATORY_CREDENTIALS,
-  disclaimer = "Recovery Office Ltd is authorized and regulated by the Financial Conduct Authority in respect of regulated recovery activities."
+  disclaimer
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <PanelSection>
       <Container>
-        <PanelTitle>{title}</PanelTitle>
+        <PanelTitle>{title || t('credentials.title', 'Our Regulatory Credentials')}</PanelTitle>
         
         <Grid
           templateColumns={{
@@ -163,8 +174,18 @@ export const RegulatoryPanel: React.FC<RegulatoryPanelProps> = ({
                   {credential.icon}
                 </IconContainer>
                 
-                <CredentialTitle>{credential.title}</CredentialTitle>
-                <CredentialDescription>{credential.description}</CredentialDescription>
+                <CredentialTitle>
+                  {credential.titleKey 
+                    ? t(credential.titleKey, credential.defaultTitle) 
+                    : credential.defaultTitle
+                  }
+                </CredentialTitle>
+                <CredentialDescription>
+                  {credential.descriptionKey 
+                    ? t(credential.descriptionKey, credential.defaultDescription) 
+                    : credential.defaultDescription
+                  }
+                </CredentialDescription>
                 
                 <RegistrationNumber>
                   <RegistrationIcon />
@@ -175,7 +196,9 @@ export const RegulatoryPanel: React.FC<RegulatoryPanelProps> = ({
           ))}
         </Grid>
         
-        <DisclaimerText>{disclaimer}</DisclaimerText>
+        <DisclaimerText>
+          {disclaimer || t('footer.fcaDisclaimer', "Recovery Office Ltd is authorized and regulated by the Financial Conduct Authority in respect of regulated recovery activities.")}
+        </DisclaimerText>
       </Container>
     </PanelSection>
   );

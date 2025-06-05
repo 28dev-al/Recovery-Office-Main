@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import { useBookingState } from '../../../hooks/useBookingState';
 
 interface DateSelectionStepProps {
@@ -15,7 +16,13 @@ interface DateSelectionStepProps {
   selectedService: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   
   // Optional callback props  
-  onComplete?: () => void;
+  onComplete?: (stepData?: {
+    selectedDate?: string;
+    selectedTimeSlot?: string;
+    date?: string;
+    timeSlot?: string;
+    service?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  }) => void;
   onBack?: () => void;
   
   // Optional data props
@@ -194,6 +201,9 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
   initialData,
   isLoading = false
 }) => {
+  // TRANSLATION HOOK - for text labels only
+  const { t } = useTranslation();
+  
   // CRITICAL FIX: Use the global booking state
   const {
     selectedDate: globalSelectedDate,
@@ -273,7 +283,7 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
   if (isLoading) {
     return (
       <Container>
-        <LoadingMessage>Loading available dates and times...</LoadingMessage>
+        <LoadingMessage>{t('booking.dateTime.loadingDatesAndTimes')}</LoadingMessage>
       </Container>
     );
   }
@@ -301,6 +311,8 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
       const stepData = {
         selectedDate: format(selectedDate, 'yyyy-MM-dd'),
         selectedTimeSlot: selectedTimeSlot,
+        date: format(selectedDate, 'yyyy-MM-dd'), // Alternative property name
+        timeSlot: selectedTimeSlot, // Alternative property name
         service: currentService
       };
       
@@ -312,8 +324,18 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
         savedTimeSlot: globalSelectedTimeSlot
       });
       
-      // Call onComplete if provided
-      onComplete?.();
+      // CRITICAL FIX: Pass the data to onComplete
+      if (onComplete) {
+        console.log('[DateSelection] Calling onComplete with data:', stepData);
+        onComplete(stepData);
+      } else {
+        console.warn('[DateSelection] No onComplete callback provided');
+      }
+    } else {
+      console.error('[DateSelection] Cannot continue - missing date or time slot:', {
+        hasDate: !!selectedDate,
+        hasTimeSlot: !!selectedTimeSlot
+      });
     }
   };
 
@@ -325,7 +347,7 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
 
   return (
     <Container>
-      <Title>Choose Your Consultation Date & Time</Title>
+      <Title>{t('booking.dateTime.title')}</Title>
       
       {currentService && (
         <SelectedServiceBadge>
@@ -335,7 +357,7 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
 
       <Content>
         <Section>
-          <SectionTitle>Select Date</SectionTitle>
+          <SectionTitle>{t('booking.dateTime.selectDate')}</SectionTitle>
           <DateGrid>
             {availableDates.slice(0, 14).map(date => (
               <DateButton
@@ -351,20 +373,20 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
         </Section>
 
         <Section>
-          <SectionTitle>Available Times</SectionTitle>
+          <SectionTitle>{t('booking.dateTime.availableTimes')}</SectionTitle>
           {!selectedDate && (
             <div style={{ textAlign: 'center', color: '#6b7280', padding: '40px 0' }}>
-              Please select a date first
+              {t('booking.dateTime.selectDateFirst')}
             </div>
           )}
           
           {selectedDate && loading && (
-            <LoadingMessage>Loading available times for {format(selectedDate, 'EEEE, MMMM do')}...</LoadingMessage>
+            <LoadingMessage>{t('booking.dateTime.loadingTimes')} {format(selectedDate, 'EEEE, MMMM do')}...</LoadingMessage>
           )}
           
           {selectedDate && !loading && timeSlots.length === 0 && (
             <div style={{ textAlign: 'center', color: '#6b7280', padding: '40px 0' }}>
-              No available times for this date
+              {t('booking.dateTime.noTimesAvailable')}
             </div>
           )}
           
@@ -381,7 +403,7 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
                 >
                   <div style={{ fontWeight: 'bold' }}>{slot.time}</div>
                   <div style={{ fontSize: '12px', marginTop: '4px' }}>
-                    {slot.available ? slot.expert : 'Unavailable'}
+                    {slot.available ? slot.expert : t('booking.dateTime.unavailable')}
                   </div>
                 </TimeSlotButton>
               ))}
@@ -393,7 +415,7 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
       <Actions>
         {onBack && (
           <Button variant="outline" onClick={onBack}>
-            Back
+            {t('booking.navigation.back')}
           </Button>
         )}
         
@@ -402,7 +424,7 @@ export const DateSelectionStep: React.FC<DateSelectionStepProps> = ({
           onClick={handleContinue}
           disabled={!selectedDate || !selectedTimeSlot}
         >
-          Continue
+          {t('booking.navigation.continue')}
         </Button>
       </Actions>
 

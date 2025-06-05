@@ -1,5 +1,7 @@
-import * as React from 'react';
-import { SEO } from '../../components/common';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import DynamicSEO from '../../components/SEO/DynamicSEO';
+import GoogleAnalytics from '../../components/tracking/GoogleAnalytics';
 import { 
   SecurityShield, 
   ComplianceBadge 
@@ -26,49 +28,98 @@ import { PremiumTeam } from '../../components/sections/premium/PremiumTeam';
 import { RecoveryTimeline } from '../../components/sections/premium/RecoveryTimeline';
 import { RegulatoryPanel } from '../../components/sections/premium/RegulatoryPanel';
 import PremiumBookingCTA from './sections/HomeCallToAction';
+import PremiumStatistics from '../../components/sections/premium/PremiumStatistics';
 
 /**
- * Home Page Component
+ * Home Page Component with Full German Language Support
  * 
  * This component represents the main landing page of the Recovery Office website.
+ * Supports multilingual content through i18next with German formatting and professional terminology.
  */
 const Home: React.FC = () => {
+  const { t, i18n } = useTranslation();
+
   return (
     <Box as="main">
-      <SEO 
-        title="Home"
-        description="Recovery Office provides premium financial recovery services backed by regulatory compliance and expert specialists."
-        canonical="https://recoveryoffice.com"
+      {/* NEW: Fixed SEO Implementation */}
+      <DynamicSEO 
+        page="home"
+        isTransactional={false}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Recovery Office",
+          "alternateName": "Recovery Office Limited",
+          "description": "UK's premier financial asset recovery consultancy specializing in cryptocurrency recovery, investment fraud, and regulatory compliance assistance.",
+          "slogan": "Excellence in Financial Recovery",
+          "knowsAbout": [
+            "Financial Asset Recovery",
+            "Cryptocurrency Recovery", 
+            "Investment Fraud Recovery",
+            "Blockchain Forensics",
+            "Regulatory Compliance",
+            "FCA Regulation"
+          ],
+          "hasCredential": [
+            {
+              "@type": "EducationalOccupationalCredential",
+              "name": "FCA Authorization",
+              "credentialCategory": "Financial Services Authorization",
+              "recognizedBy": {
+                "@type": "Organization",
+                "name": "Financial Conduct Authority"
+              }
+            }
+          ]
+        }}
       />
       
-      {/* Premium Hero Section */}
+      {/* Google Analytics 4 & Conversion Tracking */}
+      <GoogleAnalytics 
+        pageTitle="Recovery Office Homepage"
+        pagePath="/"
+        isTransactional={false}
+        serviceType="Financial Recovery Services"
+      />
+      
+      {/* Premium Hero Section with Translation Support */}
       <PremiumHero
-        title={<><span className="accent">Financial Asset</span> Recovery Experts</>}
-        subtitle="UK's premier financial recovery specialists. We help victims of cryptocurrency theft, investment fraud, and financial scams recover their stolen assets through expert legal strategies and advanced forensic techniques."
-        primaryButtonText="Book a Consultation"
+        title={
+          <>
+            <span className="accent">{t('hero.title').split(' ').slice(0, 2).join(' ')}</span>{' '}
+            {t('hero.title').split(' ').slice(2).join(' ')}
+          </>
+        }
+        subtitle={t('hero.subtitle')}
+        primaryButtonText={t('hero.ctaPrimary')}
         primaryButtonUrl="/booking"
-        secondaryButtonText="Learn More"
+        secondaryButtonText={t('hero.ctaSecondary')}
         secondaryButtonUrl="/services"
         showLogo={true}
       />
 
+      {/* Premium Trust Statistics Section */}
+      <ScrollReveal>
+        <PremiumStatistics />
+      </ScrollReveal>
+
       {/* Premium Services Section */}
       <ScrollReveal>
         <PremiumServicesSection 
-          title="Our Services"
-          description="Comprehensive recovery services that combine regulatory expertise with advanced techniques"
+          title={t('services.title')}
+          description={t('services.subtitle')}
         />
       </ScrollReveal>
 
       {/* Recovery Timeline Section */}
       <ScrollReveal>
         <RecoveryTimeline 
-          title="Our Recovery Process"
-          description="A systematic approach to recovering your financial assets"
+          title={i18n.language === 'de' ? 'Unser Rückgewinnungsprozess' : 'Our Recovery Process'}
+          description={i18n.language === 'de' ? 'Ein systematischer Ansatz zur Rückgewinnung Ihrer finanziellen Vermögenswerte' : 'A systematic approach to recovering your financial assets'}
         />
       </ScrollReveal>
 
-      {/* About Section */}
+      {/* About Section with German Content */}
       <ScrollReveal>
         <Section backgroundColor="#ffffff">
           <Container>
@@ -90,26 +141,33 @@ const Home: React.FC = () => {
               }
             >
               <SectionTitle 
-                title="Our Regulated Approach" 
-                subtitle="Recovery backed by regulatory compliance"
+                title={i18n.language === 'de' ? 'Unser Regulierter Ansatz' : 'Our Regulated Approach'}
+                subtitle={i18n.language === 'de' ? 'Rückgewinnung unterstützt durch regulatorische Compliance' : 'Recovery backed by regulatory compliance'}
                 size="medium"
                 align="left"
                 decoratorBefore={<ComplianceBadge size="sm" opacity={0.5} />}
               />
               <Box mt={4}>
                 <Paragraph variant="body1">
-                  Using principles derived from financial regulations and industry best practices,
-                  we create comprehensive recovery strategies that maximize your chances of recovering
-                  lost assets while ensuring full compliance with applicable laws.
+                  {i18n.language === 'de' 
+                    ? 'Unter Verwendung von Prinzipien aus Finanzvorschriften und Industriestandards erstellen wir umfassende Rückgewinnungsstrategien, die Ihre Chancen auf die Rückgewinnung verlorener Vermögenswerte maximieren und gleichzeitig die vollständige Einhaltung geltender Gesetze gewährleisten.'
+                    : 'Using principles derived from financial regulations and industry best practices, we create comprehensive recovery strategies that maximize your chances of recovering lost assets while ensuring full compliance with applicable laws.'
+                  }
                 </Paragraph>
                 <Paragraph variant="body1">
-                  Our approach creates a systematic pathway to recovery, offering clarity and transparency
-                  throughout the process. Our methods have been refined through years of successful
-                  case resolutions and regulatory adaptation.
+                  {i18n.language === 'de'
+                    ? 'Unser Ansatz schafft einen systematischen Weg zur Rückgewinnung und bietet Klarheit und Transparenz während des gesamten Prozesses. Unsere Methoden wurden durch Jahre erfolgreicher Falllösungen und regulatorischer Anpassung verfeinert.'
+                    : 'Our approach creates a systematic pathway to recovery, offering clarity and transparency throughout the process. Our methods have been refined through years of successful case resolutions and regulatory adaptation.'
+                  }
                 </Paragraph>
                 <Box mt={4} display="flex" alignItems="center">
                   <ComplianceBadge size="sm" opacity={0.7} style={{ marginRight: '8px' }} />
-                  <Text variant="subtitle2">Regulated expertise in every aspect of recovery</Text>
+                  <Text variant="subtitle2">
+                    {i18n.language === 'de' 
+                      ? 'Regulierte Expertise in jedem Aspekt der Rückgewinnung'
+                      : 'Regulated expertise in every aspect of recovery'
+                    }
+                  </Text>
                 </Box>
               </Box>
             </GoldenSection>
@@ -125,16 +183,16 @@ const Home: React.FC = () => {
       {/* Premium Testimonials Section */}
       <ScrollReveal>
         <PremiumTestimonials 
-          title="Client Experiences"
-          description="Discover how our approach has helped others"
+          title={i18n.language === 'de' ? 'Kundenerfahrungen' : 'Client Experiences'}
+          description={i18n.language === 'de' ? 'Entdecken Sie, wie unser Ansatz anderen geholfen hat' : 'Discover how our approach has helped others'}
         />
       </ScrollReveal>
 
       {/* Premium Team Section */}
       <ScrollReveal>
         <PremiumTeam 
-          title="Our Expert Team"
-          description="Meet our experienced specialists committed to your financial recovery"
+          title={i18n.language === 'de' ? 'Unser Expertenteam' : 'Our Expert Team'}
+          description={i18n.language === 'de' ? 'Lernen Sie unsere erfahrenen Spezialisten kennen, die sich Ihrer finanziellen Rückgewinnung widmen' : 'Meet our experienced specialists committed to your financial recovery'}
         />
       </ScrollReveal>
 

@@ -5,11 +5,13 @@
  * to book a consultation with Recovery Office specialists.
  */
 
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Container } from '../../../design-system/components/layout';
-import { FadeIn, SlideIn } from '../../../animation';
+import { SlideIn } from '../../../animation';
+import { debugLog } from '../../../utils/removeConsole';
 
 // Background with subtle pattern
 const SectionBackground = styled.section`
@@ -198,9 +200,11 @@ const Reassurance = styled.p`
  * A premium, visually striking call-to-action section for booking consultations
  */
 const PremiumBookingCTA: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   
   const handleBooking = () => {
+    debugLog('[HomeCallToAction] Book consultation button clicked');
     navigate('/booking');
   };
 
@@ -210,18 +214,18 @@ const PremiumBookingCTA: React.FC = () => {
       <Container>
         <SlideIn direction="up" delay={0.1}>
           <CTACard>
-            <Headline>Begin Your Recovery Process</Headline>
+            <Headline>{t('beginRecovery.title', 'Begin Your Recovery Process')}</Headline>
             <Subheadline>
-              Schedule a consultation with our specialists
+              {t('beginRecovery.subtitle', 'Schedule a consultation with our specialists')}
             </Subheadline>
             <ConsultationButton
               onClick={handleBooking}
-              aria-label="Book a Consultation"
+              aria-label={t('cta.bookConsultation', 'Book a Consultation')}
             >
               <CalendarIcon />
-              Book a Consultation
+              {t('cta.bookConsultation', 'Book a Consultation')}
             </ConsultationButton>
-            <Reassurance>No obligation. 100% confidential.</Reassurance>
+            <Reassurance>{t('beginRecovery.disclaimer', 'No obligation. 100% confidential.')}</Reassurance>
           </CTACard>
         </SlideIn>
       </Container>

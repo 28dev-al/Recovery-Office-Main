@@ -1,5 +1,58 @@
 # https://www.robotstxt.org/robotstxt.html
+# Recovery Office - FCA Regulated Financial Asset Recovery Services
+# Robots.txt for Google Ads Compliance & UK Financial Services SEO
+
 User-agent: *
-Disallow: /api/
+Allow: /
+
+# Priority pages for financial services
+Allow: /services
+Allow: /about
+Allow: /contact
+Allow: /booking
+Allow: /faq
+
+# Language versions
+Allow: /de/
+Allow: /en/
+
+# Static assets
+Allow: /assets/
+Allow: /static/
+Allow: /locales/
+
+# Block admin areas
 Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /private/
+
+# Block development files
+Disallow: *.json$
+Disallow: /build/
+Disallow: /src/
+Disallow: /node_modules/
+
+# Sitemap location
+Sitemap: https://recovery-office-online.netlify.app/sitemap.xml
+
+# Google specific directives for financial services
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bing specific directives
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Financial services specific crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+# Professional indexing for LinkedIn
+User-agent: LinkedInBot
 Allow: / 

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PremiumNavBar from '../../design-system/components/navigation/PremiumNavBar';
 import PremiumFooter from '../../design-system/components/footer/PremiumFooter';
 import { RecoveryOfficeLogo } from '../branding';
+import LanguageSwitcher from '../common/LanguageSwitcher';
 
 interface PremiumLayoutProps {
   children: React.ReactNode;
@@ -51,7 +52,7 @@ export const PremiumLayout: React.FC<PremiumLayoutProps> = ({ children }) => {
       name: 'Recovery Office',
       description: 'UK\'s premier financial recovery specialists',
       address: '2nd Floor, 3 Piccadilly Place, London Road, Manchester, M1 3BN, UK',
-      phone: '+44 7451 263372',
+      phone: '+44 7451 263472',
       email: 'info@recovery-office.com',
       registrationNumber: '06621703',
       firmReferenceNumber: '836358'
@@ -82,14 +83,19 @@ export const PremiumLayout: React.FC<PremiumLayoutProps> = ({ children }) => {
 
   return (
     <LayoutContainer>
-      <PremiumNavBar 
-        items={navItems}
-        logo={logo}
-        ctas={ctas}
-        showLoginButton={false}
-        isSticky={true}
-        animateOnScroll={true}
-      />
+      <NavbarContainer>
+        <PremiumNavBar 
+          items={navItems}
+          logo={logo}
+          ctas={ctas}
+          showLoginButton={false}
+          isSticky={true}
+          animateOnScroll={true}
+        />
+        <LanguageSwitcherContainer>
+          <LanguageSwitcher />
+        </LanguageSwitcherContainer>
+      </NavbarContainer>
       <MainContent>
         {children}
       </MainContent>
@@ -102,6 +108,24 @@ const LayoutContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+`;
+
+const NavbarContainer = styled.div`
+  position: relative;
+`;
+
+const LanguageSwitcherContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 1001;
+  
+  @media (max-width: 992px) {
+    top: 20px;
+    right: 70px;
+    transform: none;
+  }
 `;
 
 const MainContent = styled.main`

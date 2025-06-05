@@ -1,33 +1,48 @@
 /**
- * Pages Export File
+ * Main pages export file
  * 
- * This file provides centralized exports for all page components,
- * making it easier to import them throughout the application.
- * 
- * Each page follows sacred geometry principles in its layout and design.
+ * This file exports all pages from the application for easy importing
+ * in other parts of the codebase.
  */
 
-// Main Pages
+// Main pages
 export { default as Home } from './Home/Home';
 export { default as Services } from './Services/Services';
-export { default as About } from './About/About';
+export { default as About } from './About';
 export { default as Contact } from './Contact/Contact';
 export { default as Blog } from './Blog/Blog';
-export { default as FAQ } from './FAQ/FAQ';
+export { FAQPage as FAQ } from './FAQ/FAQPage';
 export { default as Booking } from './Booking';
 export { default as NotFound } from './NotFound/NotFound';
+export { default as ComponentTest } from './ComponentTest/ComponentTest';
 
-// Dashboard Pages
-export { default as DashboardPage } from './Dashboard/DashboardPage';
-export { default as BookingsPage } from './Dashboard/BookingsPage';
+// Auth pages
+export { LoginPage } from './Auth/LoginPage';
 
-// Legal Pages
-export * from './legal';
+// Dashboard pages
+export { DashboardPage } from './Dashboard/DashboardPage';
+export { BookingsPage } from './Dashboard/BookingsPage';
+export { default as ClientsPage } from './Dashboard/ClientsPage';
+export { default as ServicesPage } from './Dashboard/ServicesPage';
+export { default as AnalyticsPage } from './Dashboard/AnalyticsPage';
 
-export { default as Privacy } from './Privacy';
-export { default as Terms } from './Terms';
-export { default as HIPAA } from './HIPAA';
-export { default as Accessibility } from './Accessibility'; 
+// Service pages
+export { InvestmentFraudRecoveryPage } from './Services/InvestmentFraudRecoveryPage';
+export { CryptocurrencyRecoveryPage } from './Services/CryptocurrencyRecoveryPage';
+export { FinancialScamRecoveryPage } from './Services/FinancialScamRecoveryPage';
+export { RegulatoryComplaintPage } from './Services/RegulatoryComplaintPage';
+
+// Legal pages
+export { default as Privacy } from './legal/Privacy';
+export { default as Terms } from './legal/Terms';
+export { default as Accessibility } from './legal/Accessibility';
+
+// Legal page components
+export { PrivacyPolicyPage } from './legal/PrivacyPolicy/PrivacyPolicyPage';
+export { TermsOfServicePage } from './legal/TermsOfService/TermsOfServicePage';
+
+// Data Security page
+export { DataSecurityPage } from './DataSecurity/DataSecurityPage';
 
 
 

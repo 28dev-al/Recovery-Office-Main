@@ -8,7 +8,7 @@ export const CryptocurrencyRecoveryPage: React.FC = () => {
     <Container>
       <Helmet>
         <title>Cryptocurrency Recovery Services | Bitcoin Recovery | Recovery Office UK</title>
-        <meta name="description" content="Professional cryptocurrency recovery services by Recovery Office. 89% success rate recovering Bitcoin, Ethereum, and digital assets. Expert blockchain forensics. Call +44 7451 263372." />
+        <meta name="description" content="UK's leading cryptocurrency recovery specialists. Recover stolen Bitcoin, Ethereum, and digital assets. Expert blockchain forensics. Call +44 7451 263472." />
         <meta name="keywords" content="cryptocurrency recovery, Bitcoin recovery, Ethereum recovery, blockchain forensics, crypto theft recovery, exchange hack recovery, wallet theft, digital asset recovery" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Cryptocurrency Recovery Services | Recovery Office UK" />
@@ -57,8 +57,8 @@ export const CryptocurrencyRecoveryPage: React.FC = () => {
             <PrimaryButton to="/booking">
               📞 Book Emergency Consultation
             </PrimaryButton>
-            <SecondaryButton href="tel:+447451263372">
-              Call Now: +44 7451 263372
+            <SecondaryButton href="tel:+447451263472">
+              Call Now: +44 7451 263472
             </SecondaryButton>
           </HeroActions>
           
@@ -252,8 +252,8 @@ export const CryptocurrencyRecoveryPage: React.FC = () => {
               Every hour counts when cryptocurrency is stolen. Our emergency response team is standing by 24/7 to begin immediate blockchain forensics and legal action to maximize your recovery chances.
             </CTAText>
             <CTAButtons>
-              <EmergencyButton href="tel:+447451263372">
-                📞 Emergency Hotline: +44 7451 263372
+              <EmergencyButton href="tel:+447451263472">
+                📞 Emergency Hotline: +44 7451 263472
               </EmergencyButton>
               <ConsultationButton to="/booking">
                 Book Immediate Consultation

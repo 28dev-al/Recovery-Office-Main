@@ -6,26 +6,7 @@
  */
 
 import { ServiceType } from '../types/service.types';
-
-export interface ServiceData {
-  _id: string;
-  id: string;
-  name: string;
-  description: string;
-  duration: number;
-  price: number;
-  category: string;
-  type?: ServiceType;
-  formattedPrice?: string;
-  formattedDuration?: string;
-  icon?: string;
-  isActive?: boolean;
-  availableForNewClients?: boolean;
-  isValidObjectId?: boolean;
-  isDevelopmentFallback?: boolean;
-  originalMongoId?: string;
-  debugInfo?: string;
-}
+import { ServiceData } from '../types/service';
 
 export class ServicesAPI {
   private baseURL = 'https://recovery-office-backend-production.up.railway.app/api';
@@ -175,78 +156,9 @@ export class ServicesAPI {
   }
 
   private getFallbackServices(): ServiceData[] {
-    console.log('[ServicesAPI] Using fallback services');
-    
-    return [
-      {
-        _id: '507f1f77bcf86cd799439011',
-        id: 'cryptocurrency-recovery',
-        name: 'Cryptocurrency Recovery',
-        description: 'Expert recovery of stolen Bitcoin, Ethereum, and other digital assets',
-        duration: 60,
-        price: 750,
-        category: 'crypto',
-        type: ServiceType.CRYPTOCURRENCY_RECOVERY,
-        formattedPrice: '£750',
-        formattedDuration: '1 hour',
-        icon: '/icons/services/crypto.svg',
-        isActive: true,
-        availableForNewClients: true,
-        isValidObjectId: true,
-        isDevelopmentFallback: true
-      },
-      {
-        _id: '507f1f77bcf86cd799439012',
-        id: 'investment-fraud-recovery',
-        name: 'Investment Fraud Recovery',
-        description: 'Recovery services for victims of investment scams and Ponzi schemes',
-        duration: 60,
-        price: 750,
-        category: 'fraud',
-        type: ServiceType.INVESTMENT_FRAUD_RECOVERY,
-        formattedPrice: '£750',
-        formattedDuration: '1 hour',
-        icon: '/icons/services/fraud.svg',
-        isActive: true,
-        availableForNewClients: true,
-        isValidObjectId: true,
-        isDevelopmentFallback: true
-      },
-      {
-        _id: '507f1f77bcf86cd799439013',
-        id: 'regulatory-assistance',
-        name: 'Regulatory Assistance',
-        description: 'Professional assistance with financial regulatory matters',
-        duration: 45,
-        price: 500,
-        category: 'regulatory',
-        type: ServiceType.REGULATORY_COMPLAINT,
-        formattedPrice: '£500',
-        formattedDuration: '45 minutes',
-        icon: '/icons/services/regulatory.svg',
-        isActive: true,
-        availableForNewClients: true,
-        isValidObjectId: true,
-        isDevelopmentFallback: true
-      },
-      {
-        _id: '507f1f77bcf86cd799439014',
-        id: 'professional-negligence',
-        name: 'Professional Negligence',
-        description: 'Legal action against negligent financial professionals',
-        duration: 90,
-        price: 950,
-        category: 'legal',
-        type: ServiceType.LEGAL_CONSULTATION,
-        formattedPrice: '£950',
-        formattedDuration: '1 hour 30 minutes',
-        icon: '/icons/services/legal.svg',
-        isActive: true,
-        availableForNewClients: true,
-        isValidObjectId: true,
-        isDevelopmentFallback: true
-      }
-    ];
+    // PRODUCTION: No fallback services - always use real backend data
+    console.error('[ServicesAPI] CRITICAL: Fallback services requested in production mode');
+    throw new Error('PRODUCTION_ERROR: Fallback services not available. Real backend connection required.');
   }
 
   private mapCategoryToServiceType(category: string) {

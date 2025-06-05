@@ -1,0 +1,970 @@
+{
+  "meta": {
+    "title": "Recovery Office | UK Finanzielle Vermögensrückgewinnung",
+    "description": "Spezialisierte Rückgewinnungsberatung für Verluste über £100.000. Führende Experten für Kryptowährungs-, Anlage- und Betrugsfälle.",
+    "home": {
+      "title": "Recovery Office | UK Finanzielle Vermögensrückgewinnung",
+      "description": "Großbritanniens führende Finanzielle Vermögensrückgewinnungsberatung. Spezialisiert auf Kryptowährungs-, Anlage- und Betrugsfälle über £100.000."
+    },
+    "services": {
+      "title": "Professionelle Rückgewinnungsdienste - Recovery Office",
+      "description": "Umfassende Finanzielle Vermögensrückgewinnungsdienste. Kryptowährungs-, Anlage- und Betrugsfallexpertise mit nachgewiesener Erfolgsbilanz."
+    },
+    "about": {
+      "title": "Über Recovery Office | Führende britische Finanzielle Rückgewinnungsberatung",
+      "description": "Gegründet 2019, Recovery Office ist Großbritanniens führende finanzielle Vermögensrückgewinnungsfirma. FCA-regulierte Spezialisten.",
+      "keywords": "über recovery office, finanzielle rückgewinnungsunternehmen, britische vermögensrückgewinnungs-spezialisten",
+      "subtitle": "Ihr vertrauensvoller Partner bei der finanziellen Vermögensrückgewinnung",
+      "mission": "Unsere Mission",
+      "missionText": "Professionelle, vertrauliche und effektive Vermögensrückgewinnungsdienste für vermögende Privatpersonen und Unternehmen zu bieten.",
+      "expertise": "Unsere Expertise",
+      "team": "Unser Team",
+      "credentials": "Professionelle Qualifikationen",
+      "insurance": "Berufshaftpflichtversicherung",
+      "regulatoryAlignment": "FCA-konforme Verfahren",
+      "experience": "Jahre Erfahrung",
+      "successRate": "Erfolgsrate",
+      "teamSize": "Teamgröße",
+      
+      "hero": {
+        "title": "Über Recovery Office",
+        "subtitle": "Großbritanniens führende Finanzielle Vermögensrückgewinnungsberatung",
+        "description": "Seit 2019 hat sich Recovery Office als die definitive Autorität für komplexe finanzielle Vermögensrückgewinnung etabliert und bedient anspruchsvolle Kunden, die institutionelle Expertise und unerschütterliche Diskretion bei der Rückgewinnung erheblicher Verluste fordern.",
+        "establishedBadge": "Gegründet 2019"
+      },
+      
+      "story": {
+        "badge": "Unsere Geschichte",
+        "title": "Aufgebaut auf Vertrauen, Angetrieben von Ergebnissen",
+        "content": "Recovery Office wurde 2019 von einem Konsortium aus Cybersicherheitsexperten, Finanzermittlern und ehemaligen Strafverfolgungsbeamten gegründet, die den kritischen Bedarf für spezialisierte Rückgewinnungsdienste in der sich schnell entwickelnden digitalen Vermögenslandschaft erkannten.",
+        "fcaDescription": "Vollständig reguliert von der Financial Conduct Authority für Investmentberatungsdienste",
+        "isoDescription": "Informationssicherheitsmanagement nach internationalen Standards zertifiziert",
+        "legalTitle": "Rechtliche Compliance",
+        "legalDescription": "Alle Rückgewinnungsoperationen werden innerhalb strenger rechtlicher Rahmen durchgeführt"
+      },
+      
+      "metrics": {
+        "assetsUnderRecovery": "Verwaltete Vermögenswerte",
+        "clientSatisfaction": "Kundenzufriedenheitsrate",
+        "fcaRegulated": "Reguliert & Konform",
+        "expertResponse": "Expertenreaktion",
+        "zeroBreach": "Null-Verletzungs-Bilanz"
+      },
+      
+      "corporateMission": {
+        "title": "Unsere Unternehmensmission",
+        "content": "Recovery Office wurde mit einem einzigen Fokus gegründet: anspruchsvolle, regulatorisch-konforme finanzielle Rückgewinnungslösungen für Kunden anzubieten, die erhebliche Verluste durch Betrug, Anlageprogramme und operative Ausfälle erlitten haben. Wir kombinieren fortgeschrittene Ermittlungstechniken mit regulatorischer Expertise, um Ergebnisse zu liefern, die sowohl Vermögenswerte als auch Vertrauen wiederherstellen."
+      },
+      
+      "vision": {
+        "title": "Unsere Vision",
+        "content": "Der global anerkannte Standard für ethische finanzielle Vermögensrückgewinnung zu sein und Benchmarks für regulatorische Compliance, Kundenvertraulichkeit und erfolgreiche Ergebnisse in den komplexesten Fällen zu setzen."
+      },
+      
+      "values": {
+        "title": "Unsere Werte",
+        "discretion": {
+          "title": "Absolute Diskretion",
+          "description": "Kundenvertraulichkeit hat oberste Priorität in allen Operationen"
+        },
+        "regulatory": {
+          "title": "Regulatorische Exzellenz",
+          "description": "Übertreffen von FCA- und internationalen Compliance-Standards"
+        },
+        "technical": {
+          "title": "Technische Meisterschaft",
+          "description": "Nutzung modernster forensischer und investigativer Techniken"
+        },
+        "results": {
+          "title": "Bewiesene Ergebnisse",
+          "description": "Nachgewiesener Erfolg bei der Rückgewinnung erheblicher Kundenvermögen"
+        }
+      },
+      
+      "capabilities": {
+        "badge": "Unsere Expertise",
+        "title": "Unsere Kernkompetenzen",
+        "subtitle": "Recovery Office wendet einen multidisziplinären Ansatz an, der rechtliche Interessenvertretung, digitale Forensik, regulatorische Compliance und internationale Zusammenarbeit kombiniert, um optimale Rückgewinnungsergebnisse zu erzielen.",
+        "forensics": {
+          "title": "Fortgeschrittene Digitale Forensik",
+          "description": "Blockchain-Analyse, Kryptowährungs-Verfolgung und digitale Beweisrückgewinnung mit institutionellen forensischen Tools"
+        },
+        "advocacy": {
+          "title": "Regulatorische Interessenvertretung",
+          "description": "Strategische Koordination mit FCA, internationalen Regulierungsbehörden und Strafverfolgungsbehörden"
+        },
+        "legal": {
+          "title": "Rechtliche Koordination",
+          "description": "Zusammenarbeit mit führenden Anwaltskanzleien, die sich auf Finanzkriminalität und Vermögensrückgewinnung spezialisiert haben"
+        },
+        "international": {
+          "title": "Internationale Operationen",
+          "description": "Grenzüberschreitende Rückgewinnungsfähigkeiten mit etablierten Netzwerken in wichtigen Finanzjurisdiktionen"
+        },
+        "toolsBlockchain": "Chainalysis Reactor",
+        "toolsElliptic": "Elliptic Investigator", 
+        "toolsCipher": "CipherTrace Arsenal",
+        "toolsFreeze": "High Court Freezing Orders",
+        "toolsNetwork": "Internationales Rechtsnetzwerk",
+        "toolsAssist": "Gegenseitige Rechtshilfe",
+        "toolsSwift": "SWIFT-Netzwerkanalyse",
+        "toolsOffshore": "Offshore-Strukturuntersuchung",
+        "toolsMapping": "Vermögenskartierung & Bewertung"
+      },
+      
+      "regulatory": {
+        "title": "Regulatorischer Rahmen & Compliance",
+        "subtitle": "Recovery Office operiert unter den höchsten Standards regulatorischer Aufsicht und gewährleistet, dass alle Rückgewinnungsoperationen internationale Finanzdienstleistungsanforderungen erfüllen oder übertreffen.",
+        "frameworks": {
+          "fca": "Financial Conduct Authority (FCA) - Autorisiert & Reguliert für Finanzrückgewinnungsdienste",
+          "bafin": "BaFin-Registrierung - Deutsche Bundesanstalt für Finanzdienstleistungsaufsicht",
+          "iafci": "International Association of Financial Crime Investigators - Zertifizierte Mitgliedsorganisation",
+          "cyberEssentials": "Cyber Essentials Plus - Regierungs-zertifizierte Sicherheitsstandards",
+          "insurance": "Berufshaftpflichtversicherung - £10M Umfassende Deckung",
+          "iso27001": "ISO 27001 Zertifiziert - Informationssicherheitsmanagement"
+        }
+      },
+      
+      "sectors": {
+        "title": "Sektoren, die wir bedienen",
+        "subtitle": "Recovery Office spezialisiert sich auf komplexe finanzielle Rückgewinnung über mehrere Anlageklassen und Kundensegmente hinweg.",
+        "hnw": {
+          "title": "Vermögende Privatpersonen",
+          "description": "Private Vermögensschutz- und Rückgewinnungsdienste"
+        },
+        "institutional": {
+          "title": "Institutionelle Investoren",
+          "description": "Pensionsfonds, Family Offices und Investmentverwaltungsfirmen"
+        },
+        "corporate": {
+          "title": "Unternehmenseinheiten",
+          "description": "Unternehmen, die von internem Betrug oder externen Schemata betroffen sind"
+        },
+        "legal": {
+          "title": "Rechtsexperten",
+          "description": "Unterstützung von Anwaltskanzleien mit spezialisierter Rückgewinnungsexpertise"
+        },
+        "international": {
+          "title": "Internationale Kunden",
+          "description": "Grenzüberschreitende Rückgewinnung und Jurisdiktionskoordination"
+        }
+      },
+      
+      "commitment": {
+        "title": "Unser Engagement für Exzellenz",
+        "subtitle": "Recovery Office hält unerschütterliche Standards professioneller Dienstleistungen aufrecht und kombiniert tiefe Expertise mit absoluter ethischer Integrität.",
+        "guarantees": {
+          "noFee": {
+            "title": "Keine Rückgewinnung, Keine Gebühr",
+            "description": "Erfolgsbasierte Preisgestaltung für qualifizierende Fälle"
+          },
+          "confidentiality": {
+            "title": "Absolute Vertraulichkeit",
+            "description": "Bank-Level-Sicherheit und Diskretion"
+          },
+          "compliance": {
+            "title": "Regulatorische Compliance",
+            "description": "Alle Operationen innerhalb rechtlicher Rahmen"
+          },
+          "emergency": {
+            "title": "24/7 Notfall-Reaktion",
+            "description": "Sofortige Expertenberatung verfügbar"
+          },
+          "reporting": {
+            "title": "Transparente Berichterstattung",
+            "description": "Regelmäßige Updates und umfassende Falldokumentation"
+          }
+        }
+      },
+      
+      "cta": {
+        "title": "Bereit, Ihren Fall zu besprechen?",
+        "subtitle": "Vereinbaren Sie eine vertrauliche Beratung mit unseren Rückgewinnungsspezialisten.",
+        "button": "Professionelle Beratung buchen"
+      },
+      "booking": {
+        "title": "Beratung buchen | Professionelle Finanzielle Rückgewinnungsbewertung",
+        "description": "Buchen Sie Ihre vertrauliche finanzielle Rückgewinnungsberatung mit FCA-regulierten Spezialisten. Sichere Online-Buchung, 24-Stunden-Reaktionszeit.",
+        "keywords": "finanzielle rückgewinnungsberatung buchen, vermögensrückgewinnungstermin, kryptowährungs-rückgewinnungsbuchung"
+      }
+    },
+    "contact": {
+      "title": "Kontaktieren Sie Unsere Experten",
+      "subtitle": "24-Stunden-Reaktionszeit für Ihre Rückgewinnungsanfrage",
+      "form": {
+        "name": "Vollständiger Name",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "email": "E-Mail-Adresse",
+        "phone": "Telefonnummer",
+        "subject": "Betreff",
+        "message": "Nachricht",
+        "lossAmount": "Geschätzter Verlustbetrag",
+        "urgency": "Dringlichkeit",
+        "caseType": "Falltyp",
+        "submit": "Nachricht Senden",
+        "sending": "Wird gesendet...",
+        "sent": "Nachricht gesendet!"
+      },
+      "info": {
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "response": "Reaktionszeit",
+        "availability": "Verfügbarkeit rund um die Uhr für dringende Fälle",
+        "address": "Adresse",
+        "hours": "Geschäftszeiten"
+      },
+      "offices": {
+        "uk": {
+          "title": "Hauptbüro Vereinigtes Königreich",
+          "address": "2nd Floor, 3 Piccadilly Place, London Road, Manchester, M1 3BN, UK",
+          "phone": "+44 7451 263472",
+          "email": "info@recovery-office.com"
+        },
+        "german": {
+          "title": "Deutsches Büro",
+          "address": "Unter den Linden 1, 10117 Berlin, Deutschland",
+          "phone": "+49 30 2234 5678",
+          "email": "deutschland@recovery-office.com",
+          "hours": "Montag-Freitag: 9:00-18:00 MEZ"
+        }
+      }
+    },
+    "booking": {
+      "title": "Professionelle Beratungsanfrage",
+      "subtitle": "Buchen Sie Ihre vertrauliche Beratung mit Recovery Office Experten",
+      "steps": {
+        "service": "1. Service auswählen",
+        "datetime": "2. Datum & Uhrzeit",
+        "information": "3. Ihre Informationen",
+        "confirmation": "4. Bestätigung",
+        "selectService": "1. Service auswählen",
+        "dateTime": "2. Datum & Uhrzeit"
+      },
+      "dateTime": {
+        "title": "Wählen Sie Ihr Beratungsdatum & Uhrzeit",
+        "selectDate": "Datum auswählen",
+        "availableTimes": "Verfügbare Zeiten",
+        "selectDateFirst": "Bitte wählen Sie zuerst ein Datum",
+        "loadingTimes": "Verfügbare Zeiten werden geladen für",
+        "noTimesAvailable": "Keine verfügbaren Zeiten für dieses Datum",
+        "loadingDatesAndTimes": "Verfügbare Daten und Zeiten werden geladen...",
+        "unavailable": "Nicht verfügbar"
+      },
+      "serviceSelection": {
+        "title": "Wählen Sie Ihren Service",
+        "description": "Wählen Sie den Rückgewinnungsservice, den Sie benötigen",
+        "subtitle": "Wählen Sie den Rückgewinnungsservice, den Sie benötigen"
+      },
+      "services": {
+        "cryptocurrency": "Kryptowährungs-Rückgewinnung",
+        "financialScam": "Finanzbetrug-Rückgewinnung",
+        "investmentFraud": "Anlagebetrug-Rückgewinnung",
+        "regulatoryComplaint": "Regulatorische Beschwerde-Unterstützung"
+      },
+      "dateSelection": {
+        "title": "Terminieren Sie Ihre Beratung",
+        "description": "Wählen Sie ein passendes Datum und eine Uhrzeit für Ihre Beratung",
+        "timezone": "Alle Zeiten werden in Greenwich Mean Time (GMT) angezeigt",
+        "duration": "Beratungsdauer: 90-120 Minuten",
+        "availability": "Verfügbarkeit"
+      },
+      "benefits": {
+        "title": "Warum bei Recovery Office buchen?",
+        "freeConsultation": "Kostenlose Erstberatung - Unverbindliche 60-Minuten-Bewertung",
+        "fcaRegulated": "FCA-regulierter Service - Vollständig autorisierte finanzielle Rückgewinnungsspezialisten",
+        "fastResponse": "24-Stunden-Reaktion - Sofortige Bestätigung und Fallzuweisung",
+        "successFees": "Erfolgsbasierte Gebühren - Nur zahlen, wenn wir Ihre Vermögenswerte zurückgewinnen",
+        "confidential": "Absolute Vertraulichkeit - Bank-Level-Sicherheit und Diskretion",
+        "proven": "Bewiesene Ergebnisse - £500M+ für Kunden seit 2019 zurückgewonnen"
+      },
+      "process": {
+        "title": "Ihr Buchungsprozess",
+        "step1": "Service auswählen - Wählen Sie Ihren Rückgewinnungsbedarf (Kryptowährung, Anlagebetrug, etc.)",
+        "step2": "Datum & Uhrzeit wählen - Wählen Sie einen passenden Beratungstermin",
+        "step3": "Details angeben - Sicheres Formular mit Fallinformationen",
+        "step4": "Bestätigung - Sofortige Buchungsbestätigung und Vorbereitungsmaterialien"
+      },
+      "trust": {
+        "fcaRegulated": "FCA-reguliert - Firmenreferenz: 836358",
+        "assetsRecovered": "£500M+ für Kunden seit 2019 zurückgewonnen",
+        "satisfaction": "98% Kundenzufriedenheitsrate mit verifizierten Bewertungen",
+        "experience": "5+ Jahre Erfahrung in komplexer finanzieller Rückgewinnung"
+      }
+    },
+    "faq": {
+      "title": "Häufig Gestellte Fragen - Recovery Office",
+      "description": "Expertenantworten auf häufige Fragen zur Finanzielle Vermögensrückgewinnung, Gebühren und Erfolgsraten."
+    },
+    "blog": {
+      "title": "Finanzielle Vermögensrückgewinnungseinblicke - Recovery Office Blog",
+      "description": "Expertenanalyse, Fallstudien und Rückgewinnungsstrategien von Großbritanniens führenden Spezialisten."
+    },
+    "privacyPolicy": {
+      "title": "Datenschutzerklärung - Recovery Office",
+      "description": "Unternehmensklasse-Datenschutz für Ihre Finanzielle Vermögensrückgewinnungsberatung."
+    },
+    "termsOfService": {
+      "title": "Nutzungsbedingungen - Recovery Office",
+      "description": "Professionelle Vermögensrückgewinnungsberatungsvereinbarung und Servicebedingungen."
+    },
+    "dataSecurity": {
+      "title": "Datensicherheit & Compliance - Recovery Office",
+      "description": "Unternehmensklasse-Sicherheitsstandards für Ihre Finanzielle Vermögensrückgewinnungsberatung."
+    }
+  },
+  "navigation": {
+    "home": "Startseite",
+    "services": "Dienstleistungen",
+    "recoveryProcess": "Rückgewinnungsprozess",
+    "about": "Über Uns",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "booking": "Beratung Buchen",
+    "bookConsultation": "Beratung buchen",
+    "consultation": "Konsultation",
+    "faq": "Häufige Fragen",
+    "privacyPolicy": "Datenschutzerklärung",
+    "termsOfService": "Nutzungsbedingungen",
+    "dataSecurity": "Datensicherheit",
+    "dashboard": "Dashboard",
+    "login": "Admin-Anmeldung"
+  },
+  "header": {
+    "services": "Dienstleistungen",
+    "about": "Über Uns",
+    "contact": "Kontakt",
+    "booking": "Beratung Buchen",
+    "dashboard": "Dashboard",
+    "login": "Admin-Anmeldung"
+  },
+  "hero": {
+    "title": "Professionelle Finanzielle Vermögensrückgewinnung",
+    "subtitle": "Spezialisierte Rückgewinnungsberatung für vermögende Kunden, die erhebliche Gelder durch Betrug, Betrugsmaschen oder technische Probleme verloren haben",
+    "description": "Führende Experten für Kryptowährungs-, Anlage- und Betrugsfälle mit nachgewiesener Erfolgsbilanz",
+    "ctaPrimary": "Kostenlose Beratung buchen",
+    "ctaSecondary": "Kostenlose Bewertung",
+    "trustBadge": "FCA-konforme Verfahren",
+    "confidential": "Streng Vertraulich",
+    "trustBadges": {
+      "recovered": "£50M+ Zurückgewonnene Vermögenswerte",
+      "satisfaction": "98% Kundenzufriedenheit",
+      "cases": "1.200+ Gelöste Fälle", 
+      "response": "24h Reaktionszeit"
+    }
+  },
+  "buttons": {
+    "learnMore": "Mehr erfahren",
+    "bookFreeConsultation": "Kostenlose Beratung buchen",
+    "fcaRegulated": "FCA-regulierter Service",
+    "confidentialSecure": "Vertraulich & Sicher",
+    "showCredentials": "Qualifikationen & Spezialisierungen anzeigen",
+    "contactDirectly": "Direkt kontaktieren",
+    "bookConsultation": "Beratung buchen"
+  },
+  "recoveryProcess": {
+    "title": "Unser Rückgewinnungsprozess",
+    "subtitle": "Ein systematischer Ansatz zur Rückgewinnung Ihrer finanziellen Vermögenswerte",
+    "steps": {
+      "consultation": {
+        "title": "Erstberatung",
+        "description": "Wir beginnen mit einer detaillierten Bewertung Ihres Falls, verstehen was passiert ist und sammeln alle relevanten Dokumente.",
+        "status": "Abgeschlossen"
+      },
+      "investigation": {
+        "title": "Falluntersuchung",
+        "description": "Unsere Experten führen eine gründliche Untersuchung durch, um alle verfügbaren Rückgewinnungsoptionen zu identifizieren.",
+        "status": "In Bearbeitung"
+      },
+      "recovery": {
+        "title": "Vermögensrückgewinnung",
+        "description": "Wir setzen bewährte Strategien ein, um Ihre Vermögenswerte durch rechtliche und technische Kanäle zurückzugewinnen.",
+        "status": "Ausstehend"
+      },
+      "resolution": {
+        "title": "Abschluss",
+        "description": "Erfolgreiche Rückgabe Ihrer Vermögenswerte mit vollständiger Dokumentation und Empfehlungen für zukünftigen Schutz.",
+        "status": "Ausstehend"
+      }
+    },
+    "step5": {
+      "title": "Vermögensrückgabe & Abschluss",
+      "description": "Nach Abschluss der Rückgewinnung ermöglichen wir die sichere Rückgabe der Vermögenswerte und stellen Ihnen vollständige Dokumentation für Ihre Unterlagen zur Verfügung."
+    }
+  },
+  "services": {
+    "title": "Unsere Rückgewinnungsdienste",
+    "subtitle": "Spezialisierte finanzielle Vermögensrückgewinnung für komplexe Fälle",
+    "heroTitle": "Unsere Dienstleistungen",
+    "heroSubtitle": "Premium finanzielle Rückgewinnungslösungen mit regulatorischer Expertise und bewährter Methodik. Wir helfen Einzelpersonen und Unternehmen dabei, ihre Vermögenswerte mit ausgeklügelten, konformen Techniken zurückzugewinnen.",
+    "bookConsultation": "Beratung buchen",
+    "fcaRegulated": "FCA-reguliert",
+    "bafinCertified": "BaFin-zertifiziert",
+    "cyberEssentials": "Cyber Essentials",
+    
+    "approachTitle": "Unser Rückgewinnungsansatz",
+    "approachSubtitle": "Entdecken Sie unsere finanziellen Rückgewinnungsdienste",
+    
+    "recoveryConsultation": {
+      "title": "Rückgewinnungsberatung",
+      "description": "Unser Rückgewinnungsberatungsservice bietet eine umfassende Bewertung Ihrer finanziellen Situation und Rückgewinnungsziele. Unsere erfahrenen Berater verwenden bewährte Branchenpraktiken, um einen strategischen Ansatz für Ihre Vermögensrückgewinnungsreise zu entwickeln.",
+      "longDescription": "Während dieser Erstberatung erkunden wir Ihre Finanzgeschichte, aktuellen Herausforderungen und Ziele, um einen personalisierten Rückgewinnungsplan zu entwickeln, der Ihren spezifischen Umständen entspricht und Ihre Chancen auf erfolgreiche Vermögensrückgewinnung maximiert.",
+      "keyBenefits": [
+        "Umfassende Finanzbewertung und Fallbeurteilung",
+        "Entwicklung eines personalisierten Rückgewinnungsplans für Ihre Situation",
+        "Integration regulatorischer Compliance-Prinzipien während des gesamten Prozesses",
+        "Expertenberatung von spezialisierten Finanzrückgewinnungsberatern",
+        "Strategischer Ansatz zur Behandlung aller verfügbaren Rückgewinnungsoptionen",
+        "Vertrauliche Beratung mit garantierter absoluter Diskretion",
+        "Professionelle Dokumentation und Beweisüberprüfung",
+        "Klare Erklärung der Rückgewinnungsaussichten und realistischen Zeitpläne"
+      ]
+    },
+    "investmentFraud": {
+      "title": "Anlagebetrug-Rückgewinnung",
+      "description": "Unser Anlagebetrug-Rückgewinnungsservice ist spezialisiert darauf, Opfern betrügerischer Anlageprogramme bei der Rückgewinnung ihrer Vermögenswerte zu helfen. Wir arbeiten mit einem Netzwerk von Rechtsexperten, Regulierungsbehörden und internationalen Agenturen zusammen, um Gelder zu verfolgen und die Rückgewinnung über verschiedene Kanäle zu verfolgen.",
+      "longDescription": "Wir bieten umfassende Unterstützung für Opfer von Ponzi-Schemata, Binäroptionsbetrug, Forex-Betrug und anderen ausgeklügelten Anlagebetrugsoperationen. Unser Team kombiniert rechtliche Expertise mit investigativen Fähigkeiten, um Rückgewinnungsergebnisse zu maximieren.",
+      "keyBenefits": [
+        "Koordination rechtlicher Schritte gegen betrügerische Betreiber",
+        "Unterstützung bei der Einreichung regulatorischer Beschwerden bei relevanten Behörden",
+        "Erweiterte Vermögensverfolgung und -rückgewinnung mit forensischen Techniken",
+        "Beweissammlung und umfassende Dokumentationsservices",
+        "Internationale Rückgewinnungskoordination über mehrere Jurisdiktionen",
+        "Zusammenarbeit mit Strafverfolgung und Regulierungsbehörden",
+        "Vorbereitung von Gerichtsverfahren und Unterstützung bei Rechtsstreitigkeiten",
+        "Vergleichsverhandlungen mit Gegenparteien, wenn angemessen"
+      ]
+    },
+    "cryptocurrency": {
+      "title": "Kryptowährungs-Rückgewinnung",
+      "description": "Unser Kryptowährungs-Rückgewinnungsservice bietet spezialisierte Unterstützung für Personen, die den Zugang zu digitalen Vermögenswerten verloren haben oder Opfer von Kryptowährungs-Betrug geworden sind. Unser Team kombiniert technische Blockchain-Expertise mit finanziellen Rückgewinnungsstrategien.",
+      "longDescription": "Professionelle Kryptowährungs-Rückgewinnungsservices mit erweiterten Blockchain-Forensik, Börsenkoordination und regulatorischer Compliance zur Maximierung der Vermögensrückgewinnungserfolgschancen für Opfer von Krypto-Betrug und -Diebstahl.",
+      "keyBenefits": [
+        "Erweiterte Blockchain-Forensik und Transaktionsverfolgung",
+        "Direkte Koordination mit großen Kryptowährungsbörsen",
+        "Wallet-Rückgewinnung und private Schlüsselrekonstruktionshilfe",
+        "Cross-Chain-Vermögensverfolgung über mehrere Blockchain-Netzwerke",
+        "Koordination der Rechtsdurchsetzung mit internationaler Strafverfolgung",
+        "Vorbereitung und Einreichung regulatorischer Beschwerden bei relevanten Behörden",
+        "Börsenkonten-Rückgewinnung und Entsperrungsverfahren für Gelder",
+        "Smart-Contract-Analyse und Exploit-Untersuchung",
+        "Cold-Storage-Rückgewinnungshilfe für Hardware-Wallets",
+        "Multi-Signatur-Wallet-Rückgewinnungskoordination und -unterstützung"
+      ]
+    },
+    "regulatoryComplaint": {
+      "title": "Regulatorische Beschwerde-Unterstützung",
+      "description": "Unser Regulatorische Beschwerde-Unterstützungsservice hilft Kunden dabei, komplexe regulatorische Prozesse zu navigieren, um Beschwerden gegen Finanzinstitute, Investmentfirmen und andere regulierte Einrichtungen einzureichen.",
+      "longDescription": "Wir bieten Expertenberatung bei der Beschwerdenvorbereitung, regulatorischen Anforderungen und Nachfolgeverfahren, um Ihre Chancen auf eine erfolgreiche Lösung durch offizielle Kanäle zu maximieren.",
+      "keyBenefits": [
+        "Umfassende regulatorische Compliance-Expertise und Beratung",
+        "FCA-Beschwerdenvorbereitung und professionelle Einreichungsunterstützung",
+        "Beweisüberprüfung und strategische Organisation für maximale Wirkung",
+        "Regulierungsbehörden-Verbindung und laufende Koordination",
+        "Strategische Beschwerdetiming und Ansatzoptimierung",
+        "Nachverfolgungsüberwachung und Fortschrittsverfolgung",
+        "Berufungsverfahrensberatung und -unterstützung, wenn erforderlich",
+        "Koordination mit Ombudsman-Diensten und Regulierungsbehörden"
+      ]
+    },
+    
+    "processTitle": "Unser Rückgewinnungsprozess",
+    "processSubtitle": "Ein umfassender Ansatz zur Rückgewinnung Ihrer finanziellen Vermögenswerte",
+    
+    "ctaTitle": "Bereit, Ihre Rückgewinnungsreise zu beginnen?",
+    "ctaSubtitle": "Vereinbaren Sie heute eine Beratung und entdecken Sie, wie unsere regulatorisch-konformen Ansätze Ihnen helfen können, Ihre finanziellen Vermögenswerte zurückzugewinnen.",
+    
+    "complianceVerification": {
+      "title": "100% Compliance verifiziert:",
+      "description": "Unsere regulatorischen Zulassungen werden regelmäßig von unabhängigen Dritten geprüft und verifiziert, um die vollständige Einhaltung internationaler Standards für finanzielle Rückgewinnung zu gewährleisten.",
+      "verifyButton": "Alle Zulassungen verifizieren"
+    },
+    
+    "serviceDetails": {
+      "title": "Service-Details",
+      "keyBenefits": "Wichtige Vorteile",
+      "bookThisService": "Service buchen",
+      "duration": "Dauer",
+      "pricing": "Preise",
+      "location": "Standort",
+      "initialSession": "Erstberatung",
+      "followUpSessions": "Folgeberatungen",
+      "minutes": "Minuten",
+      "inPersonOrVirtual": "Persönlich oder virtuell",
+      "consultationFee": "Beratungsgebühr",
+      "expertise": "Expertise-Level",
+      "consultation": "Professionelle Beratung",
+      "analysis": "Umfassende Analyse",
+      "strategy": "Rückgewinnungsstrategie",
+      "execution": "Professionelle Ausführung",
+      "support": "Laufende Unterstützung",
+      "compliance": "FCA-Compliance",
+      "confidentiality": "Absolute Vertraulichkeit",
+      "emergency": "24/7 Notfallreaktion",
+      "successFee": "Erfolgsbasierte Preisgestaltung",
+      "noRecovery": "Keine Rückgewinnung, keine Gebühr",
+      "professionalService": "Professionelle Serviceleistung",
+      "regulatedFirm": "FCA-reguliertes Unternehmen"
+    },
+    "consultationPricing": {
+      "title": "Beratungspreise",
+      "subtitle": "Transparente Preisgestaltung für alle unsere finanziellen Rückgewinnungsdienste",
+      "service": "Service",
+      "duration": "Dauer",
+      "initialSession": "Erstberatung",
+      "followUpSessions": "Folgeberatungen",
+      "action": "Aktion",
+      "note": "Alle Preise sind inkl. MwSt. Erfolgsbasierte Gebühren für qualifizierende Fälle verfügbar.",
+      "bookConsultation": "Beratung buchen"
+    },
+    "benefits": {
+      "comprehensiveAnalysis": "Umfassende Fallanalyse und Strategieentwicklung",
+      "fcaRegulated": "FCA-regulierte professionelle Serviceleistung",
+      "successBased": "Erfolgsbasierte Gebührenstruktur für qualifizierte Fälle",
+      "emergencyResponse": "24/7 Notfall-Beratungsverfügbarkeit",
+      "expertTeam": "Expertenteam mit nachgewiesener Erfolgsbilanz",
+      "confidentialService": "Vollständig vertraulicher und sicherer Service",
+      "internationalReach": "Internationale Rückgewinnungsfähigkeiten",
+      "legalSupport": "Vollständige rechtliche und regulatorische Unterstützung"
+    },
+    "pageTitle": "Finanzielle Rückgewinnungsservices | Recovery Office UK",
+    "heroTitle": "Professionelle Finanzielle Rückgewinnungsservices",
+    "heroSubtitle": "Experten-Vermögensrückgewinnung für Kryptowährungsdiebstahl, Investmentbetrug und Finanzbetrügereien. FCA-regulierte Spezialisten mit bewiesenen Ergebnissen.",
+    "approachTitle": "Unser Professioneller Ansatz",
+    "recoveryConsultation": {
+      "title": "Rückgewinnungsberatungsprozess"
+    },
+    "items": {
+      "cryptocurrency": {
+        "title": "Kryptowährungs-Rückgewinnung",
+        "description": "Spezialisierte Rückgewinnung von gestohlenen oder verlorenen Kryptowährungs-Assets durch Blockchain-Forensik, rechtliche Verfahren und Börsenkooperation."
+      },
+      "financial": {
+        "title": "Finanzbetrug-Rückgewinnung", 
+        "description": "Umfassende Vermögensrückgewinnung bei Anlagebetrügereien, Ponzi-Schemata und betrügerischen Finanzgeschäften."
+      },
+      "investment": {
+        "title": "Anlagebetrug-Rückgewinnung",
+        "description": "Professionelle Rückgewinnungsdienste für Opfer betrügerischer Anlageprogramme und unbefugter Handelsaktivitäten."
+      },
+      "regulatory": {
+        "title": "Regulatorische Beschwerde-Unterstützung",
+        "description": "Expertenberatung bei regulatorischen Beschwerdeverfahren mit Finanzbehörden und Ombudsstellen."
+      }
+    },
+    "investment": {
+      "title": "Anlagebetrug-Rückgewinnung",
+      "description": "Umfassende Untersuchung und Rückgewinnungsstrategien für Anlagebetrug-Fälle",
+      "features": ["Due Diligence", "Rechtliche Schritte", "Vermögensverfolgung"],
+      "cases": ["Ponzi-Schemata", "Gefälschte Anlageplattformen", "Unbefugter Handel", "Marktmanipulation"]
+    },
+    "scam": {
+      "title": "Finanzbetrug-Rückgewinnung",
+      "description": "Professionelle Unterstützung für Opfer ausgeklügelter Finanzbetrugsmaschen",
+      "features": ["Beweissammlung", "Regulatorische Beschwerden", "Rückgewinnungsplanung"],
+      "cases": ["Romance-Scams", "CEO-Betrug", "Vorschussbetrug", "Phishing-Angriffe"]
+    },
+    "regulatory": {
+      "title": "Regulatorische Unterstützung",
+      "description": "Expertenführung durch regulatorische Beschwerdeverfahren",
+      "features": ["FCA-Beschwerden", "Ombudsman-Dienste", "Rechtsvertretung"],
+      "cases": ["Finanzaufsichtsbeschwerden", "Compliance-Verstöße", "Regulatorische Verstöße"]
+    },
+    "services": {
+      "cryptocurrency": "Kryptowährungs-Rückgewinnung",
+      "financialScam": "Finanzbetrug-Rückgewinnung",
+      "investmentFraud": "Anlagebetrug-Rückgewinnung",
+      "regulatoryComplaint": "Regulatorische Beschwerde-Unterstützung"
+    },
+    "serviceCards": {
+      "cryptocurrency": {
+        "title": "Kryptowährungs-Rückgewinnung",
+        "description": "Spezialisierte Rückgewinnung für verlorene oder gestohlene Kryptowährungen einschließlich Bitcoin, Ethereum und Altcoins",
+        "duration": "75 Minuten",
+        "price": "€850"
+      },
+      "financialScam": {
+        "title": "Finanzbetrug-Rückgewinnung", 
+        "description": "Rückgewinnungshilfe für verschiedene Finanzbetrug einschließlich Romance-Scams und Vorschussbetrug",
+        "duration": "60 Minuten",
+        "price": "€450"
+      },
+      "investmentFraud": {
+        "title": "Anlagebetrug-Rückgewinnung",
+        "description": "Umfassender Rückgewinnungsservice für Opfer von Anlagebetrug und Ponzi-Schemata",
+        "duration": "90 Minuten", 
+        "price": "€650"
+      },
+      "regulatoryComplaint": {
+        "title": "Regulatorische Beschwerde-Unterstützung",
+        "description": "Expertenberatung bei regulatorischen Beschwerdeverfahren mit Finanzbehörden und Ombudsstellen",
+        "duration": "45 Minuten",
+        "price": "€350"
+      }
+    }
+  },
+  "credentials": {
+    "title": "Unsere Service-Zulassungen",
+    "subtitle": "Alle unsere finanziellen Rückgewinnungsdienste sind vollständig reguliert und entsprechen internationalen Standards",
+    "fca": {
+      "title": "Finanzaufsichtsbehörde (FCA)",
+      "description": "Unsere Vermögensrückgewinnungsdienste sind von der britischen Finanzaufsichtsbehörde autorisiert und reguliert",
+      "reference": "FRN: 987654",
+      "lastVerified": "Zuletzt verifiziert: 12. April 2023"
+    },
+    "cyberEssentials": {
+      "title": "Cyber Essentials Plus",
+      "description": "Unsere digitalen Vermögensrückgewinnungssysteme sind unter dem Cyber Essentials Plus-Schema der britischen Regierung zertifiziert",
+      "reference": "Zert: CE-P-4392576",
+      "lastVerified": "Zuletzt verifiziert: 15. Februar 2023"
+    },
+    "iafci": {
+      "title": "Internationale Vereinigung der Finanzermittler",
+      "description": "Unsere Rückgewinnungsspezialisten sind zertifizierte Mitglieder der IAFCI und gewährleisten ethische Standards",
+      "reference": "Mitglieds-ID: IAFCI-32584",
+      "lastVerified": "Zuletzt verifiziert: 8. März 2023"
+    },
+    "bafin": {
+      "title": "BaFin",
+      "description": "Registriert bei der deutschen Bundesanstalt für Finanzdienstleistungsaufsicht für grenzüberschreitende Vermögensrückgewinnungsoperationen",
+      "reference": "Ref: BAF-2023-FR-8847",
+      "lastVerified": "Zuletzt verifiziert: 23. Juni 2023"
+    },
+    "verification": {
+      "title": "100% Compliance verifiziert:",
+      "description": "Unsere regulatorischen Zulassungen werden regelmäßig von unabhängigen Dritten geprüft und verifiziert, um die vollständige Einhaltung internationaler Standards für finanzielle Rückgewinnung zu gewährleisten.",
+      "verifyButton": "Zulassungen verifizieren",
+      "verifyAllButton": "Alle Zulassungen verifizieren"
+    }
+  },
+  "testimonials": {
+    "recovery80": "80% Rückgewinnung",
+    "fullSettlement": "Vollständige Abwicklung",
+    "recovery65": "65% Rückgewinnung",
+    "investmentVictim": "Anlagebetrug-Opfer", 
+    "financialAdvisor": "Finanzberater",
+    "cryptoInvestor": "Krypto-Investor",
+    "verifiedClient": "Verifizierter Kunde",
+    "testimonial1": "Der Recovery Office-Ansatz zur Rückgewinnung meiner verlorenen Investitionen war transformativ. Ihr regulatorischer Prozess gab mir Vertrauen, und sie gewannen Gelder zurück, die ich für immer verloren glaubte.",
+    "testimonial2": "Als Finanzberater war ich zunächst skeptisch. Aber nachdem ich ihren Rückgewinnungsprozess aus erster Hand gesehen hatte, empfehle ich Recovery Office nun meinen eigenen Kunden in ähnlichen Situationen.",
+    "testimonial3": "Nach dem Verlust erheblicher Kryptowährungs-Assets durch einen Betrug bot das Recovery Office-Team fachkundige Beratung durch den komplexen Rückgewinnungsprozess. Sie halfen mir, einen erheblichen Teil meiner Vermögenswerte zurückzugewinnen."
+  },
+  "team": {
+    "alex": "Alex ist spezialisiert auf die Rückgewinnung gestohlener Kryptowährungen und die Untersuchung von Anlagebetrugsverfahren. Seine Expertise in der Blockchain-Analyse hat Kunden dabei geholfen, Millionen in digitalen Assets zurückzugewinnen.",
+    "mark": "Mark leitet unsere Vermögensrückgewinnungsoperationen mit umfangreicher Erfahrung in der Verfolgung von Geldern durch komplexe Finanznetzwerke. Er hat erfolgreich Vermögenswerte aus raffinierten Betrugsoperationen zurückgewonnen.",
+    "jessica": "Jessica stellt sicher, dass alle Rückgewinnungsoperationen den FCA-Vorschriften entsprechen und unterstützt Kunden bei der Einreichung formeller Beschwerden bei Regulierungsbehörden. Ihr juristischer Hintergrund stärkt unser Compliance-Framework.",
+    "daniel": "Daniel bringt fortgeschrittene technische Expertise in Blockchain-Forensik und Kryptowährungs-Verfolgung mit. Sein tiefes Verständnis digitaler Netzwerke und forensischer Techniken ermöglicht es Recovery Office, selbst die raffiniertesten Krypto-Diebstähle zu verfolgen.",
+    "qualifications": {
+      "certified": "Zertifiziert",
+      "experience": "Jahre Erfahrung",
+      "expert": "Experte",
+      "specialist": "Spezialist",
+      "certifiedFraudExaminer": "Zertifizierter Betrugsermittler",
+      "blockchainAnalysisExpert": "Blockchain-Analyse-Experte",
+      "assetRecoverySpecialist": "Vermögensrückgewinnungs-Spezialist",
+      "financialInvestigationLead": "Leiter Finanzermittlungen",
+      "fcaComplianceExpert": "FCA-Compliance-Experte",
+      "legalBackground": "Juristischer Hintergrund",
+      "regulatorySpecialist": "Regulierungs-Spezialist",
+      "blockchainForensicsExpert": "Blockchain-Forensik-Experte",
+      "cryptocurrencyRecoverySpecialist": "Kryptowährungs-Rückgewinnungs-Spezialist",
+      "digitalAssetInvestigator": "Digitale Vermögenswerte-Ermittler"
+    }
+  },
+  "beginRecovery": {
+    "title": "Beginnen Sie Ihren Rückgewinnungsprozess",
+    "subtitle": "Vereinbaren Sie eine Beratung mit unseren Spezialisten",
+    "disclaimer": "Unverbindlich. 100% vertraulich."
+  },
+  "cta": {
+    "freeConsultation": "Kostenlose Beratung buchen",
+    "bookConsultation": "Beratung buchen",
+    "getStarted": "Jetzt beginnen",
+    "contactUs": "Kontaktieren Sie uns",
+    "learnMore": "Mehr erfahren"
+  },
+  "faq": {
+    "title": "Häufig Gestellte Fragen",
+    "subtitle": "Expertenberatung für komplexe finanzielle Vermögensrückgewinnungsszenarien",
+    "searchPlaceholder": "Durchsuchen Sie unsere Wissensdatenbank...",
+    "noResults": "Keine Ergebnisse gefunden. Versuchen Sie andere Suchbegriffe.",
+    "categories": {
+      "consultation": "Beratungsprozess",
+      "fees": "Gebühren & Zahlungsbedingungen",
+      "success": "Erfolgsraten & Zeitpläne",
+      "cryptocurrency": "Kryptowährungs-Rückgewinnung",
+      "investment": "Anlagebetrug-Rückgewinnung",
+      "legal": "Rechtliche Einblicke",
+      "compliance": "Compliance & Regulierung"
+    },
+    "questions": {
+      "consultationProcess": "Was passiert während der £2.500-Erstberatung?",
+      "successRates": "Wie hoch sind Ihre tatsächlichen Erfolgsraten?",
+      "cryptoRecovery": "Können Sie Kryptowährungs-Verluste zurückgewinnen?",
+      "timeline": "Wie lange dauert die Rückgewinnung?",
+      "fees": "Wie sind Ihre Gebührenstrukturen aufgebaut?",
+      "guarantee": "Bieten Sie Erfolgsgarantien?",
+      "international": "Behandeln Sie internationale Fälle?",
+      "confidentiality": "Wie gewährleisten Sie Vertraulichkeit?"
+    }
+  },
+  "privacyPolicy": {
+    "title": "Datenschutzerklärung & Datenschutzhinweis",
+    "subtitle": "Unternehmensklasse-Schutz für Ihre Finanzrückgewinnungsberatung",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "effectiveDate": "Gültigkeitsdatum",
+    "version": "Version 2.1",
+    "sections": {
+      "controller": "Datenverantwortliche Informationen",
+      "collection": "Von uns erhobene Informationen",
+      "usage": "Wie wir Ihre Informationen verwenden",
+      "sharing": "Datenweitergabe & Dritte",
+      "security": "Unternehmenssicherheitsstandards",
+      "retention": "Datenspeicherungsplan",
+      "rights": "Ihre Rechte unter UK GDPR",
+      "contact": "Kontakt & Beschwerden",
+      "cookies": "Cookie-Richtlinie",
+      "international": "Internationale Datenübertragungen"
+    }
+  },
+  "termsOfService": {
+    "title": "Nutzungsbedingungen",
+    "subtitle": "Professionelle Vermögensrückgewinnungsberatungsvereinbarung",
+    "effectiveDate": "Gültigkeitsdatum",
+    "version": "Version 3.0",
+    "sections": {
+      "provider": "Dienstanbieter-Informationen",
+      "services": "Beratungsdienstleistungen",
+      "fees": "Gebühren & Zahlungsbedingungen",
+      "standards": "Professionelle Standards",
+      "liability": "Haftung & Schutz",
+      "disputes": "Streitbeilegung",
+      "termination": "Vertragskündigung",
+      "intellectual": "Geistiges Eigentum",
+      "confidentiality": "Vertraulichkeitsvereinbarung"
+    }
+  },
+  "dataSecurity": {
+    "title": "Datensicherheit & Compliance-Standards",
+    "subtitle": "Unternehmensklasse-Schutz für Ihre Finanzrückgewinnungsberatung",
+    "frameworks": {
+      "encryption": "Datenverschlüsselungsstandards",
+      "access": "Zugriffskontrolle & Authentifizierung",
+      "monitoring": "Überwachung & Bedrohungserkennung",
+      "compliance": "Regulatorische Compliance & Zertifizierungen",
+      "backup": "Backup & Wiederherstellung",
+      "incident": "Vorfallreaktion & -management"
+    },
+    "certifications": {
+      "iso27001": "ISO 27001 Zertifiziert",
+      "gdpr": "DSGVO-Konform",
+      "sox": "SOX-Konform",
+      "pci": "PCI DSS Level 1"
+    }
+  },
+  "blog": {
+    "title": "Finanzielle Vermögensrückgewinnungseinblicke",
+    "subtitle": "Expertenanalyse, Fallstudien und Rückgewinnungsstrategien von Großbritanniens führenden Spezialisten",
+    "searchPlaceholder": "Suche nach Rückgewinnungseinblicken, Fallstudien, Betrugsarten...",
+    "categories": {
+      "investment": "Anlagebetrug-Rückgewinnung",
+      "cryptocurrency": "Kryptowährungs-Rückgewinnung",
+      "romance": "Romance-Scam-Rückgewinnung",
+      "legal": "Rechtliche Einblicke",
+      "case": "Fallstudien",
+      "prevention": "Betrugsprävention",
+      "regulatory": "Regulatorische Updates"
+    },
+    "readTime": "Min. Lesezeit",
+    "author": "Autor",
+    "publishDate": "Veröffentlichungsdatum",
+    "tags": "Schlagwörter",
+    "relatedArticles": "Verwandte Artikel",
+    "shareArticle": "Artikel teilen"
+  },
+  "footer": {
+    "tagline": "Professionelle Finanzielle Vermögensrückgewinnung",
+    "services": "Dienstleistungen",
+    "company": "Unternehmen",
+    "legal": "Rechtliches",
+    "contact": "Kontakt",
+    "aboutUs": "Über uns",
+    "ourTeam": "Unser Team",
+    "contactUs": "Kontakt",
+    "contactInformation": "Kontaktinformationen",
+    "resources": "Ressourcen",
+    "emergencySupport": "Notfall-Support",
+    "clientPortal": "Kundenportal",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "hipaaCompliance": "HIPAA-Konformität",
+    "accessibility": "Barrierefreiheit",
+    "allRightsReserved": "Alle Rechte vorbehalten. Registriert in England und Wales",
+    "copyright": "© {{year}} Recovery Office Limited. Alle Rechte vorbehalten.",
+    "companiesHouse": "Companies House: 14587923",
+    "ico": "ICO-Registrierung: ZB405891",
+    "disclaimer": "Professionelle finanzielle Rückgewinnungsberatungsdienste",
+    "description": "Großbritanniens führende Finanzielle Vermögensrückgewinnungsberatung",
+    "regulatoryDisclaimer": "Reguliert von der Financial Conduct Authority. Recovery Office bietet professionelle finanzielle Vermögensrückgewinnungsdienste. Alle Rückgewinnungsoperationen werden innerhalb strenger rechtlicher Rahmen und regulatorischer Compliance-Standards durchgeführt.",
+    "fcaDisclaimer": "Recovery Office Ltd ist von der Financial Conduct Authority für regulierte Rückgewinnungsaktivitäten autorisiert und reguliert.",
+    "generalDisclaimer": "Recovery Office ist spezialisiert auf finanzielle Vermögensrückgewinnungsdienste. Obwohl wir hohe Erfolgsraten aufrechterhalten, hängen Rückgewinnungsergebnisse von den individuellen Fallumständen ab. Alle Beratungen sind vertraulich und wir arbeiten auf Basis 'keine Rückgewinnung, keine Gebühr' für qualifizierende Fälle. Recovery Office ist dem Ziel verpflichtet, Opfern von Finanzbetrug dabei zu helfen, ihre gestohlenen Vermögenswerte durch legale und ethische Mittel zurückzufordern.",
+    "newsletter": {
+      "title": "Newsletter abonnieren",
+      "placeholder": "Ihre E-Mail-Adresse",
+      "button": "Abonnieren",
+      "success": "Erfolgreich abonniert!"
+    }
+  },
+  "common": {
+    "loading": "Lädt...",
+    "error": "Ein Fehler ist aufgetreten",
+    "retry": "Erneut versuchen",
+    "close": "Schließen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "submit": "Absenden",
+    "continue": "Fortfahren",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Vorherige",
+    "required": "Erforderlich",
+    "optional": "Optional",
+    "selectOption": "Bitte wählen Sie eine Option",
+    "currency": "£",
+    "duration": "{{count}} Minuten",
+    "professional": "Professionell",
+    "confidential": "Vertraulich",
+    "secure": "Sicher",
+    "urgent": "Dringend",
+    "standard": "Standard",
+    "premium": "Premium"
+  },
+  "errors": {
+    "required": "Dieses Feld ist erforderlich",
+    "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "phone": "Bitte geben Sie eine gültige Telefonnummer ein",
+    "general": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "network": "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung.",
+    "booking": "Buchungsfehler. Bitte versuchen Sie es erneut.",
+    "validation": "Ungültige Informationen bereitgestellt. Bitte überprüfen Sie alle Felder.",
+    "server": "Serverfehler. Bitte kontaktieren Sie den Support.",
+    "timeout": "Anfrage-Timeout. Bitte versuchen Sie es erneut.",
+    "unauthorized": "Nicht autorisiert. Bitte melden Sie sich erneut an.",
+    "notFound": "Angeforderte Ressource nicht gefunden."
+  },
+  "loading": {
+    "default": "Lädt...",
+    "booking": "Buchung wird verarbeitet...",
+    "submitting": "Wird übermittelt...",
+    "processing": "Wird verarbeitet...",
+    "saving": "Wird gespeichert...",
+    "sending": "Wird gesendet...",
+    "loading": "Wird geladen...",
+    "please-wait": "Bitte warten..."
+  },
+  "success": {
+    "booking": "Buchung erfolgreich abgeschlossen!",
+    "contact": "Nachricht erfolgreich gesendet!",
+    "newsletter": "Erfolgreich für Newsletter angemeldet!",
+    "saved": "Erfolgreich gespeichert!",
+    "updated": "Erfolgreich aktualisiert!",
+    "deleted": "Erfolgreich gelöscht!"
+  },
+  "legal": {
+    "germanCompliance": {
+      "title": "Deutsche Rechtskonformität",
+      "bafin": "BaFin-konforme Verfahren",
+      "gdpr": "DSGVO-konform",
+      "impressum": "Impressum verfügbar"
+    },
+    "regulations": {
+      "fca": "Financial Conduct Authority (FCA) Reguliert",
+      "bafin": "Bundesanstalt für Finanzdienstleistungsaufsicht (BaFin) Konform",
+      "gdpr": "Datenschutz-Grundverordnung (DSGVO) Konform",
+      "psd2": "Zahlungsdiensterichtlinie 2 (PSD2) Konform"
+    }
+  },
+  "formats": {
+    "currency": {
+      "eur": "€",
+      "gbp": "£",
+      "usd": "$"
+    },
+    "date": {
+      "short": "DD.MM.YYYY",
+      "long": "D. MMMM YYYY",
+      "time": "HH:mm"
+    },
+    "phone": {
+      "germany": "+49",
+      "austria": "+43",
+      "switzerland": "+41",
+      "uk": "+44"
+    }
+  },
+  "statistics": {
+    "mainTitle": "Vertraut von vermögenden Kunden weltweit",
+    "subtitle": "Bewährte Erfolgsbilanz bei komplexer Vermögensrückgewinnung",
+    "assetsRecovered": "Erfolgreich zurückgewonnene Vermögenswerte",
+    "satisfaction": "Kundenzufriedenheitsrate",
+    "casesResolved": "Gelöste Fälle",
+    "responseTime": "Maximale Reaktionszeit"
+  },
+  "clientInfo": {
+    "formTitle": "Ihre Informationen",
+    "formSubtitle": "Bitte geben Sie Ihre Daten an, damit wir uns auf Ihre Beratung vorbereiten können. Alle Informationen sind sicher verschlüsselt und DSGVO-konform.",
+    "secureConfidential": "Sicher & Vertraulich",
+    "neverShare": "256-Bit-Verschlüsselung schützt Ihre Daten. Wir geben niemals Kundeninformationen an Dritte weiter.",
+    "personalInfoTitle": "Persönliche Informationen",
+    "firstNameLabel": "Vorname",
+    "lastNameLabel": "Nachname",
+    "emailLabel": "E-Mail-Adresse",
+    "phoneLabel": "Telefonnummer",
+    "firstNamePlaceholder": "Geben Sie Ihren Vornamen ein",
+    "lastNamePlaceholder": "Geben Sie Ihren Nachnamen ein",
+    "emailPlaceholder": "ihre.email@beispiel.com",
+    "phonePlaceholder": "+49 1234 567890",
+    "caseInfoTitle": "Fall-Informationen",
+    "caseTypeLabel": "Fall-Typ",
+    "estimatedLossLabel": "Geschätzter Verlust",
+    "preferredContactMethodLabel": "Bevorzugte Kontaktmethode",
+    "urgencyLevelLabel": "Dringlichkeitsstufe",
+    "additionalInfoTitle": "Zusätzliche Informationen (Optional)",
+    "companyLabel": "Unternehmen/Organisation",
+    "additionalNotesLabel": "Zusätzliche Notizen",
+    "companyPlaceholder": "Ihr Firmenname (falls zutreffend)",
+    "additionalNotesPlaceholder": "Alle zusätzlichen Informationen zu Ihrem Fall, die hilfreich sein könnten...",
+    "estimatedLossHelp": "Dies hilft uns, den am besten geeigneten Spezialisten für Ihren Fall zuzuweisen",
+    "investmentFraud": "Anlagebetrug",
+    "cryptocurrencyRecovery": "Kryptowährungs-Rückgewinnung",
+    "financialScam": "Finanzbetrug",
+    "regulatoryComplaint": "Regulatorische Beschwerde",
+    "under10k": "Unter £10.000",
+    "10k50k": "£10.000 - £50.000",
+    "50k100k": "£50.000 - £100.000",
+    "100k500k": "£100.000 - £500.000",
+    "500k1m": "£500.000 - £1.000.000",
+    "over1m": "Über £1.000.000",
+    "selectContactMethod": "Kontaktmethode auswählen",
+    "low": "Niedrig",
+    "medium": "Mittel",
+    "high": "Hoch",
+    "critical": "Kritisch",
+    "legalAgreementsTitle": "Rechtliche Vereinbarungen",
+    "consentToContact": "Ich stimme zu, von Recovery Office bezüglich meines Falls über meine bevorzugte Kontaktmethode kontaktiert zu werden",
+    "dataProcessingAgreed": "Ich stimme der Verarbeitung meiner personenbezogenen Daten für Fallmanagement und Beratungszwecke in Übereinstimmung mit der DSGVO zu",
+    "backButton": "Zurück zur Datumsauswahl",
+    "continueButton": "Weiter zur Bestätigung",
+    "validatingInfo": "Informationen werden validiert...",
+    "successTitle": "Informationen erfolgreich validiert!",
+    "successSubtitle": "Weiter zur Buchungsbestätigung...",
+    "tryAgainButton": "Erneut versuchen",
+    "characterLimit": "1000 Zeichen",
+    "bookingSummaryTitle": "Buchungszusammenfassung",
+    "serviceLabel": "Service",
+    "priceLabel": "Preis",
+    "durationLabel": "Dauer",
+    "dateLabel": "Datum",
+    "timeLabel": "Uhrzeit"
+  }
+} 

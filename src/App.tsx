@@ -8,6 +8,10 @@ import { ThemeProvider } from './design-system/theme/ThemeProvider';
 import { BookingProvider } from './context/BookingContext';
 import PremiumNavbar from './components/sections/premium/PremiumNavbar';
 import PremiumLayout from './components/sections/premium/PremiumLayout';
+import { PerformanceOptimizer } from './components/common/PerformanceOptimizer';
+
+// Import i18n configuration (MUST be imported before any component that uses translations)
+import './i18n';
 
 /**
  * Layout wrapper that conditionally shows navigation based on route
@@ -53,11 +57,21 @@ const App: React.FC = () => {
         <ThemeProvider initialMode="premium">
           <BookingProvider>
             <ErrorBoundary>
-              <BrowserRouter>
-                <ConditionalLayout>
-                  <AppRoutes />
-                </ConditionalLayout>
-              </BrowserRouter>
+              <PerformanceOptimizer />
+              <React.Suspense fallback={<div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '100vh',
+                fontSize: '18px',
+                color: '#1a365d'
+              }}>Loading translations...</div>}>
+                <BrowserRouter>
+                  <ConditionalLayout>
+                    <AppRoutes />
+                  </ConditionalLayout>
+                </BrowserRouter>
+              </React.Suspense>
             </ErrorBoundary>
           </BookingProvider>
         </ThemeProvider>

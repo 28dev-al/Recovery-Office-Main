@@ -1,0 +1,169 @@
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
+const LoginContainer = styled.div`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+`;
+
+const LoginCard = styled.div`
+  background: white;
+  border-radius: 16px;
+  padding: 48px;
+  box-shadow: 0 20px 64px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+`;
+
+const Logo = styled.div`
+  text-align: center;
+  margin-bottom: 32px;
+`;
+
+const LogoText = styled.h1`
+  font-size: 24px;
+  font-weight: 800;
+  color: #1a365d;
+  margin-bottom: 8px;
+`;
+
+const LogoSubtext = styled.p`
+  color: #4a5568;
+  font-size: 14px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const Label = styled.label`
+  font-weight: 600;
+  color: #1a365d;
+  font-size: 14px;
+`;
+
+const Input = styled.input`
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #d69e2e;
+  }
+`;
+
+const LoginButton = styled.button`
+  background: linear-gradient(135deg, #d69e2e 0%, #f6ad3a 100%);
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(214, 158, 46, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  background: #fed7d7;
+  color: #c53030;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+`;
+
+export const LoginPage: React.FC = () => {
+  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    // Simple authentication - in production, use proper JWT/OAuth
+    if (credentials.username === 'admin' && credentials.password === 'recovery2025') {
+      localStorage.setItem('recovery-office-auth', 'authenticated');
+      localStorage.setItem('recovery-office-user', JSON.stringify({
+        name: 'Alex Bianchi',
+        role: 'Senior Recovery Specialist',
+        email: 'alex.bianchi@recovery-office.com'
+      }));
+      navigate('/dashboard');
+    } else {
+      setError('Invalid credentials. Please try again.');
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <LoginContainer>
+      <LoginCard>
+        <Logo>
+          <LogoText>RECOVERY OFFICE</LogoText>
+          <LogoSubtext>Admin Dashboard Access</LogoSubtext>
+        </Logo>
+
+        <Form onSubmit={handleLogin}>
+          <InputGroup>
+            <Label>Username</Label>
+            <Input
+              type="text"
+              value={credentials.username}
+              onChange={(e) => setCredentials(prev => ({ ...prev, username: e.target.value }))}
+              placeholder="Enter username"
+              required
+            />
+          </InputGroup>
+          
+          <InputGroup>
+            <Label>Password</Label>
+            <Input
+              type="password"
+              value={credentials.password}
+              onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
+              placeholder="Enter password"
+              required
+            />
+          </InputGroup>
+          
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          
+          <LoginButton type="submit" disabled={loading}>
+            {loading ? 'Signing In...' : 'Sign In to Dashboard'}
+          </LoginButton>
+        </Form>
+      </LoginCard>
+    </LoginContainer>
+  );
+}; 

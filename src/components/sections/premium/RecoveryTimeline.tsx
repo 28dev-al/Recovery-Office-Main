@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { PREMIUM_SPACING } from '../../../design-system/tokens';
 import { Container } from '../../../design-system/components/layout/Container';
@@ -221,8 +222,10 @@ const StepStatus = styled.div<{ $completed: boolean }>`
 const RECOVERY_STEPS = [
   {
     id: 1,
-    title: "Initial Consultation",
-    description: "We begin with a detailed assessment of your case, understanding what happened and collecting all relevant documentation.",
+    titleKey: "recoveryProcess.steps.consultation.title",
+    defaultTitle: "Initial Consultation",
+    descriptionKey: "recoveryProcess.steps.consultation.description", 
+    defaultDescription: "We begin with a detailed assessment of your case, understanding what happened and collecting all relevant documentation.",
     completed: true,
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -234,8 +237,10 @@ const RECOVERY_STEPS = [
   },
   {
     id: 2,
-    title: "Case Analysis",
-    description: "Our specialists analyze your case against regulations and legal precedents to determine the optimal recovery strategy.",
+    titleKey: "recoveryProcess.steps.investigation.title",
+    defaultTitle: "Case Analysis",
+    descriptionKey: "recoveryProcess.steps.investigation.description",
+    defaultDescription: "Our specialists analyze your case against regulations and legal precedents to determine the optimal recovery strategy.",
     completed: true,
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,27 +253,23 @@ const RECOVERY_STEPS = [
   },
   {
     id: 3,
-    title: "Recovery Planning",
-    description: "We develop a customized recovery plan outlining the approach, timeline, and expected outcomes.",
+    titleKey: "recoveryProcess.steps.recovery.title",
+    defaultTitle: "Implementation",
+    descriptionKey: "recoveryProcess.steps.recovery.description",
+    defaultDescription: "We implement the approved recovery strategy using appropriate legal, technical, and regulatory channels.",
     completed: false,
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 20C18.2091 20 20 18.2091 20 16C20 13.7909 18.2091 12 16 12C13.7909 12 12 13.7909 12 16C12 18.2091 13.7909 20 16 20Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M16 6V8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M16 24V26" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M8.5 8.5L10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M22 22L23.5 23.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M6 16H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M24 16H26" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M8.5 23.5L10 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M22 10L23.5 8.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M16 6L18.4 13.6H26L20.8 17.6L23.2 25.2L16 21.2L8.8 25.2L11.2 17.6L6 13.6H13.6L16 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     )
   },
   {
     id: 4,
-    title: "Execution & Recovery",
-    description: "We implement the recovery strategy, engaging with relevant institutions, legal channels, and regulatory bodies.",
+    titleKey: "recoveryProcess.steps.resolution.title",
+    defaultTitle: "Execution & Recovery",
+    descriptionKey: "recoveryProcess.steps.resolution.description",
+    defaultDescription: "We implement the recovery strategy, engaging with relevant institutions, legal channels, and regulatory bodies.",
     completed: false,
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -279,8 +280,10 @@ const RECOVERY_STEPS = [
   },
   {
     id: 5,
-    title: "Asset Return & Closure",
-    description: "Once recovery is completed, we facilitate the secure return of assets and provide documentation for your records.",
+    titleKey: "recoveryProcess.step5.title",
+    defaultTitle: "Asset Return & Closure",
+    descriptionKey: "recoveryProcess.step5.description",
+    defaultDescription: "Once recovery is completed, we facilitate the secure return of assets and provide documentation for your records.",
     completed: false,
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -308,9 +311,11 @@ interface RecoveryTimelineProps {
 
 export const RecoveryTimeline: React.FC<RecoveryTimelineProps> = ({
   title = "Our Recovery Process",
-  description = "A systematic approach to recovering your financial assets",
+  description = "A systematic approach to financial asset recovery",
   steps = RECOVERY_STEPS
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <TimelineSection>
       <Container>
@@ -325,8 +330,8 @@ export const RecoveryTimeline: React.FC<RecoveryTimelineProps> = ({
               <TimelineNumber $isEven={index % 2 === 0}>{step.id}</TimelineNumber>
               <TimelineContent $isEven={index % 2 === 0}>
                 <TimelineIcon>{step.icon}</TimelineIcon>
-                <TimelineTitle>{step.title}</TimelineTitle>
-                <TimelineDescription>{step.description}</TimelineDescription>
+                <TimelineTitle>{step.titleKey ? t(step.titleKey, step.defaultTitle) : step.defaultTitle}</TimelineTitle>
+                <TimelineDescription>{step.descriptionKey ? t(step.descriptionKey, step.defaultDescription) : step.defaultDescription}</TimelineDescription>
                 <StepStatus $completed={step.completed}>
                   {step.completed && <CompletedIcon />}
                   {step.completed ? 'Completed' : 'Future step'}

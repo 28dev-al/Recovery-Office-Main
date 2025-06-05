@@ -39,7 +39,6 @@ export const BookingFlow: React.FC = () => {
               setCurrentStep(2);
             }}
             onBack={currentStep > 1 ? () => setCurrentStep(1) : undefined}
-            initialData={bookingData}
           />
         );
       
@@ -51,7 +50,7 @@ export const BookingFlow: React.FC = () => {
                 setBookingData(prev => ({ 
                   ...prev, 
                   selectedDate: data.selectedDate,
-                  selectedTimeSlot: data.selectedTimeSlot
+                  selectedTimeSlot: data.selectedTimeSlot as unknown as BookingTimeSlot
                 }));
                 setCurrentStep(3);
               }

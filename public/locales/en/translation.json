@@ -1,0 +1,775 @@
+{
+  "meta": {
+    "title": "Recovery Office | UK Financial Asset Recovery",
+    "description": "Professional asset recovery services for cryptocurrency theft, investment fraud, and financial scams. FCA regulated with £500M+ recovered. Free consultation available.",
+    "home": {
+      "title": "Recovery Office | UK Financial Asset Recovery",
+      "description": "Professional asset recovery services for cryptocurrency theft, investment fraud, and financial scams. FCA regulated with £500M+ recovered. Free consultation available.",
+      "keywords": "financial recovery, asset recovery, cryptocurrency recovery, investment fraud recovery, FCA regulated, Manchester financial services"
+    },
+    "services": {
+      "title": "Financial Recovery Services | Cryptocurrency & Investment Fraud Recovery",
+      "description": "Specialist recovery services for cryptocurrency theft, investment fraud, and financial scams. FCA regulated with 98% client satisfaction. Manchester-based experts.",
+      "keywords": "cryptocurrency recovery, investment fraud recovery, financial scam recovery, blockchain forensics, regulatory complaint assistance"
+    },
+    "about": {
+      "title": "About Recovery Office | Leading UK Financial Recovery Consultancy",
+      "description": "Established 2019, Recovery Office is the UK's premier financial asset recovery firm. FCA regulated specialists with proven track record.",
+      "keywords": "about recovery office, financial recovery company, UK asset recovery specialists, FCA regulated recovery services"
+    },
+    "contact": {
+      "title": "Contact Recovery Office | Free Financial Recovery Consultation UK",
+      "description": "Contact UK's leading financial recovery specialists. Free consultation available. Manchester office: +44 7451 263472. FCA regulated firm reference 836358.",
+      "keywords": "contact recovery office, financial recovery consultation, asset recovery Manchester, FCA regulated contact"
+    },
+    "booking": {
+      "title": "Book Consultation | Professional Financial Recovery Assessment",
+      "description": "Book your confidential financial recovery consultation with FCA regulated specialists. Secure online booking, 24-hour response time, free initial assessment.",
+      "keywords": "book financial recovery consultation, asset recovery appointment, cryptocurrency recovery booking, investment fraud consultation"
+    },
+    "faq": {
+      "title": "FAQ | Financial Recovery Questions Answered by UK Specialists",
+      "description": "Common questions about financial asset recovery, cryptocurrency recovery, and investment fraud. Expert answers from FCA regulated recovery specialists.",
+      "keywords": "financial recovery FAQ, asset recovery questions, cryptocurrency recovery help, investment fraud advice"
+    },
+    "blog": {
+      "title": "Financial Asset Recovery Blog | Expert Insights & Case Studies | Recovery Office",
+      "description": "Expert insights on financial asset recovery, investment fraud recovery, and cryptocurrency recovery from UK's leading specialists. £500M+ recovered.",
+      "keywords": "financial asset recovery blog, investment fraud recovery insights, cryptocurrency recovery case studies, UK recovery specialists"
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy | Recovery Office - Enterprise Financial Data Protection",
+      "description": "Recovery Office Privacy Policy - How we protect your financial consultation data with enterprise-grade security and UK GDPR compliance.",
+      "keywords": "privacy policy, financial data protection, GDPR compliance, recovery office privacy"
+    },
+    "termsOfService": {
+      "title": "Terms of Service | Recovery Office - Professional Asset Recovery Agreement",
+      "description": "Comprehensive Terms of Service for Recovery Office financial asset recovery consultancy. Professional agreement for consultation services.",
+      "keywords": "terms of service, asset recovery agreement, professional financial services terms"
+    },
+    "dataSecurity": {
+      "title": "Data Security & Compliance Standards | Recovery Office",
+      "description": "Enterprise-grade data security and compliance standards for Recovery Office financial asset recovery consultancy. UK regulatory compliance.",
+      "keywords": "data security, compliance standards, financial services security, UK regulatory compliance"
+    }
+  },
+  "clientInfo": {
+    "formTitle": "Your Information",
+    "formSubtitle": "Please provide your details so we can prepare for your consultation. All information is securely encrypted and GDPR compliant.",
+    "secureConfidential": "Secure & Confidential",
+    "neverShare": "256-bit encryption protects your data. We never share client information with third parties.",
+    "personalInfoTitle": "Personal Information",
+    "firstNameLabel": "First Name",
+    "lastNameLabel": "Last Name",
+    "emailLabel": "Email Address",
+    "phoneLabel": "Phone Number",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastNamePlaceholder": "Enter your last name",
+    "emailPlaceholder": "your.email@example.com",
+    "phonePlaceholder": "+44 1234 567890",
+    "caseInfoTitle": "Case Information",
+    "caseTypeLabel": "Case Type",
+    "estimatedLossLabel": "Estimated Loss",
+    "preferredContactMethodLabel": "Preferred Contact Method",
+    "urgencyLevelLabel": "Urgency Level",
+    "additionalInfoTitle": "Additional Information (Optional)",
+    "companyLabel": "Company/Organization",
+    "additionalNotesLabel": "Additional Notes",
+    "companyPlaceholder": "Your company name (if applicable)",
+    "additionalNotesPlaceholder": "Any additional information about your case that might be helpful...",
+    "estimatedLossHelp": "This helps us assign the most suitable specialist for your case",
+    "investmentFraud": "Investment Fraud",
+    "cryptocurrencyRecovery": "Cryptocurrency Recovery",
+    "financialScam": "Financial Scam",
+    "regulatoryComplaint": "Regulatory Complaint",
+    "under10k": "Under £10,000",
+    "10k50k": "£10,000 - £50,000",
+    "50k100k": "£50,000 - £100,000",
+    "100k500k": "£100,000 - £500,000",
+    "500k1m": "£500,000 - £1,000,000",
+    "over1m": "Over £1,000,000",
+    "selectContactMethod": "Select contact method",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical",
+    "legalAgreementsTitle": "Legal Agreements",
+    "consentToContact": "I consent to being contacted by Recovery Office regarding my case via my preferred contact method",
+    "dataProcessingAgreed": "I agree to the processing of my personal data for case management and consultation purposes in accordance with GDPR",
+    "backButton": "Back to Date Selection",
+    "continueButton": "Continue to Confirmation",
+    "validatingInfo": "Validating Information...",
+    "successTitle": "Information validated successfully!",
+    "successSubtitle": "Proceeding to booking confirmation...",
+    "tryAgainButton": "Try Again",
+    "characterLimit": "1000 characters",
+    "bookingSummaryTitle": "Booking Summary",
+    "serviceLabel": "Service",
+    "priceLabel": "Price",
+    "durationLabel": "Duration",
+    "dateLabel": "Date",
+    "timeLabel": "Time"
+  },
+  "navigation": {
+    "tagline": "FINANCIAL RECOVERY SPECIALISTS",
+    "services": "Services",
+    "recoveryProcess": "Recovery Process",
+    "about": "About",
+    "contact": "Contact",
+    "bookConsultation": "Book Consultation",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "header": {
+    "services": "Services",
+    "about": "About Us",
+    "contact": "Contact",
+    "booking": "Book Consultation",
+    "dashboard": "Dashboard",
+    "login": "Admin Login"
+  },
+  "hero": {
+    "title": "Excellence in Financial Recovery",
+    "subtitle": "Professional asset recovery consultation for high-net-worth clients who have lost significant funds through fraud, scams, or technical issues",
+    "ctaPrimary": "Book Free Consultation",
+    "ctaSecondary": "Learn More",
+    "trustBadge": "FCA-Aligned Processes",
+    "confidential": "Strictly Confidential"
+  },
+  "services": {
+    "title": "Financial Recovery Services | Recovery Office UK",
+    "description": "Professional financial recovery specialists. Expert cryptocurrency recovery, investment fraud assistance, and scam resolution. FCA regulated.",
+    "keywords": "financial recovery services, cryptocurrency recovery, investment fraud recovery, financial scam recovery, regulatory assistance, FCA regulated, UK",
+    "heroTitle": "Professional Financial Recovery Services",
+    "heroSubtitle": "Expert asset recovery for cryptocurrency theft, investment fraud, and financial scams. FCA regulated specialists with proven results.",
+    "ctaTitle": "Ready to Start Your Recovery?",
+    "ctaSubtitle": "Join thousands of clients who have successfully recovered their assets with our expert team.",
+    "bookConsultation": "Book Professional Consultation",
+    
+    "serviceDetails": {
+      "title": "Service Details",
+      "keyBenefits": "Key Benefits",
+      "bookThisService": "Book This Service",
+      "duration": "Duration",
+      "pricing": "Pricing",
+      "location": "Location",
+      "initialSession": "Initial Session",
+      "followUpSessions": "Follow-Up Sessions",
+      "minutes": "minutes",
+      "inPersonOrVirtual": "In-person or Virtual",
+      "consultationFee": "Consultation Fee",
+      "expertise": "Expertise Level",
+      "consultation": "Professional Consultation",
+      "analysis": "Comprehensive Analysis",
+      "strategy": "Recovery Strategy",
+      "execution": "Professional Execution",
+      "support": "Ongoing Support",
+      "compliance": "FCA Compliance",
+      "confidentiality": "Absolute Confidentiality",
+      "emergency": "24/7 Emergency Response",
+      "successFee": "Success-Based Pricing",
+      "noRecovery": "No Recovery, No Fee",
+      "professionalService": "Professional Service Delivery",
+      "regulatedFirm": "FCA Regulated Firm"
+    },
+    
+    "recoveryConsultation": {
+      "title": "Recovery Consultation",
+      "description": "Our Recovery Consultation service provides a comprehensive assessment of your financial situation and recovery goals. Our experienced consultants use industry best practices to create a strategic approach to your asset recovery journey.",
+      "longDescription": "During this initial consultation, we will explore your financial history, current challenges, and objectives to develop a personalized recovery plan that aligns with your specific circumstances and maximizes your chances of successful asset recovery.",
+      "keyBenefits": [
+        "Comprehensive financial assessment and case evaluation",
+        "Personalized recovery plan development tailored to your situation",
+        "Integration of regulatory compliance principles throughout the process",
+        "Expert guidance from specialized financial recovery consultants",
+        "Strategic approach addressing all available recovery options",
+        "Confidential consultation with absolute discretion guaranteed",
+        "Professional documentation and evidence review",
+        "Clear explanation of recovery prospects and realistic timelines"
+      ]
+    },
+    
+    "investmentFraud": {
+      "title": "Investment Fraud Recovery",
+      "description": "Our Investment Fraud Recovery service specializes in helping victims of fraudulent investment schemes recover their assets. We work with a network of legal professionals, regulatory bodies, and international agencies to trace funds and pursue recovery through various channels.",
+      "longDescription": "We provide comprehensive assistance for victims of Ponzi schemes, binary options fraud, forex scams, and other sophisticated investment fraud operations. Our team combines legal expertise with investigative capabilities to maximize recovery outcomes.",
+      "keyBenefits": [
+        "Legal action coordination against fraudulent operators",
+        "Regulatory complaint filing assistance with relevant authorities",
+        "Advanced asset tracing and recovery using forensic techniques",
+        "Evidence gathering and comprehensive documentation services",
+        "International recovery coordination across multiple jurisdictions",
+        "Collaboration with law enforcement and regulatory agencies",
+        "Court action preparation and litigation support",
+        "Settlement negotiation with opposing parties when appropriate"
+      ]
+    },
+    
+    "cryptocurrency": {
+      "title": "Cryptocurrency Recovery",
+      "description": "Our Cryptocurrency Recovery service provides specialized assistance for individuals who have lost access to digital assets or been victims of cryptocurrency fraud. Our team combines technical blockchain expertise with financial recovery strategies.",
+      "longDescription": "Professional cryptocurrency recovery services utilizing advanced blockchain forensics, exchange coordination, and regulatory compliance to maximize asset recovery success rates for victims of crypto fraud and theft.",
+      "keyBenefits": [
+        "Advanced blockchain forensics and transaction tracing",
+        "Direct coordination with major cryptocurrency exchanges",
+        "Wallet recovery and private key reconstruction assistance",
+        "Cross-chain asset tracking across multiple blockchain networks",
+        "Legal enforcement coordination with international law enforcement",
+        "Regulatory complaint preparation and filing with relevant authorities",
+        "Exchange account recovery and fund unfreezing procedures",
+        "Smart contract analysis and exploit investigation",
+        "Cold storage recovery assistance for hardware wallets",
+        "Multi-signature wallet recovery coordination and support"
+      ]
+    },
+    
+    "regulatoryComplaint": {
+      "title": "Regulatory Complaint Assistance",
+      "description": "Our Regulatory Complaint Assistance service helps clients navigate complex regulatory processes to file complaints against financial institutions, investment firms, and other regulated entities.",
+      "longDescription": "We provide expert guidance on complaint preparation, regulatory requirements, and follow-up procedures to maximize your chances of successful resolution through official channels.",
+      "keyBenefits": [
+        "Comprehensive regulatory compliance expertise and guidance",
+        "FCA complaint preparation and professional filing assistance",
+        "Evidence review and strategic organization for maximum impact",
+        "Regulatory body liaison and ongoing coordination",
+        "Strategic complaint timing and approach optimization",
+        "Follow-up monitoring and progress tracking",
+        "Appeals process guidance and support when required",
+        "Coordination with ombudsman services and regulatory bodies"
+      ]
+    },
+
+    "consultationPricing": {
+      "title": "Consultation Pricing",
+      "subtitle": "Transparent pricing for all our financial recovery services",
+      "service": "Service",
+      "duration": "Duration",
+      "initialSession": "Initial Session",
+      "followUpSessions": "Follow-Up Sessions",
+      "action": "Action",
+      "note": "All prices include VAT. Success-based fees available for qualifying cases.",
+      "bookConsultation": "Book Consultation"
+    },
+
+    "approachTitle": "Our Recovery Approach",
+    "approachSubtitle": "Discover our financial recovery services",
+    "processTitle": "Our Recovery Process",
+    "processSubtitle": "A comprehensive approach to recovering your financial assets",
+    "fcaRegulated": "FCA Regulated",
+    "bafinCertified": "BaFin Certified",
+    "cyberEssentials": "Cyber Essentials"
+  },
+  "booking": {
+    "title": "Book Your Consultation",
+    "subtitle": "Schedule a confidential consultation with our recovery specialists",
+    "steps": {
+      "service": "Select Service",
+      "datetime": "Select Date & Time",
+      "information": "Your Information", 
+      "confirmation": "Confirmation",
+      "selectService": "1. Select Service",
+      "dateTime": "2. Date & Time"
+    },
+    "dateTime": {
+      "title": "Choose Your Consultation Date & Time",
+      "selectDate": "Select Date",
+      "availableTimes": "Available Times",
+      "selectDateFirst": "Please select a date first",
+      "loadingTimes": "Loading available times for",
+      "noTimesAvailable": "No available times for this date",
+      "loadingDatesAndTimes": "Loading available dates and times...",
+      "unavailable": "Unavailable"
+    },
+    "clientInfo": {
+      "title": "Your Information",
+      "subtitle": "Please provide your details so we can prepare for your consultation. All information is securely encrypted and GDPR compliant.",
+      "securityNotice": "256-bit encryption protects your data. We never share client information with third parties.",
+      "securityLabel": "Secure & Confidential:",
+      "loadingMessage": "Loading client information form...",
+      "sections": {
+        "personal": "Personal Information",
+        "case": "Case Information",
+        "additional": "Additional Information (Optional)",
+        "legal": "Legal Agreements",
+        "summary": "Booking Summary"
+      },
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "caseType": "Case Type",
+        "estimatedLoss": "Estimated Loss",
+        "contactMethod": "Preferred Contact Method",
+        "urgencyLevel": "Urgency Level",
+        "company": "Company/Organization",
+        "notes": "Additional Notes"
+      },
+      "placeholders": {
+        "firstName": "Enter your first name",
+        "lastName": "Enter your last name",
+        "email": "your.email@example.com",
+        "phone": "+44 1234 567890",
+        "company": "Your company name (if applicable)",
+        "notes": "Any additional information about your case that might be helpful...",
+        "selectContactMethod": "Select contact method"
+      },
+      "options": {
+        "caseTypes": {
+          "investmentFraud": "Investment Fraud",
+          "cryptocurrencyRecovery": "Cryptocurrency Recovery",
+          "financialScam": "Financial Scam",
+          "regulatoryComplaint": "Regulatory Complaint"
+        },
+        "lossAmounts": {
+          "under10k": "Under £10,000",
+          "10k50k": "£10,000 - £50,000",
+          "50k100k": "£50,000 - £100,000",
+          "100k500k": "£100,000 - £500,000",
+          "500k1m": "£500,000 - £1,000,000",
+          "over1m": "Over £1,000,000"
+        },
+        "contactMethods": {
+          "email": "Email",
+          "phone": "Phone",
+          "text": "Text"
+        },
+        "urgencyLevels": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High",
+          "critical": "Critical"
+        }
+      },
+      "helperText": "This helps us assign the most suitable specialist for your case",
+      "characterCount": "characters",
+      "legal": {
+        "consent": "I consent to being contacted by Recovery Office regarding my case via my preferred contact method",
+        "privacy": "I have read and accept the Privacy Policy",
+        "gdpr": "I agree to the processing of my personal data for case management and consultation purposes in accordance with GDPR"
+      },
+      "buttons": {
+        "backToDateSelection": "Back to Date Selection",
+        "continueToConfirmation": "Continue to Confirmation",
+        "validatingInformation": "Validating Information...",
+        "tryAgain": "Try Again"
+      },
+      "messages": {
+        "incompleteBooking": "Incomplete Booking Information",
+        "validationSuccess": "Information validated successfully!",
+        "proceedingToConfirmation": "Proceeding to booking confirmation..."
+      },
+      "summary": {
+        "service": "Service:",
+        "price": "Price:",
+        "duration": "Duration:",
+        "date": "Date:",
+        "time": "Time:",
+        "minutes": "minutes"
+      }
+    },
+    "serviceSelection": {
+      "title": "Choose Your Recovery Service",
+      "description": "Select the service that best matches your situation"
+    },
+    "serviceCards": {
+      "cryptocurrency": {
+        "title": "Cryptocurrency Recovery",
+        "description": "Specialized recovery for lost or stolen cryptocurrency including Bitcoin, Ethereum, and altcoins",
+        "duration": "75 minutes",
+        "price": "£750"
+      },
+      "financialScam": {
+        "title": "Financial Scam Recovery",
+        "description": "Recovery assistance for various financial scams including romance scams and advance fee fraud", 
+        "duration": "60 minutes",
+        "price": "£400"
+      },
+      "investmentFraud": {
+        "title": "Investment Fraud Recovery",
+        "description": "Comprehensive recovery service for victims of investment fraud and Ponzi schemes",
+        "duration": "90 minutes",
+        "price": "£650"
+      },
+      "regulatoryComplaint": {
+        "title": "Regulatory Complaint Assistance",
+        "description": "Expert guidance through regulatory complaint processes with financial authorities and ombudsman services",
+        "duration": "45 minutes", 
+        "price": "£350"
+      }
+    },
+    "confirmation": {
+      "title": "Review & Confirm Your Consultation",
+      "subtitle": "Please review your consultation details below. Once confirmed, you'll receive an email confirmation with all the necessary information.",
+      "serviceDetails": "Service Details",
+      "dateTime": "Date & Time",
+      "yourInformation": "Your Information",
+      "investmentSummary": "Investment Summary",
+      "edit": "Edit",
+      "serviceType": "Service Type",
+      "duration": "Duration",
+      "consultationFee": "Consultation Fee",
+      "minutes": "minutes",
+      "date": "Date",
+      "time": "Time",
+      "timezone": "Timezone",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "caseType": "Case Type",
+      "preferredContact": "Preferred Contact",
+      "totalInvestment": "Total Investment",
+      "paymentNotice": "Payment will be processed after your consultation. We accept all major payment methods.",
+      "secureConfidential": "Secure & Confidential",
+      "dataProtection": "Data Protection",
+      "gdprCompliant": "GDPR Compliant",
+      "encryption": "Encryption",
+      "confidentiality": "Confidentiality",
+      "professionalStandards": "Professional Standards",
+      "back": "← Back",
+      "confirmBooking": "Confirm Booking"
+    },
+    "success": {
+      "title": "Booking Confirmed!",
+      "subtitle": "Your consultation has been successfully scheduled",
+      "nextSteps": "Next Steps",
+      "emailConfirmation": "You'll receive a detailed confirmation email within 5 minutes",
+      "calendarInvite": "A calendar invitation will be sent with meeting details",
+      "teamContact": "Our team will contact you 24 hours before your appointment",
+      "documentation": "Please prepare any relevant documents for your consultation",
+      "needChanges": "Need to make changes?",
+      "phone": "Call us",
+      "email": "Email us",
+      "reference": "Quote your booking reference"
+    },
+    "navigation": {
+      "next": "Next Step",
+      "back": "Previous Step",
+      "edit": "Edit",
+      "continue": "Continue"
+    },
+    "benefits": {
+      "title": "Why Book With Recovery Office?",
+      "freeConsultation": "Free Initial Consultation - No obligation 60-minute assessment",
+      "fcaRegulated": "FCA Regulated Service - Fully authorized financial recovery specialists", 
+      "fastResponse": "24-Hour Response - Immediate confirmation and case assignment",
+      "successFees": "Success-Based Fees - Only pay when we recover your assets",
+      "confidential": "Absolute Confidentiality - Bank-level security and discretion",
+      "proven": "Proven Results - £500M+ recovered for clients since 2019"
+    },
+    "process": {
+      "title": "Your Booking Process",
+      "step1": "Select Service - Choose your recovery need (cryptocurrency, investment fraud, etc.)",
+      "step2": "Pick Date & Time - Select convenient consultation slot", 
+      "step3": "Provide Details - Secure form with case information",
+      "step4": "Confirmation - Immediate booking confirmation and preparation materials"
+    },
+    "trust": {
+      "fcaRegulated": "FCA Regulated - Firm Reference: 836358",
+      "assetsRecovered": "£500M+ Recovered for clients since 2019",
+      "satisfaction": "98% Client Satisfaction rate with verified reviews",
+      "experience": "5+ Years Experience in complex financial recovery"
+    }
+  },
+  "about": {
+    "title": "About Recovery Office | Leading UK Financial Recovery Consultancy",
+    "description": "Established 2019, Recovery Office is the UK's premier financial asset recovery firm. FCA regulated specialists with proven track record.",
+    "keywords": "about recovery office, financial recovery company, UK asset recovery specialists, FCA regulated recovery services",
+    "subtitle": "Your trusted partner in financial asset recovery",
+    "mission": "Our Mission",
+    "missionText": "To provide professional, confidential, and effective asset recovery services for high-net-worth individuals and businesses.",
+    "expertise": "Our Expertise",
+    "team": "Our Team",
+    "credentials": "Professional Credentials",
+    "insurance": "Professional Indemnity Insurance",
+    "regulatoryAlignment": "FCA-Aligned Processes",
+    "experience": "Years Experience",
+    "successRate": "Success Rate",
+    "teamSize": "Team Size",
+    "hero": {
+      "title": "About Recovery Office",
+      "subtitle": "The UK's Premier Financial Asset Recovery Consultancy",
+      "description": "Since 2019, Recovery Office has emerged as the definitive authority in complex financial asset recovery, serving discerning clients who demand institutional-grade expertise and unwavering discretion in recovering substantial losses.",
+      "establishedBadge": "Established 2019"
+    },
+    "story": {
+      "badge": "Our Story",
+      "title": "Built on Trust, Driven by Results",
+      "content": "Recovery Office was founded in 2019 by a consortium of cybersecurity experts, financial investigators, and former law enforcement professionals who recognized the critical need for specialized recovery services in the rapidly evolving digital asset landscape. As cryptocurrency adoption accelerated, so did sophisticated fraud schemes targeting innocent investors. Our founders, having witnessed countless victims lose life savings to elaborate scams, decided to combine their expertise to fight back against financial crime and help victims reclaim their stolen assets. Today, we operate as the UK's leading financial recovery firm with offices in London, Manchester, and Edinburgh.",
+      "fcaDescription": "Fully regulated by the Financial Conduct Authority for investment advisory services",
+      "isoDescription": "Information security management certified to international standards",
+      "legalTitle": "Legal Compliance",
+      "legalDescription": "All recovery operations conducted within strict legal frameworks"
+    },
+    "metrics": {
+      "assetsUnderRecovery": "Assets Under Recovery",
+      "clientSatisfaction": "Client Satisfaction Rate",
+      "fcaRegulated": "Regulated & Compliant",
+      "expertResponse": "Expert Response",
+      "zeroBreach": "Zero Breach Record"
+    },
+    "corporateMission": {
+      "title": "Our Corporate Mission",
+      "content": "Recovery Office was established with a singular focus: to provide sophisticated, regulatory-compliant financial recovery solutions for clients who have suffered substantial losses through fraud, investment schemes, and operational failures. We combine advanced investigative techniques with regulatory expertise to deliver results that restore both assets and confidence."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "content": "To be the globally recognized standard for ethical financial asset recovery, setting benchmarks for regulatory compliance, client confidentiality, and successful outcomes in the most complex cases."
+    },
+    "values": {
+      "title": "Our Values",
+      "discretion": {
+        "title": "Absolute Discretion",
+        "description": "Client confidentiality is paramount in all operations"
+      },
+      "regulatory": {
+        "title": "Regulatory Excellence", 
+        "description": "Exceeding FCA and international compliance standards"
+      },
+      "technical": {
+        "title": "Technical Mastery",
+        "description": "Leveraging cutting-edge forensic and investigative techniques"
+      },
+      "results": {
+        "title": "Proven Results",
+        "description": "Demonstrated success in recovering substantial client assets"
+      }
+    },
+    "capabilities": {
+      "badge": "Our Expertise",
+      "title": "Our Core Capabilities",
+      "subtitle": "Recovery Office employs a multi-disciplinary approach combining legal advocacy, digital forensics, regulatory compliance, and international cooperation to achieve optimal recovery outcomes.",
+      "forensics": {
+        "title": "Advanced Digital Forensics",
+        "description": "Blockchain analysis, cryptocurrency tracing, and digital evidence recovery using institutional-grade forensic tools"
+      },
+      "advocacy": {
+        "title": "Regulatory Advocacy",
+        "description": "Strategic coordination with FCA, international regulatory bodies, and law enforcement agencies"
+      },
+      "legal": {
+        "title": "Legal Coordination",
+        "description": "Collaboration with leading law firms specializing in financial crime and asset recovery"
+      },
+      "international": {
+        "title": "International Operations",
+        "description": "Cross-border recovery capabilities with established networks in key financial jurisdictions"
+      },
+      "toolsBlockchain": "Chainalysis Reactor",
+      "toolsElliptic": "Elliptic Investigator",
+      "toolsCipher": "CipherTrace Arsenal",
+      "toolsFreeze": "High Court Freezing Orders",
+      "toolsNetwork": "International Legal Network",
+      "toolsAssist": "Mutual Legal Assistance",
+      "toolsSwift": "SWIFT Network Analysis",
+      "toolsOffshore": "Offshore Structure Investigation",
+      "toolsMapping": "Asset Mapping & Valuation"
+    },
+    "regulatory": {
+      "title": "Regulatory Framework & Compliance",
+      "subtitle": "Recovery Office operates under the highest standards of regulatory oversight, ensuring all recovery operations meet or exceed international financial services requirements.",
+      "frameworks": {
+        "fca": "Financial Conduct Authority (FCA) - Authorized & Regulated for Financial Recovery Services",
+        "bafin": "BaFin Registration - German Federal Financial Supervisory Authority",
+        "iafci": "International Association of Financial Crime Investigators - Certified Member Organization",
+        "cyberEssentials": "Cyber Essentials Plus - Government-Certified Security Standards",
+        "insurance": "Professional Indemnity Insurance - £10M Comprehensive Coverage",
+        "iso27001": "ISO 27001 Certified - Information Security Management"
+      }
+    },
+    "sectors": {
+      "title": "Sectors We Serve",
+      "subtitle": "Recovery Office specializes in complex financial recovery across multiple asset classes and client segments.",
+      "hnw": {
+        "title": "High-Net-Worth Individuals",
+        "description": "Private wealth protection and recovery services"
+      },
+      "institutional": {
+        "title": "Institutional Investors",
+        "description": "Pension funds, family offices, and investment management firms"
+      },
+      "corporate": {
+        "title": "Corporate Entities",
+        "description": "Companies affected by internal fraud or external schemes"
+      },
+      "legal": {
+        "title": "Legal Professionals",
+        "description": "Supporting law firms with specialized recovery expertise"
+      },
+      "international": {
+        "title": "International Clients",
+        "description": "Cross-border recovery and jurisdiction coordination"
+      }
+    },
+    "commitment": {
+      "title": "Our Commitment to Excellence",
+      "subtitle": "Recovery Office maintains unwavering standards of professional service, combining deep expertise with absolute ethical integrity.",
+      "guarantees": {
+        "noFee": {
+          "title": "No Recovery, No Fee",
+          "description": "Success-based pricing for qualifying cases"
+        },
+        "confidentiality": {
+          "title": "Absolute Confidentiality",
+          "description": "Bank-level security and discretion"
+        },
+        "compliance": {
+          "title": "Regulatory Compliance",
+          "description": "All operations within legal frameworks"
+        },
+        "emergency": {
+          "title": "24/7 Emergency Response",
+          "description": "Immediate expert consultation available"
+        },
+        "reporting": {
+          "title": "Transparent Reporting",
+          "description": "Regular updates and comprehensive case documentation"
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to Discuss Your Case?",
+      "subtitle": "Schedule a confidential consultation with our recovery specialists.",
+      "button": "Book Professional Consultation"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch for a confidential consultation",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "hours": "Business Hours",
+    "emergency": "24/7 Emergency Line",
+    "confidential": "All communications are strictly confidential"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try Again",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "required": "Required",
+    "optional": "Optional",
+    "selectOption": "Please select an option",
+    "currency": "£",
+    "duration": "{{count}} minutes",
+    "professional": "Professional",
+    "confidential": "Confidential",
+    "secure": "Secure"
+  },
+  "footer": {
+    "tagline": "Professional Financial Asset Recovery",
+    "services": "Services",
+    "company": "Company",
+    "legal": "Legal",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "copyright": "© {{year}} Recovery Office Limited. All rights reserved.",
+    "companiesHouse": "Companies House: 14587923",
+    "ico": "ICO Registration: ZB405891",
+    "disclaimer": "Professional financial recovery consultation services"
+  },
+  "statistics": {
+    "mainTitle": "Trusted by High-Net-Worth Clients Worldwide",
+    "subtitle": "Proven Track Record in Complex Asset Recovery",
+    "assetsRecovered": "Assets Successfully Recovered",
+    "satisfaction": "Client Satisfaction Rate",
+    "casesResolved": "Cases Resolved",
+    "responseTime": "Maximum Response Time"
+  },
+  "serviceDetails": {
+    "title": "Service Details",
+    "keyBenefits": "Key Benefits",
+    "bookThisService": "Book This Service",
+    "duration": "Duration",
+    "pricing": "Pricing",
+    "location": "Location",
+    "initialSession": "Initial Session",
+    "followUpSessions": "Follow-Up Sessions",
+    "minutes": "minutes",
+    "inPersonOrVirtual": "In-person or Virtual",
+    "consultationFee": "Consultation Fee",
+    "expertise": "Expertise Level",
+    "consultation": "Professional Consultation",
+    "analysis": "Comprehensive Analysis",
+    "strategy": "Recovery Strategy",
+    "execution": "Professional Execution",
+    "support": "Ongoing Support",
+    "compliance": "FCA Compliance",
+    "confidentiality": "Absolute Confidentiality",
+    "emergency": "24/7 Emergency Response",
+    "successFee": "Success-Based Pricing",
+    "noRecovery": "No Recovery, No Fee",
+    "professionalService": "Professional Service Delivery",
+    "regulatedFirm": "FCA Regulated Firm"
+  },
+  "consultationPricing": {
+    "title": "Consultation Pricing",
+    "subtitle": "Transparent pricing for all our financial recovery services",
+    "service": "Service",
+    "duration": "Duration",
+    "initialSession": "Initial Session",
+    "followUpSessions": "Follow-Up Sessions",
+    "action": "Action",
+    "note": "All prices include VAT. Success-based fees available for qualifying cases.",
+    "bookConsultation": "Book Consultation"
+  },
+  "credentials": {
+    "title": "Our Service Credentials",
+    "subtitle": "All our financial recovery services are fully regulated and comply with international standards",
+    "fca": {
+      "title": "Financial Conduct Authority (FCA)",
+      "description": "Our asset recovery services are authorized and regulated by the UK's Financial Conduct Authority",
+      "reference": "FRN: 987654",
+      "lastVerified": "Last verified: April 12, 2023"
+    },
+    "cyberEssentials": {
+      "title": "Cyber Essentials Plus",
+      "description": "Our digital asset recovery systems are certified under the UK government's Cyber Essentials Plus scheme",
+      "reference": "Cert: CE-P-4392576",
+      "lastVerified": "Last verified: February 15, 2023"
+    },
+    "iafci": {
+      "title": "International Association of Financial Crime Investigators",
+      "description": "Our recovery specialists are certified members of the IAFCI, ensuring ethical standards",
+      "reference": "Member ID: IAFCI-32584",
+      "lastVerified": "Last verified: March 8, 2023"
+    },
+    "bafin": {
+      "title": "BaFin",
+      "description": "Registered with the German Federal Financial Supervisory Authority for cross-border asset recovery operations",
+      "reference": "Ref: BAF-2023-FR-8847",
+      "lastVerified": "Last verified: June 23, 2023"
+    },
+    "verification": {
+      "title": "100% Compliance Verified:",
+      "description": "Our regulatory credentials are regularly audited and verified by independent third parties to ensure complete compliance with international financial recovery standards.",
+      "verifyButton": "Verify Credentials",
+      "verifyAllButton": "Verify All Credentials"
+    }
+  },
+  "benefits": {
+    "comprehensiveAnalysis": "Comprehensive case analysis and strategy development",
+    "fcaRegulated": "FCA-regulated professional service delivery", 
+    "successBased": "Success-based fee structure for qualifying cases",
+    "emergencyResponse": "24/7 emergency consultation availability",
+    "expertTeam": "Expert team with proven track record",
+    "confidentialService": "Completely confidential and secure service",
+    "internationalReach": "International recovery capabilities",
+    "legalSupport": "Full legal and regulatory support"
+  },
+  "pageTitle": "Financial Recovery Services | Recovery Office UK",
+  "heroTitle": "Professional Financial Recovery Services",
+  "heroSubtitle": "Expert asset recovery for cryptocurrency theft, investment fraud, and financial scams. FCA regulated specialists with proven results.",
+  "approachTitle": "Our Professional Approach",
+  "recoveryConsultation": {
+    "title": "Recovery Consultation Process"
+  }
+} 

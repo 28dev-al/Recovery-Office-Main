@@ -8,6 +8,7 @@ import { Grid } from '../../../design-system/components/layout/Grid';
 import { GridItem } from '../../../design-system/components/layout/GridItem';
 import { PremiumServiceCard } from '../../../design-system/components/cards/PremiumServiceCard';
 import { Button } from '../../../design-system/components/button/Button';
+import { useTranslation } from 'react-i18next';
 
 const ServicesContainer = styled.section`
   padding: ${PREMIUM_SPACING.xxl}px 0;
@@ -125,43 +126,53 @@ const BadgeText = styled.span`
   color: ${PREMIUM_COLORS.BASE_COLORS.gray[600]};
 `;
 
-// Define our professional financial service offerings with improved icons
+// Premium service data using client's professional images
 const DEFAULT_SERVICE_DATA = [
   {
-    id: 'consultation',
+    id: 'cryptocurrency',
+    icon: 'https://images2.imgbox.com/ba/78/wNqfvrmO_o.png',
+    titleKey: 'services.items.cryptocurrency.title',
+    defaultTitle: 'Cryptocurrency Recovery',
+    descriptionKey: 'services.items.cryptocurrency.description',
+    defaultDescription: 'Specialized recovery of stolen or lost cryptocurrency assets through blockchain forensics, legal proceedings, and exchange cooperation.',
+    href: '/services/cryptocurrency-recovery'
+  },
+  {
+    id: 'financial-scam',
     icon: 'https://images2.imgbox.com/e7/0f/yfQ894Tl_o.png',
-    title: 'Financial Scam Recovery',
-    description: 'Personalized assessment and recovery planning for victims of financial scams.',
-    href: '/services/consultation',
+    titleKey: 'services.items.financial.title',
+    defaultTitle: 'Financial Scam Recovery',
+    descriptionKey: 'services.items.financial.description',
+    defaultDescription: 'Comprehensive asset recovery from investment scams, Ponzi schemes, and fraudulent financial operations.',
+    href: '/services/financial-scam-recovery'
   },
   {
     id: 'investment-fraud',
     icon: 'https://images2.imgbox.com/76/6d/BSPbxZsR_o.png',
-    title: 'Investment Fraud Recovery',
-    description: 'Specialized recovery services for victims of investment fraud and scams.',
-    href: '/services/investment-fraud',
+    titleKey: 'services.items.investment.title',
+    defaultTitle: 'Investment Fraud Recovery',
+    descriptionKey: 'services.items.investment.description',
+    defaultDescription: 'Professional recovery services for victims of fraudulent investment schemes and unauthorized trading activities.',
+    href: '/services/investment-fraud-recovery'
   },
   {
-    id: 'cryptocurrency',
-    icon: 'https://images2.imgbox.com/ba/78/wNqfvrmO_o.png',
-    title: 'Cryptocurrency Recovery',
-    description: 'Expert assistance in recovering lost or stolen cryptocurrency assets.',
-    href: '/services/cryptocurrency',
-  },
-  {
-    id: 'regulatory',
+    id: 'regulatory-assistance',
     icon: 'https://images2.imgbox.com/f2/e9/tDfdd3sR_o.png',
-    title: 'Regulatory Complaint Assistance',
-    description: 'Navigate complex regulatory procedures to maximize your recovery potential.',
-    href: '/services/regulatory',
-  },
+    titleKey: 'services.items.regulatory.title',
+    defaultTitle: 'Regulatory Complaint Assistance',
+    descriptionKey: 'services.items.regulatory.description',
+    defaultDescription: 'Expert guidance through regulatory complaint processes with financial authorities and ombudsman services.',
+    href: '/services/regulatory-assistance'
+  }
 ];
 
 interface ServiceData {
   id: string;
-  icon: string;
-  title: string;
-  description: string;
+  icon: string | React.ReactNode;
+  titleKey: string;
+  defaultTitle: string;
+  descriptionKey: string;
+  defaultDescription: string;
   href: string;
 }
 
@@ -184,6 +195,8 @@ export const PremiumServicesSection: React.FC<PremiumServicesSectionProps> = ({
   ctaText = 'Book a Free Consultation',
   ctaUrl = '/booking',
 }) => {
+  const { t } = useTranslation();
+  
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -206,7 +219,11 @@ export const PremiumServicesSection: React.FC<PremiumServicesSectionProps> = ({
   };
   
   return (
-    <ServicesContainer style={backgroundColor ? { backgroundColor } : {}}>
+    <ServicesContainer 
+      id="services-section"
+      data-section="services"
+      style={backgroundColor ? { backgroundColor } : {}}
+    >
       <ContentWrapper>
         <Container>
           <motion.div
@@ -240,8 +257,8 @@ export const PremiumServicesSection: React.FC<PremiumServicesSectionProps> = ({
                   >
                     <PremiumServiceCard
                       icon={service.icon}
-                      title={service.title}
-                      description={service.description}
+                      title={t(service.titleKey, service.defaultTitle)}
+                      description={t(service.descriptionKey, service.defaultDescription)}
                       href={service.href}
                     />
                   </motion.div>
@@ -257,7 +274,7 @@ export const PremiumServicesSection: React.FC<PremiumServicesSectionProps> = ({
                     variant="primary"
                     size="lg"
                   >
-                    {ctaText}
+                    {t('buttons.bookFreeConsultation', ctaText)}
                   </PrimaryCTA>
                 </ActionContainer>
               </motion.div>
@@ -277,7 +294,7 @@ export const PremiumServicesSection: React.FC<PremiumServicesSectionProps> = ({
                       strokeWidth="2"
                     />
                   </svg>
-                  <BadgeText>FCA Regulated Service</BadgeText>
+                  <BadgeText>{t('buttons.fcaRegulated', 'FCA Regulated Service')}</BadgeText>
                 </RegulatoryBadge>
                 
                 <RegulatoryBadge>
@@ -292,7 +309,7 @@ export const PremiumServicesSection: React.FC<PremiumServicesSectionProps> = ({
                       strokeWidth="2"
                     />
                   </svg>
-                  <BadgeText>Confidential & Secure</BadgeText>
+                  <BadgeText>{t('buttons.confidentialSecure', 'Confidential & Secure')}</BadgeText>
                 </RegulatoryBadge>
               </ServiceBadge>
             </motion.div>

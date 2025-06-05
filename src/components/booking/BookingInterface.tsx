@@ -7,7 +7,6 @@ import { ErrorDisplay } from '../../design-system/components/feedback/ErrorDispl
 import { LoadingOverlay } from '../../design-system/components/feedback/LoadingOverlay';
 import { VisuallyHidden } from '../../design-system/components/utility/VisuallyHidden';
 import { BookingStepId, ServiceOption } from '../../types/booking.types';
-import { ClientInformation } from '../../types/booking';
 import { useBooking } from '../../context/BookingContext';
 import { Portal } from '../../design-system/components/utility/Portal';
 import { GlobalStyles } from '../../design-system/components/utility/GlobalStyles';
@@ -15,7 +14,6 @@ import ServiceSelectionStep from './steps/ServiceSelectionStep';
 import DateSelectionStep from './steps/DateSelectionStep';
 import ClientInfoStep from './steps/ClientInfoStep';
 import ConfirmationStep from './steps/ConfirmationStep';
-import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 
 // --- Styled Components ---
 const BookingContainer = styled(Box)`
@@ -49,8 +47,6 @@ const BookingInterface: React.FC = () => {
     state,
     goToStep,
     fetchAvailableServices,
-    fetchAvailableDates: _fetchAvailableDates,
-    fetchAvailableTimeSlots: _fetchAvailableTimeSlots,
     submitBooking,
     isResourceLoading,
     hasApiError,
@@ -63,13 +59,6 @@ const BookingInterface: React.FC = () => {
   const [containerMaxWidth, setContainerMaxWidth] = useState('800px');
   
   const { currentStep, selectedService, selectedDate, selectedTimeSlot, clientInfo } = state;
-  
-  // Get responsive values based on screen size
-  const _isMobile = useBreakpointValue({
-    base: true,
-    sm: true,
-    md: false
-  });
   
   // Load services on component mount
   useEffect(() => {
@@ -243,8 +232,6 @@ const BookingInterface: React.FC = () => {
               onServiceSelect={handleServiceSelect}
               onNext={() => handleNext({})}
               onBack={handleBack}
-              isLoading={isResourceLoading('services')}
-              initialData={{ selectedService: selectedService }}
             />
           );
         
@@ -390,7 +377,7 @@ const BookingInterface: React.FC = () => {
             <Box padding={SACRED_SPACING.md}>
               <ErrorDisplay
                 title="Service Unavailable"
-                message={typeof serviceError === 'object' && serviceError !== null ? (serviceError as any).message : "We're having trouble connecting to our booking service. Please try again later."}
+                message={typeof serviceError === 'object' && serviceError !== null ? (serviceError as Error).message || String(serviceError) : "We're having trouble connecting to our booking service. Please try again later."}
                 showRetry={true}
                 retryText="Try Again"
                 onRetry={handleRetryAfterError}

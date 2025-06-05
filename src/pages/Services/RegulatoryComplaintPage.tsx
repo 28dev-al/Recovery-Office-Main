@@ -50,7 +50,7 @@ export const RegulatoryComplaintPage: React.FC = () => {
       amount: "£45,000"
     },
     seoTitle: "Regulatory Complaint Assistance | FCA Complaints | Recovery Office UK",
-    seoDescription: "Professional regulatory complaint assistance by Recovery Office. 89% success rate with FCA complaints, ombudsman services. Expert regulatory enforcement. Call +44 7451 263372.",
+    seoDescription: "Regulatory complaint assistance. File FCA complaints, ombudsman services. Expert regulatory enforcement. Call +44 7451 263472.",
     seoKeywords: "regulatory complaint assistance, FCA complaints, financial ombudsman service, regulatory enforcement, compensation claims, professional misconduct, compliance violations"
   };
 

@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ScrollReveal } from '../../../animation';
-import { RecoveryTimeline } from '../../../components/sections/premium/RecoveryTimeline';
-import { Container } from '../../../design-system/components/layout';
-import { Section, SectionContent } from '../../../design-system/components/layout/Section';
 import { Button } from '../../../design-system/components/button';
+import { Container } from '../../../design-system/components/layout/Container';
+import { Section, SectionContent } from '../../../design-system/components/layout/Section';
+import { RecoveryTimeline } from '../../../components/sections/premium/RecoveryTimeline';
 import { PREMIUM_SPACING } from '../../../design-system/tokens';
 
 /**
@@ -51,31 +52,32 @@ const CtaText = styled.p`
  */
 const ServicesProcess: React.FC<ServicesProcessProps> = ({
   backgroundColor = "#f9fafb",
-  ctaText = "Book a Consultation",
+  ctaText,
   ctaUrl = "/booking"
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <Section backgroundColor={backgroundColor}>
       <Container>
         <SectionContent>
           <RecoveryTimeline 
-            title="Our Recovery Process"
-            description="A comprehensive approach to recovering your financial assets"
+            title={t('services.processTitle')}
+            description={t('services.processSubtitle')}
           />
           
           <ScrollReveal threshold={0.2}>
             <CtaContainer>
-              <CtaHeading>Ready to Begin Your Recovery Journey?</CtaHeading>
+              <CtaHeading>{t('services.ctaTitle')}</CtaHeading>
               <CtaText>
-                Schedule a consultation today and discover how our regulatory-compliant 
-                approaches can help you recover your financial assets.
+                {t('services.ctaSubtitle')}
               </CtaText>
               <Button 
                 variant="accent" 
                 size="lg"
                 href={ctaUrl}
               >
-                {ctaText}
+                {ctaText || t('services.bookConsultation')}
               </Button>
             </CtaContainer>
           </ScrollReveal>

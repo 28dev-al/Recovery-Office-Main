@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -7,7 +8,7 @@ import { PREMIUM_COLORS } from '../../../design-system/tokens/colors.premium';
 import FallbackImage from '../../../design-system/components/utility/FallbackImage';
 
 interface PremiumServiceCardProps {
-  icon: string;
+  icon: string | React.ReactNode;
   title: string;
   description: string;
   href: string;
@@ -144,27 +145,46 @@ export const PremiumServiceCard: React.FC<PremiumServiceCardProps> = ({
   description,
   href,
 }) => {
+  const { t } = useTranslation();
   const handleImageError = (error: Error) => {
     console.warn(`[PremiumServiceCard] Failed to load icon for "${title}":`, error.message);
+  };
+
+  // Render icon based on type
+  const renderIcon = () => {
+    // If icon is a React component/element, render it directly
+    if (React.isValidElement(icon)) {
+      return icon;
+    }
+    
+    // If icon is a string (URL), use FallbackImage
+    if (typeof icon === 'string') {
+      return (
+        <FallbackImage 
+          src={icon} 
+          alt={`${title} Icon`}
+          width="56"
+          height="56"
+          fallbackComponent={<DefaultServiceIcon />}
+          onImageError={handleImageError}
+        />
+      );
+    }
+    
+    // Fallback for any other type
+    return <DefaultServiceIcon />;
   };
 
   return (
     <CardContainer>
       <CardLink to={href} aria-label={`Learn more about ${title}`}>
         <IconContainer>
-          <FallbackImage 
-            src={icon} 
-            alt={`${title} Icon`}
-            width="56"
-            height="56"
-            fallbackComponent={<DefaultServiceIcon />}
-            onImageError={handleImageError}
-          />
+          {renderIcon()}
         </IconContainer>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
         <ArrowIndicator>
-          Learn more
+          {t('buttons.learnMore', 'Learn more')}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" fill="currentColor" />
           </svg>

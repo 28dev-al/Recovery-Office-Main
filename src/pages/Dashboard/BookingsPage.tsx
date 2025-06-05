@@ -1,156 +1,52 @@
-/**
- * Bookings Management Page
- * Comprehensive booking administration for Recovery Office
- */
-
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { DashboardLayout } from './components/DashboardLayout';
-import { dashboardApi, RecentBooking } from '../../services/dashboardApi';
+import { dashboardApi, type RecentBooking } from '../../services/dashboardApi';
+import { BookingViewModal } from '../../components/dashboard/BookingViewModal';
+import { BookingEditModal } from '../../components/dashboard/BookingEditModal';
+import { debugLog } from '../../utils/removeConsole';
 
-// Types
-interface BookingFilter {
-  status: string;
-  service: string;
-  dateRange: string;
-  search: string;
-}
-
-// Styled Components
-const PageContainer = styled.div`
+const BookingsContainer = styled.div`
   padding: 24px;
-  background: #f7fafc;
-  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
 `;
 
 const PageHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 32px;
 `;
 
 const PageTitle = styled.h1`
-  color: #1a365d;
-  font-size: 2rem;
+  font-size: 28px;
   font-weight: 700;
-  margin: 0 0 8px 0;
-`;
-
-const PageSubtitle = styled.p`
-  color: #718096;
-  font-size: 1rem;
+  color: #1a365d;
   margin: 0;
 `;
 
-const FiltersCard = styled.div`
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2e8f0;
-`;
-
-const FiltersGrid = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr auto;
-  gap: 16px;
-  align-items: end;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const FilterGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-
-const FilterLabel = styled.label`
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #4a5568;
-`;
-
-const FilterInput = styled.input`
-  padding: 8px 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  transition: border-color 0.2s ease;
-
-  &:focus {
-    outline: none;
-    border-color: #1a365d;
-    box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
-  }
-`;
-
-const FilterSelect = styled.select`
-  padding: 8px 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  background: white;
-  cursor: pointer;
-  transition: border-color 0.2s ease;
-
-  &:focus {
-    outline: none;
-    border-color: #1a365d;
-    box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
-  }
-`;
-
-const ActionButton = styled.button<{ variant?: 'primary' | 'secondary' }>`
-  padding: 8px 16px;
-  border: 2px solid ${props => props.variant === 'primary' ? '#1a365d' : '#e2e8f0'};
-  background: ${props => props.variant === 'primary' ? '#1a365d' : 'white'};
-  color: ${props => props.variant === 'primary' ? 'white' : '#4a5568'};
-  border-radius: 6px;
-  font-size: 0.875rem;
+const AddButton = styled.button`
+  background: linear-gradient(135deg, #d69e2e 0%, #f6ad3a 100%);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  transition: all 0.3s ease;
 
   &:hover {
-    background: ${props => props.variant === 'primary' ? '#2d3748' : '#f7fafc'};
-    border-color: ${props => props.variant === 'primary' ? '#2d3748' : '#1a365d'};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214, 158, 46, 0.3);
   }
 `;
 
-const BookingsTable = styled.div`
+const TableContainer = styled.div`
   background: white;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-`;
-
-const TableHeader = styled.div`
-  padding: 20px 24px;
-  border-bottom: 1px solid #e2e8f0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const TableTitle = styled.h3`
-  color: #1a365d;
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin: 0;
-`;
-
-const TableActions = styled.div`
-  display: flex;
-  gap: 12px;
 `;
 
 const Table = styled.table`
@@ -158,204 +54,261 @@ const Table = styled.table`
   border-collapse: collapse;
 `;
 
-const TableHead = styled.thead`
-  background: #f7fafc;
+const TableHeader = styled.thead`
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
 `;
 
 const TableHeaderCell = styled.th`
-  padding: 12px 16px;
+  padding: 16px 20px;
   text-align: left;
-  font-size: 0.75rem;
   font-weight: 600;
-  color: #4a5568;
+  color: #1a365d;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid #e2e8f0;
 `;
 
 const TableBody = styled.tbody``;
 
 const TableRow = styled.tr`
-  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background: #f7fafc;
+    background: #f8fafc;
   }
 
-  &:not(:last-child) {
-    border-bottom: 1px solid #e2e8f0;
+  &:last-child {
+    border-bottom: none;
   }
 `;
 
 const TableCell = styled.td`
-  padding: 16px;
-  font-size: 0.875rem;
+  padding: 16px 20px;
+  font-size: 14px;
   color: #4a5568;
-  vertical-align: middle;
 `;
 
-const StatusBadge = styled.span<{ $status: string }>`
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
+const ClientInfo = styled.div`
+  .name {
+    font-weight: 600;
+    color: #1a365d;
+    margin-bottom: 4px;
+  }
+  .service {
+    font-size: 12px;
+    color: #4a5568;
+  }
+`;
+
+const DateTimeInfo = styled.div`
+  .date {
+    font-weight: 500;
+    color: #1a365d;
+    margin-bottom: 4px;
+  }
+  .time {
+    font-size: 12px;
+    color: #4a5568;
+  }
+`;
+
+const StatusBadge = styled.span<{ status: string }>`
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
   font-weight: 600;
-  text-transform: capitalize;
-  
-  ${props => {
-    switch (props.$status) {
+  text-transform: uppercase;
+
+  ${({ status }) => {
+    switch (status.toLowerCase()) {
       case 'confirmed':
-        return `
-          background: rgba(56, 161, 105, 0.1);
-          color: #38a169;
-        `;
+        return 'background: #c6f6d5; color: #2f855a;';
       case 'pending':
-        return `
-          background: rgba(214, 158, 46, 0.1);
-          color: #d69e2e;
-        `;
+        return 'background: #fed7d7; color: #c53030;';
       case 'completed':
-        return `
-          background: rgba(128, 90, 213, 0.1);
-          color: #805ad5;
-        `;
+        return 'background: #bee3f8; color: #2b6cb0;';
       case 'cancelled':
-        return `
-          background: rgba(229, 62, 62, 0.1);
-          color: #e53e3e;
-        `;
+        return 'background: #e2e8f0; color: #4a5568;';
       default:
-        return `
-          background: rgba(113, 128, 150, 0.1);
-          color: #718096;
-        `;
+        return 'background: #fef5e7; color: #d69e2e;';
     }
   }}
 `;
 
-const ClientInfo = styled.div``;
-
-const ClientName = styled.div`
+const ValueDisplay = styled.div`
   font-weight: 600;
   color: #1a365d;
-  margin-bottom: 2px;
 `;
 
-const ServiceName = styled.div`
-  font-size: 0.75rem;
-  color: #718096;
-`;
-
-const ActionMenu = styled.div`
+const ActionButtons = styled.div`
   display: flex;
   gap: 8px;
 `;
 
-const ActionMenuButton = styled.button`
-  padding: 4px 8px;
-  border: 1px solid #e2e8f0;
-  background: white;
-  color: #4a5568;
+const ActionButton = styled.button<{ variant?: 'danger' }>`
+  padding: 6px 12px;
+  border: none;
   border-radius: 4px;
-  font-size: 0.75rem;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  
+  ${props => props.variant === 'danger' ? `
+    background: #e53e3e;
+    color: white;
+    &:hover { background: #c53030; }
+  ` : `
+    background: #d69e2e;
+    color: white;
+    &:hover { background: #b8851f; }
+  `}
+`;
 
-  &:hover {
-    background: #f7fafc;
-    border-color: #1a365d;
-    color: #1a365d;
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  background: white;
+  border-radius: 12px;
+`;
+
+const LoadingSpinner = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #d69e2e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 `;
 
 const EmptyState = styled.div`
-  padding: 60px 24px;
   text-align: center;
-  color: #718096;
-`;
-
-const EmptyIcon = styled.div`
-  font-size: 64px;
-  margin-bottom: 16px;
-`;
-
-const EmptyTitle = styled.h3`
+  padding: 60px 20px;
   color: #4a5568;
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 8px 0;
 `;
 
-const EmptyDescription = styled.p`
-  color: #718096;
-  font-size: 0.875rem;
-  margin: 0;
-  line-height: 1.5;
-`;
+// Enhanced booking interface for better type safety
+interface ExtendedBooking extends RecentBooking {
+  firstName?: string;
+  lastName?: string;
+  client?: {
+    name?: string;
+    firstName?: string;
+    lastName?: string;
+  };
+  email?: string;
+  clientId?: string;
+  price?: number;
+  totalAmount?: number;
+  estimatedValue?: number;
+  timeSlot?: string;
+  urgencyLevel?: string;
+  notes?: string;
+}
 
-const Pagination = styled.div`
-  padding: 16px 24px;
-  border-top: 1px solid #e2e8f0;
-  display: flex;
-  align-items: center;
-  justify-content: between;
-  gap: 16px;
-`;
+// Utility functions for data formatting
+const formatDate = (dateString: string) => {
+  if (!dateString) return 'Not set';
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  } catch {
+    return 'Invalid date';
+  }
+};
 
-const PaginationInfo = styled.div`
-  color: #718096;
-  font-size: 0.875rem;
-`;
+const formatTime = (timeString: string) => {
+  if (!timeString || timeString === 'TBD') return 'To be confirmed';
+  return timeString;
+};
 
-const PaginationControls = styled.div`
-  display: flex;
-  gap: 8px;
-  margin-left: auto;
-`;
+const getClientName = (booking: ExtendedBooking) => {
+  debugLog('[BookingsPage] Extracting client name from booking:', booking);
 
-const PaginationButton = styled.button<{ $active?: boolean }>`
-  padding: 6px 12px;
-  border: 1px solid ${props => props.$active ? '#1a365d' : '#e2e8f0'};
-  background: ${props => props.$active ? '#1a365d' : 'white'};
-  color: ${props => props.$active ? 'white' : '#4a5568'};
-  border-radius: 4px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: #1a365d;
-    background: ${props => props.$active ? '#1a365d' : '#f7fafc'};
+  // Method 1: Direct clientName field (now populated by backend)
+  if (booking.clientName && booking.clientName !== 'Unknown Client' && booking.clientName !== 'Client information pending') {
+    debugLog('[BookingsPage] Using populated clientName:', booking.clientName);
+    return booking.clientName;
   }
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  // Method 2: firstName + lastName (now populated by backend)
+  const firstName = booking.firstName;
+  const lastName = booking.lastName;
+  if (firstName && lastName) {
+    const fullName = `${firstName} ${lastName}`.trim();
+    debugLog('[BookingsPage] Using populated firstName+lastName:', fullName);
+    return fullName;
   }
-`;
+
+  // Method 3: Populated client object
+  const client = booking.client;
+  if (client?.name) {
+    debugLog('[BookingsPage] Using populated client.name:', client.name);
+    return client.name;
+  }
+
+  // Method 4: Email as fallback
+  const email = booking.email;
+  if (email) {
+    debugLog('[BookingsPage] Using email as identifier:', email);
+    return email;
+  }
+
+  const clientId = booking.clientId;
+  debugLog('[BookingsPage] No client name found, using clientId:', clientId);
+  return `Client ID: ${clientId?.substring(0, 8)}...`;
+};
+
+const getBookingValue = (booking: ExtendedBooking) => {
+  debugLog('[BookingsPage] Extracting booking value from:', booking);
+
+  // Try the value fields that backend now populates
+  const value = booking.value || 
+                booking.price || 
+                booking.totalAmount || 
+                booking.estimatedValue;
+
+  if (value && value > 0) {
+    debugLog('[BookingsPage] Found booking value:', value);
+    return `£${value.toLocaleString()}`;
+  }
+
+  debugLog('[BookingsPage] No booking value found, showing quote required');
+  return 'Quote required';
+};
 
 export const BookingsPage: React.FC = () => {
   const [bookings, setBookings] = useState<RecentBooking[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState<BookingFilter>({
-    status: 'all',
-    service: 'all',
-    dateRange: 'all',
-    search: ''
-  });
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  
+  // Modal states
+  const [selectedBooking, setSelectedBooking] = useState<RecentBooking | null>(null);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
-  // Fetch bookings data
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         setLoading(true);
-        const data = await dashboardApi.getRecentBookings(50); // Get more for filtering
-        setBookings(data);
+        const response = await dashboardApi.getRecentBookings(50); // Get more bookings for full list
+        if (response?.data) {
+          setBookings(Array.isArray(response.data) ? response.data : []);
+        }
       } catch (error) {
-        console.error('Failed to fetch bookings:', error);
+        console.error('Error fetching bookings:', error);
       } finally {
         setLoading(false);
       }
@@ -364,250 +317,171 @@ export const BookingsPage: React.FC = () => {
     fetchBookings();
   }, []);
 
-  // Filter bookings
-  const filteredBookings = bookings.filter(booking => {
-    if (filters.status !== 'all' && booking.status !== filters.status) return false;
-    if (filters.search && !booking.clientName.toLowerCase().includes(filters.search.toLowerCase()) &&
-        !booking.serviceName.toLowerCase().includes(filters.search.toLowerCase())) return false;
-    return true;
-  });
-
-  // Paginate bookings
-  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedBookings = filteredBookings.slice(startIndex, startIndex + itemsPerPage);
-
-  const handleFilterChange = (key: keyof BookingFilter, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-    setCurrentPage(1); // Reset to first page when filtering
+  const handleView = (bookingId: string) => {
+    debugLog('[BookingsPage] Viewing booking:', bookingId);
+    const booking = bookings.find(b => b._id === bookingId);
+    if (booking) {
+      setSelectedBooking(booking);
+      setShowViewModal(true);
+    }
   };
 
-  const handleExport = () => {
-    console.log('Export bookings data');
-    // Implement export functionality
+  const handleEdit = (bookingId: string) => {
+    debugLog('[BookingsPage] Editing booking:', bookingId);
+    const booking = bookings.find(b => b._id === bookingId);
+    if (booking) {
+      setSelectedBooking(booking);
+      setShowEditModal(true);
+    }
   };
 
-  const handleNewBooking = () => {
-    console.log('Create new booking');
-    // Navigate to booking creation
+  const handleSave = async (updatedBooking: ExtendedBooking) => {
+    try {
+      debugLog('[BookingsPage] Saving booking changes:', updatedBooking);
+
+      // For now, update local state (in production, make API call to update)
+      setBookings(prev => prev.map(booking => 
+        booking._id === updatedBooking._id ? updatedBooking : booking
+      ));
+      
+      setShowEditModal(false);
+      setSelectedBooking(null);
+      
+      debugLog('[BookingsPage] Booking updated successfully');
+    } catch (error) {
+      console.error('[BookingsPage] Error updating booking:', error);
+    }
   };
 
-  const handleViewBooking = (bookingId: string) => {
-    console.log('View booking:', bookingId);
-    // Navigate to booking details
+  const handleCancel = async (bookingId: string) => {
+    const booking = bookings.find(b => b._id === bookingId);
+    const confirmMessage = `Are you sure you want to cancel the booking for ${booking?.clientName}?`;
+
+    if (window.confirm(confirmMessage)) {
+      try {
+        debugLog('[BookingsPage] Cancelling booking:', bookingId);
+        
+        // Update booking status to cancelled
+        setBookings(prev => prev.map(b => 
+          b._id === bookingId ? { ...b, status: 'cancelled' } : b
+        ));
+        
+        debugLog('[BookingsPage] Booking cancelled successfully');
+      } catch (error) {
+        console.error('[BookingsPage] Error cancelling booking:', error);
+      }
+    }
   };
 
-  const handleEditBooking = (bookingId: string) => {
-    console.log('Edit booking:', bookingId);
-    // Navigate to booking edit
+  const closeModals = () => {
+    setShowViewModal(false);
+    setShowEditModal(false);
+    setSelectedBooking(null);
   };
 
-  const handleCancelBooking = (bookingId: string) => {
-    console.log('Cancel booking:', bookingId);
-    // Implement booking cancellation
+  const handleAddNew = () => {
+    debugLog('Adding new booking');
+    // Navigate to booking creation form
   };
+
+  if (loading) {
+    return (
+      <BookingsContainer>
+        <LoadingContainer>
+          <LoadingSpinner />
+        </LoadingContainer>
+      </BookingsContainer>
+    );
+  }
 
   return (
-    <DashboardLayout>
-      <PageContainer>
-        <PageHeader>
-          <PageTitle>Bookings Management</PageTitle>
-          <PageSubtitle>
-            Manage and track all client bookings and appointments
-          </PageSubtitle>
-        </PageHeader>
+    <BookingsContainer>
+      <PageHeader>
+        <PageTitle>Bookings Management ({bookings.length})</PageTitle>
+        <AddButton onClick={handleAddNew}>Add New Booking</AddButton>
+      </PageHeader>
 
-        {/* Filters */}
-        <FiltersCard>
-          <FiltersGrid>
-            <FilterGroup>
-              <FilterLabel>Search</FilterLabel>
-              <FilterInput
-                type="text"
-                placeholder="Search by client name or service..."
-                value={filters.search}
-                onChange={(e) => handleFilterChange('search', e.target.value)}
-              />
-            </FilterGroup>
+      <TableContainer>
+        {bookings.length > 0 ? (
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableHeaderCell>Client & Service</TableHeaderCell>
+                <TableHeaderCell>Date & Time</TableHeaderCell>
+                <TableHeaderCell>Status</TableHeaderCell>
+                <TableHeaderCell>Value</TableHeaderCell>
+                <TableHeaderCell>Urgency</TableHeaderCell>
+                <TableHeaderCell>Actions</TableHeaderCell>
+              </tr>
+            </TableHeader>
+            <TableBody>
+              {bookings.map((booking) => (
+                <TableRow key={booking._id}>
+                  <TableCell>
+                    <ClientInfo>
+                      <div className="name">{getClientName(booking as ExtendedBooking)}</div>
+                      <div className="service">{booking.serviceName}</div>
+                    </ClientInfo>
+                  </TableCell>
+                  <TableCell>
+                    <DateTimeInfo>
+                      <div className="date">{formatDate(booking.date)}</div>
+                      <div className="time">{formatTime(booking.time)}</div>
+                    </DateTimeInfo>
+                  </TableCell>
+                  <TableCell>
+                    <StatusBadge status={booking.status}>
+                      {booking.status}
+                    </StatusBadge>
+                  </TableCell>
+                  <TableCell>
+                    <ValueDisplay>{getBookingValue(booking as ExtendedBooking)}</ValueDisplay>
+                  </TableCell>
+                  <TableCell>{booking.urgency || 'Standard'}</TableCell>
+                  <TableCell>
+                    <ActionButtons>
+                      <ActionButton onClick={() => handleView(booking._id)}>
+                        View
+                      </ActionButton>
+                      <ActionButton onClick={() => handleEdit(booking._id)}>
+                        Edit
+                      </ActionButton>
+                      <ActionButton 
+                        onClick={() => handleCancel(booking._id)} 
+                        variant="danger"
+                      >
+                        Cancel
+                      </ActionButton>
+                    </ActionButtons>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <EmptyState>
+            <h3>No bookings found</h3>
+            <p>Start by adding your first booking or check your filters.</p>
+          </EmptyState>
+        )}
+      </TableContainer>
 
-            <FilterGroup>
-              <FilterLabel>Status</FilterLabel>
-              <FilterSelect
-                value={filters.status}
-                onChange={(e) => handleFilterChange('status', e.target.value)}
-              >
-                <option value="all">All Statuses</option>
-                <option value="pending">Pending</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="completed">Completed</option>
-                <option value="cancelled">Cancelled</option>
-              </FilterSelect>
-            </FilterGroup>
+      {showViewModal && selectedBooking && (
+        <BookingViewModal
+          booking={selectedBooking}
+          isOpen={showViewModal}
+          onClose={closeModals}
+        />
+      )}
 
-            <FilterGroup>
-              <FilterLabel>Service</FilterLabel>
-              <FilterSelect
-                value={filters.service}
-                onChange={(e) => handleFilterChange('service', e.target.value)}
-              >
-                <option value="all">All Services</option>
-                <option value="crypto">Cryptocurrency Recovery</option>
-                <option value="fraud">Investment Fraud Recovery</option>
-                <option value="consultation">Initial Consultation</option>
-              </FilterSelect>
-            </FilterGroup>
-
-            <FilterGroup>
-              <FilterLabel>Date Range</FilterLabel>
-              <FilterSelect
-                value={filters.dateRange}
-                onChange={(e) => handleFilterChange('dateRange', e.target.value)}
-              >
-                <option value="all">All Time</option>
-                <option value="today">Today</option>
-                <option value="week">This Week</option>
-                <option value="month">This Month</option>
-              </FilterSelect>
-            </FilterGroup>
-
-            <ActionButton variant="secondary" onClick={() => setFilters({
-              status: 'all',
-              service: 'all',
-              dateRange: 'all',
-              search: ''
-            })}>
-              Clear
-            </ActionButton>
-          </FiltersGrid>
-        </FiltersCard>
-
-        {/* Bookings Table */}
-        <BookingsTable>
-          <TableHeader>
-            <TableTitle>
-              Bookings ({filteredBookings.length})
-            </TableTitle>
-            <TableActions>
-              <ActionButton variant="secondary" onClick={handleExport}>
-                Export
-              </ActionButton>
-              <ActionButton variant="primary" onClick={handleNewBooking}>
-                New Booking
-              </ActionButton>
-            </TableActions>
-          </TableHeader>
-
-          {loading ? (
-            <EmptyState>
-              <EmptyIcon>⏳</EmptyIcon>
-              <EmptyTitle>Loading Bookings</EmptyTitle>
-              <EmptyDescription>Please wait while we fetch your booking data...</EmptyDescription>
-            </EmptyState>
-          ) : paginatedBookings.length === 0 ? (
-            <EmptyState>
-              <EmptyIcon>📅</EmptyIcon>
-              <EmptyTitle>No Bookings Found</EmptyTitle>
-              <EmptyDescription>
-                {filters.search || filters.status !== 'all' || filters.service !== 'all' 
-                  ? 'No bookings match your current filters. Try adjusting your search criteria.'
-                  : 'No bookings have been created yet. Create your first booking to get started.'
-                }
-              </EmptyDescription>
-            </EmptyState>
-          ) : (
-            <>
-              <Table>
-                <TableHead>
-                  <tr>
-                    <TableHeaderCell>Client & Service</TableHeaderCell>
-                    <TableHeaderCell>Date & Time</TableHeaderCell>
-                    <TableHeaderCell>Status</TableHeaderCell>
-                    <TableHeaderCell>Value</TableHeaderCell>
-                    <TableHeaderCell>Priority</TableHeaderCell>
-                    <TableHeaderCell>Actions</TableHeaderCell>
-                  </tr>
-                </TableHead>
-                <TableBody>
-                  {paginatedBookings.map((booking) => (
-                    <TableRow key={booking.id}>
-                      <TableCell>
-                        <ClientInfo>
-                          <ClientName>{booking.clientName}</ClientName>
-                          <ServiceName>{booking.serviceName}</ServiceName>
-                        </ClientInfo>
-                      </TableCell>
-                      <TableCell>
-                        <div>{booking.date}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#718096' }}>
-                          {booking.time}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <StatusBadge $status={booking.status}>
-                          {booking.status}
-                        </StatusBadge>
-                      </TableCell>
-                      <TableCell>
-                        £{booking.value.toLocaleString()}
-                      </TableCell>
-                      <TableCell>
-                        <StatusBadge $status={booking.urgency}>
-                          {booking.urgency}
-                        </StatusBadge>
-                      </TableCell>
-                      <TableCell>
-                        <ActionMenu>
-                          <ActionMenuButton onClick={() => handleViewBooking(booking.id)}>
-                            View
-                          </ActionMenuButton>
-                          <ActionMenuButton onClick={() => handleEditBooking(booking.id)}>
-                            Edit
-                          </ActionMenuButton>
-                          <ActionMenuButton onClick={() => handleCancelBooking(booking.id)}>
-                            Cancel
-                          </ActionMenuButton>
-                        </ActionMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-
-              {/* Pagination */}
-              <Pagination>
-                <PaginationInfo>
-                  Showing {startIndex + 1}-{Math.min(startIndex + itemsPerPage, filteredBookings.length)} of {filteredBookings.length} bookings
-                </PaginationInfo>
-                <PaginationControls>
-                  <PaginationButton
-                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                    disabled={currentPage === 1}
-                  >
-                    Previous
-                  </PaginationButton>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                    <PaginationButton
-                      key={page}
-                      $active={page === currentPage}
-                      onClick={() => setCurrentPage(page)}
-                    >
-                      {page}
-                    </PaginationButton>
-                  ))}
-                  <PaginationButton
-                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                    disabled={currentPage === totalPages}
-                  >
-                    Next
-                  </PaginationButton>
-                </PaginationControls>
-              </Pagination>
-            </>
-          )}
-        </BookingsTable>
-      </PageContainer>
-    </DashboardLayout>
+      {showEditModal && selectedBooking && (
+        <BookingEditModal
+          booking={selectedBooking}
+          isOpen={showEditModal}
+          onSave={handleSave}
+          onClose={closeModals}
+        />
+      )}
+    </BookingsContainer>
   );
-};
-
-export default BookingsPage; 
+}; 

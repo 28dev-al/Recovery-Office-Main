@@ -131,12 +131,15 @@ const TestComponent = ({ testId = 'test-component' }) => {
       <button 
         data-testid="set-service" 
         onClick={() => setSelectedService({
+          _id: '507f1f77bcf86cd799439011',
           id: 'service-123',
           name: 'Test Service',
+          description: 'Test service description',
           duration: 60,
           price: 100,
-          type: ServiceType.INITIAL_CONSULTATION,
-          description: 'Test service description'
+          category: 'recovery',
+          isActive: true,
+          type: ServiceType.INITIAL_CONSULTATION
         })}
       >
         Set Service

@@ -8,7 +8,7 @@ export const RegulatoryAssistancePage: React.FC = () => {
     <>
       <Helmet>
         <title>Regulatory Assistance & Compliance Support | Recovery Office UK</title>
-        <meta name="description" content="Expert regulatory compliance assistance, FCA complaint filing, and financial ombudsman representation by Recovery Office. Firm Reference: 836358. Call +44 7451 263372." />
+        <meta name="description" content="Expert regulatory complaint assistance services. FCA complaints, ombudsman cases, compensation claims. FCA authorized firm - Recovery Office. Firm Reference: 836358. Call +44 7451 263472." />
         <meta name="keywords" content="regulatory assistance, FCA compliance, financial ombudsman, regulatory disputes, Recovery Office, UK financial regulation, FRN 836358" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Regulatory Assistance & Compliance Support | Recovery Office UK" />
@@ -57,8 +57,8 @@ export const RegulatoryAssistancePage: React.FC = () => {
               <PrimaryButton to="/booking">
                 📋 Book Regulatory Consultation
               </PrimaryButton>
-              <SecondaryButton href="tel:+447451263372">
-                Call Expert: +44 7451 263372
+              <SecondaryButton href="tel:+447451263472">
+                Call Expert: +44 7451 263472
               </SecondaryButton>
             </HeroActions>
             
@@ -372,8 +372,8 @@ export const RegulatoryAssistancePage: React.FC = () => {
                   <Feature>✓ Ongoing compliance monitoring</Feature>
                   <Feature>✓ Retainer arrangements available</Feature>
                 </PricingFeatures>
-                <PricingExternalButton href="tel:+447451263372">
-                  Discuss Requirements
+                <PricingExternalButton href="tel:+447451263472">
+                  Call for Quote
                 </PricingExternalButton>
               </PricingCard>
             </PricingGrid>
@@ -433,8 +433,8 @@ export const RegulatoryAssistancePage: React.FC = () => {
                 Most regulatory complaints have strict time limits. FCA complaints must typically be made within 6 years of the issue, or 3 years from when you became aware. Don\'t let time limits prevent you from securing the compensation you deserve.
               </CTAText>
               <CTAButtons>
-                <UrgentButton href="tel:+447451263372">
-                  📞 Urgent Advice: +44 7451 263372
+                <UrgentButton href="tel:+447451263472">
+                  📞 Urgent Advice: +44 7451 263472
                 </UrgentButton>
                 <ConsultationButton to="/booking">
                   Book Immediate Assessment

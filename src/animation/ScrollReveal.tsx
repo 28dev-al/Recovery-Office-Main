@@ -2,24 +2,17 @@
  * ScrollReveal Component
  * 
  * A component that reveals its children with an animation when they
- * enter the viewport. Uses sacred geometry principles for timing
- * and animation properties.
- * 
- * This component applies the Golden Ratio (PHI) to create naturally
- * pleasing reveal animations with harmonious timing.
+ * enter the viewport. Uses safe animations to prevent Framer Motion errors.
  */
 
-import * as React from 'react';;
+import * as React from 'react';
 import { motion, useAnimation, Variants } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { PHI_INVERSE, SACRED_EASINGS } from '../constants/sacred-geometry';
+import { PROFESSIONAL_ANIMATIONS } from '../utils/animations';
 import { ScrollRevealProps } from './animation.d';
-import { resolveDuration, applyGoldenRatioDuration, getAccessibleAnimationSettings } from '../utils/animation';
 
 /**
- * ScrollReveal Component with ref forwarding
- * 
- * Animates its children when they enter the viewport
+ * ScrollReveal Component with ref forwarding and safe animations
  */
 export const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
   ({ 
@@ -27,25 +20,13 @@ export const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
     variant = 'fade',
     duration = 'normal',
     delay = 0,
-    easing = 'standard',
     threshold = 0.2,
-    distance = 34, // Fibonacci number
+    distance = 30,
     resetOnExit = false,
     rootMargin = "0px",
-    initialScale = PHI_INVERSE,
-    useGoldenRatio = true,
+    initialScale = 0.95,
     ...rest
   }, ref) => {
-    // Convert duration string to numerical value
-    const durationValue = resolveDuration(duration);
-    
-    // Apply golden ratio to duration if enabled
-    const effectiveDuration = useGoldenRatio 
-      ? applyGoldenRatioDuration(durationValue) 
-      : durationValue;
-    
-    // Check for accessibility settings
-    const accessibleSettings = getAccessibleAnimationSettings(effectiveDuration, distance);
     
     // Animation controls
     const controls = useAnimation();
@@ -76,31 +57,40 @@ export const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
       }
     }, [controls, inView, resetOnExit]);
     
-    // Get animation variants based on the chosen type
+    // Check for reduced motion preference
+    const prefersReducedMotion = React.useMemo(() => {
+      return typeof window !== 'undefined' && 
+             window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }, []);
+    
+    // Get safe animation variants
     const getVariants = (): Variants => {
-      // Use accessible values if reduced motion is preferred
-      const { duration: finalDuration, distance: finalDistance, shouldAnimate } = accessibleSettings;
-      
-      // Disable animation completely if shouldAnimate is false
-      if (!shouldAnimate) {
+      // Disable animation completely if reduced motion is preferred
+      if (prefersReducedMotion) {
         return {
           hidden: { opacity: 1 },
           visible: { opacity: 1 }
         };
       }
       
-      // Get the easing function from SACRED_EASINGS
-      const easingValues = SACRED_EASINGS[easing];
-      // Ensure the easing value is proper for Framer Motion
-      const easingFunction = Array.isArray(easingValues) 
-        ? easingValues 
-        : [PHI_INVERSE, 0, 1 - PHI_INVERSE, 1]; // Default fallback
+      // Get safe duration based on duration prop
+      const getDurationValue = (duration: string | number): number => {
+        if (typeof duration === 'number') return duration;
+        switch (duration) {
+          case 'fast': return 0.3;
+          case 'normal': return 0.6;
+          case 'slow': return 0.9;
+          default: return 0.6;
+        }
+      };
       
-      // Create base transition settings
+      const durationValue = getDurationValue(duration);
+      
+      // Create safe transition settings
       const transition = {
-        duration: finalDuration,
+        duration: durationValue,
         delay,
-        ease: easingFunction
+        ease: "easeOut" // Use safe string easing
       };
       
       // Return appropriate variants based on the animation type
@@ -113,25 +103,25 @@ export const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
           
         case 'slide-up':
           return {
-            hidden: { y: finalDistance, opacity: 0 },
+            hidden: { y: distance, opacity: 0 },
             visible: { y: 0, opacity: 1, transition }
           };
           
         case 'slide-down':
           return {
-            hidden: { y: -finalDistance, opacity: 0 },
+            hidden: { y: -distance, opacity: 0 },
             visible: { y: 0, opacity: 1, transition }
           };
           
         case 'slide-left':
           return {
-            hidden: { x: finalDistance, opacity: 0 },
+            hidden: { x: distance, opacity: 0 },
             visible: { x: 0, opacity: 1, transition }
           };
           
         case 'slide-right':
           return {
-            hidden: { x: -finalDistance, opacity: 0 },
+            hidden: { x: -distance, opacity: 0 },
             visible: { x: 0, opacity: 1, transition }
           };
           
@@ -149,7 +139,7 @@ export const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
               opacity: 1, 
               transition: {
                 ...transition,
-                scale: { ...transition, duration: finalDuration * 1.2 }
+                scale: { ...transition, duration: durationValue * 1.2 }
               }
             }
           };
@@ -161,26 +151,34 @@ export const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
           };
           
         default:
-          return {
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition }
-          };
+          // Use pre-defined safe animation variant
+          return PROFESSIONAL_ANIMATIONS.variants.fadeIn;
       }
     };
     
-    // Use the motion component directly with as prop
-    return (
-      <motion.div
-        ref={combinedRef}
-        initial="hidden"
-        animate={controls}
-        variants={getVariants()}
-        style={{ willChange: 'transform, opacity' }} // Add performance optimization
-        {...rest}
-      >
-        {children}
-      </motion.div>
-    );
+    // Wrap in error boundary with fallback
+    try {
+      return (
+        <motion.div
+          ref={combinedRef}
+          initial="hidden"
+          animate={controls}
+          variants={getVariants()}
+          style={{ willChange: 'transform, opacity' }}
+          {...rest}
+        >
+          {children}
+        </motion.div>
+      );
+    } catch (error) {
+      console.warn('ScrollReveal animation failed:', error);
+      // Fallback to non-animated version
+      return (
+        <div ref={combinedRef} {...rest}>
+          {children}
+        </div>
+      );
+    }
   }
 );
 

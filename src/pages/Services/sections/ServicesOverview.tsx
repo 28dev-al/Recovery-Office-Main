@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ScrollReveal } from '../../../animation';
 import { SecurityShield, ComplianceBadge } from '../../../design-system/components/utility/FinancialIcons';
@@ -107,8 +107,7 @@ const ServiceIcon = styled.div<{ accentColor: string }>`
 const ServiceGridWrapper: React.FC<{ 
   services: Service[]; 
   columns: number; 
-  animated?: boolean;
-}> = ({ services, columns, animated = false }) => {
+}> = ({ services, columns }) => {
   return (
     <Grid 
       columns={columns} 
@@ -141,10 +140,12 @@ const ServiceGridWrapper: React.FC<{
  */
 const ServicesOverview: React.FC<ServicesOverviewProps> = ({
   services,
-  title = "Our Recovery Approach",
-  subtitle = "Discover our financial recovery services",
+  title,
+  subtitle,
   backgroundColor = "#f8f9fa"
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <StyledSection backgroundColor={backgroundColor}>
       <TopLeftDecoration>
@@ -158,8 +159,8 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({
       <Container>
         <ScrollReveal>
           <SectionTitle 
-            title={title} 
-            subtitle={subtitle}
+            title={title || t('services.approachTitle')} 
+            subtitle={subtitle || t('services.approachSubtitle')}
             decoratorBefore={<SecurityShield size="sm" opacity={0.15} />}
             decoratorAfter={<ComplianceBadge size="sm" opacity={0.15} />}
           />
@@ -170,7 +171,6 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({
             <ServiceGridWrapper 
               services={services}
               columns={2}
-              animated={true}
             />
           </SectionContent>
         </ScrollReveal>

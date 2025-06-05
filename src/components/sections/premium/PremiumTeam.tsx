@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { PREMIUM_SPACING } from '../../../design-system/tokens';
 import { Container } from '../../../design-system/components/layout/Container';
@@ -74,17 +75,21 @@ const MemberPhoto = styled.div`
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto 20px auto;
-  box-shadow: 0 2px 8px rgba(10, 64, 33, 0.08);
-  border: 2px solid #F8F7F0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 4px solid #E6F4EA;
   background: #f3f3f3;
   
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center;
     display: block;
     transition: transform 0.3s ease;
+    
+    /* Professional centering and aspect ratio */
+    margin-left: auto;
+    margin-right: auto;
   }
   
   ${TeamMemberCard}:hover & img {
@@ -238,93 +243,108 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => (
   </svg>
 );
 
-// Financial recovery team members data
-const TEAM_MEMBERS = [
+const DEFAULT_TEAM_DATA = [
   {
     id: 1,
-    name: "Dr. Elizabeth Harper",
-    role: "Recovery Specialist & Director",
-    bio: "With over 15 years of experience in financial recovery, Dr. Harper specializes in complex investment fraud cases and regulatory compliance. She has led the recovery of over $50 million in assets for clients across various industries.",
-    photoUrl: "https://images2.imgbox.com/1b/c8/iUrzV8lp_o.jpg",
-    email: "elizabeth.harper@recoveryoffice.com",
-    credentials: [
-      "Ph.D. in Financial Law",
-      "Certified Fraud Examiner (CFE)",
-      "FCA Approved Person"
-    ],
-    specialties: ["Investment Fraud", "Regulatory Compliance", "Asset Recovery"],
-    additionalInfo: "Dr. Harper regularly speaks at financial industry conferences and has published several papers on modern fraud recovery techniques. She previously served as an advisor to regulatory bodies on fraud prevention."
+    name: "Alex Bianchi",
+    role: "Senior Recovery Specialist",
+    bioKey: "team.alex",
+    defaultBio: "Alex specializes in recovering stolen cryptocurrencies and investigating investment fraud schemes. His expertise in blockchain analysis has helped clients recover millions in digital assets.",
+    image: "https://thumbs2.imgbox.com/19/6e/IkBypXFa_t.jpg",
+    credentials: ["Certified Fraud Examiner", "Blockchain Analysis Expert", "7+ Years Experience"],
+    contact: "+44 7451 263473",
+    email: "alex.bianchi@recovery-office.com"
   },
   {
     id: 2,
-    name: "James Anderson",
-    role: "Technical Recovery Specialist",
-    bio: "James leads our technical recovery team, with expertise in cryptocurrency tracing and digital forensics to track and recover digital assets. His innovative approaches have made him a leader in the emerging field of digital asset recovery.",
-    photoUrl: "https://images2.imgbox.com/c7/f9/8sX1Bj08_o.jpg",
-    email: "james.anderson@recoveryoffice.com",
-    credentials: [
-      "M.S. in Computer Science",
-      "Certified Cryptocurrency Investigator",
-      "Blockchain Forensics Certified"
-    ],
-    specialties: ["Cryptocurrency Recovery", "Digital Forensics", "Blockchain Analysis"],
-    additionalInfo: "James has pioneered several crypto-tracing techniques that have become industry standards. He maintains close relationships with major exchanges to facilitate asset recovery from fraud cases."
+    name: "Mark Marandola",
+    role: "Operations Director",
+    bioKey: "team.mark",
+    defaultBio: "Mark leads our asset recovery operations with extensive experience in tracing funds through complex financial networks. He has successfully recovered assets from sophisticated scam operations.",
+    image: "https://thumbs2.imgbox.com/08/a1/0hipVxE9_t.jpg",
+    credentials: ["Asset Recovery Specialist", "Financial Investigation Lead", "10+ Years Experience"],
+    contact: "+44 7451 263474",
+    email: "mark.marandola@recovery-office.com"
   },
   {
     id: 3,
-    name: "Sarah Williams",
-    role: "Client Relations Manager",
-    bio: "Sarah ensures our clients receive clear communication throughout the recovery process, specializing in client education and expectation management. Her background in financial education helps clients understand complex recovery procedures.",
-    photoUrl: "https://images2.imgbox.com/fe/f2/zX6yMZVC_o.jpg",
-    email: "sarah.williams@recoveryoffice.com",
-    credentials: [
-      "Certified Financial Educator",
-      "B.A. in Communications",
-      "Dispute Resolution Certified"
-    ],
-    specialties: ["Client Advocacy", "Recovery Planning", "Financial Education"],
-    additionalInfo: "Sarah developed our client-centered communication protocols that ensure transparency throughout the recovery process. She specializes in helping clients understand complex financial recovery procedures."
+    name: "Jessica Davies",
+    role: "Compliance Manager",
+    bioKey: "team.jessica",
+    defaultBio: "Jessica ensures all recovery operations comply with FCA regulations and assists clients in filing formal complaints with regulatory bodies. Her legal background strengthens our compliance framework.",
+    image: "https://thumbs2.imgbox.com/89/bc/3wKZe9Zg_t.jpg",
+    credentials: ["FCA Compliance Expert", "Legal Background", "Regulatory Specialist"],
+    contact: "+44 7451 263475",
+    email: "jessica.davies@recovery-office.com"
   },
   {
     id: 4,
-    name: "Michael Chen",
-    role: "Legal Recovery Advisor",
-    bio: "Michael specializes in the legal aspects of financial recovery, including court proceedings, regulatory filings, and cross-border asset recovery. His expertise is crucial for cases requiring legal intervention.",
-    photoUrl: "https://images2.imgbox.com/a6/3a/9g8ECMM7_o.jpg",
-    email: "michael.chen@recoveryoffice.com",
-    credentials: [
-      "J.D. Financial Law",
-      "International Asset Recovery Certified",
-      "Licensed Solicitor"
-    ],
-    specialties: ["Legal Proceedings", "Cross-Border Recovery", "Regulatory Filings"],
-    additionalInfo: "Michael has successfully represented clients in complex financial recovery cases across multiple jurisdictions. His network of international legal partners enhances our global recovery capabilities."
+    name: "Daniel Fouberg",
+    role: "Technical Recovery Lead",
+    bioKey: "team.daniel",
+    defaultBio: "Daniel brings advanced technical expertise in blockchain forensics and cryptocurrency tracking. His deep understanding of digital networks and forensic techniques enables Recovery Office to trace even the most sophisticated crypto thefts.",
+    image: "https://thumbs2.imgbox.com/7a/51/EXh7DIZa_t.jpg",
+    credentials: ["Blockchain Forensics Expert", "Cryptocurrency Recovery Specialist", "Digital Asset Investigator"],
+    contact: "+44 7451 263476",
+    email: "daniel.fouberg@recovery-office.com"
   }
 ];
 
 interface PremiumTeamProps {
   title?: string;
   description?: string;
-  members?: typeof TEAM_MEMBERS;
+  teamMembers?: typeof DEFAULT_TEAM_DATA;
+  backgroundColor?: string;
 }
 
 export const PremiumTeam: React.FC<PremiumTeamProps> = ({
   title = "Our Expert Team",
-  description = "Our specialists bring years of experience in financial recovery and regulatory compliance",
-  members = TEAM_MEMBERS
+  description = "Meet the specialists dedicated to recovering your assets",
+  teamMembers = DEFAULT_TEAM_DATA,
+  backgroundColor
 }) => {
+  const { t } = useTranslation();
   const [expandedMember, setExpandedMember] = useState<number | null>(null);
   
-  const toggleMemberDetails = (id: number) => {
-    if (expandedMember === id) {
-      setExpandedMember(null);
-    } else {
-      setExpandedMember(id);
+  const toggleMemberDetails = (memberId: number) => {
+    setExpandedMember(expandedMember === memberId ? null : memberId);
+  };
+  
+  // Function to translate credentials from English to German
+  const translateCredential = (credential: string): string => {
+    const credentialMap: { [key: string]: string } = {
+      "Certified Fraud Examiner": t('team.qualifications.certifiedFraudExaminer', 'Certified Fraud Examiner'),
+      "Blockchain Analysis Expert": t('team.qualifications.blockchainAnalysisExpert', 'Blockchain Analysis Expert'),
+      "7+ Years Experience": `7+ ${t('team.qualifications.experience', 'Years Experience')}`,
+      "Asset Recovery Specialist": t('team.qualifications.assetRecoverySpecialist', 'Asset Recovery Specialist'),
+      "Financial Investigation Lead": t('team.qualifications.financialInvestigationLead', 'Financial Investigation Lead'),
+      "10+ Years Experience": `10+ ${t('team.qualifications.experience', 'Years Experience')}`,
+      "FCA Compliance Expert": t('team.qualifications.fcaComplianceExpert', 'FCA Compliance Expert'),
+      "Legal Background": t('team.qualifications.legalBackground', 'Legal Background'),
+      "Regulatory Specialist": t('team.qualifications.regulatorySpecialist', 'Regulatory Specialist'),
+      "Blockchain Forensics Expert": t('team.qualifications.blockchainForensicsExpert', 'Blockchain Forensics Expert'),
+      "Cryptocurrency Recovery Specialist": t('team.qualifications.cryptocurrencyRecoverySpecialist', 'Cryptocurrency Recovery Specialist'),
+      "Digital Asset Investigator": t('team.qualifications.digitalAssetInvestigator', 'Digital Asset Investigator')
+    };
+    
+    return credentialMap[credential] || credential;
+  };
+  
+  // Function to handle image load errors
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    // Set a fallback background color if image fails
+    e.currentTarget.style.display = 'none';
+    if (e.currentTarget.parentElement) {
+      e.currentTarget.parentElement.style.backgroundColor = '#E6F4EA';
+      e.currentTarget.parentElement.style.display = 'flex';
+      e.currentTarget.parentElement.style.alignItems = 'center';
+      e.currentTarget.parentElement.style.justifyContent = 'center';
+      e.currentTarget.parentElement.innerHTML = '<div style="color: #0A4021; font-weight: 600; font-size: 2rem;">👤</div>';
     }
   };
   
   return (
-    <TeamSection>
+    <TeamSection style={backgroundColor ? { backgroundColor } : {}}>
       <Container>
         <TeamHeader>
           <SectionTitle>{title}</SectionTitle>
@@ -332,7 +352,7 @@ export const PremiumTeam: React.FC<PremiumTeamProps> = ({
         </TeamHeader>
         
         <TeamGrid>
-          {members.map((member) => (
+          {teamMembers.map((member) => (
             <TeamMemberCard
               key={member.id}
               tabIndex={0}
@@ -340,49 +360,46 @@ export const PremiumTeam: React.FC<PremiumTeamProps> = ({
             >
               <MemberPhoto>
                 <img 
-                  src={member.photoUrl} 
-                  srcSet={`${member.photoUrl} 1x, ${member.photoUrl} 2x`}
-                  alt={`${member.name}, ${member.role}`} 
+                  src={member.image} 
+                  alt={`${member.name} - ${member.role}`} 
                   loading="lazy"
+                  onError={handleImageError}
                 />
               </MemberPhoto>
               <MemberName>{member.name}</MemberName>
               <MemberRole>{member.role}</MemberRole>
-              <MemberBio>{member.bio}</MemberBio>
+              <MemberBio>
+                {member.bioKey ? t(member.bioKey, member.defaultBio || '') : member.defaultBio}
+              </MemberBio>
               <DetailToggle
                 onClick={() => toggleMemberDetails(member.id)}
                 aria-expanded={expandedMember === member.id}
                 aria-controls={`details-${member.id}`}
               >
-                {expandedMember === member.id ? 'Hide details' : 'Show credentials & specialties'}
+                {expandedMember === member.id ? 'Hide details' : t('buttons.showCredentials', 'Show credentials & specialties')}
                 <ChevronIcon isOpen={expandedMember === member.id} />
               </DetailToggle>
               {expandedMember === member.id && (
                 <Box data-id={`details-${member.id}`} style={{ marginTop: '1rem' }}>
                   <SpecialtiesList>
-                    {member.credentials.map((credential, index) => (
-                      <Specialty key={index}>{credential}</Specialty>
+                    {member.credentials.map((credential, credIndex) => (
+                      <Specialty key={credIndex}>{translateCredential(credential)}</Specialty>
                     ))}
                   </SpecialtiesList>
-                  {member.additionalInfo && (
-                    <Box style={{ margin: '12px 0 0 0', fontSize: '0.92em', color: '#333' }}>
-                      {member.additionalInfo}
-                    </Box>
-                  )}
+                  <ContactButton
+                    href={`mailto:${member.email}`}
+                    aria-label={`Contact ${member.name} directly by email`}
+                  >
+                    <EmailIcon />
+                    {t('buttons.contactDirectly', 'Contact directly')}
+                  </ContactButton>
                 </Box>
               )}
               <SpecialtiesList>
-                {member.specialties.map((specialty, index) => (
-                  <Specialty key={index}>{specialty}</Specialty>
+                {member.credentials.map((credential, credIndex) => (
+                  <Specialty key={credIndex}>{translateCredential(credential)}</Specialty>
                 ))}
               </SpecialtiesList>
-              <ContactButton
-                href={`mailto:${member.email}`}
-                aria-label={`Contact ${member.name} directly by email`}
-              >
-                <EmailIcon />
-                Contact directly
-              </ContactButton>
             </TeamMemberCard>
           ))}
         </TeamGrid>

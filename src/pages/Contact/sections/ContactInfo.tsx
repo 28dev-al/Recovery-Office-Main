@@ -6,7 +6,7 @@
 
 import * as React from 'react';
 import styled from 'styled-components';
-import { Box, Flex, Grid } from '../../../design-system/components/layout';
+import { Box, Grid } from '../../../design-system/components/layout';
 import { Text } from '../../../design-system/components/typography';
 import { PHI } from '../../../constants/sacred-geometry';
 import { FadeIn } from '../../../animation';
@@ -157,7 +157,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ className }) => {
                 >
                   Phone
                 </Text>
-                <Text fontWeight={500}>+44 20 7946 0523</Text>
+                <Text fontWeight={500}>+44 7451 263472</Text>
               </div>
             </ContactInfoItem>
             
@@ -223,7 +223,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ className }) => {
                 >
                   Case Support Hotline
                 </Text>
-                <Text fontWeight={500}>+44 20 7946 0524</Text>
+                <Text fontWeight={500}>+44 7451 263472</Text>
                 <Text 
                   style={{
                     fontSize: '0.875rem',
@@ -275,7 +275,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ className }) => {
               >
                 If you're experiencing an active fraud situation where immediate intervention may help:
               </Text>
-              <Text fontWeight={500} style={{ marginBottom: '0.25rem' }}>+44 20 7946 0599</Text>
+              <Text fontWeight={500} style={{ marginBottom: '0.25rem' }}>+44 7451 263472</Text>
               <Text 
                 style={{
                   fontSize: '0.875rem'
