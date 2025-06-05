@@ -1,0 +1,31 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://www.googletagmanager.com https://tagmanager.google.com https://www.google-analytics.com https://ssl.google-analytics.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com; img-src 'self' data: https: https://www.googletagmanager.com https://ssl.gstatic.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://recovery-office-backend-production.up.railway.app; font-src 'self' https://fonts.gstatic.com
+
+/static/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+*.js
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: text/javascript; charset=utf-8
+
+*.css
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: text/css; charset=utf-8
+
+*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+  Content-Type: font/woff2
+
+/locales/*
+  Cache-Control: public, max-age=86400
+  Content-Type: application/json; charset=utf-8 

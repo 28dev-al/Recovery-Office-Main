@@ -39,67 +39,12 @@ skip_processing = true
 [functions."*"]
 
 [[headers]]
-for = "/*"
+for = "/assets/*"
 
 [headers.values]
-X-Frame-Options = "DENY"
-X-Content-Type-Options = "nosniff"
-X-XSS-Protection = "1; mode=block"
-Referrer-Policy = "strict-origin-when-cross-origin"
-Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
-Cache-Control = "public, max-age=31536000, immutable"
-Content-Encoding = "gzip, br"
-Link = "<https://fonts.googleapis.com>; rel=preconnect, <https://fonts.gstatic.com>; rel=preconnect; crossorigin, <https://www.google-analytics.com>; rel=dns-prefetch, <https://www.googletagmanager.com>; rel=dns-prefetch"
-
-[[headers]]
-for = "/static/*"
-
-[headers.values]
-Cache-Control = "public, max-age=31536000, immutable, public, max-age=31536000, immutable, public, max-age=31536000, immutable, public, max-age=31536000, immutable, public, max-age=31536000, immutable, public, max-age=31536000, immutable, public, max-age=31536000, immutable"
-Content-Type = "text/javascript; charset=utf-8, text/css; charset=utf-8, image/jpeg, image/png, image/svg+xml, image/webp"
-
-[[headers]]
-for = "/assets/fonts/*"
-
-[headers.values]
-Cache-Control = "public, max-age=31536000, immutable"
-Access-Control-Allow-Origin = "*"
-
-[[headers]]
-for = "/api/*"
-
-[headers.values]
-Cache-Control = "public, max-age=300"
-
-[[headers]]
-for = "/locales/*"
-
-[headers.values]
-Cache-Control = "public, max-age=86400"
-
-[[headers]]
-for = "/*.html"
-
-[headers.values]
-Cache-Control = "public, max-age=0, must-revalidate"
-
-[[headers]]
-for = "/sw.js"
-
-[headers.values]
-Cache-Control = "no-cache, no-store, must-revalidate"
-
-[[headers]]
-for = "/manifest.json"
-
-[headers.values]
-Cache-Control = "public, max-age=86400"
-
-[[headers]]
-for = "/favicon.*"
-
-[headers.values]
-Cache-Control = "public, max-age=86400"
+Cache-Control = "public, max-age=31536000, immutable, public, max-age=31536000, immutable, public, max-age=31536000, immutable, public, max-age=31536000, immutable"
+Access-Control-Allow-Origin = "*, *"
+Content-Type = "text/javascript; charset=utf-8, text/css; charset=utf-8, font/woff2"
 
 [[headers]]
 for = "/*"
@@ -109,7 +54,7 @@ X-Frame-Options = "DENY"
 X-Content-Type-Options = "nosniff"
 X-XSS-Protection = "1; mode=block"
 Referrer-Policy = "strict-origin-when-cross-origin"
-Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.netlify.com https:;"
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://www.googletagmanager.com https://tagmanager.google.com https://www.google-analytics.com https://ssl.google-analytics.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com; img-src 'self' data: https: https://www.googletagmanager.com https://ssl.gstatic.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://recovery-office-backend-production.up.railway.app; font-src 'self' https://fonts.gstatic.com"
 
 [[headers]]
 for = "/static/*"

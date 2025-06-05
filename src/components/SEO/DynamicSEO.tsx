@@ -223,9 +223,8 @@ const DynamicSEO: React.FC<DynamicSEOProps> = ({
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       
-      {/* Security Headers */}
+      {/* Security Headers - X-Frame-Options moved to _headers file */}
       <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-      <meta httpEquiv="X-Frame-Options" content="DENY" />
       <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
       
       {/* Google Search Console Verification */}

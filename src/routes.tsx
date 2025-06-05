@@ -40,6 +40,7 @@ const AnalyticsPage = lazy(() => import('./pages/Dashboard/AnalyticsPage'));
 
 // Google Ads Landing Pages - lazy loaded for performance
 const CryptocurrencyRecoveryLanding = lazy(() => import('./pages/landing/CryptocurrencyRecoveryLanding'));
+const GoogleAdsLanding = lazy(() => import('./pages/GoogleAds/GoogleAdsLanding'));
 
 // Performance-optimized loading fallback
 const LoadingFallback: React.FC<{ message?: string }> = ({ message = 'Loading...' }) => (
@@ -334,6 +335,16 @@ const AppRoutes: React.FC = () => {
           <ErrorBoundary>
             <Suspense fallback={<LoadingFallback message="Loading Cryptocurrency Recovery Landing..." />}>
               <CryptocurrencyRecoveryLanding />
+            </Suspense>
+          </ErrorBoundary>
+        }
+      />
+      <Route
+        path="/financial-recovery"
+        element={
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingFallback message="Loading Financial Recovery Landing..." />}>
+              <GoogleAdsLanding />
             </Suspense>
           </ErrorBoundary>
         }
