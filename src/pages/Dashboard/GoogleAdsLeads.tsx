@@ -5,10 +5,13 @@ import { DashboardLayout } from '../../components/dashboard/DashboardLayout';
 
 // Google Ads Leads API Configuration
 const GOOGLE_ADS_API = {
-  BASE_URL: process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api',
+  // Base URL WITHOUT the trailing /api to avoid double prefix issues
+  BASE_URL: process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app',
   ENDPOINTS: {
-    LEADS: '/google-ads/leads',
-    STATS: '/google-ads/leads/stats'
+    LEADS: '/api/google-ads/leads',
+    STATS: '/api/google-ads/leads/stats',
+    UPDATE_LEAD: (id: string) => `/api/google-ads/leads/${id}`,
+    LEAD_BY_REFERENCE: (ref: string) => `/api/google-ads/leads/reference/${ref}`
   }
 };
 
@@ -660,7 +663,7 @@ export const GoogleAdsLeads: React.FC = () => {
     try {
       console.log(`[GoogleAdsLeads] Updating lead ${leadId} status to ${newStatus}`);
       
-      const response = await fetch(`${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.LEADS}/${leadId}/status`, {
+      const response = await fetch(`${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.UPDATE_LEAD(leadId)}`, {
         method: 'PATCH',
         credentials: 'include',
         headers: {
