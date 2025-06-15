@@ -852,7 +852,7 @@ const GoogleAdsLanding: React.FC = () => {
       
       console.log('Sending payload:', payload); // Debug log
       
-      const response = await fetch(`${config.api.baseURL}/google-ads/leads`, {
+      const response = await fetch(`${config.api.baseURL}/api/google-ads/leads`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -902,7 +902,7 @@ const GoogleAdsLanding: React.FC = () => {
 
         // Facebook Pixel tracking (if available)
         interface WindowWithFbq extends Window {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
           fbq?: (...args: any[]) => void;
         }
         
