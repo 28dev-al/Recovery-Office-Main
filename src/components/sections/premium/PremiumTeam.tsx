@@ -279,14 +279,14 @@ const DEFAULT_TEAM_DATA = [
   },
   {
     id: 4,
-    name: "Daniel Fouberg",
+    name: "Claire Lee",
     role: "Technical Recovery Lead",
-    bioKey: "team.daniel",
-    defaultBio: "Daniel brings advanced technical expertise in blockchain forensics and cryptocurrency tracking. His deep understanding of digital networks and forensic techniques enables Recovery Office to trace even the most sophisticated crypto thefts.",
-    image: "https://thumbs2.imgbox.com/7a/51/EXh7DIZa_t.jpg",
+    bioKey: "team.claire",
+    defaultBio: "Claire brings advanced technical expertise in blockchain forensics and cryptocurrency tracking. Her deep understanding of digital networks and forensic techniques enables Recovery Office to trace even the most sophisticated crypto thefts.",
+    image: "https://i.ibb.co/zWnfY53d/claire-lee.jpg",
     credentials: ["Blockchain Forensics Expert", "Cryptocurrency Recovery Specialist", "Digital Asset Investigator"],
     contact: "+44 7451 263476",
-    email: "daniel.fouberg@recovery-office.com"
+    email: "claire.lee@recovery-office.com"
   }
 ];
 

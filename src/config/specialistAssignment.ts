@@ -35,18 +35,18 @@ export const specialistAssignment: Record<string, SpecialistInfo> = {
     photo: "https://i.ibb.co/Hprgydmw/Jesica-davies.jpg",
     email: "jessica.davies@recoveryoffice.com"
   },
-  // NEW: Add blockchain/technical cases to Daniel
+  // NEW: Add blockchain/technical cases to Claire
   "blockchain-analysis": {
-    name: "Daniel Fouberg",
+    name: "Claire Lee",
     title: "Senior Digital Forensics Specialist",
-    photo: "https://i.ibb.co/G4CnwgWF/Daniel-Fouberg.jpg",
-    email: "daniel.fouberg@recoveryoffice.com"
+    photo: "https://i.ibb.co/zWnfY53d/claire-lee.jpg",
+    email: "claire.lee@recoveryoffice.com"
   },
   "digital-forensics": {
-    name: "Daniel Fouberg",
+    name: "Claire Lee",
     title: "Senior Digital Forensics Specialist",
-    photo: "https://i.ibb.co/G4CnwgWF/Daniel-Fouberg.jpg",
-    email: "daniel.fouberg@recoveryoffice.com"
+    photo: "https://i.ibb.co/zWnfY53d/claire-lee.jpg",
+    email: "claire.lee@recoveryoffice.com"
   },
   // Default assignment for any unmatched services
   "default": {

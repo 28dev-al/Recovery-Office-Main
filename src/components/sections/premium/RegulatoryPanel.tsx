@@ -120,7 +120,7 @@ const REGULATORY_CREDENTIALS = [
     descriptionKey: "credentials.fca.description",
     defaultDescription: "We are authorized and regulated by the Financial Conduct Authority (FCA) to provide financial recovery services.",
     icon: <img src="https://i.ibb.co/twTqPfY3/FCA-Badge-resize.png" alt="FCA Official Badge" />,
-    registrationNumber: "FRN: 987654"
+    registrationNumber: "FRN: 836358"
   },
   {
     id: 2,

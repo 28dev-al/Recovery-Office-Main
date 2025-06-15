@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useBooking } from '../../../context/BookingContext';
 import { ConfirmationStepProps } from '../../../types/booking.types';
 import { LoadingOverlay } from '../../../design-system/components/feedback/LoadingOverlay';
+import { trackAppointmentBooking, trackPremiumConsultationBooking } from '../../../utils/conversions';
 
 // Submission state interface
 interface SubmissionStateData {
@@ -562,6 +563,16 @@ export const ConfirmationStep: React.FC<ConfirmationStepProps> = ({
       }
       
       const bookingRef = booking._id || (booking as { reference?: string }).reference;
+      
+      // Track Google Ads conversion for appointment booking
+      const estimatedValue = parseLossAmount(clientInfoToSubmit.estimatedLoss);
+      if (estimatedValue > 0) {
+        // Track premium consultation with value for high-value cases
+        trackPremiumConsultationBooking(estimatedValue, 'GBP');
+      } else {
+        // Track standard appointment booking
+        trackAppointmentBooking();
+      }
       
       setSubmissionState({
         status: 'success',

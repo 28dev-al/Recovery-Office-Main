@@ -634,7 +634,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 // For TypeScript
 declare global {
   interface Window {
-    gtag?: (command: string, action: string, params: object) => void;
+    gtag?: (...args: unknown[]) => void;
     // Add React DevTools global hook
     __REACT_DEVTOOLS_GLOBAL_HOOK__?: {
       renderers: Record<string, unknown>;

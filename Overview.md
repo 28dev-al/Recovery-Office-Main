@@ -239,7 +239,7 @@ Qualifications: Chartered Financial Analyst (CFA), Certified Regulatory Complian
 Languages: English, Welsh
 Specialization: Ensuring all recovery operations meet strict regulatory standards
 
-Daniel Fouberg - Senior Digital Forensics Specialist
+Claire Lee - Senior Digital Forensics Specialist
 Role: Head of technical investigation and digital evidence analysis
 Background: Former senior forensic analyst with National Cyber Security Centre (NCSC)
 Expertise:
@@ -264,7 +264,7 @@ Collaborative Approach: All significant cases reviewed by full team for optimal 
 
 Regulatory Oversight: Jessica Davies ensures all operations maintain FCA compliance
 
-Technical Excellence: Daniel Fouberg provides advanced technical capabilities across all cases
+Technical Excellence: Claire Lee provides advanced technical capabilities across all cases
 
 Client Relationship Management: Mark Marandola leads client strategy and communication
 

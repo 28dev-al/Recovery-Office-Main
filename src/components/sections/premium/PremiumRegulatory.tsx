@@ -360,7 +360,7 @@ const DEFAULT_REGULATORY_CREDENTIALS = [
     id: 1,
     name: "Financial Conduct Authority (FCA)",
     description: "Authorized and regulated by the UK's Financial Conduct Authority, ensuring compliance with rigorous financial standards",
-    verificationNumber: "FRN: 987654",
+    verificationNumber: "FRN: 836358",
     verificationDate: "Last verified: April 12, 2023",
     verifyUrl: "https://register.fca.org.uk/",
     icon: "https://i.ibb.co/twTqPfY3/FCA-Badge-resize.png",

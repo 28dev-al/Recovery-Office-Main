@@ -15,6 +15,9 @@ import styled from 'styled-components';
 import DynamicSEO from '../../components/SEO/DynamicSEO';
 import { GoogleAnalytics, ServiceTracker } from '../../components/tracking/GoogleAnalytics';
 import { PREMIUM_COLORS } from '../../design-system/tokens/colors.premium';
+import { config } from '../../config/environment';
+import { trackFormSubmission, trackButtonClick } from '../../utils/analytics';
+import { trackLeadFormSubmission, trackPhoneCallConversion } from '../../utils/conversions';
 
 
 
@@ -49,14 +52,13 @@ const HeroSection = styled.section`
 const HeroContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: ${PREMIUM_SPACING.xxxl}px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: ${PREMIUM_SPACING.xl}px;
     text-align: center;
   }
 `;
@@ -65,10 +67,11 @@ const TrustBadges = styled.div`
   display: flex;
   gap: ${PREMIUM_SPACING.lg}px;
   margin-bottom: ${PREMIUM_SPACING.xl}px;
+  justify-content: center;
+  flex-wrap: wrap;
   
   @media (max-width: 768px) {
     justify-content: center;
-    flex-wrap: wrap;
     gap: ${PREMIUM_SPACING.md}px;
   }
 `;
@@ -87,7 +90,8 @@ const TrustBadge = styled.div`
 `;
 
 const HeroContent = styled.div`
-  max-width: 600px;
+  max-width: 800px;
+  text-align: center;
 `;
 
 const HeroHeadline = styled.h1`
@@ -97,6 +101,7 @@ const HeroHeadline = styled.h1`
   margin-bottom: ${PREMIUM_SPACING.lg}px;
   color: white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-align: center;
 `;
 
 const HeroSubheadline = styled.p`
@@ -105,6 +110,7 @@ const HeroSubheadline = styled.p`
   margin-bottom: ${PREMIUM_SPACING.xl}px;
   color: ${PREMIUM_COLORS.BASE_COLORS.ivory[100]};
   opacity: 0.95;
+  text-align: center;
 `;
 
 const HeroStats = styled.div`
@@ -112,10 +118,16 @@ const HeroStats = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: ${PREMIUM_SPACING.lg}px;
   margin-bottom: ${PREMIUM_SPACING.xl}px;
+  justify-content: center;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: ${PREMIUM_SPACING.xl}px;
   
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: ${PREMIUM_SPACING.md}px;
+    max-width: 300px;
   }
 `;
 
@@ -145,6 +157,8 @@ const CTASection = styled.div`
   flex-direction: column;
   gap: ${PREMIUM_SPACING.md}px;
   margin-bottom: ${PREMIUM_SPACING.xl}px;
+  align-items: center;
+  justify-content: center;
   
   @media (max-width: 768px) {
     align-items: center;
@@ -198,6 +212,7 @@ const TrustIndicators = styled.div`
   gap: ${PREMIUM_SPACING.lg}px;
   font-size: 0.9rem;
   color: ${PREMIUM_COLORS.BASE_COLORS.ivory[200]};
+  justify-content: center;
   
   span {
     display: flex;
@@ -208,23 +223,6 @@ const TrustIndicators = styled.div`
   @media (max-width: 768px) {
     justify-content: center;
   }
-`;
-
-const HeroImage = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  @media (max-width: 768px) {
-    order: -1;
-  }
-`;
-
-const ProfessionalImage = styled.img`
-  max-width: 100%;
-  height: auto;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 `;
 
 // Services Section Styles
@@ -821,53 +819,96 @@ const GoogleAdsLanding: React.FC = () => {
         throw new Error('Please fill in all required fields');
       }
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/google-ads/leads`, {
+      // Map loss type from user-friendly to backend enum
+      const mapLossType = (lossType: string): string => {
+        const mapping: { [key: string]: string } = {
+          "Cryptocurrency Theft/Scam": "cryptocurrency-recovery",
+          "Investment Fraud/Ponzi Scheme": "investment-fraud", 
+          "Romance Scam": "romance-scam",
+          "Business Email Compromise": "financial-scam",
+          "Forex/Trading Scam": "forex-scam",
+          "Other Financial Fraud": "other"
+        };
+        return mapping[lossType] || "other";
+      };
+
+      // Map urgency level from user-friendly to backend enum
+      const mapUrgencyLevel = (urgencyLevel: string): string => {
+        if (urgencyLevel.includes("Emergency")) return "emergency";
+        if (urgencyLevel.includes("Urgent")) return "urgent";
+        return "normal";
+      };
+
+      // Format data exactly as backend expects (snake_case field names)
+      const payload = {
+        name: currentFormData.name.trim(),
+        email: currentFormData.email.toLowerCase().trim(),
+        phone: currentFormData.phone.trim(),
+        estimated_loss: currentFormData.estimatedLoss || "",
+        loss_type: mapLossType(currentFormData.lossType),
+        urgency_level: mapUrgencyLevel(currentFormData.urgencyLevel),
+        description: currentFormData.description || ""
+      };
+      
+      console.log('Sending payload:', payload); // Debug log
+      
+      const response = await fetch(`${config.api.baseURL}/google-ads/leads`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          name: currentFormData.name,
-          email: currentFormData.email,
-          phone: currentFormData.phone,
-          estimated_loss: currentFormData.estimatedLoss,
-          loss_type: currentFormData.lossType,
-          urgency_level: currentFormData.urgencyLevel,
-          description: currentFormData.description
-        })
+        body: JSON.stringify(payload)
       });
 
-      const result = await response.json();
+      const responseText = await response.text();
+      console.log('Response status:', response.status);
+      console.log('Response body:', responseText);
+      
+      if (!response.ok) {
+        if (response.status === 409) {
+          // 409 means duplicate - this is actually success with existing reference
+          const errorResult = JSON.parse(responseText);
+          setSubmissionStatus({
+            type: 'success',
+            message: `✅ We already have your request! Reference: ${errorResult.existingReference}. Our team will contact you soon.`
+          });
+          return; // Don't throw error for 409
+        }
+        throw new Error(`Server error: ${response.status} - ${responseText}`);
+      }
+      
+      const result = JSON.parse(responseText);
 
-      if (response.ok && result.success) {
+      if (result.success) {
         // Success - show confirmation with reference number
         setSubmissionStatus({
           type: 'success',
-          message: `✅ Thank you! Your consultation request has been submitted successfully. 
-        Reference Number: ${result.reference_number}
-        ${result.response_time}
-        Our FCA-regulated specialists will contact you soon.`
+          message: `✅ Thank you! Your request has been submitted successfully. Reference: ${result.reference_number}. ${result.response_time}.`
         });
         
-        // Google Ads conversion tracking
-        if (window.gtag) {
-          window.gtag('event', 'conversion', {
-            'send_to': 'AW-XXXXXXXXX/google_ads_lead_submission',
-            'value': 0,
-            'currency': 'GBP',
-            'transaction_id': result.reference_number,
-            'custom_parameters': {
-              'lead_id': result.lead_id,
-              'urgency': currentFormData.urgencyLevel,
-              'loss_type': currentFormData.lossType
-            }
-          });
-        }
+        // Enhanced Google Analytics tracking with our new utility
+        trackFormSubmission({
+          form_type: 'google_ads_lead_form',
+          form_location: 'landing_page',
+          service_type: currentFormData.lossType,
+          estimated_loss: currentFormData.estimatedLoss,
+          urgency_level: currentFormData.urgencyLevel,
+          reference_number: result.reference_number
+        });
+        
+        // Google Ads conversion tracking - Lead form submission
+        trackLeadFormSubmission();
 
         // Facebook Pixel tracking (if available)
-        if (typeof (window as Window & { fbq?: Function }).fbq === 'function') {
-          (window as Window & { fbq: Function }).fbq('track', 'Lead', {
+        interface WindowWithFbq extends Window {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          fbq?: (...args: any[]) => void;
+        }
+        
+        const windowWithFbq = window as WindowWithFbq;
+        if ('fbq' in window && typeof windowWithFbq.fbq === 'function') {
+          windowWithFbq.fbq('track', 'Lead', {
             content_name: 'Google Ads Lead Submission',
             content_category: 'Financial Recovery',
             value: 0,
@@ -886,8 +927,11 @@ const GoogleAdsLanding: React.FC = () => {
           description: ''
         });
 
-        // Reset the actual form
-        (e.currentTarget as HTMLFormElement).reset();
+        // Safe form reset - check if form exists
+        const form = document.querySelector('form');
+        if (form) {
+          form.reset();
+        }
 
       } else {
         // Backend returned error
@@ -898,11 +942,10 @@ const GoogleAdsLanding: React.FC = () => {
       }
 
     } catch (error) {
-      // Network or other error
       console.error('Form submission error:', error);
       setSubmissionStatus({
         type: 'error',
-        message: 'Sorry, there was a connection error. Please call us directly at +44 7451 263472 for immediate assistance, or try submitting the form again.'
+        message: 'Submission failed. Please call +44 7451 263472 for immediate assistance.'
       });
     } finally {
       setIsSubmitting(false);
@@ -1007,10 +1050,16 @@ const GoogleAdsLanding: React.FC = () => {
               </HeroStats>
               
               <CTASection>
-                <PrimaryButton onClick={scrollToForm}>
+                <PrimaryButton onClick={() => {
+                  trackButtonClick('Get Free Recovery Assessment', 'hero_section', '#consultation-form');
+                  scrollToForm();
+                }}>
                   Get Free Recovery Assessment
                 </PrimaryButton>
-                <EmergencyButton href="tel:+447451263472">
+                <EmergencyButton href="tel:+447451263472" onClick={() => {
+                  trackButtonClick('Emergency Call Now', 'hero_section', 'tel:+447451263472');
+                  trackPhoneCallConversion();
+                }}>
                   🚨 Emergency: Call Now +44 7451 263472
                 </EmergencyButton>
               </CTASection>
@@ -1021,14 +1070,6 @@ const GoogleAdsLanding: React.FC = () => {
                 <span>✓ FCA Regulated Firm #836358</span>
               </TrustIndicators>
             </HeroContent>
-            
-            <HeroImage>
-              <ProfessionalImage 
-                src="/images/professional-consultation.webp" 
-                alt="Professional financial recovery consultation"
-                loading="eager"
-              />
-            </HeroImage>
           </HeroContainer>
         </HeroSection>
 

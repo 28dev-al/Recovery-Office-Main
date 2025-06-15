@@ -9,16 +9,31 @@ import { BookingProvider } from './context/BookingContext';
 import PremiumNavbar from './components/sections/premium/PremiumNavbar';
 import PremiumLayout from './components/sections/premium/PremiumLayout';
 import { PerformanceOptimizer } from './components/common/PerformanceOptimizer';
+import { trackPageView } from './utils/analytics';
 
 // Import i18n configuration (MUST be imported before any component that uses translations)
 import './i18n';
 
 /**
  * Layout wrapper that conditionally shows navigation based on route
+ * Also handles Google Analytics page view tracking for React Router
  */
 const ConditionalLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const isDashboard = location.pathname.startsWith('/dashboard');
+
+  // Track page views for Google Analytics on route changes
+  React.useEffect(() => {
+    // Get page title from document or create a meaningful title
+    const pageTitle = document.title || `Recovery Office - ${location.pathname}`;
+    
+    // Track the page view with Google Analytics
+    trackPageView({
+      page_title: pageTitle,
+      page_location: window.location.href,
+      page_path: location.pathname + location.search
+    });
+  }, [location]);
 
   if (isDashboard) {
     // Dashboard routes don't need the main site navigation

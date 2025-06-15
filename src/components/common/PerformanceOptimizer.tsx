@@ -18,21 +18,30 @@ export const PerformanceOptimizer: React.FC = () => {
       });
     };
 
-    // Preload critical fonts to eliminate render-blocking
-    const preloadFonts = () => {
-      const criticalFonts = [
-        'https://fonts.gstatic.com/s/opensans/v40/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsg-1x4iaVQUwaEQbjB_mQ.woff2'
-      ];
+    // Load critical fonts safely via Google Fonts CSS API
+    const loadFontsSafely = () => {
+      // Check if fonts are already loaded
+      if (document.querySelector('link[href*="fonts.googleapis.com/css2"]')) {
+        return;
+      }
 
-      criticalFonts.forEach(src => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'font';
-        link.type = 'font/woff2';
-        link.crossOrigin = 'anonymous';
-        link.href = src;
-        document.head.appendChild(link);
-      });
+      // Create preconnect links
+      const preconnectGoogle = document.createElement('link');
+      preconnectGoogle.rel = 'preconnect';
+      preconnectGoogle.href = 'https://fonts.googleapis.com';
+      document.head.appendChild(preconnectGoogle);
+
+      const preconnectGstatic = document.createElement('link');
+      preconnectGstatic.rel = 'preconnect';
+      preconnectGstatic.href = 'https://fonts.gstatic.com';
+      preconnectGstatic.crossOrigin = 'anonymous';
+      document.head.appendChild(preconnectGstatic);
+
+      // Load fonts via CSS API
+      const fontLink = document.createElement('link');
+      fontLink.rel = 'stylesheet';
+      fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap';
+      document.head.appendChild(fontLink);
     };
 
     // Prefetch DNS for external resources (0.1-0.2s savings)
@@ -91,7 +100,7 @@ export const PerformanceOptimizer: React.FC = () => {
     };
 
     preloadImages();
-    preloadFonts();
+    loadFontsSafely();
     prefetchDNS();
     preconnectDomains();
     
