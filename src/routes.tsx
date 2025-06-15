@@ -36,6 +36,7 @@ const DashboardPage = lazy(() => import('./pages/Dashboard/DashboardPage').then(
 const BookingsPage = lazy(() => import('./pages/Dashboard/BookingsPage').then(module => ({ default: module.BookingsPage })));
 const ClientsPage = lazy(() => import('./pages/Dashboard/ClientsPage'));
 const ServicesPage = lazy(() => import('./pages/Dashboard/ServicesPage'));
+const GoogleAdsLeads = lazy(() => import('./pages/Dashboard/GoogleAdsLeads').then(module => ({ default: module.GoogleAdsLeads })));
 const AnalyticsPage = lazy(() => import('./pages/Dashboard/AnalyticsPage'));
 
 // Google Ads Landing Pages - lazy loaded for performance
@@ -310,6 +311,18 @@ const AppRoutes: React.FC = () => {
             <ProtectedRoute>
               <Suspense fallback={<LoadingFallback message="Loading Services..." />}>
                 <ServicesPage />
+              </Suspense>
+            </ProtectedRoute>
+          </ErrorBoundary>
+        }
+      />
+      <Route
+        path="/dashboard/google-ads-leads"
+        element={
+          <ErrorBoundary>
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingFallback message="Loading Google Ads Leads..." />}>
+                <GoogleAdsLeads />
               </Suspense>
             </ProtectedRoute>
           </ErrorBoundary>

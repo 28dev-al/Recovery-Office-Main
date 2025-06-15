@@ -175,6 +175,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
     { path: '/dashboard/bookings', icon: '📅', label: 'Bookings', key: 'bookings' },
     { path: '/dashboard/clients', icon: '👥', label: 'Clients', key: 'clients' },
     { path: '/dashboard/services', icon: '🛠️', label: 'Services', key: 'services' },
+    { path: '/dashboard/google-ads-leads', icon: '🎯', label: 'Google Ads Leads', key: 'google-ads-leads' },
     { path: '/dashboard/analytics', icon: '📈', label: 'Analytics', key: 'analytics' },
   ];
 
