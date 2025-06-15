@@ -94,5 +94,12 @@
     "rimraf": "^5.0.10",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.1"
+  },
+  "overrides": {
+    "react-scripts": {
+      "typescript": "^5.8.3"
+    },
+    "@typescript-eslint/typescript-estree": "^5.57.1",
+    "fork-ts-checker-webpack-plugin": "^6.5.3"
   }
 }
