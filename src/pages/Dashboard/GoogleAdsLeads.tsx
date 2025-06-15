@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { DashboardLayout } from '../../components/dashboard/DashboardLayout';
-import { API_CONFIG } from '../../config/api';
+
+// Google Ads Leads API Configuration
+const GOOGLE_ADS_API = {
+  BASE_URL: process.env.REACT_APP_API_URL || 'https://recovery-office-backend-production.up.railway.app/api',
+  ENDPOINTS: {
+    LEADS: '/google-ads/leads',
+    STATS: '/google-ads/leads/stats'
+  }
+};
 
 // Interface for Google Ads Lead data structure
 interface GoogleAdsLead {
@@ -458,7 +466,7 @@ export const GoogleAdsLeads: React.FC = () => {
         if (value) queryParams.append(key, value);
       });
       
-      const url = `${API_CONFIG.BASE_URL}/google-ads/leads${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+      const url = `${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.LEADS}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
       console.log('[GoogleAdsLeads] Fetching from:', url);
       
       const response = await fetch(url);
@@ -581,7 +589,7 @@ export const GoogleAdsLeads: React.FC = () => {
     try {
       console.log(`[GoogleAdsLeads] Updating lead ${leadId} status to ${newStatus}`);
       
-      const response = await fetch(`${API_CONFIG.BASE_URL}/google-ads/leads/${leadId}/status`, {
+      const response = await fetch(`${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.LEADS}/${leadId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'

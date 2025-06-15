@@ -11,7 +11,9 @@ export const API_CONFIG = {
     CLIENTS: '/clients',
     AVAILABILITY: '/availability',
     HEALTH: '/health',
-    DASHBOARD: '/dashboard'
+    DASHBOARD: '/dashboard',
+    GOOGLE_ADS_LEADS: '/google-ads/leads',
+    GOOGLE_ADS_LEADS_STATS: '/google-ads/leads/stats'
   },
   TIMEOUT: 10000,
   RETRY_ATTEMPTS: 3
