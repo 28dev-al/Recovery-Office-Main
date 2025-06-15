@@ -474,6 +474,7 @@ export const GoogleAdsLeads: React.FC = () => {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          ...(localStorage.getItem('recovery-office-token') ? { 'Authorization': `Bearer ${localStorage.getItem('recovery-office-token')}` } : {})
         },
       });
       console.log('[GoogleAdsLeads] API test response status:', response.status);
@@ -518,6 +519,7 @@ export const GoogleAdsLeads: React.FC = () => {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          ...(localStorage.getItem('recovery-office-token') ? { 'Authorization': `Bearer ${localStorage.getItem('recovery-office-token')}` } : {})
         },
       });
       
@@ -667,7 +669,8 @@ export const GoogleAdsLeads: React.FC = () => {
         method: 'PATCH',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          ...(localStorage.getItem('recovery-office-token') ? { 'Authorization': `Bearer ${localStorage.getItem('recovery-office-token')}` } : {})
         },
         body: JSON.stringify({ status: newStatus })
       });
@@ -699,6 +702,7 @@ export const GoogleAdsLeads: React.FC = () => {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          ...(localStorage.getItem('recovery-office-token') ? { 'Authorization': `Bearer ${localStorage.getItem('recovery-office-token')}` } : {})
         },
       });
       

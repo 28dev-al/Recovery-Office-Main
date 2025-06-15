@@ -138,13 +138,17 @@ export const LoginPage: React.FC = () => {
         const result = await loginResponse.json();
         console.log('[Login] Backend authentication successful:', result);
         
-        // Set frontend authentication
+        // Store JWT/token if provided by backend
+        if (result.token) {
+          localStorage.setItem('recovery-office-token', result.token);
+        }
+        // Also store user data if returned
+        if (result.data && result.data.user) {
+          localStorage.setItem('recovery-office-user', JSON.stringify(result.data.user));
+        }
+
+        // Flag as authenticated for ProtectedRoute
         localStorage.setItem('recovery-office-auth', 'authenticated');
-        localStorage.setItem('recovery-office-user', JSON.stringify({
-          name: 'Alex Bianchi',
-          role: 'Senior Recovery Specialist',
-          email: 'alex.bianchi@recovery-office.com'
-        }));
         
         navigate('/dashboard');
       } else {
