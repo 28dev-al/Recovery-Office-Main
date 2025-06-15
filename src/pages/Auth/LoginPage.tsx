@@ -110,17 +110,51 @@ export const LoginPage: React.FC = () => {
     setLoading(true);
     setError('');
 
-    // Simple authentication - in production, use proper JWT/OAuth
-    if (credentials.username === 'admin' && credentials.password === 'recovery2025') {
-      localStorage.setItem('recovery-office-auth', 'authenticated');
-      localStorage.setItem('recovery-office-user', JSON.stringify({
-        name: 'Alex Bianchi',
-        role: 'Senior Recovery Specialist',
-        email: 'alex.bianchi@recovery-office.com'
-      }));
-      navigate('/dashboard');
-    } else {
-      setError('Invalid credentials. Please try again.');
+    try {
+      // First, validate credentials locally
+      if (credentials.username !== 'admin' || credentials.password !== 'recovery2025') {
+        setError('Invalid credentials. Please try again.');
+        setLoading(false);
+        return;
+      }
+
+      // Then authenticate with backend to establish session
+      console.log('[Login] Authenticating with backend...');
+      const loginResponse = await fetch('https://recovery-office-backend-production.up.railway.app/api/auth/login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: 'admin@recovery-office.com',
+          password: 'recovery2025'
+        })
+      });
+
+      console.log('[Login] Backend response status:', loginResponse.status);
+
+      if (loginResponse.ok) {
+        const result = await loginResponse.json();
+        console.log('[Login] Backend authentication successful:', result);
+        
+        // Set frontend authentication
+        localStorage.setItem('recovery-office-auth', 'authenticated');
+        localStorage.setItem('recovery-office-user', JSON.stringify({
+          name: 'Alex Bianchi',
+          role: 'Senior Recovery Specialist',
+          email: 'alex.bianchi@recovery-office.com'
+        }));
+        
+        navigate('/dashboard');
+      } else {
+        const errorResult = await loginResponse.json();
+        console.error('[Login] Backend authentication failed:', errorResult);
+        setError('Authentication failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('[Login] Authentication error:', error);
+      setError('Login failed. Please try again.');
     }
 
     setLoading(false);
