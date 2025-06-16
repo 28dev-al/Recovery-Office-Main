@@ -469,12 +469,18 @@ export const GoogleAdsLeads: React.FC = () => {
       const testUrl = `${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.LEADS}`;
       console.log('[GoogleAdsLeads] Full test URL:', testUrl);
       
+      // Get token once to avoid inconsistency between multiple calls
+      const token = localStorage.getItem('recovery-office-token');
+      console.log('[GoogleAdsLeads] Using auth token:', token ? `${token.substring(0, 15)}...` : 'none');
+      
       const response = await fetch(testUrl, {
         method: 'GET',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          ...(localStorage.getItem('recovery-office-token') ? { 'Authorization': `Bearer ${localStorage.getItem('recovery-office-token')}` } : {})
+          'X-Client-Version': '1.0.0',
+          'X-Request-Source': 'dashboard',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
       });
       console.log('[GoogleAdsLeads] API test response status:', response.status);
@@ -514,12 +520,17 @@ export const GoogleAdsLeads: React.FC = () => {
       const url = `${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.LEADS}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
       console.log('[GoogleAdsLeads] Fetching leads from:', url);
       
+      // Get token once to avoid inconsistency between multiple calls
+      const token = localStorage.getItem('recovery-office-token');
+      
       const response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          ...(localStorage.getItem('recovery-office-token') ? { 'Authorization': `Bearer ${localStorage.getItem('recovery-office-token')}` } : {})
+          'X-Client-Version': '1.0.0',
+          'X-Request-Source': 'dashboard',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
       });
       
@@ -665,12 +676,17 @@ export const GoogleAdsLeads: React.FC = () => {
     try {
       console.log(`[GoogleAdsLeads] Updating lead ${leadId} status to ${newStatus}`);
       
+      // Get token once to avoid inconsistency between multiple calls
+      const token = localStorage.getItem('recovery-office-token');
+      
       const response = await fetch(`${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.UPDATE_LEAD(leadId)}`, {
         method: 'PATCH',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          ...(localStorage.getItem('recovery-office-token') ? { 'Authorization': `Bearer ${localStorage.getItem('recovery-office-token')}` } : {})
+          'X-Client-Version': '1.0.0',
+          'X-Request-Source': 'dashboard',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
         body: JSON.stringify({ status: newStatus })
       });
@@ -694,6 +710,9 @@ export const GoogleAdsLeads: React.FC = () => {
     try {
       console.log('[GoogleAdsLeads] Fetching stats...');
       
+      // Get token once to avoid inconsistency between multiple calls
+      const token = localStorage.getItem('recovery-office-token');
+      
       const statsUrl = `${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.STATS}`;
       console.log('[GoogleAdsLeads] Stats URL:', statsUrl);
       
@@ -702,7 +721,9 @@ export const GoogleAdsLeads: React.FC = () => {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          ...(localStorage.getItem('recovery-office-token') ? { 'Authorization': `Bearer ${localStorage.getItem('recovery-office-token')}` } : {})
+          'X-Client-Version': '1.0.0',
+          'X-Request-Source': 'dashboard',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
       });
       
