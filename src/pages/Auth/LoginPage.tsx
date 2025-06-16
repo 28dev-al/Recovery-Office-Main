@@ -111,20 +111,14 @@ export const LoginPage: React.FC = () => {
     setError('');
 
     try {
-      // First, validate credentials locally
-      if (credentials.username !== 'admin' || credentials.password !== 'recovery2025') {
-        setError('Invalid credentials. Please try again.');
-        setLoading(false);
-        return;
-      }
-
-      // Then authenticate with backend to establish session
+      // Always authenticate with backend to establish session
       console.log('[Login] Authenticating with backend...');
       const loginResponse = await fetch('https://recovery-office-backend-production.up.railway.app/api/auth/login', {
         method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          'X-API-Key': process.env.REACT_APP_ADMIN_API_KEY || 'recovery-office-admin-key-2024',
         },
         body: JSON.stringify({
           email: 'admin@recovery-office.com',
