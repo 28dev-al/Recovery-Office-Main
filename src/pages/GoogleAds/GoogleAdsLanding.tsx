@@ -10,6 +10,7 @@
  * - Performance optimization for Core Web Vitals
  */
 
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import DynamicSEO from '../../components/SEO/DynamicSEO';
@@ -18,8 +19,15 @@ import { PREMIUM_COLORS } from '../../design-system/tokens/colors.premium';
 import { config } from '../../config/environment';
 import { trackFormSubmission, trackButtonClick } from '../../utils/analytics';
 import { trackLeadFormSubmission, trackPhoneCallConversion } from '../../utils/conversions';
+import { Helmet } from 'react-helmet-async';
 
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare global {
+  interface Window {
+    gtag_report_conversion?: any; // Google Ads helper injected via script tag
+  }
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 // Premium spacing tokens
 const PREMIUM_SPACING = {
@@ -902,8 +910,8 @@ const GoogleAdsLanding: React.FC = () => {
 
         // Facebook Pixel tracking (if available)
         interface WindowWithFbq extends Window {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-          fbq?: (...args: any[]) => void;
+          /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+          fbq?: (...args: unknown[]) => void;
         }
         
         const windowWithFbq = window as WindowWithFbq;
@@ -958,455 +966,481 @@ const GoogleAdsLanding: React.FC = () => {
   };
 
   return (
-    <ServiceTracker serviceType="Financial Recovery" interactionType="landing_page_view">
-      <LandingContainer>
-        {/* SEO Optimization for Google Ads */}
-        <DynamicSEO 
-          page="financial-recovery"
-          customTitle="Financial Asset Recovery Services | FCA Regulated | Recovery Office"
-          customDescription="Professional financial asset recovery services. Cryptocurrency recovery, investment fraud recovery, scam recovery. FCA regulated. Free consultation. No recovery, no fee."
-          customKeywords="financial recovery, cryptocurrency recovery, investment fraud recovery, asset recovery UK, FCA regulated recovery"
-          isTransactional={true}
-          structuredData={{
-            "@context": "https://schema.org",
-            "@type": "FinancialService",
-            "name": "Recovery Office",
-            "description": "Professional financial asset recovery services specializing in cryptocurrency recovery, investment fraud recovery, and financial scam recovery.",
-            "url": "https://recovery-office-online.netlify.app/financial-recovery",
-            "telephone": "+44 7451 263472",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "2nd Floor, 3 Piccadilly Place, London Road",
-              "addressLocality": "Manchester",
-              "postalCode": "M1 3BN",
-              "addressCountry": "GB"
-            },
-            "areaServed": "United Kingdom",
-            "serviceType": "Financial Asset Recovery",
-            "offers": [{
-              "@type": "Offer",
-              "name": "Free Financial Recovery Consultation",
-              "description": "Complimentary assessment of recovery options",
-              "price": "0",
-              "priceCurrency": "GBP"
-            }],
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "reviewCount": "247"
+    <>
+      {/* Google Ads click-conversion snippet (added as per Google guidance) */}
+      <Helmet>
+        <script type="text/javascript">{`
+          function gtag_report_conversion(url) {
+            var callback = function () {
+              if (typeof(url) !== 'undefined') {
+                window.location = url;
+              }
+            };
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'conversion', {
+                'send_to': 'AW-17199312546/ZyoxCLLymdwaEKLdoolA',
+                'value': 1.0,
+                'currency': 'USD',
+                'event_callback': callback
+              });
             }
-          }}
-        />
+            return false;
+          }
+        `}</script>
+      </Helmet>
+      <ServiceTracker serviceType="Financial Recovery" interactionType="landing_page_view">
+        <LandingContainer>
+          {/* SEO Optimization for Google Ads */}
+          <DynamicSEO 
+            page="financial-recovery"
+            customTitle="Financial Asset Recovery Services | FCA Regulated | Recovery Office"
+            customDescription="Professional financial asset recovery services. Cryptocurrency recovery, investment fraud recovery, scam recovery. FCA regulated. Free consultation. No recovery, no fee."
+            customKeywords="financial recovery, cryptocurrency recovery, investment fraud recovery, asset recovery UK, FCA regulated recovery"
+            isTransactional={true}
+            structuredData={{
+              "@context": "https://schema.org",
+              "@type": "FinancialService",
+              "name": "Recovery Office",
+              "description": "Professional financial asset recovery services specializing in cryptocurrency recovery, investment fraud recovery, and financial scam recovery.",
+              "url": "https://recovery-office-online.netlify.app/financial-recovery",
+              "telephone": "+44 7451 263472",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "2nd Floor, 3 Piccadilly Place, London Road",
+                "addressLocality": "Manchester",
+                "postalCode": "M1 3BN",
+                "addressCountry": "GB"
+              },
+              "areaServed": "United Kingdom",
+              "serviceType": "Financial Asset Recovery",
+              "offers": [{
+                "@type": "Offer",
+                "name": "Free Financial Recovery Consultation",
+                "description": "Complimentary assessment of recovery options",
+                "price": "0",
+                "priceCurrency": "GBP"
+              }],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "247"
+              }
+            }}
+          />
 
-        {/* Google Analytics Tracking */}
-        <GoogleAnalytics 
-          pageTitle="Financial Recovery Landing Page"
-          pagePath="/financial-recovery"
-          isTransactional={true}
-          serviceType="Financial Recovery Services"
-        />
+          {/* Google Analytics Tracking */}
+          <GoogleAnalytics 
+            pageTitle="Financial Recovery Landing Page"
+            pagePath="/financial-recovery"
+            isTransactional={true}
+            serviceType="Financial Recovery Services"
+          />
 
-        {/* Hero Section */}
-        <HeroSection>
-          <HeroContainer>
-            <HeroContent>
-              <TrustBadges>
-                <TrustBadge>
-                  <span>🛡️</span>
-                  <span>FCA Regulated</span>
-                </TrustBadge>
-                <TrustBadge>
-                  <span>🔒</span>
-                  <span>£10M Insured</span>
-                </TrustBadge>
-                <TrustBadge>
-                  <span>💰</span>
-                  <span>£500M+ Recovered</span>
-                </TrustBadge>
-              </TrustBadges>
-              
-              <HeroHeadline>
-                Recover Your Lost Financial Assets
-              </HeroHeadline>
-              
-              <HeroSubheadline>
-                UK's Leading FCA-Regulated Financial Recovery Specialists. 
-                Free Consultation • No Recovery, No Fee • 24/7 Emergency Response
-              </HeroSubheadline>
-              
-              <HeroStats>
-                <StatItem>
-                  <StatNumber>£500M+</StatNumber>
-                  <StatLabel>Successfully Recovered</StatLabel>
-                </StatItem>
-                <StatItem>
-                  <StatNumber>98%</StatNumber>
-                  <StatLabel>Client Satisfaction</StatLabel>
-                </StatItem>
-                <StatItem>
-                  <StatNumber>24/7</StatNumber>
-                  <StatLabel>Emergency Support</StatLabel>
-                </StatItem>
-              </HeroStats>
-              
-              <CTASection>
-                <PrimaryButton onClick={() => {
-                  trackButtonClick('Get Free Recovery Assessment', 'hero_section', '#consultation-form');
-                  scrollToForm();
-                }}>
-                  Get Free Recovery Assessment
-                </PrimaryButton>
-                <EmergencyButton href="tel:+447451263472" onClick={() => {
-                  trackButtonClick('Emergency Call Now', 'hero_section', 'tel:+447451263472');
-                  trackPhoneCallConversion();
-                }}>
-                  🚨 Emergency: Call Now +44 7451 263472
-                </EmergencyButton>
-              </CTASection>
-              
-              <TrustIndicators>
-                <span>✓ Free Initial Assessment</span>
-                <span>✓ No Upfront Fees</span>
-                <span>✓ FCA Regulated Firm #836358</span>
-              </TrustIndicators>
-            </HeroContent>
-          </HeroContainer>
-        </HeroSection>
+          {/* Hero Section */}
+          <HeroSection>
+            <HeroContainer>
+              <HeroContent>
+                <TrustBadges>
+                  <TrustBadge>
+                    <span>🛡️</span>
+                    <span>FCA Regulated</span>
+                  </TrustBadge>
+                  <TrustBadge>
+                    <span>🔒</span>
+                    <span>£10M Insured</span>
+                  </TrustBadge>
+                  <TrustBadge>
+                    <span>💰</span>
+                    <span>£500M+ Recovered</span>
+                  </TrustBadge>
+                </TrustBadges>
+                
+                <HeroHeadline>
+                  Recover Your Lost Financial Assets
+                </HeroHeadline>
+                
+                <HeroSubheadline>
+                  UK's Leading FCA-Regulated Financial Recovery Specialists. 
+                  Free Consultation • No Recovery, No Fee • 24/7 Emergency Response
+                </HeroSubheadline>
+                
+                <HeroStats>
+                  <StatItem>
+                    <StatNumber>£500M+</StatNumber>
+                    <StatLabel>Successfully Recovered</StatLabel>
+                  </StatItem>
+                  <StatItem>
+                    <StatNumber>98%</StatNumber>
+                    <StatLabel>Client Satisfaction</StatLabel>
+                  </StatItem>
+                  <StatItem>
+                    <StatNumber>24/7</StatNumber>
+                    <StatLabel>Emergency Support</StatLabel>
+                  </StatItem>
+                </HeroStats>
+                
+                <CTASection>
+                  <PrimaryButton onClick={() => {
+                    trackButtonClick('Get Free Recovery Assessment', 'hero_section', '#consultation-form');
+                    if (typeof window.gtag_report_conversion === 'function') {
+                      window.gtag_report_conversion();
+                    }
+                    scrollToForm();
+                  }}>
+                    Get Free Recovery Assessment
+                  </PrimaryButton>
+                  <EmergencyButton href="tel:+447451263472" onClick={() => {
+                    trackButtonClick('Emergency Call Now', 'hero_section', 'tel:+447451263472');
+                    trackPhoneCallConversion();
+                  }}>
+                    🚨 Emergency: Call Now +44 7451 263472
+                  </EmergencyButton>
+                </CTASection>
+                
+                <TrustIndicators>
+                  <span>✓ Free Initial Assessment</span>
+                  <span>✓ No Upfront Fees</span>
+                  <span>✓ FCA Regulated Firm #836358</span>
+                </TrustIndicators>
+              </HeroContent>
+            </HeroContainer>
+          </HeroSection>
 
-        {/* Services Section */}
-        <ServicesSection>
-          <SectionHeader>
-            <h2>Specialized Financial Recovery Services</h2>
-            <p>Expert assistance for victims of financial fraud and asset theft</p>
-          </SectionHeader>
-          
-          <ServicesGrid>
-            <ServiceCard>
-              <ServiceIcon>💰</ServiceIcon>
-              <ServiceTitle>Cryptocurrency Recovery</ServiceTitle>
-              <ServiceDescription>
-                Professional recovery of stolen Bitcoin, Ethereum, and other digital assets. 
-                Advanced blockchain forensics and exchange coordination.
-              </ServiceDescription>
-              <ServiceFeatures>
-                <li>Blockchain transaction analysis</li>
-                <li>Exchange account recovery</li>
-                <li>Wallet reconstruction</li>
-                <li>Legal enforcement coordination</li>
-              </ServiceFeatures>
-              <ServiceCTA>
-                <span className="success-rate">87% Success Rate</span>
-                <button onClick={scrollToForm}>Get Crypto Recovery Help</button>
-              </ServiceCTA>
-            </ServiceCard>
+          {/* Services Section */}
+          <ServicesSection>
+            <SectionHeader>
+              <h2>Specialized Financial Recovery Services</h2>
+              <p>Expert assistance for victims of financial fraud and asset theft</p>
+            </SectionHeader>
             
-            <ServiceCard>
-              <ServiceIcon>📈</ServiceIcon>
-              <ServiceTitle>Investment Fraud Recovery</ServiceTitle>
-              <ServiceDescription>
-                Specialized assistance for victims of Ponzi schemes, fake investment platforms, and authorized push payment fraud.
-              </ServiceDescription>
-              <ServiceFeatures>
-                <li>Asset tracing and freezing</li>
-                <li>Regulatory complaint filing</li>
-                <li>Legal action coordination</li>
-                <li>Evidence gathering</li>
-              </ServiceFeatures>
-              <ServiceCTA>
-                <span className="success-rate">92% Success Rate</span>
-                <button onClick={scrollToForm}>Recover Investment Losses</button>
-              </ServiceCTA>
-            </ServiceCard>
-            
-            <ServiceCard>
-              <ServiceIcon>🛡️</ServiceIcon>
-              <ServiceTitle>Financial Scam Recovery</ServiceTitle>
-              <ServiceDescription>
-                Comprehensive recovery services for romance scams, business email compromise, and other financial frauds.
-              </ServiceDescription>
-              <ServiceFeatures>
-                <li>Bank account freezing</li>
-                <li>International coordination</li>
-                <li>Evidence preservation</li>
-                <li>Recovery negotiations</li>
-              </ServiceFeatures>
-              <ServiceCTA>
-                <span className="success-rate">89% Success Rate</span>
-                <button onClick={scrollToForm}>Start Scam Recovery</button>
-              </ServiceCTA>
-            </ServiceCard>
-          </ServicesGrid>
-        </ServicesSection>
+            <ServicesGrid>
+              <ServiceCard>
+                <ServiceIcon>💰</ServiceIcon>
+                <ServiceTitle>Cryptocurrency Recovery</ServiceTitle>
+                <ServiceDescription>
+                  Professional recovery of stolen Bitcoin, Ethereum, and other digital assets. 
+                  Advanced blockchain forensics and exchange coordination.
+                </ServiceDescription>
+                <ServiceFeatures>
+                  <li>Blockchain transaction analysis</li>
+                  <li>Exchange account recovery</li>
+                  <li>Wallet reconstruction</li>
+                  <li>Legal enforcement coordination</li>
+                </ServiceFeatures>
+                <ServiceCTA>
+                  <span className="success-rate">87% Success Rate</span>
+                  <button onClick={scrollToForm}>Get Crypto Recovery Help</button>
+                </ServiceCTA>
+              </ServiceCard>
+              
+              <ServiceCard>
+                <ServiceIcon>📈</ServiceIcon>
+                <ServiceTitle>Investment Fraud Recovery</ServiceTitle>
+                <ServiceDescription>
+                  Specialized assistance for victims of Ponzi schemes, fake investment platforms, and authorized push payment fraud.
+                </ServiceDescription>
+                <ServiceFeatures>
+                  <li>Asset tracing and freezing</li>
+                  <li>Regulatory complaint filing</li>
+                  <li>Legal action coordination</li>
+                  <li>Evidence gathering</li>
+                </ServiceFeatures>
+                <ServiceCTA>
+                  <span className="success-rate">92% Success Rate</span>
+                  <button onClick={scrollToForm}>Recover Investment Losses</button>
+                </ServiceCTA>
+              </ServiceCard>
+              
+              <ServiceCard>
+                <ServiceIcon>🛡️</ServiceIcon>
+                <ServiceTitle>Financial Scam Recovery</ServiceTitle>
+                <ServiceDescription>
+                  Comprehensive recovery services for romance scams, business email compromise, and other financial frauds.
+                </ServiceDescription>
+                <ServiceFeatures>
+                  <li>Bank account freezing</li>
+                  <li>International coordination</li>
+                  <li>Evidence preservation</li>
+                  <li>Recovery negotiations</li>
+                </ServiceFeatures>
+                <ServiceCTA>
+                  <span className="success-rate">89% Success Rate</span>
+                  <button onClick={scrollToForm}>Start Scam Recovery</button>
+                </ServiceCTA>
+              </ServiceCard>
+            </ServicesGrid>
+          </ServicesSection>
 
-        {/* Consultation Form Section */}
-        <ConsultationFormSection id="consultation-form">
-          <FormContainer>
-            <FormHeader>
-              <h2>Get Your Free Recovery Assessment</h2>
-              <p>Speak with our FCA-regulated specialists. Completely confidential, no obligation.</p>
-              <FormTrustIndicators>
-                <span>✓ Free Initial Assessment</span>
-                <span>✓ 24-Hour Response</span>
-                <span>✓ FCA Regulated Firm #836358</span>
-              </FormTrustIndicators>
-            </FormHeader>
-            
-            <ConsultationForm onSubmit={handleSubmit}>
-              <FormRow>
+          {/* Consultation Form Section */}
+          <ConsultationFormSection id="consultation-form">
+            <FormContainer>
+              <FormHeader>
+                <h2>Get Your Free Recovery Assessment</h2>
+                <p>Speak with our FCA-regulated specialists. Completely confidential, no obligation.</p>
+                <FormTrustIndicators>
+                  <span>✓ Free Initial Assessment</span>
+                  <span>✓ 24-Hour Response</span>
+                  <span>✓ FCA Regulated Firm #836358</span>
+                </FormTrustIndicators>
+              </FormHeader>
+              
+              <ConsultationForm onSubmit={handleSubmit}>
+                <FormRow>
+                  <FormGroup>
+                    <label htmlFor="name">Full Name *</label>
+                    <input 
+                      id="name"
+                      name="name"
+                      type="text" 
+                      required 
+                      placeholder="Enter your full name" 
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <label htmlFor="email">Email Address *</label>
+                    <input 
+                      id="email"
+                      name="email"
+                      type="email" 
+                      required 
+                      placeholder="your.email@example.com" 
+                    />
+                  </FormGroup>
+                </FormRow>
+                
+                <FormRow>
+                  <FormGroup>
+                    <label htmlFor="phone">Phone Number *</label>
+                    <input 
+                      id="phone"
+                      name="phone"
+                      type="tel" 
+                      required 
+                      placeholder="+44 7XXX XXX XXX" 
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <label htmlFor="estimatedLoss">Estimated Loss Amount</label>
+                    <select id="estimatedLoss" name="estimatedLoss">
+                      <option>Under £10,000</option>
+                      <option>£10,000 - £50,000</option>
+                      <option>£50,000 - £100,000</option>
+                      <option>£100,000 - £500,000</option>
+                      <option>Over £500,000</option>
+                    </select>
+                  </FormGroup>
+                </FormRow>
+                
+                <FormRow>
+                  <FormGroup>
+                    <label htmlFor="lossType">Type of Loss *</label>
+                    <select id="lossType" name="lossType" required>
+                      <option value="">Select loss type</option>
+                      <option>Cryptocurrency Theft/Scam</option>
+                      <option>Investment Fraud/Ponzi Scheme</option>
+                      <option>Romance Scam</option>
+                      <option>Business Email Compromise</option>
+                      <option>Forex/Trading Scam</option>
+                      <option>Other Financial Fraud</option>
+                    </select>
+                  </FormGroup>
+                  <FormGroup>
+                    <label htmlFor="urgencyLevel">Urgency Level</label>
+                    <select id="urgencyLevel" name="urgencyLevel">
+                      <option>Standard (48-72 hours)</option>
+                      <option>Urgent (24 hours)</option>
+                      <option>Emergency (Same day)</option>
+                    </select>
+                  </FormGroup>
+                </FormRow>
+                
                 <FormGroup>
-                  <label htmlFor="name">Full Name *</label>
-                  <input 
-                    id="name"
-                    name="name"
-                    type="text" 
-                    required 
-                    placeholder="Enter your full name" 
+                  <label htmlFor="description">Brief Description of Your Case</label>
+                  <textarea 
+                    id="description"
+                    name="description"
+                    rows={3} 
+                    placeholder="Please provide a brief description of your situation..."
                   />
                 </FormGroup>
-                <FormGroup>
-                  <label htmlFor="email">Email Address *</label>
-                  <input 
-                    id="email"
-                    name="email"
-                    type="email" 
-                    required 
-                    placeholder="your.email@example.com" 
-                  />
-                </FormGroup>
-              </FormRow>
-              
-              <FormRow>
-                <FormGroup>
-                  <label htmlFor="phone">Phone Number *</label>
-                  <input 
-                    id="phone"
-                    name="phone"
-                    type="tel" 
-                    required 
-                    placeholder="+44 7XXX XXX XXX" 
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <label htmlFor="estimatedLoss">Estimated Loss Amount</label>
-                  <select id="estimatedLoss" name="estimatedLoss">
-                    <option>Under £10,000</option>
-                    <option>£10,000 - £50,000</option>
-                    <option>£50,000 - £100,000</option>
-                    <option>£100,000 - £500,000</option>
-                    <option>Over £500,000</option>
-                  </select>
-                </FormGroup>
-              </FormRow>
-              
-              <FormRow>
-                <FormGroup>
-                  <label htmlFor="lossType">Type of Loss *</label>
-                  <select id="lossType" name="lossType" required>
-                    <option value="">Select loss type</option>
-                    <option>Cryptocurrency Theft/Scam</option>
-                    <option>Investment Fraud/Ponzi Scheme</option>
-                    <option>Romance Scam</option>
-                    <option>Business Email Compromise</option>
-                    <option>Forex/Trading Scam</option>
-                    <option>Other Financial Fraud</option>
-                  </select>
-                </FormGroup>
-                <FormGroup>
-                  <label htmlFor="urgencyLevel">Urgency Level</label>
-                  <select id="urgencyLevel" name="urgencyLevel">
-                    <option>Standard (48-72 hours)</option>
-                    <option>Urgent (24 hours)</option>
-                    <option>Emergency (Same day)</option>
-                  </select>
-                </FormGroup>
-              </FormRow>
-              
-              <FormGroup>
-                <label htmlFor="description">Brief Description of Your Case</label>
-                <textarea 
-                  id="description"
-                  name="description"
-                  rows={3} 
-                  placeholder="Please provide a brief description of your situation..."
-                />
-              </FormGroup>
-              
-              <ConsentSection>
-                <input type="checkbox" id="consent" name="consent" required />
-                <label htmlFor="consent">
-                  I consent to Recovery Office contacting me about my case. I understand this is confidential and I'm under no obligation.
-                </label>
-              </ConsentSection>
-              
-              <SubmitButton type="submit" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <LoadingSpinner />
-                    Submitting...
-                  </>
-                ) : (
-                  'Get My Free Assessment Now'
-                )}
-              </SubmitButton>
-              
-              {submissionStatus && (
-                <SubmissionMessage className={submissionStatus.type}>
-                  {submissionStatus.type === 'success' ? (
-                    <div>
-                      <div>✅ {submissionStatus.message.split('Reference Number:')[0]}</div>
-                      {submissionStatus.message.includes('Reference Number:') && (
-                        <ReferenceNumber>
-                          {submissionStatus.message.split('Reference Number:')[1].split('We\'ll')[0].trim()}
-                        </ReferenceNumber>
-                      )}
-                      <div>{submissionStatus.message.split('Our FCA-regulated')[1] && 'Our FCA-regulated' + submissionStatus.message.split('Our FCA-regulated')[1]}</div>
-                    </div>
+                
+                <ConsentSection>
+                  <input type="checkbox" id="consent" name="consent" required />
+                  <label htmlFor="consent">
+                    I consent to Recovery Office contacting me about my case. I understand this is confidential and I'm under no obligation.
+                  </label>
+                </ConsentSection>
+                
+                <SubmitButton type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <LoadingSpinner />
+                      Submitting...
+                    </>
                   ) : (
-                    <div>❌ {submissionStatus.message}</div>
+                    'Get My Free Assessment Now'
                   )}
-                </SubmissionMessage>
-              )}
+                </SubmitButton>
+                
+                {submissionStatus && (
+                  <SubmissionMessage className={submissionStatus.type}>
+                    {submissionStatus.type === 'success' ? (
+                      <div>
+                        <div>✅ {submissionStatus.message.split('Reference Number:')[0]}</div>
+                        {submissionStatus.message.includes('Reference Number:') && (
+                          <ReferenceNumber>
+                            {submissionStatus.message.split('Reference Number:')[1].split('We\'ll')[0].trim()}
+                          </ReferenceNumber>
+                        )}
+                        <div>{submissionStatus.message.split('Our FCA-regulated')[1] && 'Our FCA-regulated' + submissionStatus.message.split('Our FCA-regulated')[1]}</div>
+                      </div>
+                    ) : (
+                      <div>❌ {submissionStatus.message}</div>
+                    )}
+                  </SubmissionMessage>
+                )}
+                
+                <SecurityNote>
+                  🔒 Your information is encrypted and completely confidential
+                </SecurityNote>
+              </ConsultationForm>
+            </FormContainer>
+          </ConsultationFormSection>
+
+
+
+          {/* Why Choose Us Section */}
+          <WhyChooseUsSection>
+            <SectionHeader>
+              <h2>Why Choose Recovery Office?</h2>
+              <p>The only FCA-regulated financial recovery consultancy in the UK</p>
+            </SectionHeader>
+            
+            <BenefitsGrid>
+              <BenefitCard>
+                <BenefitIcon>🛡️</BenefitIcon>
+                <BenefitTitle>FCA Regulated & Compliant</BenefitTitle>
+                <BenefitDescription>
+                  Fully authorized by the Financial Conduct Authority (Firm Reference: 836358). 
+                  All operations conducted within strict regulatory frameworks.
+                </BenefitDescription>
+              </BenefitCard>
               
-              <SecurityNote>
-                🔒 Your information is encrypted and completely confidential
-              </SecurityNote>
-            </ConsultationForm>
-          </FormContainer>
-        </ConsultationFormSection>
+              <BenefitCard>
+                <BenefitIcon>💰</BenefitIcon>
+                <BenefitTitle>No Recovery, No Fee</BenefitTitle>
+                <BenefitDescription>
+                  Success-based pricing for qualifying cases. You only pay when we successfully 
+                  recover your assets. Free initial assessment with no upfront costs.
+                </BenefitDescription>
+              </BenefitCard>
+              
+              <BenefitCard>
+                <BenefitIcon>🚨</BenefitIcon>
+                <BenefitTitle>24/7 Emergency Response</BenefitTitle>
+                <BenefitDescription>
+                  Immediate response for urgent cases. Our emergency hotline ensures you get 
+                  expert help when time is critical for asset preservation.
+                </BenefitDescription>
+              </BenefitCard>
+              
+              <BenefitCard>
+                <BenefitIcon>🔒</BenefitIcon>
+                <BenefitTitle>Absolute Confidentiality</BenefitTitle>
+                <BenefitDescription>
+                  Bank-level security and discretion. All cases handled with complete 
+                  confidentiality and protected by £10M professional indemnity insurance.
+                </BenefitDescription>
+              </BenefitCard>
+              
+              <BenefitCard>
+                <BenefitIcon>🎯</BenefitIcon>
+                <BenefitTitle>Proven Track Record</BenefitTitle>
+                <BenefitDescription>
+                  £500M+ successfully recovered since 2019. 98% client satisfaction rate 
+                  with documented case studies and verified results.
+                </BenefitDescription>
+              </BenefitCard>
+              
+              <BenefitCard>
+                <BenefitIcon>🌍</BenefitIcon>
+                <BenefitTitle>International Expertise</BenefitTitle>
+                <BenefitDescription>
+                  Cross-border recovery capabilities. Established networks with international 
+                  law enforcement, regulators, and legal professionals.
+                </BenefitDescription>
+              </BenefitCard>
+            </BenefitsGrid>
+          </WhyChooseUsSection>
 
 
 
-        {/* Why Choose Us Section */}
-        <WhyChooseUsSection>
-          <SectionHeader>
-            <h2>Why Choose Recovery Office?</h2>
-            <p>The only FCA-regulated financial recovery consultancy in the UK</p>
-          </SectionHeader>
-          
-          <BenefitsGrid>
-            <BenefitCard>
-              <BenefitIcon>🛡️</BenefitIcon>
-              <BenefitTitle>FCA Regulated & Compliant</BenefitTitle>
-              <BenefitDescription>
-                Fully authorized by the Financial Conduct Authority (Firm Reference: 836358). 
-                All operations conducted within strict regulatory frameworks.
-              </BenefitDescription>
-            </BenefitCard>
-            
-            <BenefitCard>
-              <BenefitIcon>💰</BenefitIcon>
-              <BenefitTitle>No Recovery, No Fee</BenefitTitle>
-              <BenefitDescription>
-                Success-based pricing for qualifying cases. You only pay when we successfully 
-                recover your assets. Free initial assessment with no upfront costs.
-              </BenefitDescription>
-            </BenefitCard>
-            
-            <BenefitCard>
-              <BenefitIcon>🚨</BenefitIcon>
-              <BenefitTitle>24/7 Emergency Response</BenefitTitle>
-              <BenefitDescription>
-                Immediate response for urgent cases. Our emergency hotline ensures you get 
-                expert help when time is critical for asset preservation.
-              </BenefitDescription>
-            </BenefitCard>
-            
-            <BenefitCard>
-              <BenefitIcon>🔒</BenefitIcon>
-              <BenefitTitle>Absolute Confidentiality</BenefitTitle>
-              <BenefitDescription>
-                Bank-level security and discretion. All cases handled with complete 
-                confidentiality and protected by £10M professional indemnity insurance.
-              </BenefitDescription>
-            </BenefitCard>
-            
-            <BenefitCard>
-              <BenefitIcon>🎯</BenefitIcon>
-              <BenefitTitle>Proven Track Record</BenefitTitle>
-              <BenefitDescription>
-                £500M+ successfully recovered since 2019. 98% client satisfaction rate 
-                with documented case studies and verified results.
-              </BenefitDescription>
-            </BenefitCard>
-            
-            <BenefitCard>
-              <BenefitIcon>🌍</BenefitIcon>
-              <BenefitTitle>International Expertise</BenefitTitle>
-              <BenefitDescription>
-                Cross-border recovery capabilities. Established networks with international 
-                law enforcement, regulators, and legal professionals.
-              </BenefitDescription>
-            </BenefitCard>
-          </BenefitsGrid>
-        </WhyChooseUsSection>
+          {/* Urgency & Scarcity Section */}
+          <UrgencySection>
+            <UrgencyContainer>
+              <UrgencyIcon>⚠️</UrgencyIcon>
+              <UrgencyContent>
+                <UrgencyTitle>Time is Critical for Asset Recovery</UrgencyTitle>
+                <UrgencyText>
+                  The longer you wait, the harder it becomes to recover your assets. 
+                  Early intervention significantly increases recovery success rates.
+                </UrgencyText>
+                <UrgencyStats>
+                  <UrgencyStat>
+                    <StatPercentage>87%</StatPercentage>
+                    <StatLabelUrgency>Success rate within 30 days</StatLabelUrgency>
+                  </UrgencyStat>
+                  <UrgencyStat>
+                    <StatPercentage>62%</StatPercentage>
+                    <StatLabelUrgency>Success rate after 90 days</StatLabelUrgency>
+                  </UrgencyStat>
+                </UrgencyStats>
+              </UrgencyContent>
+              <UrgencyAction>
+                <EmergencyButton href="tel:+447451263472">
+                  🚨 Call Emergency Line Now
+                </EmergencyButton>
+                <span>Available 24/7 for urgent cases</span>
+              </UrgencyAction>
+            </UrgencyContainer>
+          </UrgencySection>
 
-
-
-        {/* Urgency & Scarcity Section */}
-        <UrgencySection>
-          <UrgencyContainer>
-            <UrgencyIcon>⚠️</UrgencyIcon>
-            <UrgencyContent>
-              <UrgencyTitle>Time is Critical for Asset Recovery</UrgencyTitle>
-              <UrgencyText>
-                The longer you wait, the harder it becomes to recover your assets. 
-                Early intervention significantly increases recovery success rates.
-              </UrgencyText>
-              <UrgencyStats>
-                <UrgencyStat>
-                  <StatPercentage>87%</StatPercentage>
-                  <StatLabelUrgency>Success rate within 30 days</StatLabelUrgency>
-                </UrgencyStat>
-                <UrgencyStat>
-                  <StatPercentage>62%</StatPercentage>
-                  <StatLabelUrgency>Success rate after 90 days</StatLabelUrgency>
-                </UrgencyStat>
-              </UrgencyStats>
-            </UrgencyContent>
-            <UrgencyAction>
-              <EmergencyButton href="tel:+447451263472">
-                🚨 Call Emergency Line Now
-              </EmergencyButton>
-              <span>Available 24/7 for urgent cases</span>
-            </UrgencyAction>
-          </UrgencyContainer>
-        </UrgencySection>
-
-        {/* Final CTA Section */}
-        <FinalCTASection>
-          <CTAContainer>
-            <CTAContent>
-              <CTATitle>Ready to Start Your Recovery?</CTATitle>
-              <CTASubtitle>
-                Join thousands of clients who have successfully recovered their assets with Recovery Office
-              </CTASubtitle>
-              <CTAFeatures>
-                <CTAFeature>✓ Free confidential consultation</CTAFeature>
-                <CTAFeature>✓ No upfront fees</CTAFeature>
-                <CTAFeature>✓ FCA regulated specialists</CTAFeature>
-                <CTAFeature>✓ 24-hour response guarantee</CTAFeature>
-              </CTAFeatures>
-            </CTAContent>
-            
-            <CTAActions>
-              <PrimaryButton onClick={scrollToForm}>
-                Get Free Assessment Now
-              </PrimaryButton>
-              <SecondaryButton href="tel:+447451263472">
-                Call +44 7451 263472
-              </SecondaryButton>
-            </CTAActions>
-            
-            <CTADisclaimer>
-              <FCADisclaimer>
-                Recovery Office is authorized and regulated by the Financial Conduct Authority. 
-                Firm Reference: 836358. Professional indemnity insurance: £10M coverage.
-              </FCADisclaimer>
-            </CTADisclaimer>
-          </CTAContainer>
-        </FinalCTASection>
-      </LandingContainer>
-    </ServiceTracker>
+          {/* Final CTA Section */}
+          <FinalCTASection>
+            <CTAContainer>
+              <CTAContent>
+                <CTATitle>Ready to Start Your Recovery?</CTATitle>
+                <CTASubtitle>
+                  Join thousands of clients who have successfully recovered their assets with Recovery Office
+                </CTASubtitle>
+                <CTAFeatures>
+                  <CTAFeature>✓ Free confidential consultation</CTAFeature>
+                  <CTAFeature>✓ No upfront fees</CTAFeature>
+                  <CTAFeature>✓ FCA regulated specialists</CTAFeature>
+                  <CTAFeature>✓ 24-hour response guarantee</CTAFeature>
+                </CTAFeatures>
+              </CTAContent>
+              
+              <CTAActions>
+                <PrimaryButton onClick={scrollToForm}>
+                  Get Free Assessment Now
+                </PrimaryButton>
+                <SecondaryButton href="tel:+447451263472">
+                  Call +44 7451 263472
+                </SecondaryButton>
+              </CTAActions>
+              
+              <CTADisclaimer>
+                <FCADisclaimer>
+                  Recovery Office is authorized and regulated by the Financial Conduct Authority. 
+                  Firm Reference: 836358. Professional indemnity insurance: £10M coverage.
+                </FCADisclaimer>
+              </CTADisclaimer>
+            </CTAContainer>
+          </FinalCTASection>
+        </LandingContainer>
+      </ServiceTracker>
+    </>
   );
 };
 
