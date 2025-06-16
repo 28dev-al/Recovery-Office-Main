@@ -121,8 +121,8 @@ export const LoginPage: React.FC = () => {
           'X-API-Key': process.env.REACT_APP_ADMIN_API_KEY || 'recovery-office-admin-key-2024',
         },
         body: JSON.stringify({
-          email: 'admin@recovery-office.com',
-          password: 'recovery2025'
+          email: credentials.username.trim().toLowerCase(),
+          password: credentials.password
         })
       });
 
@@ -168,12 +168,12 @@ export const LoginPage: React.FC = () => {
 
         <Form onSubmit={handleLogin}>
           <InputGroup>
-            <Label>Username</Label>
+            <Label>Email</Label>
             <Input
               type="text"
               value={credentials.username}
               onChange={(e) => setCredentials(prev => ({ ...prev, username: e.target.value }))}
-              placeholder="Enter username"
+              placeholder="Enter email"
               required
             />
           </InputGroup>
