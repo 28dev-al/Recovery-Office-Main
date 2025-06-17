@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { DashboardLayout } from '../../components/dashboard/DashboardLayout';
+import type { Lead, Pagination, LeadsApiResponse } from '../../types/googleAds';
 
 // Google Ads Leads API Configuration
 const GOOGLE_ADS_API = {
@@ -14,35 +15,6 @@ const GOOGLE_ADS_API = {
     LEAD_BY_REFERENCE: (ref: string) => `/api/google-ads/leads/reference/${ref}`
   }
 };
-
-// Interface for Google Ads Lead data structure
-interface GoogleAdsLead {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  estimatedLoss: string;
-  lossType: string;
-  urgencyLevel: string;
-  description: string;
-  source: string;
-  leadStatus: string;
-  priority: string;
-  contactAttempts: number;
-  qualificationScore: number;
-  ipAddress: string;
-  userAgent: string;
-  utmSource: string;
-  utmMedium: string;
-  utmCampaign: string;
-  utmContent: string;
-  utmTerm: string;
-  confirmationSent: boolean;
-  internalNotificationSent: boolean;
-  referenceNumber: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 // Interface for lead statistics
 interface LeadStats {
@@ -433,8 +405,8 @@ const EmptyState = styled.div`
 `;
 
 export const GoogleAdsLeads: React.FC = () => {
-  const [leads, setLeads] = useState<GoogleAdsLead[]>([]);
-  const [filteredLeads, setFilteredLeads] = useState<GoogleAdsLead[]>([]);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [filteredLeads, setFilteredLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [stats, setStats] = useState<LeadStats>({
@@ -459,47 +431,32 @@ export const GoogleAdsLeads: React.FC = () => {
     utmSource: ''
   });
 
+  // value currently not used; we keep setter for future pagination features
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [, setPagination] = useState<Pagination | undefined>();
+
   // Test API connection
   const testAPIConnection = async () => {
-    try {
-      console.log('[GoogleAdsLeads] Testing API connection...');
-      console.log('[GoogleAdsLeads] BASE_URL:', GOOGLE_ADS_API.BASE_URL);
-      console.log('[GoogleAdsLeads] LEADS endpoint:', GOOGLE_ADS_API.ENDPOINTS.LEADS);
-      
-      const testUrl = `${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.LEADS}`;
-      console.log('[GoogleAdsLeads] Full test URL:', testUrl);
-      
-      // Get token once to avoid inconsistency between multiple calls
-      const token = localStorage.getItem('recovery-office-token');
-      console.log('[GoogleAdsLeads] Using auth token:', token ? `${token.substring(0, 15)}...` : 'none');
-      
-      const response = await fetch(testUrl, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Client-Version': '1.0.0',
-          'X-Request-Source': 'dashboard',
-          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-        },
-      });
-      console.log('[GoogleAdsLeads] API test response status:', response.status);
-      console.log('[GoogleAdsLeads] API test response ok:', response.ok);
-      console.log('[GoogleAdsLeads] API test response headers:', response.headers);
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('[GoogleAdsLeads] API test error response text:', errorText);
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const result = await response.json();
-      console.log('[GoogleAdsLeads] API test successful:', result);
-      return result;
-    } catch (error) {
-      console.error('[GoogleAdsLeads] API test failed:', error);
-      throw error;
+    const testUrl = `${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.LEADS}`;
+    const token = localStorage.getItem('recovery-office-token');
+    
+    const response = await fetch(testUrl, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Client-Version': '1.0.0',
+        'X-Request-Source': 'dashboard',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+      },
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`);
     }
+    
+    await response.json();
   };
 
   // Fetch leads from backend
@@ -507,7 +464,6 @@ export const GoogleAdsLeads: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      console.log('[GoogleAdsLeads] Starting fetchLeads...');
       
       // First test API connection
       await testAPIConnection();
@@ -518,7 +474,6 @@ export const GoogleAdsLeads: React.FC = () => {
       });
       
       const url = `${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.LEADS}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
-      console.log('[GoogleAdsLeads] Fetching leads from:', url);
       
       // Get token once to avoid inconsistency between multiple calls
       const token = localStorage.getItem('recovery-office-token');
@@ -534,41 +489,29 @@ export const GoogleAdsLeads: React.FC = () => {
         },
       });
       
-      console.log('[GoogleAdsLeads] Fetch response status:', response.status);
-      console.log('[GoogleAdsLeads] Fetch response ok:', response.ok);
-      
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('[GoogleAdsLeads] Fetch error response:', errorText);
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
       
-      const result = await response.json();
-      console.log('[GoogleAdsLeads] Full API response:', result);
-      console.log('[GoogleAdsLeads] Response success field:', result.success);
-      console.log('[GoogleAdsLeads] Response data field:', result.data);
-      console.log('[GoogleAdsLeads] Response data type:', typeof result.data);
-      console.log('[GoogleAdsLeads] Response data length:', Array.isArray(result.data) ? result.data.length : 'Not an array');
+      const json: LeadsApiResponse = await response.json();
 
-      if (result.success) {
-        if (Array.isArray(result.data)) {
-          console.log('[GoogleAdsLeads] Setting leads:', result.data.length, 'leads');
-          setLeads(result.data);
-          setFilteredLeads(result.data);
-          console.log('[GoogleAdsLeads] First lead sample:', result.data[0]);
-        } else {
-          console.warn('[GoogleAdsLeads] Data is not an array:', result.data);
-          setLeads([]);
-          setFilteredLeads([]);
-        }
+      let leadsArray: Lead[] = [];
+      let paginationInfo: Pagination | undefined;
+
+      if (Array.isArray(json)) {
+        leadsArray = json;
+      } else if (json && json.success && Array.isArray(json.data.leads)) {
+        leadsArray = json.data.leads;
+        paginationInfo = json.data.pagination;
       } else {
-        console.error('[GoogleAdsLeads] API returned success=false:', result);
-        setError(`API Error: ${result.message || 'Unknown error'}`);
-        setLeads([]);
-        setFilteredLeads([]);
+        throw new Error('Unexpected GoogleAds leads API response shape');
       }
+
+      setLeads(leadsArray);
+      setFilteredLeads(leadsArray);
+      setPagination(paginationInfo);
     } catch (error) {
-      console.error('[GoogleAdsLeads] Error fetching leads:', error);
       setError(`Failed to fetch leads: ${error instanceof Error ? error.message : 'Unknown error'}`);
       setLeads([]);
       setFilteredLeads([]);
@@ -674,11 +617,7 @@ export const GoogleAdsLeads: React.FC = () => {
   // Update lead status
   const handleUpdateStatus = async (leadId: string, newStatus: string) => {
     try {
-      console.log(`[GoogleAdsLeads] Updating lead ${leadId} status to ${newStatus}`);
-      
-      // Get token once to avoid inconsistency between multiple calls
       const token = localStorage.getItem('recovery-office-token');
-      
       const response = await fetch(`${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.UPDATE_LEAD(leadId)}`, {
         method: 'PATCH',
         credentials: 'include',
@@ -686,76 +625,57 @@ export const GoogleAdsLeads: React.FC = () => {
           'Content-Type': 'application/json',
           'X-Client-Version': '1.0.0',
           'X-Request-Source': 'dashboard',
-          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
         },
         body: JSON.stringify({ status: newStatus })
       });
 
-      const result = await response.json();
-      
-      if (result.success) {
-        // Update local state
+      if (response.ok) {
         setLeads(prev => prev.map(lead => 
           lead._id === leadId ? { ...lead, leadStatus: newStatus } : lead
         ));
-        console.log('[GoogleAdsLeads] Lead status updated successfully');
       }
-    } catch (error) {
-      console.error('[GoogleAdsLeads] Error updating lead status:', error);
+    } catch (updateErr) {
+      setError(`Failed to update lead status: ${updateErr instanceof Error ? updateErr.message : 'Unknown error'}`);
     }
   };
 
   // Fetch statistics from backend
   const fetchStats = async () => {
     try {
-      console.log('[GoogleAdsLeads] Fetching stats...');
-      
-      // Get token once to avoid inconsistency between multiple calls
       const token = localStorage.getItem('recovery-office-token');
-      
-      const statsUrl = `${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.STATS}`;
-      console.log('[GoogleAdsLeads] Stats URL:', statsUrl);
-      
-      const response = await fetch(statsUrl, {
+      const response = await fetch(`${GOOGLE_ADS_API.BASE_URL}${GOOGLE_ADS_API.ENDPOINTS.STATS}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           'X-Client-Version': '1.0.0',
           'X-Request-Source': 'dashboard',
-          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
         },
       });
       
-      console.log('[GoogleAdsLeads] Stats response status:', response.status);
-      console.log('[GoogleAdsLeads] Stats response ok:', response.ok);
-      
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('[GoogleAdsLeads] Stats error response:', errorText);
-        throw new Error(`Stats HTTP error! status: ${response.status}`);
+        throw new Error(`Stats HTTP ${response.status}: ${errorText}`);
       }
       
-      const result = await response.json();
-      console.log('[GoogleAdsLeads] Stats API response:', result);
-      
-      if (result.success && result.data && result.data.overview) {
-        console.log('[GoogleAdsLeads] Setting stats from API:', result.data.overview);
-        setStats(result.data.overview);
+      const json = await response.json();
+
+      const statsData = json && json.success ? json.data : json;
+
+      if (statsData && statsData.overview) {
+        setStats(statsData.overview);
       } else {
-        console.warn('[GoogleAdsLeads] Stats API response not as expected, calculating locally');
         calculateLocalStats();
       }
-    } catch (error) {
-      console.error('[GoogleAdsLeads] Error fetching stats, calculating locally:', error);
+    } catch {
       calculateLocalStats();
     }
   };
 
   // Calculate stats from current leads (fallback)
   const calculateLocalStats = () => {
-    console.log('[GoogleAdsLeads] Calculating local stats from', leads.length, 'leads');
-    
     const newStats = leads.reduce((acc, lead) => {
       acc.totalLeads++;
       
@@ -781,14 +701,12 @@ export const GoogleAdsLeads: React.FC = () => {
     newStats.conversionRate = newStats.totalLeads > 0 ? (newStats.convertedLeads / newStats.totalLeads) * 100 : 0;
     newStats.avgQualificationScore = newStats.totalLeads > 0 ? newStats.avgQualificationScore / newStats.totalLeads : 0;
 
-    console.log('[GoogleAdsLeads] Calculated local stats:', newStats);
     setStats(newStats);
   };
 
   // Effect hooks
   useEffect(() => {
     const initializeData = async () => {
-      console.log('[GoogleAdsLeads] Initializing dashboard data...');
       await fetchLeads();
       await fetchStats();
     };
@@ -802,7 +720,6 @@ export const GoogleAdsLeads: React.FC = () => {
 
   useEffect(() => {
     if (leads.length > 0) {
-      console.log('[GoogleAdsLeads] Leads updated, recalculating stats locally as backup');
       calculateLocalStats();
     }
   }, [leads]);
@@ -874,7 +791,7 @@ export const GoogleAdsLeads: React.FC = () => {
 
           <StatCard>
             <StatIcon color="linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%)">💰</StatIcon>
-            <StatValue>{stats.conversionRate.toFixed(1)}%</StatValue>
+            <StatValue>{typeof stats.conversionRate === 'number' ? stats.conversionRate.toFixed(1) : '–'}%</StatValue>
             <StatLabel>Conversion Rate</StatLabel>
           </StatCard>
 
@@ -886,7 +803,7 @@ export const GoogleAdsLeads: React.FC = () => {
 
           <StatCard>
             <StatIcon color="linear-gradient(135deg, #d69e2e 0%, #f6ad3a 100%)">⭐</StatIcon>
-            <StatValue>{stats.avgQualificationScore.toFixed(1)}</StatValue>
+            <StatValue>{typeof stats.avgQualificationScore === 'number' ? stats.avgQualificationScore.toFixed(1) : '–'}</StatValue>
             <StatLabel>Avg. Score</StatLabel>
           </StatCard>
         </StatsGrid>
