@@ -1,5 +1,6 @@
 import React from 'react';
 import ServiceDetailTemplate from './detail-template';
+import { formatCurrencyCAD } from '../../utils/formatters';
 
 // Icons for benefits section
 const BlockchainIcon = () => (
@@ -87,7 +88,7 @@ const CryptocurrencyRecovery = () => {
     
     pricing: {
       title: "Mixed Fee Structure",
-      rate: "From £1,500 + %",
+      rate: `From ${formatCurrencyCAD(2250)} + %`,
       description: "Our crypto recovery services typically involve an initial technical assessment fee plus a success-based percentage.",
       features: [
         "Initial technical assessment fee",

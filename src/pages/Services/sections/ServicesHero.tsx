@@ -372,7 +372,7 @@ export const ServicesHero: React.FC<ServicesHeroProps> = ({
                 <path d="M12 2L2 7v9c0 5 5 8 10 8s10-3 10-8V7L12 2z" stroke="#FFFFFF" strokeWidth="2" fill="none" />
                 <path d="M9 12l2 2 4-4" stroke={PREMIUM_COLORS.BASE_COLORS.gold[500]} strokeWidth="2" />
               </svg>
-              <BadgeText>{t('services.fcaRegulated')}</BadgeText>
+              <BadgeText>{t('services.ciroRegulated')}</BadgeText>
             </Badge>
             
             <Badge className="certification-badge">
@@ -380,7 +380,7 @@ export const ServicesHero: React.FC<ServicesHeroProps> = ({
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#FFFFFF" strokeWidth="2" fill="none" />
                 <path d="M9 12l2 2 4-4" stroke={PREMIUM_COLORS.BASE_COLORS.gold[500]} strokeWidth="2" />
               </svg>
-              <BadgeText>{t('services.bafinCertified')}</BadgeText>
+              <BadgeText>{t('services.pipedaCompliant')}</BadgeText>
             </Badge>
             
             <Badge className="certification-badge">
@@ -388,7 +388,7 @@ export const ServicesHero: React.FC<ServicesHeroProps> = ({
                 <path d="M4 6h16v12H4V6z" stroke="#FFFFFF" strokeWidth="2" fill="none" />
                 <path d="M12 14.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" stroke={PREMIUM_COLORS.BASE_COLORS.gold[500]} strokeWidth="2" fill="none" />
               </svg>
-              <BadgeText>{t('services.cyberEssentials')}</BadgeText>
+              <BadgeText>{t('services.cybersecureCanada')}</BadgeText>
             </Badge>
           </BadgesContainer>
         </HeroContent>

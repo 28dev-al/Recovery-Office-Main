@@ -223,7 +223,7 @@ const BookingSummary: React.FC = () => {
                 {clientInfo.approximateLossAmount && (
                   <ContentRow>
                     <Label>Loss Amount:</Label>
-                    <Value>£{clientInfo.approximateLossAmount}</Value>
+                    <Value>${clientInfo.approximateLossAmount} CAD</Value>
                   </ContentRow>
                 )}
                 {clientInfo.incidentDate && (
@@ -324,7 +324,7 @@ const BookingSummary: React.FC = () => {
               {clientInfo.approximateLossAmount && (
                 <ContentRow>
                   <Label>Loss Amount:</Label>
-                  <Value>£{clientInfo.approximateLossAmount}</Value>
+                  <Value>${clientInfo.approximateLossAmount} CAD</Value>
                 </ContentRow>
               )}
               {clientInfo.incidentDate && (

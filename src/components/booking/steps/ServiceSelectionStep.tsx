@@ -312,30 +312,47 @@ const StepDescription = styled.p`
 const ServicesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: 30px;
+  margin-bottom: 40px;
 `;
 
 const ServiceCard = styled.div<{ selected: boolean }>`
   background: white;
   border: 2px solid ${({ selected }) => selected ? '#d69e2e' : '#e5e7eb'};
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 32px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: ${({ selected }) => selected ? '4px' : '0'};
+    background: linear-gradient(90deg, #d69e2e, #f6ad3a);
+    transition: all 0.3s ease;
+  }
 
   &:hover {
     border-color: #d69e2e;
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    
+    &::after {
+      height: 4px;
+    }
   }
 
   ${({ selected }) => selected && `
-    background: #fef3c7;
+    background: #fef9e7;
     border-color: #d69e2e;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(214, 158, 46, 0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(214, 158, 46, 0.25);
   `}
 `;
 
@@ -345,34 +362,35 @@ const ServiceIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
-  width: 80px;
-  margin: 0 auto 20px;
+  height: 100px;
+  width: 100px;
+  margin: 0 auto 24px;
   border-radius: 50%;
   background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
   color: #d69e2e;
-  box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(26, 54, 93, 0.3);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
-  /* Professional hover effect */
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(214, 158, 46, 0.4);
+  /* Premium hover effect */
+  ${ServiceCard}:hover & {
+    transform: scale(1.08) translateY(-5px);
+    box-shadow: 0 15px 30px rgba(214, 158, 46, 0.4);
+    background: linear-gradient(135deg, #1a365d 0%, #0A214F 100%);
   }
 `;
 
 const ServiceName = styled.h3`
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: #1a365d;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 `;
 
 const ServiceDescription = styled.p`
-  font-size: 14px;
+  font-size: 15px;
   color: #6b7280;
-  line-height: 1.5;
-  margin-bottom: 20px;
+  line-height: 1.6;
+  margin-bottom: 24px;
 `;
 
 const ServiceDetails = styled.div`
@@ -381,16 +399,25 @@ const ServiceDetails = styled.div`
   align-items: center;
   padding-top: 16px;
   border-top: 1px solid #e5e7eb;
+  margin-top: auto;
 `;
 
 const ServiceDuration = styled.span`
   font-size: 14px;
   color: #6b7280;
+  display: flex;
+  align-items: center;
+  
+  &::before {
+    content: '🕒';
+    margin-right: 6px;
+    font-size: 16px;
+  }
 `;
 
 const ServicePrice = styled.span`
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: #d69e2e;
 `;
 

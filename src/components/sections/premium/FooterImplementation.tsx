@@ -4,6 +4,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PremiumFooter } from '../../../design-system/components/footer';
+import { COMPANY_PROFILE_CA } from '../../../constants/companyProfile.ca';
 
 // --- SVGs ---
 const LogoComponent = () => (
@@ -21,48 +22,45 @@ const FooterImplementation: React.FC = () => {
   // Columns for footer content
   const primaryColumns = [
     {
-      title: t('footer.services', 'Services'),
+      title: t('footer.services.title', 'Services'),
       links: [
-        { label: t('services.items.cryptocurrency.title', 'Cryptocurrency Recovery'), url: '/services/cryptocurrency-recovery' },
-        { label: t('services.items.investment.title', 'Investment Fraud Recovery'), url: '/services/investment-fraud-recovery' },
-        { label: t('services.items.financial.title', 'Financial Scam Recovery'), url: '/services/financial-scam-recovery' },
-        { label: t('services.items.regulatory.title', 'Regulatory Complaint Assistance'), url: '/services/regulatory-assistance' },
+        { label: t('footer.services.cryptocurrencyRecovery', 'Cryptocurrency Recovery'), url: '/services/cryptocurrency-recovery' },
+        { label: t('footer.services.investmentFraudRecovery', 'Investment Fraud Recovery'), url: '/services/investment-fraud-recovery' },
+        { label: t('footer.services.financialScamRecovery', 'Financial Scam Recovery'), url: '/services/financial-scam-recovery' },
+        { label: t('footer.services.regulatoryComplaintAssistance', 'Regulatory Complaint Assistance'), url: '/services/regulatory-assistance' },
       ]
     },
     {
-      title: t('footer.company', 'Company'),
+      title: t('footer.company.title', 'Company'),
       links: [
-        { label: t('footer.aboutUs', 'About Us'), url: '/about' },
-        { label: t('footer.ourTeam', 'Our Team'), url: '/about#team' },
-        { label: t('footer.contactUs', 'Contact Us'), url: '/contact' },
-        { label: t('buttons.bookConsultation', 'Book Consultation'), url: '/booking', isHighlighted: true },
+        { label: t('footer.company.aboutUs', 'About Us'), url: '/about' },
+        { label: t('footer.company.ourTeam', 'Our Team'), url: '/about#team' },
+        { label: t('footer.company.contactUs', 'Contact Us'), url: '/contact' },
+        { label: t('footer.company.bookConsultation', 'Book Consultation'), url: '/booking', isHighlighted: true },
       ]
     },
     {
-      title: t('footer.contactInformation', 'Contact Information'),
+      title: t('footer.contactInformation.title', 'Contact Information'),
       links: [
-        { label: '📍 2nd Floor, 3 Piccadilly Place', url: '#' },
-        { label: 'London Road, Manchester M1 3BN', url: '#' },
-        { label: '📞 +44 7451 263472', url: 'tel:+447451263472' },
-        { label: '📧 info@recovery-office.com', url: 'mailto:info@recovery-office.com' },
+        { label: `📍 ${t('footer.contactInformation.address', COMPANY_PROFILE_CA.address)}`, url: '#' },
+        { label: `📧 ${t('footer.contactInformation.email', COMPANY_PROFILE_CA.email)}`, url: `mailto:${COMPANY_PROFILE_CA.email}` },
       ]
     },
     {
-      title: t('footer.resources', 'Resources'),
+      title: t('footer.resources.title', 'Resources'),
       links: [
-        { label: 'FAQ', url: '/faq' },
-        { label: 'Blog', url: '/blog' },
-        { label: t('footer.emergencySupport', 'Emergency Support'), url: 'tel:+447451263472', isHighlighted: true },
-        { label: t('footer.clientPortal', 'Client Portal'), url: '/dashboard' },
+        { label: t('footer.resources.faq', 'FAQ'), url: '/faq' },
+        { label: t('footer.resources.blog', 'Blog'), url: '/blog' },
+        { label: t('footer.resources.emergencyConsultation', 'Emergency Consultation'), url: '/booking', isHighlighted: true },
+        { label: t('footer.resources.clientPortal', 'Client Portal'), url: '/dashboard' },
       ]
     }
   ];
   
   // Legal/utility links shown in bottom bar
   const legalLinks = [
-    { label: t('footer.privacyPolicy', 'Privacy Policy'), url: '/privacy' },
-    { label: t('footer.termsOfService', 'Terms of Service'), url: '/terms' },
-    { label: t('footer.hipaaCompliance', 'HIPAA Compliance'), url: '/hipaa' },
+    { label: t('navigation.privacyPolicy', 'Privacy Policy'), url: '/privacy' },
+    { label: t('navigation.termsOfService', 'Terms of Service'), url: '/terms' },
     { label: t('footer.accessibility', 'Accessibility'), url: '/accessibility' },
   ];
   
@@ -75,10 +73,10 @@ const FooterImplementation: React.FC = () => {
   
   // Real regulatory information
   const regulatoryInfo = {
-    registrationInfo: "Recovery Office is registered in England and Wales. Company Number: 06621703 | Firm Reference Number: 836358",
-    regulatoryBody: "Financial Conduct Authority",
-    regulatoryBodyUrl: "https://www.fca.org.uk/",
-    additionalInfo: t('footer.regulatoryDisclaimer', "Recovery Office provides professional financial asset recovery services. All recovery operations are conducted within strict legal frameworks and regulatory compliance standards.")
+    registrationInfo: `Business Number: ${COMPANY_PROFILE_CA.businessNumber}`,
+    regulatoryBody: COMPANY_PROFILE_CA.regulatorPrimary,
+    regulatoryBodyUrl: 'https://www.ciro.ca',
+    additionalInfo: t('footer.regulatoryDisclaimer', 'Recovery Office provides professional financial asset recovery services across Canada. All operations are conducted within Canadian federal and provincial regulatory frameworks.')
   };
 
   // Company disclaimer for financial services
@@ -87,13 +85,13 @@ const FooterImplementation: React.FC = () => {
   return (
     <PremiumFooter
       logo={<LogoComponent />}
-      companyName="Recovery Office"
+      companyName="Recovery Office Canada"
       columns={primaryColumns}
       legalLinks={legalLinks}
       socialLinks={socialLinks}
       regulatoryInfo={regulatoryInfo}
       disclaimerText={disclaimerText}
-      copyrightText={t('footer.allRightsReserved', `© ${currentYear} Recovery Office. All rights reserved. Registered in England and Wales: 06621703`)}
+      copyrightText={t('footer.copyright', `© ${currentYear} Recovery Office. All rights reserved. Incorporated in Ontario, Canada.`)}
       botanical={{ enabled: true, position: 'bottom-right', variant: 'smallFlourish' }}
     />
   );

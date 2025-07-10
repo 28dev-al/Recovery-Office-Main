@@ -180,7 +180,7 @@ const ServiceSelection: React.FC = () => {
             <ServiceDescription>{service.description}</ServiceDescription>
             <ServiceDetails>
               <ServiceDuration>{service.duration} min</ServiceDuration>
-              <ServicePrice>£{service.price}</ServicePrice>
+              <ServicePrice>${service.price} CAD</ServicePrice>
             </ServiceDetails>
           </ServiceCard>
         ))}

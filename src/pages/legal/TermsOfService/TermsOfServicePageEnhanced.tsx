@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { COMPANY_PROFILE_CA } from '../../../constants/companyProfile.ca';
 import { PremiumHero } from './components/PremiumHero';
 import { EnhancedTableOfContents } from './components/EnhancedTableOfContents';
 import { PremiumTermsSection } from './components/PremiumTermsSection';
@@ -33,7 +34,7 @@ export const TermsOfServicePageEnhanced: React.FC = () => {
         <title>Terms of Service | Recovery Office - Professional Asset Recovery Agreement</title>
         <meta 
           name="description" 
-          content="Comprehensive Terms of Service for Recovery Office financial asset recovery consultancy. Professional agreement for £2,500+ consultation services with enterprise-grade legal protection." 
+          content="Comprehensive Terms of Service for Recovery Office financial asset recovery consultancy. Professional agreement for $3,750+ CAD consultation services with enterprise-grade legal protection." 
         />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://recovery-office-online.netlify.app/terms-of-service" />
@@ -48,10 +49,10 @@ export const TermsOfServicePageEnhanced: React.FC = () => {
             "description": "Professional terms and conditions for financial asset recovery consultancy services",
             "url": "https://recovery-office-online.netlify.app/terms-of-service",
             "dateModified": "2025-06-02",
-            "inLanguage": "en-GB",
+            "inLanguage": "en-CA",
             "publisher": {
               "@type": "Organization",
-              "name": "Recovery Office Limited",
+              "name": "Recovery Office Canada Inc.",
               "url": "https://recovery-office-online.netlify.app"
             }
           })}
@@ -76,35 +77,31 @@ export const TermsOfServicePageEnhanced: React.FC = () => {
                 <CompanyInfoGrid>
                   <InfoItem>
                     <InfoLabel>Legal Entity:</InfoLabel>
-                    <InfoValue>Recovery Office Limited</InfoValue>
+                    <InfoValue>Recovery Office Canada Inc.</InfoValue>
                   </InfoItem>
                   <InfoItem>
                     <InfoLabel>Business Type:</InfoLabel>
                     <InfoValue>Financial Asset Recovery Consultancy</InfoValue>
                   </InfoItem>
                   <InfoItem>
-                    <InfoLabel>Companies House Registration:</InfoLabel>
-                    <InfoValue>14587923</InfoValue>
+                    <InfoLabel>Business Number</InfoLabel>
+                    <InfoValue>{COMPANY_PROFILE_CA.businessNumber}</InfoValue>
                   </InfoItem>
                   <InfoItem>
-                    <InfoLabel>Registered Office:</InfoLabel>
-                    <InfoValue>1 Northumberland Avenue, London WC2N 5BW</InfoValue>
+                    <InfoLabel>Registered Address</InfoLabel>
+                    <InfoValue>{COMPANY_PROFILE_CA.address}</InfoValue>
                   </InfoItem>
                   <InfoItem>
-                    <InfoLabel>VAT Registration:</InfoLabel>
-                    <InfoValue>GB 345 6789 12</InfoValue>
+                    <InfoLabel>FINTRAC Registration:</InfoLabel>
+                    <InfoValue>MSB Registration</InfoValue>
                   </InfoItem>
                   <InfoItem>
                     <InfoLabel>Business Email:</InfoLabel>
-                    <InfoValue>legal@recovery-office.com</InfoValue>
-                  </InfoItem>
-                  <InfoItem>
-                    <InfoLabel>Business Phone:</InfoLabel>
-                    <InfoValue>+44 (0) 20 7946 0080</InfoValue>
+                    <InfoValue>legal@recovery-office.ca</InfoValue>
                   </InfoItem>
                   <InfoItem>
                     <InfoLabel>Legal Notice Address:</InfoLabel>
-                    <InfoValue>Legal Department, Recovery Office Limited</InfoValue>
+                    <InfoValue>Legal Department, Recovery Office Canada Inc.</InfoValue>
                   </InfoItem>
                 </CompanyInfoGrid>
               </ProfessionalCard>
@@ -115,29 +112,29 @@ export const TermsOfServicePageEnhanced: React.FC = () => {
                   <CredentialItem>
                     <CredentialIcon>🏛️</CredentialIcon>
                     <CredentialContent>
-                      <strong>FCA Alignment:</strong> Operating in accordance with Financial 
-                      Conduct Authority principles for financial services with full regulatory compliance
+                      <strong>CIRO Alignment:</strong> Operating in accordance with Canadian Investment 
+                      Regulatory Organization principles for financial services with full regulatory compliance
                     </CredentialContent>
                   </CredentialItem>
                   <CredentialItem>
                     <CredentialIcon>🛡️</CredentialIcon>
                     <CredentialContent>
                       <strong>Professional Indemnity:</strong> £10 million professional 
-                      indemnity insurance coverage maintained with Lloyd's of London underwriters
+                      indemnity insurance coverage maintained with Canadian underwriters
                     </CredentialContent>
                   </CredentialItem>
                   <CredentialItem>
                     <CredentialIcon>🔐</CredentialIcon>
                     <CredentialContent>
-                      <strong>Data Protection:</strong> ICO registered (ZB405891) with comprehensive 
-                      UK GDPR compliance procedures and certified data protection officer
+                      <strong>Data Protection:</strong> PIPEDA compliant with comprehensive 
+                      Canadian privacy law compliance procedures and certified privacy officer
                     </CredentialContent>
                   </CredentialItem>
                   <CredentialItem>
                     <CredentialIcon>⚖️</CredentialIcon>
                     <CredentialContent>
-                      <strong>Legal Framework:</strong> Governed by English law with jurisdiction 
-                      in England and Wales courts for all contract matters
+                      <strong>Legal Framework:</strong> Governed by Ontario law with jurisdiction 
+                      in Ontario courts for all contract matters
                     </CredentialContent>
                   </CredentialItem>
                   <CredentialItem>
@@ -153,7 +150,7 @@ export const TermsOfServicePageEnhanced: React.FC = () => {
               <ImportantNotice>
                 <h4>⚖️ Regulatory Status & Limitations</h4>
                 <p>
-                  Recovery Office Limited operates as a specialist financial asset recovery consultancy. 
+                  Recovery Office Canada Inc. operates as a specialist financial asset recovery consultancy. 
                   We provide expert consultation services and are not a regulated financial advisor, 
                   legal representative, or recovery service provider. All recommendations are 
                   professional opinions requiring independent verification and decision-making by clients.
@@ -167,8 +164,7 @@ export const TermsOfServicePageEnhanced: React.FC = () => {
             >
               <p>
                 Our consultation services are designed exclusively for high-net-worth individuals 
-                and organizations who have experienced significant financial losses (typically 
-                £100,000+) and require expert guidance on recovery options and strategies.
+                and organizations who have experienced significant financial losses ($150,000+ CAD) and require expert guidance on recovery options and strategies.
               </p>
 
               <h3 id="service-definitions">Service Definitions & Deliverables</h3>
@@ -226,10 +222,10 @@ export const TermsOfServicePageEnhanced: React.FC = () => {
 
                 <h4>Currency & Exchange Rates</h4>
                 <ul>
-                  <li><strong>Base Currency:</strong> All fees quoted in British Pounds (GBP)</li>
+                  <li><strong>Base Currency:</strong> All fees quoted in Canadian Dollars (CAD)</li>
                   <li><strong>Exchange Rates:</strong> Mid-market rates at time of invoice</li>
                   <li><strong>Currency Risk:</strong> Client bears currency fluctuation risk</li>
-                  <li><strong>Payment Processing:</strong> 2-3% charge for non-GBP payments</li>
+                  <li><strong>Payment Processing:</strong> 2-3% charge for non-CAD payments</li>
                 </ul>
               </ProfessionalCard>
 
@@ -328,7 +324,7 @@ export const TermsOfServicePageEnhanced: React.FC = () => {
             <LegalHighlight>
               <h3>Terms Updates & Document Control</h3>
               <p>
-                <strong>Amendment Rights:</strong> Recovery Office Limited reserves the right to update 
+                <strong>Amendment Rights:</strong> Recovery Office Canada Inc. reserves the right to update 
                 these Terms of Service to reflect changes in our services, legal requirements, or 
                 business practices. Material changes will be communicated with 30 days' advance notice 
                 via email and website notification.

@@ -74,6 +74,9 @@ export * from './propsMapping';
 // Explicitly export the preferred getFibonacciByIndex implementation
 export { getFibonacciByIndex } from './getFibonacciByIndex';
 
+// Export new formatter utilities
+export * from './formatters';
+
 
 
 

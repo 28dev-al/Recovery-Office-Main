@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { BlogHero } from './components/BlogHero';
 import { blogCategories } from './data/blogCategories';
 import { allBlogPosts } from './data/blogPosts';
+import { formatCurrencyCAD } from '../../utils/formatters';
 
 // Import design system tokens
 const PREMIUM_SPACING = {
@@ -366,7 +367,7 @@ export const BlogPage: React.FC = () => {
         <title>Financial Asset Recovery Blog | Expert Insights & Case Studies | Recovery Office</title>
         <meta 
           name="description" 
-          content="Expert insights on financial asset recovery, investment fraud recovery, and cryptocurrency recovery from UK's leading specialists. £500M+ recovered, 185+ expert articles." 
+          content="Expert insights on financial asset recovery, investment fraud recovery, and cryptocurrency recovery from Canada's leading specialists. $750M+ recovered, 185+ expert articles." 
         />
         <meta 
           name="keywords" 
@@ -376,7 +377,7 @@ export const BlogPage: React.FC = () => {
         
         {/* Open Graph tags */}
         <meta property="og:title" content="Financial Asset Recovery Blog | Recovery Office" />
-        <meta property="og:description" content="Expert insights on financial asset recovery from UK specialists who have recovered £500M+ in client assets." />
+        <meta property="og:description" content="Expert insights on financial asset recovery from Canadian specialists who have recovered $750M+ in client assets." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://recovery-office.com/blog" />
         <meta property="og:image" content="https://recovery-office.com/assets/images/blog-og.jpg" />

@@ -533,7 +533,7 @@ const CustomerInformation: React.FC = () => {
         
         <FieldRow>
           <FieldGroup>
-            <Label htmlFor="approximateLossAmount">Approximate Loss Amount (£)*</Label>
+            <Label htmlFor="approximateLossAmount">Approximate Loss Amount (CAD $)*</Label>
             <Input
               type="text"
               id="approximateLossAmount"
@@ -593,7 +593,7 @@ const CustomerInformation: React.FC = () => {
               onChange={handleChange}
             />
             <Label htmlFor="hasReportedToAuthorities">
-              I have already reported this incident to the relevant authorities (police, FCA, Action Fraud, etc.)
+              I have already reported this incident to the relevant authorities (police, CIRO, Canadian Anti-Fraud Centre, etc.)
             </Label>
           </Checkbox>
         </FieldGroup>

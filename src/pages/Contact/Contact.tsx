@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Hero } from '../../design-system/components/feature-sections';
-import { FlowerOfLife, OliveBranch, VesicaPiscis } from '../../design-system/botanical';
-import { Box, Container, Grid } from '../../design-system/components/layout';
-import { Section, SectionTitle, SectionContent } from '../../design-system/components/layout/Section';
-import { Text, Paragraph, Heading } from '../../design-system/components/typography';
+import { Box, Container } from '../../design-system/components/layout';
+import { Section, SectionTitle } from '../../design-system/components/layout/Section';
+import { Heading } from '../../design-system/components/typography';
 import { Card } from '../../design-system/components/data-display';
 import { 
   FormControl, 
@@ -13,22 +11,22 @@ import {
   FormError,
   Input, 
   TextArea,
-  Select,
-  Checkbox
+  Select
 } from '../../design-system/components/form';
 import { Button } from '../../design-system/components/button';
-import { ScrollReveal } from '../../animation';
 import { PHI, PHI_INVERSE } from '../../constants/sacred-geometry';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { trackLeadFormSubmission, trackAppointmentBooking } from '../../utils/conversions';
+import { COMPANY_PROFILE_CA } from '../../constants/companyProfile.ca';
+import { formatCurrencyCAD } from '../../utils/formatters';
 
 // Styled Components for Premium Contact Design
-const FCABadge = styled.div`
+const RegulatoryBadge = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
   color: white;
   padding: 8px 16px;
   border-radius: 24px;
@@ -687,8 +685,7 @@ const ContactPage: React.FC = () => {
   const contactFormSchema = z.object({
     fullName: z.string().min(2, "Full name must be at least 2 characters"),
     email: z.string().email("Please enter a valid email address"),
-    phone: z.string().min(10, "Please enter a valid phone number"),
-    contactMethod: z.enum(["phone", "email", "video", "office"], {
+    contactMethod: z.enum(["email", "video", "office"], {
       errorMap: () => ({ message: "Please select a contact method" })
     }),
     caseType: z.enum(["cryptocurrency", "investment", "financial", "regulatory", "general"], {
@@ -748,7 +745,7 @@ const ContactPage: React.FC = () => {
       alert('Thank you for your consultation request. Our FCA-regulated specialists will contact you within the specified timeframe.');
     } catch (error) {
       console.error('Form submission error:', error);
-      alert('There was an error submitting your form. Please try again or call our emergency line: +44 7451 263472');
+      alert(`There was an error submitting your form. Please try again or email us at: ${COMPANY_PROFILE_CA.email}`);
     }
   };
 
@@ -764,10 +761,9 @@ const ContactPage: React.FC = () => {
       {/* Hero Section with FCA Badge and Emergency Contact */}
       <HeroSection>
         <HeroContainer>
-          <FCABadge>
-            <span>🛡️</span>
-            <span>FCA Regulated • Firm Reference: 836358</span>
-          </FCABadge>
+          <RegulatoryBadge>
+            CIRO Regulated • Business No: {COMPANY_PROFILE_CA.businessNumber}
+          </RegulatoryBadge>
           
           <HeroContent>
             <HeroTitle>Contact Our FCA-Regulated Specialists</HeroTitle>
@@ -780,13 +776,13 @@ const ContactPage: React.FC = () => {
               <EmergencyIcon>🚨</EmergencyIcon>
               <div>
                 <EmergencyLabel>24/7 Emergency Line</EmergencyLabel>
-                <EmergencyNumber href="tel:+447451263472">+44 7451 263472</EmergencyNumber>
+                <EmergencyNumber href="/booking">📅 Schedule Priority Consultation</EmergencyNumber>
               </div>
             </EmergencyContact>
             
             <TrustIndicators>
-              <TrustItem>✓ £10M Professional Indemnity Insurance</TrustItem>
-              <TrustItem>✓ £500M+ Successfully Recovered</TrustItem>
+              <TrustItem>✓ {formatCurrencyCAD(15000000).replace('.00', '')}M Professional Indemnity Insurance</TrustItem>
+              <TrustItem>✓ {formatCurrencyCAD(750000000).replace('.00', '')}M+ Successfully Recovered</TrustItem>
               <TrustItem>✓ Absolute Client Confidentiality</TrustItem>
             </TrustIndicators>
           </HeroContent>
@@ -804,17 +800,15 @@ const ContactPage: React.FC = () => {
           
           <ContactGrid>
             <ContactCard className="priority">
-              <ContactIcon>📞</ContactIcon>
+              <ContactIcon>📧</ContactIcon>
               <ContactTitle>Emergency Consultation</ContactTitle>
               <ContactDescription>
-                Immediate response for urgent asset recovery cases. Available 24/7 for time-critical situations.
+                Immediate response for urgent asset recovery cases. Secure email consultation available 24/7.
               </ContactDescription>
               <ContactAction>
-                <PrimaryButton as="a" href="tel:+447451263472">
-                  Call +44 7451 263472
-                </PrimaryButton>
+                <PrimaryButton as="a" href={`mailto:${COMPANY_PROFILE_CA.email}`}>Email: {COMPANY_PROFILE_CA.email}</PrimaryButton>
               </ContactAction>
-              <ContactNote>Response: Immediate</ContactNote>
+              <ContactNote>Response: Within 4 hours</ContactNote>
             </ContactCard>
             
             <ContactCard>
@@ -824,9 +818,7 @@ const ContactPage: React.FC = () => {
                 Secure email consultation for detailed case assessment. All communications encrypted and confidential.
               </ContactDescription>
               <ContactAction>
-                <SecondaryButton as="a" href="mailto:info@recovery-office.com">
-                  Email: info@recovery-office.com
-                </SecondaryButton>
+                <SecondaryButton as="a" href={`mailto:${COMPANY_PROFILE_CA.email}`}>Email: {COMPANY_PROFILE_CA.email}</SecondaryButton>
               </ContactAction>
               <ContactNote>Response: Within 4 hours</ContactNote>
             </ContactCard>
@@ -980,28 +972,16 @@ const ContactPage: React.FC = () => {
                     <FormInput 
                       id="email" 
                       type="email" 
-                      placeholder="your.email@example.com" 
+                      placeholder={COMPANY_PROFILE_CA.email} 
                       {...register('email')}
                     />
                     {errors.email && <FormError>{errors.email.message}</FormError>}
-                  </FormGroup>
-                  
-                  <FormGroup isInvalid={!!errors.phone}>
-                    <FormLabel htmlFor="phone">Phone Number *</FormLabel>
-                    <FormInput 
-                      id="phone" 
-                      type="tel" 
-                      placeholder="+44 7XXX XXX XXX" 
-                      {...register('phone')}
-                    />
-                    {errors.phone && <FormError>{errors.phone.message}</FormError>}
                   </FormGroup>
                   
                   <FormGroup isInvalid={!!errors.contactMethod}>
                     <FormLabel htmlFor="contactMethod">Preferred Contact Method</FormLabel>
                     <FormSelect {...register('contactMethod')}>
                       <option value="">Select contact method</option>
-                      <option value="phone">Phone (Immediate)</option>
                       <option value="email">Email (Within 4 hours)</option>
                       <option value="video">Video Call (Scheduled)</option>
                       <option value="office">Office Visit (In-person)</option>
@@ -1082,7 +1062,7 @@ const ContactPage: React.FC = () => {
                     {isSubmitting ? 'Sending Secure Message...' : 'Send Secure Message'}
                   </SubmitButton>
                   <SecurityNote>
-                    🔒 Your information is encrypted, confidential, and protected by our £10M professional indemnity insurance
+                    🔒 Your information is encrypted, confidential, and protected by our {formatCurrencyCAD(15000000).replace('.00', '')}M professional indemnity insurance
                   </SecurityNote>
                 </SubmitSection>
               </FormFooter>
@@ -1095,32 +1075,32 @@ const ContactPage: React.FC = () => {
       <CredentialsSection>
         <SectionHeader>
           <h2>Our Service Credentials</h2>
-          <p>Fully authorized and regulated by UK and international financial authorities</p>
+          <p>Fully authorized and regulated by Canadian and international financial authorities</p>
         </SectionHeader>
         
         <CredentialsGrid>
           <CredentialCard>
             <CredentialHeader>
               <CredentialLogo>
-                <img src="https://i.ibb.co/twTqPfY3/FCA-Badge-resize.png" 
-                     alt="Financial Conduct Authority Official Badge" />
+                <img src="/assets/icons/badges/ciro-badge.png" 
+                     alt="Canadian Investment Regulatory Organization Official Badge" />
               </CredentialLogo>
-              <CredentialTitle>Financial Conduct Authority (FCA)</CredentialTitle>
+              <CredentialTitle>Canadian Investment Regulatory Organization (CIRO)</CredentialTitle>
             </CredentialHeader>
             
             <CredentialContent>
               <CredentialDescription>
-                Our asset recovery services are authorized and regulated by the UK's Financial Conduct Authority
+                Our asset recovery services are authorized and regulated by Canada's Investment Regulatory Organization
               </CredentialDescription>
               
               <CredentialDetails>
-                <DetailBadge>FRN: 836358</DetailBadge>
-                <VerificationDate>Last verified: April 12, 2023</VerificationDate>
+                <DetailBadge>BN: {COMPANY_PROFILE_CA.businessNumber}</DetailBadge>
+                <VerificationDate>Last verified: November 15, 2024</VerificationDate>
               </CredentialDetails>
             </CredentialContent>
             
             <CredentialFooter>
-              <VerifyButton href="https://register.fca.org.uk/" target="_blank">
+              <VerifyButton href="https://www.ciro.ca/" target="_blank">
                 ✓ Verify Credentials ↗
               </VerifyButton>
             </CredentialFooter>

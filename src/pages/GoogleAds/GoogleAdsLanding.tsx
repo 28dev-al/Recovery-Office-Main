@@ -20,6 +20,8 @@ import { config } from '../../config/environment';
 import { trackFormSubmission, trackButtonClick } from '../../utils/analytics';
 import { trackLeadFormSubmission, trackPhoneCallConversion } from '../../utils/conversions';
 import { Helmet } from 'react-helmet-async';
+import { formatCurrencyCAD } from '../../utils/formatters';
+import { COMPANY_PROFILE_CA } from '../../constants/companyProfile.ca';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
@@ -953,7 +955,7 @@ const GoogleAdsLanding: React.FC = () => {
       console.error('Form submission error:', error);
       setSubmissionStatus({
         type: 'error',
-        message: 'Submission failed. Please call +44 7451 263472 for immediate assistance.'
+        message: 'Submission failed. Please email us at contact@recovery-office.ca for immediate assistance.'
       });
     } finally {
       setIsSubmitting(false);
@@ -1003,7 +1005,7 @@ const GoogleAdsLanding: React.FC = () => {
               "name": "Recovery Office",
               "description": "Professional financial asset recovery services specializing in cryptocurrency recovery, investment fraud recovery, and financial scam recovery.",
               "url": "https://recovery-office-online.netlify.app/financial-recovery",
-              "telephone": "+44 7451 263472",
+              "email": "contact@recovery-office.ca",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "2nd Floor, 3 Piccadilly Place, London Road",
@@ -1043,15 +1045,15 @@ const GoogleAdsLanding: React.FC = () => {
                 <TrustBadges>
                   <TrustBadge>
                     <span>🛡️</span>
-                    <span>FCA Regulated</span>
+                    <span>CIRO Regulated</span>
                   </TrustBadge>
                   <TrustBadge>
                     <span>🔒</span>
-                    <span>£10M Insured</span>
+                    <span>$15M CAD Insured</span>
                   </TrustBadge>
                   <TrustBadge>
                     <span>💰</span>
-                    <span>£500M+ Recovered</span>
+                    <span>$750M+ CAD Recovered</span>
                   </TrustBadge>
                 </TrustBadges>
                 
@@ -1060,13 +1062,13 @@ const GoogleAdsLanding: React.FC = () => {
                 </HeroHeadline>
                 
                 <HeroSubheadline>
-                  UK's Leading FCA-Regulated Financial Recovery Specialists. 
+                  Canada's Leading CIRO-Regulated Financial Recovery Specialists. 
                   Free Consultation • No Recovery, No Fee • 24/7 Emergency Response
                 </HeroSubheadline>
                 
                 <HeroStats>
                   <StatItem>
-                    <StatNumber>£500M+</StatNumber>
+                    <StatNumber>{formatCurrencyCAD(750000000).replace('.00', '')}M+</StatNumber>
                     <StatLabel>Successfully Recovered</StatLabel>
                   </StatItem>
                   <StatItem>
@@ -1089,18 +1091,17 @@ const GoogleAdsLanding: React.FC = () => {
                   }}>
                     Get Free Recovery Assessment
                   </PrimaryButton>
-                  <EmergencyButton href="tel:+447451263472" onClick={() => {
-                    trackButtonClick('Emergency Call Now', 'hero_section', 'tel:+447451263472');
-                    trackPhoneCallConversion();
+                  <EmergencyButton href="/booking" onClick={() => {
+                    trackButtonClick('Schedule Urgent Consultation', 'hero_section', '/booking');
                   }}>
-                    🚨 Emergency: Call Now +44 7451 263472
+                    🚨 Schedule Urgent Consultation
                   </EmergencyButton>
                 </CTASection>
                 
                 <TrustIndicators>
                   <span>✓ Free Initial Assessment</span>
                   <span>✓ No Upfront Fees</span>
-                  <span>✓ FCA Regulated Firm #836358</span>
+                  <span>✓ CIRO Regulated Firm #{COMPANY_PROFILE_CA.businessNumber}</span>
                 </TrustIndicators>
               </HeroContent>
             </HeroContainer>
@@ -1176,11 +1177,11 @@ const GoogleAdsLanding: React.FC = () => {
             <FormContainer>
               <FormHeader>
                 <h2>Get Your Free Recovery Assessment</h2>
-                <p>Speak with our FCA-regulated specialists. Completely confidential, no obligation.</p>
+                <p>Speak with our CIRO-regulated specialists. Completely confidential, no obligation.</p>
                 <FormTrustIndicators>
                   <span>✓ Free Initial Assessment</span>
                   <span>✓ 24-Hour Response</span>
-                  <span>✓ FCA Regulated Firm #836358</span>
+                  <span>✓ CIRO Regulated Business #877332510</span>
                 </FormTrustIndicators>
               </FormHeader>
               
@@ -1216,17 +1217,17 @@ const GoogleAdsLanding: React.FC = () => {
                       name="phone"
                       type="tel" 
                       required 
-                      placeholder="+44 7XXX XXX XXX" 
+                      placeholder="(555) 123-4567" 
                     />
                   </FormGroup>
                   <FormGroup>
                     <label htmlFor="estimatedLoss">Estimated Loss Amount</label>
                     <select id="estimatedLoss" name="estimatedLoss">
-                      <option>Under £10,000</option>
-                      <option>£10,000 - £50,000</option>
-                      <option>£50,000 - £100,000</option>
-                      <option>£100,000 - £500,000</option>
-                      <option>Over £500,000</option>
+                      <option>Under $15,000 CAD</option>
+                      <option>$15,000 - $75,000 CAD</option>
+                      <option>$75,000 - $150,000 CAD</option>
+                      <option>$150,000 - $750,000 CAD</option>
+                      <option>Over $750,000 CAD</option>
                     </select>
                   </FormGroup>
                 </FormRow>
@@ -1313,15 +1314,15 @@ const GoogleAdsLanding: React.FC = () => {
           <WhyChooseUsSection>
             <SectionHeader>
               <h2>Why Choose Recovery Office?</h2>
-              <p>The only FCA-regulated financial recovery consultancy in the UK</p>
+              <p>Canada's leading CIRO-regulated financial recovery consultancy</p>
             </SectionHeader>
             
             <BenefitsGrid>
               <BenefitCard>
                 <BenefitIcon>🛡️</BenefitIcon>
-                <BenefitTitle>FCA Regulated & Compliant</BenefitTitle>
+                <BenefitTitle>CIRO Regulated & Compliant</BenefitTitle>
                 <BenefitDescription>
-                  Fully authorized by the Financial Conduct Authority (Firm Reference: 836358). 
+                  Fully authorized by the Canadian Investment Regulatory Organization (Business Number: 877332510). 
                   All operations conducted within strict regulatory frameworks.
                 </BenefitDescription>
               </BenefitCard>
@@ -1349,7 +1350,7 @@ const GoogleAdsLanding: React.FC = () => {
                 <BenefitTitle>Absolute Confidentiality</BenefitTitle>
                 <BenefitDescription>
                   Bank-level security and discretion. All cases handled with complete 
-                  confidentiality and protected by £10M professional indemnity insurance.
+                  confidentiality and protected by $15M CAD professional indemnity insurance.
                 </BenefitDescription>
               </BenefitCard>
               
@@ -1357,7 +1358,7 @@ const GoogleAdsLanding: React.FC = () => {
                 <BenefitIcon>🎯</BenefitIcon>
                 <BenefitTitle>Proven Track Record</BenefitTitle>
                 <BenefitDescription>
-                  £500M+ successfully recovered since 2019. 98% client satisfaction rate 
+                  $750M+ CAD successfully recovered since 2019. 98% client satisfaction rate 
                   with documented case studies and verified results.
                 </BenefitDescription>
               </BenefitCard>
@@ -1397,8 +1398,8 @@ const GoogleAdsLanding: React.FC = () => {
                 </UrgencyStats>
               </UrgencyContent>
               <UrgencyAction>
-                <EmergencyButton href="tel:+447451263472">
-                  🚨 Call Emergency Line Now
+                <EmergencyButton href="/booking">
+                  🚨 Book Emergency Consultation
                 </EmergencyButton>
                 <span>Available 24/7 for urgent cases</span>
               </UrgencyAction>
@@ -1416,7 +1417,7 @@ const GoogleAdsLanding: React.FC = () => {
                 <CTAFeatures>
                   <CTAFeature>✓ Free confidential consultation</CTAFeature>
                   <CTAFeature>✓ No upfront fees</CTAFeature>
-                  <CTAFeature>✓ FCA regulated specialists</CTAFeature>
+                  <CTAFeature>✓ CIRO regulated specialists</CTAFeature>
                   <CTAFeature>✓ 24-hour response guarantee</CTAFeature>
                 </CTAFeatures>
               </CTAContent>
@@ -1425,15 +1426,15 @@ const GoogleAdsLanding: React.FC = () => {
                 <PrimaryButton onClick={scrollToForm}>
                   Get Free Assessment Now
                 </PrimaryButton>
-                <SecondaryButton href="tel:+447451263472">
-                  Call +44 7451 263472
+                <SecondaryButton href="mailto:contact@recovery-office.ca">
+                  📧 Email: contact@recovery-office.ca
                 </SecondaryButton>
               </CTAActions>
               
               <CTADisclaimer>
                 <FCADisclaimer>
-                  Recovery Office is authorized and regulated by the Financial Conduct Authority. 
-                  Firm Reference: 836358. Professional indemnity insurance: £10M coverage.
+                  Recovery Office Canada is authorized and regulated by the Canadian Investment Regulatory Organization. 
+                  Business Number: 877332510. Professional indemnity insurance: $15M CAD coverage.
                 </FCADisclaimer>
               </CTADisclaimer>
             </CTAContainer>

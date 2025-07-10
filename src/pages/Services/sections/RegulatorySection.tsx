@@ -9,39 +9,39 @@ const ServicesRegulatorySection: React.FC = () => {
   const SERVICES_REGULATORY_CREDENTIALS = [
     {
       id: 1,
-      name: t('credentials.fca.title'),
-      description: t('credentials.fca.description'),
-      verificationNumber: t('credentials.fca.reference'),
-      verificationDate: t('credentials.fca.lastVerified'),
-      verifyUrl: "https://register.fca.org.uk/",
-      icon: "https://i.ibb.co/twTqPfY3/FCA-Badge-resize.png"
+      name: "CIRO Member Organization",
+      description: "Regulated by the Canadian Investment Regulatory Organization for investment recovery services",
+      verificationNumber: "BN: 877332510",
+      verificationDate: "2024",
+      verifyUrl: "https://www.ciro.ca/",
+      icon: "/assets/icons/badges/ciro-badge.png"
     },
     {
       id: 2,
-      name: t('credentials.cyberEssentials.title'),
-      description: t('credentials.cyberEssentials.description'),
-      verificationNumber: t('credentials.cyberEssentials.reference'),
-      verificationDate: t('credentials.cyberEssentials.lastVerified'),
-      verifyUrl: "https://www.ncsc.gov.uk/cyberessentials/",
-      icon: "https://i.ibb.co/PsLSqdfk/Cyberessentials-Badge-resize.png"
+      name: "FINTRAC Registered",
+      description: "Registered with Financial Transactions and Reports Analysis Centre of Canada",
+      verificationNumber: "Registry ID: 3950042",
+      verificationDate: "2024",
+      verifyUrl: "https://www.fintrac-canafe.gc.ca/",
+      icon: "/assets/icons/badges/fintrac-badge.png"
     },
     {
       id: 3,
-      name: t('credentials.iafci.title'),
-      description: t('credentials.iafci.description'),
-      verificationNumber: t('credentials.iafci.reference'),
-      verificationDate: t('credentials.iafci.lastVerified'),
-      verifyUrl: "https://www.iafci.org/",
-      icon: "https://images2.imgbox.com/07/b8/FqD1iMOl_o.png"
+      name: "FSRA Compliance",
+      description: "Operates under Financial Services Regulatory Authority of Ontario guidelines",
+      verificationNumber: "Ontario Registration",
+      verificationDate: "2024",
+      verifyUrl: "https://www.fsrao.ca/",
+      icon: "/assets/icons/badges/fsra-badge.png"
     },
     {
       id: 4,
-      name: t('credentials.bafin.title'),
-      description: t('credentials.bafin.description'),
-      verificationNumber: t('credentials.bafin.reference'),
-      verificationDate: t('credentials.bafin.lastVerified'),
-      verifyUrl: "https://www.bafin.de/EN/PublikationenDaten/Datenbanken/datenbanken_node_en.html",
-      icon: "https://images2.imgbox.com/bf/bf/cfuajGnV_o.png"
+      name: "PIPEDA Compliant",
+      description: "Full compliance with Personal Information Protection and Electronic Documents Act",
+      verificationNumber: "Privacy Policy Verified",
+      verificationDate: "2024",
+      verifyUrl: "https://www.priv.gc.ca/",
+      icon: "https://images2.imgbox.com/07/b8/FqD1iMOl_o.png"
     }
   ];
 

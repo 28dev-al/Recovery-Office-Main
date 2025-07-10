@@ -1,5 +1,6 @@
 import React from 'react';
 import { ServiceDetailTemplate } from './ServiceDetailTemplate';
+import { formatCurrencyCAD } from '../../utils/formatters';
 
 export const FinancialScamRecoveryPage: React.FC = () => {
   const serviceData = {
@@ -43,14 +44,14 @@ export const FinancialScamRecoveryPage: React.FC = () => {
       recovery: "Success Fee Only"
     },
     successRate: "71%",
-    averageRecovery: "£125K",
+    averageRecovery: formatCurrencyCAD(187500).replace('.00', '') + "+",
     testimonial: {
-      text: "I lost £85,000 to a romance scammer who convinced me to invest in a fake trading platform. Recovery Office traced the money and recovered £67,000. They gave me hope when I had none.",
-      author: "Jennifer R., Birmingham",
-      amount: "£67,000"
+      text: `I lost ${formatCurrencyCAD(127500)} to a romance scammer who convinced me to invest in a fake trading platform. Recovery Office traced the money and recovered ${formatCurrencyCAD(100500)}. They gave me hope when I had none.`,
+      author: "Michael T., Calgary",
+      amount: formatCurrencyCAD(100500)
     },
     seoTitle: "Financial Scam Recovery Services | Romance Scam Recovery | Recovery Office UK",
-    seoDescription: "Expert financial scam recovery services. Recover funds from romance scams, advance fee fraud, wire transfer scams. Call +44 7451 263472.",
+    seoDescription: "Expert financial scam recovery services. Recover funds from romance scams, advance fee fraud, wire transfer scams. Contact us for consultation.",
     seoKeywords: "financial scam recovery, romance scam recovery, advance fee fraud, wire transfer fraud, business email compromise, online dating scam, lottery scam recovery"
   };
 

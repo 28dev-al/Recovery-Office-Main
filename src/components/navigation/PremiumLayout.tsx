@@ -5,6 +5,7 @@ import PremiumNavBar from '../../design-system/components/navigation/PremiumNavB
 import PremiumFooter from '../../design-system/components/footer/PremiumFooter';
 import { RecoveryOfficeLogo } from '../branding';
 import LanguageSwitcher from '../common/LanguageSwitcher';
+import { COMPANY_PROFILE_CA } from '../../constants/companyProfile.ca';
 
 interface PremiumLayoutProps {
   children: React.ReactNode;
@@ -50,12 +51,11 @@ export const PremiumLayout: React.FC<PremiumLayoutProps> = ({ children }) => {
     companyName: 'Recovery Office',
     companyInfo: {
       name: 'Recovery Office',
-      description: 'UK\'s premier financial recovery specialists',
-      address: '2nd Floor, 3 Piccadilly Place, London Road, Manchester, M1 3BN, UK',
-      phone: '+44 7451 263472',
-      email: 'info@recovery-office.com',
-      registrationNumber: '06621703',
-      firmReferenceNumber: '836358'
+      description: 'Canada\'s premier financial asset recovery specialists',
+      address: COMPANY_PROFILE_CA.address,
+      email: COMPANY_PROFILE_CA.email,
+      registrationNumber: COMPANY_PROFILE_CA.businessNumber,
+      regulator: COMPANY_PROFILE_CA.regulatorPrimary
     },
     links: {
       services: [

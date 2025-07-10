@@ -331,7 +331,7 @@ export const BookingConfirmation: React.FC<BookingConfirmationProps> = ({
         borderRadius: '8px',
         fontStyle: 'italic'
       }}>
-        <strong>Confidentiality Notice:</strong> This consultation is completely confidential and there is no obligation to proceed with our services. Recovery Office Limited is authorised and regulated by the Financial Conduct Authority (FCA Reference: 836358).
+        <strong>Confidentiality Notice:</strong> This consultation is completely confidential and there is no obligation to proceed with our services. Recovery Office Limited is authorised and regulated by the Canadian Investment Regulatory Organization (CIRO Business Number: 877332510).
       </div>
     </ConfirmationContainer>
   );

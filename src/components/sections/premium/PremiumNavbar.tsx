@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Container } from '../../../design-system/components/layout/Container';
 import { RecoveryOfficeLogo } from '../../branding';
 import LanguageSwitcher from '../../common/LanguageSwitcher';
+import { COMPANY_PROFILE_CA } from '../../../constants/companyProfile.ca';
 
 // --- TopBar for regulatory info ---
 const TopBar = styled.div`
@@ -370,7 +371,7 @@ export const PremiumNavbar: React.FC = () => {
     <>
       {/* TopBar with emergency contact */}
       <TopBar>
-        FCA Regulated • Firm Reference: 836358 • Emergency: <a href="tel:+447451263472" style={{ color: '#D4AF37', textDecoration: 'underline' }}>+44 7451 263472</a>
+        CIRO Regulated • Business No: {COMPANY_PROFILE_CA.businessNumber} • Emergency: <a href="/booking" style={{ color: '#D4AF37', textDecoration: 'underline' }}>Book Consultation</a>
       </TopBar>
       <NavbarWrapper $scrolled={scrolled}>
         <NavInner>

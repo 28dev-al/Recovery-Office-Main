@@ -16,6 +16,7 @@ import {
   DataCategoryGrid,
   DataCategoryCard
 } from './styles/PrivacyPolicyStyles';
+import { COMPANY_PROFILE_CA } from '../../../constants/companyProfile.ca';
 
 export const PrivacyPolicyPageEnhanced: React.FC = () => {
   return (
@@ -24,12 +25,12 @@ export const PrivacyPolicyPageEnhanced: React.FC = () => {
         <title>Privacy Policy | Recovery Office - Enterprise Financial Data Protection</title>
         <meta 
           name="description" 
-          content="Recovery Office Privacy Policy - How we protect your financial consultation data with enterprise-grade security and UK GDPR compliance for high-net-worth clients." 
+          content="Recovery Office Privacy Policy - How we protect your financial consultation data with enterprise-grade security and Canadian PIPEDA compliance for high-net-worth clients." 
         />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://recovery-office-online.netlify.app/privacy-policy" />
         <meta property="og:title" content="Privacy Policy | Recovery Office - Enterprise Data Protection" />
-        <meta property="og:description" content="Enterprise-grade privacy policy for financial asset recovery consultancy with UK GDPR compliance" />
+        <meta property="og:description" content="Enterprise-grade privacy policy for financial asset recovery consultancy with Canadian PIPEDA compliance" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">
           {JSON.stringify({
@@ -39,10 +40,10 @@ export const PrivacyPolicyPageEnhanced: React.FC = () => {
             "description": "Enterprise-grade privacy policy for financial asset recovery consultancy",
             "url": "https://recovery-office-online.netlify.app/privacy-policy",
             "dateModified": "2025-06-02",
-            "inLanguage": "en-GB",
+            "inLanguage": "en-CA",
             "publisher": {
               "@type": "Organization",
-              "name": "Recovery Office Limited",
+              "name": "Recovery Office Canada Inc.",
               "url": "https://recovery-office-online.netlify.app"
             }
           })}

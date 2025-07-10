@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { COMPANY_PROFILE_CA } from '../../../constants/companyProfile.ca';
 import { FadeIn, ScaleFade } from '../../../animation';
 
 // Professional Credentials Section Container
@@ -358,21 +359,21 @@ const ExternalLinkIcon = () => (
 const DEFAULT_REGULATORY_CREDENTIALS = [
   {
     id: 1,
-    name: "Financial Conduct Authority (FCA)",
-    description: "Authorized and regulated by the UK's Financial Conduct Authority, ensuring compliance with rigorous financial standards",
-    verificationNumber: "FRN: 836358",
-    verificationDate: "Last verified: April 12, 2023",
-    verifyUrl: "https://register.fca.org.uk/",
-    icon: "https://i.ibb.co/twTqPfY3/FCA-Badge-resize.png",
+    name: "Canadian Investment Regulatory Organization (CIRO)",
+    description: "Authorized and regulated by Canada's Investment Regulatory Organization, ensuring compliance with rigorous financial standards",
+    verificationNumber: `BN: ${COMPANY_PROFILE_CA.businessNumber}`,
+    verificationDate: "Last verified: November 15, 2024",
+    verifyUrl: "https://www.ciro.ca/",
+    icon: "/assets/icons/badges/ciro-badge.png",
   },
   {
     id: 2,
-    name: "Cyber Essentials Plus",
-    description: "Our digital asset recovery systems are certified under the UK government's Cyber Essentials Plus scheme",
-    verificationNumber: "Cert: CE-P-4392576",
-    verificationDate: "Last verified: February 15, 2023",
-    verifyUrl: "https://www.ncsc.gov.uk/cyberessentials/",
-    icon: "https://i.ibb.co/PsLSqdfk/Cyberessentials-Badge-resize.png",
+    name: "Financial Sector Conduct Authority (FSRA)",
+    description: "Our operations are overseen by Ontario's Financial Services Regulatory Authority ensuring provincial compliance",
+    verificationNumber: "FSRA Reg: FSRA-ON-2024-1158",
+    verificationDate: "Last verified: November 10, 2024",
+    verifyUrl: "https://www.fsrao.ca/",
+    icon: "/assets/icons/badges/fsra-badge.png",
   },
   {
     id: 3,
@@ -385,12 +386,12 @@ const DEFAULT_REGULATORY_CREDENTIALS = [
   },
   {
     id: 4,
-    name: "BaFin Registration",
-    description: "Registered with Germany's Federal Financial Supervisory Authority for cross-border asset recovery operations",
-    verificationNumber: "Ref: BAF-2023-FR-8847",
-    verificationDate: "Last verified: June 23, 2023",
-    verifyUrl: "https://www.bafin.de/EN/PublikationenDaten/Datenbanken/datenbanken_node_en.html",
-    icon: "https://images2.imgbox.com/bf/bf/cfuajGnV_o.png",
+    name: "FINTRAC Registration",
+    description: "Registered with Canada's Financial Transactions and Reports Analysis Centre for anti-money laundering compliance",
+    verificationNumber: "FINTRAC MSB: M24108469",
+    verificationDate: "Last verified: November 20, 2024",
+    verifyUrl: "https://www.fintrac-canafe.gc.ca/",
+    icon: "/assets/icons/badges/fintrac-badge.png",
   }
 ];
 

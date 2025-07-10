@@ -144,7 +144,7 @@ export const PremiumStatistics: React.FC<PremiumStatisticsProps> = ({
 
   const statisticsData = [
     {
-      value: '£500M+',
+      value: '$750M+ CAD',
       labelKey: 'statistics.assetsRecovered',
       icon: '💰'
     },

@@ -22,13 +22,13 @@ export const CryptocurrencyRecoveryLanding: React.FC = () => {
       <Container>
         <DynamicSEO 
           page="cryptocurrency-recovery"
-          customTitle="Recover Your Stolen Cryptocurrency | Expert Bitcoin Recovery UK | Recovery Office"
-          customDescription="Professional cryptocurrency recovery service with 89% success rate. Expert blockchain forensics for Bitcoin, Ethereum & all altcoins. FCA regulated. Free consultation."
-          customKeywords="cryptocurrency recovery, bitcoin recovery, stolen crypto, blockchain forensics, crypto theft recovery, FCA regulated"
+          customTitle="Recover Your Stolen Cryptocurrency | Expert Bitcoin Recovery Canada | Recovery Office"
+          customDescription="Professional cryptocurrency recovery services for Bitcoin, Ethereum & all altcoins. CIRO regulated. Free consultation."
+          customKeywords="cryptocurrency recovery, bitcoin recovery, stolen crypto, blockchain forensics, crypto theft recovery, CIRO regulated, Canada"
           isTransactional={true}
           serviceData={{
             name: "Cryptocurrency Recovery",
-            price: "£750",
+            price: "$1125 CAD",
             duration: "75 minutes",
             category: "Financial Recovery Services"
           }}
@@ -41,16 +41,16 @@ export const CryptocurrencyRecoveryLanding: React.FC = () => {
               "name": "Recovery Office",
               "hasCredential": {
                 "@type": "EducationalOccupationalCredential",
-                "name": "FCA Authorization",
+                "name": "CIRO Authorization",
                 "credentialCategory": "Financial Services Authorization"
               }
             },
             "offers": {
               "@type": "Offer",
-              "price": "750",
-              "priceCurrency": "GBP",
+              "price": "1125",
+              "priceCurrency": "CAD",
               "availability": "InStock",
-              "eligibleRegion": "GB"
+              "eligibleRegion": "CA"
             },
             "aggregateRating": {
               "@type": "AggregateRating",
@@ -78,11 +78,11 @@ export const CryptocurrencyRecoveryLanding: React.FC = () => {
             <UrgencyBadge>⚡ 89% Success Rate - Act Fast, Recovery Time Matters</UrgencyBadge>
             <HeroTitle>
               <Highlight>Recover Your Stolen Cryptocurrency</Highlight><br />
-              Professional Bitcoin & Crypto Recovery UK
+              Professional Bitcoin & Crypto Recovery Canada
             </HeroTitle>
             <HeroSubtitle>
               Expert blockchain forensics and legal recovery for Bitcoin, Ethereum, and all major cryptocurrencies. 
-              <strong> FCA regulated specialists</strong> with £50M+ successfully recovered.
+              <strong> CIRO regulated specialists</strong> with $75M+ CAD successfully recovered.
             </HeroSubtitle>
             
             <TrustRow>

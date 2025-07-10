@@ -585,7 +585,7 @@ const PremiumBookingPage: React.FC = () => {
           <path d="M12 2L2 7v9c0 5 5 8 10 8s10-3 10-8V7L12 2z" stroke={PREMIUM_COLORS.BASE_COLORS.gray[700]} strokeWidth="2" fill="none" />
           <path d="M9 12l2 2 4-4" stroke={PREMIUM_COLORS.BASE_COLORS.forest[500]} strokeWidth="2" />
         </svg>
-        <Text fontWeight={500} style={{ fontSize: '12px' }}>FCA Regulated</Text>
+        <Text fontWeight={500} style={{ fontSize: '12px' }}>CIRO Regulated</Text>
       </Badge>
       
       <Badge>

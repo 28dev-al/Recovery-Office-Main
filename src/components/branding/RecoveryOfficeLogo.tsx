@@ -80,7 +80,7 @@ const RecoveryOfficeLogo: React.FC<LogoProps> = ({
           <CompanyName isWhite={isWhiteVariant}>Recovery Office</CompanyName>
           <Tagline>Financial Recovery Specialists</Tagline>
           {showCredentials && (
-            <Credentials>FCA Regulated • Manchester, UK</Credentials>
+            <Credentials>CIRO Regulated • Toronto, Canada</Credentials>
           )}
         </LogoText>
       )}

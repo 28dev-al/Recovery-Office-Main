@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { bookingApi } from '../../../config/api';
 import { ClientInformation } from '../../../types/booking';
+import { COMPANY_PROFILE_CA } from '../../../constants/companyProfile.ca';
 
 interface BookingConfirmationStepProps {
   bookingData: {
@@ -139,10 +140,10 @@ export const BookingConfirmationStep: React.FC<BookingConfirmationStepProps> = (
           <ContactInfo>
             <ContactTitle>Need to Contact Us?</ContactTitle>
             <ContactItem>
-              📞 Emergency Hotline: <strong>+44 7451 263472</strong>
+              📅 Priority Support: <strong>Book Another Consultation</strong>
             </ContactItem>
             <ContactItem>
-              📧 Email: <strong>info@recovery-office.com</strong>
+              📧 Email: <strong>{COMPANY_PROFILE_CA.email}</strong>
             </ContactItem>
           </ContactInfo>
 

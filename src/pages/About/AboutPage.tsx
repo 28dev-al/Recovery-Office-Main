@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import DynamicSEO from '../../components/SEO/DynamicSEO';
+import { formatCurrencyCAD } from '../../utils/formatters';
+import { COMPANY_PROFILE_CA } from '../../constants/companyProfile.ca';
 
 export const AboutPage: React.FC = () => {
   const { t } = useTranslation();
@@ -56,7 +58,7 @@ export const AboutPage: React.FC = () => {
             </HeroSubtitle>
             <HeroStats>
               <StatItem>
-                <StatNumber>£500M+</StatNumber>
+                <StatNumber>{formatCurrencyCAD(750000000).replace('.00', '')}+</StatNumber>
                 <StatLabel>{t('about.metrics.assetsUnderRecovery', 'Assets Recovered')}</StatLabel>
               </StatItem>
               <StatItem>
@@ -96,26 +98,26 @@ export const AboutPage: React.FC = () => {
           <StoryGrid>
             <StoryContent>
               <StoryText>
-                {t('about.story.content', 'Recovery Office was founded in 2019 by a consortium of cybersecurity experts, financial investigators, and former law enforcement professionals who recognized the critical need for specialized recovery services in the rapidly evolving digital asset landscape. As cryptocurrency adoption accelerated, so did sophisticated fraud schemes targeting innocent investors. Our founders, having witnessed countless victims lose life savings to elaborate scams, decided to combine their expertise to fight back against financial crime and help victims reclaim their stolen assets. Today, we operate as the UK\'s leading financial recovery firm with offices in London, Manchester, and Edinburgh.')}
+                {t('about.story.content', 'Recovery Office was founded in 2019 by a consortium of cybersecurity experts, financial investigators, and former law enforcement professionals who recognized the critical need for specialized recovery services in the rapidly evolving digital asset landscape. As cryptocurrency adoption accelerated, so did sophisticated fraud schemes targeting innocent investors. Our founders, having witnessed countless victims lose life savings to elaborate scams, decided to combine their expertise to fight back against financial crime and help victims reclaim their stolen assets. Today, we operate as Canada\'s leading financial recovery firm with offices in Toronto, Vancouver, and Montreal.')}
               </StoryText>
               
               {/* Add proper list markup for SEO */}
               <h3>Our Key Achievements</h3>
               <ul>
-                <li><strong>£500M+ Assets Successfully Recovered</strong> since 2019 establishment</li>
+                <li><strong>{formatCurrencyCAD(750000000).replace('.00', '')}+ Assets Successfully Recovered</strong> since 2019 establishment</li>
                 <li><strong>98% Client Satisfaction Rate</strong> across all recovery services</li>
                 <li><strong>2,500+ Cases Resolved</strong> with professional expertise</li>
                 <li><strong>24/7 Emergency Response</strong> for urgent financial recovery cases</li>
-                <li><strong>FCA Regulated Operations</strong> ensuring compliance and trust</li>
+                <li><strong>CIRO Regulated Operations</strong> ensuring compliance and trust</li>
                 <li><strong>Zero Security Breaches</strong> maintaining client confidentiality</li>
               </ul>
             </StoryContent>
             <StoryFeatures>
               <FeatureItem>
                 <FeatureIcon>🏛️</FeatureIcon>
-                <FeatureTitle>{t('credentials.fca.title', 'FCA Regulated')}</FeatureTitle>
+                <FeatureTitle>{t('credentials.ciro.title', 'CIRO Regulated')}</FeatureTitle>
                 <FeatureDescription>
-                  {t('about.story.fcaDescription', 'Fully regulated by the Financial Conduct Authority for investment advisory services')}
+                  {t('about.story.ciroDescription', 'Fully regulated by the Canadian Investment Regulatory Organization for investment advisory services')}
                 </FeatureDescription>
               </FeatureItem>
               <FeatureItem>
@@ -165,7 +167,7 @@ export const AboutPage: React.FC = () => {
               <CardIcon>⚖️</CardIcon>
               <CardTitle>{t('about.capabilities.advocacy.title', 'Regulatory Advocacy')}</CardTitle>
               <CardDescription>
-                {t('about.capabilities.advocacy.description', 'Strategic coordination with FCA, international regulatory bodies, and law enforcement agencies')}
+                {t('about.capabilities.advocacy.description', 'Strategic coordination with CIRO, international regulatory bodies, and law enforcement agencies')}
               </CardDescription>
               <CardTools>
                 <Tool><strong>{t('about.capabilities.toolsFreeze', 'High Court Freezing Orders')}</strong></Tool>
@@ -196,7 +198,7 @@ export const AboutPage: React.FC = () => {
           <h2>Our Professional Track Record</h2>
           <MetricsGrid>
             <MetricCard>
-              <MetricNumber>£500M+</MetricNumber>
+              <MetricNumber>{formatCurrencyCAD(750000000).replace('.00', '')}+</MetricNumber>
               <MetricLabel>{t('about.metrics.assetsUnderRecovery', 'Assets Under Recovery')}</MetricLabel>
               <MetricDescription>{t('statistics.mainTitle', 'Trusted by High-Net-Worth Clients Worldwide')}</MetricDescription>
             </MetricCard>
@@ -206,14 +208,14 @@ export const AboutPage: React.FC = () => {
               <MetricDescription>{t('about.metrics.fcaRegulated', 'Regulated & Compliant')}</MetricDescription>
             </MetricCard>
             <MetricCard>
-              <MetricNumber>FCA</MetricNumber>
-              <MetricLabel>{t('about.metrics.fcaRegulated', 'FCA Regulated')}</MetricLabel>
-              <MetricDescription><strong>Recovery Office is FCA regulated</strong> with firm reference <strong>836358</strong></MetricDescription>
+              <MetricNumber>CIRO</MetricNumber>
+              <MetricLabel>{t('about.metrics.ciroRegulated', 'CIRO Regulated')}</MetricLabel>
+              <MetricDescription><strong>Recovery Office is CIRO regulated</strong> with business number <strong>{COMPANY_PROFILE_CA.businessNumber}</strong></MetricDescription>
             </MetricCard>
             <MetricCard>
               <MetricNumber>100%</MetricNumber>
               <MetricLabel>{t('about.metrics.zeroBreach', 'Zero Breach Record')}</MetricLabel>
-              <MetricDescription>We have successfully recovered <strong>over £500 million</strong> for our clients</MetricDescription>
+              <MetricDescription>We have successfully recovered <strong>over {formatCurrencyCAD(750000000).replace('.00', '')} million</strong> for our clients</MetricDescription>
             </MetricCard>
           </MetricsGrid>
         </ContentWrapper>
@@ -240,9 +242,9 @@ export const AboutPage: React.FC = () => {
             
             <ContactCard>
               <ContactIcon>📞</ContactIcon>
-              <ContactTitle>{t('contact.info.phone', 'Emergency Hotline')}</ContactTitle>
+              <ContactTitle>{t('contact.info.consultation', 'Priority Consultation')}</ContactTitle>
               <ContactDetails>
-                <ContactLink href="tel:+447451263472">{t('contact.offices.uk.phone', '+44 7451 263472')}</ContactLink>
+                <ContactLink href="/booking">{t('contact.booking', 'Schedule Consultation')}</ContactLink>
                 <ContactNote>{t('contact.info.availability', 'Available 24/7 for urgent cases')}</ContactNote>
               </ContactDetails>
             </ContactCard>
@@ -281,8 +283,8 @@ export const AboutPage: React.FC = () => {
               <PrimaryCTA to="/booking">
                 {t('about.cta.button', 'Book Professional Consultation')}
               </PrimaryCTA>
-              <SecondaryCTA href="tel:+447451263472">
-                Call Recovery Office Directly
+              <SecondaryCTA href="mailto:contact@recovery-office.ca">
+                Email Recovery Office Directly
               </SecondaryCTA>
             </CTAButtons>
             <CTANote>

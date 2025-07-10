@@ -1,0 +1,66 @@
+{
+  "company": {
+    "address": "{{address}}",
+    "email": "{{email}}",
+    "businessNumber": "{{businessNumber}}",
+    "registryId": "{{registryId}}",
+    "registeredOffice": "{{registeredOffice}}",
+    "regulatorPrimary": "{{regulatorPrimary}}",
+    "regulatorList": "{{regulatorList}}"
+  },
+  "meta": {
+    "siteName": "Recovery Office Canada - Spécialistes en récupération d'actifs",
+    "description": "Contactez les spécialistes en récupération financière du Canada. Consultation gratuite disponible. Numéro d'entreprise réglementé OCRCI : 877332510.",
+    "keywords": "récupération d'actifs, récupération de fraude financière, récupération de cryptomonnaie, fraude d'investissement, Canada, réglementé OCRCI"
+  },
+  "hero": {
+    "title": "Récupérez vos actifs perdus",
+    "subtitle": "Services professionnels de récupération financière",
+    "description": "Spécialistes experts en récupération d'actifs aidant les particuliers et entreprises à récupérer leurs investissements perdus, cryptomonnaies et fonds de fraude financière.",
+    "cta": "Commencer le processus de récupération",
+    "ctaSecondary": "Consultation gratuite",
+    "ctaPrimary": "Consultation gratuite"
+  },
+  "statistics": {
+    "mainTitle": "Résultats prouvés",
+    "subtitle": "Notre succès en chiffres",
+    "assetsRecovered": "Actifs récupérés",
+    "satisfaction": "Satisfaction client",
+    "casesResolved": "Cas résolus",
+    "responseTime": "Temps de réponse"
+  },
+  "footer": {
+    "company": {
+      "title": "Entreprise",
+      "name": "Recovery Office Canada",
+      "description": "Spécialistes professionnels en récupération d'actifs servant les clients à travers le Canada.",
+      "aboutUs": "À propos de nous",
+      "ourTeam": "Notre équipe",
+      "contactUs": "Nous contacter",
+      "bookConsultation": "Réserver une consultation"
+    },
+    "services": {
+      "title": "Services",
+      "cryptocurrencyRecovery": "Récupération de cryptomonnaie",
+      "investmentFraudRecovery": "Récupération de fraude d'investissement",
+      "financialScamRecovery": "Récupération d'escroquerie financière",
+      "regulatoryComplaintAssistance": "Assistance pour plainte réglementaire"
+    },
+    "contactInformation": {
+      "title": "Informations de contact",
+      "address": "Suite 2700, 1 First Canadian Place, Toronto, ON M5X 1A4",
+      "email": "contact@recovery-office.com"
+    },
+    "resources": {
+      "title": "Ressources",
+      "faq": "FAQ",
+      "blog": "Blog",
+      "emergencyConsultation": "Consultation d'urgence",
+      "clientPortal": "Portail client"
+    },
+    "accessibility": "Accessibilité",
+    "copyright": "© 2024 Recovery Office Canada. Tous droits réservés. Incorporée en Ontario, Canada.",
+    "regulatoryDisclaimer": "Réglementé par CIRO. Recovery Office fournit des services professionnels de récupération d'actifs financiers à travers le Canada. Toutes les opérations sont menées dans le cadre des réglementations fédérales et provinciales canadiennes.",
+    "generalDisclaimer": "Recovery Office se spécialise dans les services de récupération d'actifs financiers. Bien que nous maintenions des taux de succès élevés, les résultats de récupération dépendent des circonstances individuelles de chaque cas. Toutes les consultations sont confidentielles et nous opérons sur une base 'pas de récupération, pas de frais' pour les cas qualifiés. Recovery Office s'engage à aider les victimes de fraude financière à récupérer leurs actifs volés par des moyens légaux et éthiques."
+  }
+} 

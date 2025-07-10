@@ -260,12 +260,12 @@ export const BlogHero: React.FC<BlogHeroProps> = ({ onSearch, onCategoryFilter }
       <HeroContent>
         <HeroTitle>Financial Asset Recovery Insights</HeroTitle>
         <HeroSubtitle>
-          Expert analysis, case studies, and recovery strategies from UK's leading 
+          Expert analysis, case studies, and recovery strategies from Canada's leading 
           financial asset recovery specialists
         </HeroSubtitle>
         <HeroDescription>
           Stay informed with the latest insights from our team of experts who have 
-          recovered over £500M in client assets across cryptocurrency, investment fraud, 
+          recovered over $750M in client assets across cryptocurrency, investment fraud, 
           and international recovery cases.
         </HeroDescription>
 
@@ -325,7 +325,7 @@ export const BlogHero: React.FC<BlogHeroProps> = ({ onSearch, onCategoryFilter }
 
         <TrustIndicators>
           <TrustBadge>
-            <strong>£500M+</strong>
+            <strong>$750M+</strong>
             <span>Assets Recovered</span>
           </TrustBadge>
           <TrustBadge>

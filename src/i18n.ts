@@ -8,8 +8,8 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
-    supportedLngs: ['en', 'de'],
+    fallbackLng: ['en-CA', 'en'],
+    supportedLngs: ['en-CA', 'fr-CA', 'en', 'de'],
     debug: process.env.NODE_ENV === 'development',
     
     interpolation: {
@@ -34,6 +34,8 @@ i18n
     react: {
       useSuspense: true,
     },
+
+    lng: process.env.REACT_APP_LOCALE_TARGET || undefined,
   });
 
 export default i18n; 

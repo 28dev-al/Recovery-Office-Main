@@ -89,7 +89,30 @@ const Photo = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  
+  /* Specific positioning for each team member based on their photo */
+  &[alt*="Alex Bianchi"] {
+    object-position: center 35%; /* Alex's photo needs more room for his face */
+  }
+  
+  &[alt*="Mark Marandola"] {
+    object-position: center 40%; /* Mark's photo composition needs different positioning */
+  }
+  
+  &[alt*="Jessica Davies"] {
+    object-position: center 25%; /* Jessica's photo works well with standard positioning */
+  }
+  
+  &[alt*="Claire Lee"] {
+    object-position: center 30%; /* Claire's photo needs slight adjustment */
+  }
+  
+  /* Fallback for any other photos */
+  &:not([alt*="Alex Bianchi"]):not([alt*="Mark Marandola"]):not([alt*="Jessica Davies"]):not([alt*="Claire Lee"]) {
+    object-position: center 25%;
+  }
 `;
 
 // Content container with sacred spacing
@@ -192,7 +215,30 @@ const MemberListPhoto = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    
+    /* Specific positioning for each team member based on their photo */
+    &[alt*="Alex Bianchi"] {
+      object-position: center 35%; /* Alex's photo needs more room for his face */
+    }
+    
+    &[alt*="Mark Marandola"] {
+      object-position: center 40%; /* Mark's photo composition needs different positioning */
+    }
+    
+    &[alt*="Jessica Davies"] {
+      object-position: center 25%; /* Jessica's photo works well with standard positioning */
+    }
+    
+    &[alt*="Claire Lee"] {
+      object-position: center 30%; /* Claire's photo needs slight adjustment */
+    }
+    
+    /* Fallback for any other photos */
+    &:not([alt*="Alex Bianchi"]):not([alt*="Mark Marandola"]):not([alt*="Jessica Davies"]):not([alt*="Claire Lee"]) {
+      object-position: center 25%;
+    }
   }
 `;
 

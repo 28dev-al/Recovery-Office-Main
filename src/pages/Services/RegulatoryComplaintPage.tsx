@@ -1,5 +1,6 @@
 import React from 'react';
 import { ServiceDetailTemplate } from './ServiceDetailTemplate';
+import { formatCurrencyCAD } from '../../utils/formatters';
 
 export const RegulatoryComplaintPage: React.FC = () => {
   const serviceData = {
@@ -43,14 +44,14 @@ export const RegulatoryComplaintPage: React.FC = () => {
       recovery: "Success Fee Only"
     },
     successRate: "89%",
-    averageRecovery: "£95K",
+    averageRecovery: formatCurrencyCAD(142500).replace('.00', '') + "+",
     testimonial: {
-      text: "Recovery Office helped me file a successful FCA complaint against my former financial advisor. Their expertise in regulatory procedures resulted in £45,000 compensation that I never thought possible.",
-      author: "David L., Edinburgh",
-      amount: "£45,000"
+      text: `Their expertise in regulatory procedures resulted in ${formatCurrencyCAD(67500)} compensation that I never thought possible.`,
+      author: "David R., Montreal",
+      amount: formatCurrencyCAD(67500)
     },
     seoTitle: "Regulatory Complaint Assistance | FCA Complaints | Recovery Office UK",
-    seoDescription: "Regulatory complaint assistance. File FCA complaints, ombudsman services. Expert regulatory enforcement. Call +44 7451 263472.",
+    seoDescription: "Regulatory complaint assistance. File CIRO complaints, ombudsman services. Expert regulatory enforcement. Contact us for consultation.",
     seoKeywords: "regulatory complaint assistance, FCA complaints, financial ombudsman service, regulatory enforcement, compensation claims, professional misconduct, compliance violations"
   };
 

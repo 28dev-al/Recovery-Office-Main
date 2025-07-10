@@ -13,6 +13,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { COMPANY_PROFILE_CA } from '../../constants/companyProfile.ca';
 
 interface DynamicSEOProps {
   /** Page identifier for translation lookup */
@@ -83,42 +84,41 @@ const DynamicSEO: React.FC<DynamicSEOProps> = ({
   const defaultStructuredData = {
     "@context": "https://schema.org",
     "@type": "FinancialService",
-    "name": "Recovery Office",
-    "alternateName": "Recovery Office Limited",
-    "description": "UK's premier FCA-regulated financial asset recovery consultancy",
+    "name": "Recovery Office Canada",
+    "alternateName": "Recovery Office Canada Inc.",
+    "description": "Canada's premier CIRO-regulated financial asset recovery consultancy",
     "url": canonicalUrl,
     "logo": "https://images2.imgbox.com/86/72/GE2VLjan_o.png",
     "image": "https://images2.imgbox.com/86/72/GE2VLjan_o.png",
-    "telephone": "+44 7451 263472",
-    "email": "info@recovery-office.com",
+    "email": COMPANY_PROFILE_CA.email,
     "foundingDate": "2019",
     "slogan": "Excellence in Financial Recovery",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "2nd Floor, 3 Piccadilly Place, London Road",
-      "addressLocality": "Manchester",
-      "addressRegion": "Greater Manchester", 
-      "postalCode": "M1 3BN",
-      "addressCountry": "GB"
+      "streetAddress": COMPANY_PROFILE_CA.address.split(',')[0],
+      "addressLocality": "Toronto",
+      "addressRegion": "Ontario", 
+      "postalCode": "M5X 1A4",
+      "addressCountry": "CA"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 53.4808,
-      "longitude": -2.2426
+      "latitude": 43.6532,
+      "longitude": -79.3832
     },
     "hasCredential": {
       "@type": "EducationalOccupationalCredential",
-      "name": "FCA Authorization",
+      "name": "CIRO Authorization",
       "credentialCategory": "Financial Services Authorization",
       "recognizedBy": {
         "@type": "Organization",
-        "name": "Financial Conduct Authority",
-        "url": "https://www.fca.org.uk/"
+        "name": "Canadian Investment Regulatory Organization",
+        "url": "https://www.ciro.ca/"
       }
     },
     "areaServed": {
       "@type": "Country",
-      "name": "United Kingdom"
+      "name": "Canada"
     },
     "serviceType": [
       "Financial Asset Recovery",
@@ -138,11 +138,11 @@ const DynamicSEO: React.FC<DynamicSEOProps> = ({
     "offers": {
       "@type": "Offer",
       "price": serviceData.price.replace('£', ''),
-      "priceCurrency": "GBP",
+      "priceCurrency": "CAD",
       "availability": "InStock",
       "validFrom": new Date().toISOString(),
       "priceValidUntil": new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
-      "eligibleRegion": "GB"
+      "eligibleRegion": "CA"
     },
     "provider": defaultStructuredData,
     "additionalType": "FinancialService"
@@ -169,22 +169,22 @@ const DynamicSEO: React.FC<DynamicSEOProps> = ({
       <html lang={i18n.language} />
       
       {/* FCA Compliance & Regulatory Meta Tags */}
-      <meta name="fca-regulated" content="true" />
-      <meta name="firm-reference" content="836358" />
-      <meta name="regulatory-body" content="Financial Conduct Authority" />
+      <meta name="ciro-regulated" content="true" />
+      <meta name="business-number" content={COMPANY_PROFILE_CA.businessNumber} />
+      <meta name="regulatory-body" content="Canadian Investment Regulatory Organization" />
       <meta name="business-type" content="Financial Services" />
       <meta name="service-category" content="Asset Recovery" />
       
-      {/* Geographic Targeting - Manchester/UK Focus */}
-      <meta name="geo.region" content="GB-MAN" />
-      <meta name="geo.placename" content="Manchester, United Kingdom" />
-      <meta name="ICBM" content="53.4808, -2.2426" />
-      <meta name="geo.position" content="53.4808;-2.2426" />
+      {/* Geographic Targeting - Toronto/Canada Focus */}
+      <meta name="geo.region" content="CA-ON" />
+      <meta name="geo.placename" content="Toronto, Ontario, Canada" />
+      <meta name="ICBM" content="43.6532, -79.3832" />
+      <meta name="geo.position" content="43.6532;-79.3832" />
       
       {/* YMYL Content Signals */}
       <meta name="content-category" content="YMYL" />
       <meta name="expertise-level" content="Expert" />
-      <meta name="authoritativeness" content="FCA-Regulated" />
+      <meta name="authoritativeness" content="CIRO-Regulated" />
       <meta name="trustworthiness" content="Professional" />
       
       {/* Enhanced Open Graph - Optimized for Social Sharing */}
@@ -194,11 +194,11 @@ const DynamicSEO: React.FC<DynamicSEOProps> = ({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content="Recovery Office" />
       <meta property="og:image" content="https://images2.imgbox.com/86/72/GE2VLjan_o.png" />
-      <meta property="og:image:alt" content="Recovery Office - UK Financial Asset Recovery Specialists" />
+      <meta property="og:image:alt" content="Recovery Office - Canadian Financial Asset Recovery Specialists" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:locale" content={i18n.language === 'de' ? 'de_DE' : 'en_GB'} />
-      <meta property="og:locale:alternate" content={i18n.language === 'de' ? 'en_GB' : 'de_DE'} />
+      <meta property="og:locale" content={i18n.language === 'de' ? 'de_CA' : 'en_CA'} />
+      <meta property="og:locale:alternate" content={i18n.language === 'de' ? 'en_CA' : 'fr_CA'} />
       
       {/* Twitter Cards - Required for Social Media */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -207,13 +207,12 @@ const DynamicSEO: React.FC<DynamicSEOProps> = ({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={optimizedDescription} />
       <meta name="twitter:image" content="https://images2.imgbox.com/86/72/GE2VLjan_o.png" />
-      <meta name="twitter:image:alt" content="Recovery Office - UK Financial Asset Recovery Specialists" />
+      <meta name="twitter:image:alt" content="Recovery Office - Canadian Financial Asset Recovery Specialists" />
       <meta name="twitter:url" content={canonicalUrl} />
       
       {/* Business & Contact Information */}
-      <meta name="business-name" content="Recovery Office Limited" />
-      <meta name="contact-phone" content="+44 7451 263472" />
-      <meta name="contact-email" content="info@recovery-office.com" />
+      <meta name="business-name" content="Recovery Office Canada Inc." />
+      <meta name="contact-email" content={COMPANY_PROFILE_CA.email} />
       <meta name="business-hours" content="24/7" />
       <meta name="emergency-contact" content="true" />
       
@@ -254,9 +253,9 @@ const DynamicSEO: React.FC<DynamicSEOProps> = ({
       <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       
       {/* Additional SEO Meta Tags */}
-      <meta name="author" content="Recovery Office Limited" />
-      <meta name="publisher" content="Recovery Office Limited" />
-      <meta name="copyright" content="© 2024 Recovery Office Limited. All rights reserved." />
+      <meta name="author" content="Recovery Office Canada Inc." />
+      <meta name="publisher" content="Recovery Office Canada Inc." />
+      <meta name="copyright" content="© 2024 Recovery Office Canada Inc. All rights reserved." />
       <meta name="application-name" content="Recovery Office" />
       <meta name="msapplication-TileColor" content="#1a365d" />
       <meta name="theme-color" content="#1a365d" />

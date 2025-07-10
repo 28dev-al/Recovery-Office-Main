@@ -1,5 +1,6 @@
 import React from 'react';
 import { ServiceDetailTemplate } from './ServiceDetailTemplate';
+import { formatCurrencyCAD } from '../../utils/formatters';
 
 export const InvestmentFraudRecoveryPage: React.FC = () => {
   const serviceData = {
@@ -43,14 +44,14 @@ export const InvestmentFraudRecoveryPage: React.FC = () => {
       recovery: "Success Fee Only"
     },
     successRate: "78%",
-    averageRecovery: "£450K",
+    averageRecovery: formatCurrencyCAD(675000).replace('.00', '') + "+",
     testimonial: {
-      text: "Recovery Office helped me recover £230,000 from a binary options scam. Their expertise and determination made the impossible possible. I can't thank them enough.",
-      author: "Sarah M., Manchester",
-      amount: "£230,000"
+      text: `Recovery Office helped me recover ${formatCurrencyCAD(345000)} from a binary options scam. Their expertise and determination made the impossible possible. I can't thank them enough.`,
+      author: "Sarah M., Toronto",
+      amount: formatCurrencyCAD(345000)
     },
     seoTitle: "Investment Fraud Recovery Services | Recovery Office Manchester UK",
-    seoDescription: "Professional investment fraud recovery services by Recovery Office. Expert recovery from Ponzi schemes, fake trading platforms, forex scams. Free consultation. Call +44 7451 263472.",
+    seoDescription: "Professional investment fraud recovery services by Recovery Office. Expert recovery from Ponzi schemes, fake trading platforms, forex scams. Free consultation available.",
     seoKeywords: "investment fraud recovery, Ponzi scheme recovery, binary options fraud, forex scam recovery, fraudulent trading platforms, investment scam help, UK financial recovery"
   };
 

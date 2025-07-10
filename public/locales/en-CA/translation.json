@@ -1,0 +1,66 @@
+{
+  "company": {
+    "address": "{{address}}",
+    "email": "{{email}}",
+    "businessNumber": "{{businessNumber}}",
+    "registryId": "{{registryId}}",
+    "registeredOffice": "{{registeredOffice}}",
+    "regulatorPrimary": "{{regulatorPrimary}}",
+    "regulatorList": "{{regulatorList}}"
+  },
+  "meta": {
+    "siteName": "Recovery Office Canada - Asset Recovery Specialists",
+    "description": "Contact Canada's leading financial recovery specialists. Free consultation available. CIRO regulated business number: 877332510.",
+    "keywords": "asset recovery, financial fraud recovery, cryptocurrency recovery, investment fraud, Canada, CIRO regulated"
+  },
+  "hero": {
+    "title": "Recover Your Lost Assets",
+    "subtitle": "Professional Financial Recovery Services",
+    "description": "Expert asset recovery specialists helping individuals and businesses recover lost investments, cryptocurrency, and funds from financial fraud.",
+    "cta": "Start Recovery Process",
+    "ctaSecondary": "Free Consultation",
+    "ctaPrimary": "Free Consultation"
+  },
+  "statistics": {
+    "mainTitle": "Proven Track Record",
+    "subtitle": "Our success in numbers",
+    "assetsRecovered": "Assets Recovered",
+    "satisfaction": "Client Satisfaction",
+    "casesResolved": "Cases Resolved",
+    "responseTime": "Response Time"
+  },
+  "footer": {
+    "company": {
+      "title": "Company",
+      "name": "Recovery Office Canada",
+      "description": "Professional asset recovery specialists serving clients across Canada.",
+      "aboutUs": "About Us",
+      "ourTeam": "Our Team",
+      "contactUs": "Contact Us",
+      "bookConsultation": "Book Consultation"
+    },
+    "services": {
+      "title": "Services",
+      "cryptocurrencyRecovery": "Cryptocurrency Recovery",
+      "investmentFraudRecovery": "Investment Fraud Recovery",
+      "financialScamRecovery": "Financial Scam Recovery",
+      "regulatoryComplaintAssistance": "Regulatory Complaint Assistance"
+    },
+    "contactInformation": {
+      "title": "Contact Information",
+      "address": "Suite 2700, 1 First Canadian Place, Toronto, ON M5X 1A4",
+      "email": "contact@recovery-office.com"
+    },
+    "resources": {
+      "title": "Resources",
+      "faq": "FAQ",
+      "blog": "Blog",
+      "emergencyConsultation": "Emergency Consultation",
+      "clientPortal": "Client Portal"
+    },
+    "accessibility": "Accessibility",
+    "copyright": "© 2024 Recovery Office Canada. All rights reserved. Incorporated in Ontario, Canada.",
+    "regulatoryDisclaimer": "Regulated by CIRO. Recovery Office provides professional financial asset recovery services across Canada. All operations are conducted within Canadian federal and provincial regulatory frameworks.",
+    "generalDisclaimer": "Recovery Office specializes in financial asset recovery services. While we maintain high success rates, recovery outcomes depend on individual case circumstances. All consultations are confidential and we operate on a no recovery, no fee basis for qualifying cases. Recovery Office is committed to helping victims of financial fraud reclaim their stolen assets through legal and ethical means."
+  }
+} 

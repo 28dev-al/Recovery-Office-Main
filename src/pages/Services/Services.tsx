@@ -318,9 +318,9 @@ const ServicesPage: React.FC = () => {
         {/* SEO Optimization - Critical for Google Ads */}
         <DynamicSEO 
           page="services"
-          customTitle="Financial Recovery Services | Recovery Office UK"
-          customDescription="Professional financial recovery specialists. Expert cryptocurrency recovery, investment fraud assistance, and scam resolution. FCA regulated."
-          customKeywords="financial recovery services, cryptocurrency recovery, investment fraud recovery, financial scam recovery, regulatory assistance, FCA regulated, UK"
+          customTitle="Financial Recovery Services | Recovery Office Canada"
+          customDescription="Professional financial recovery specialists. Expert cryptocurrency recovery, investment fraud assistance, and scam resolution. CIRO regulated."
+          customKeywords="financial recovery services, cryptocurrency recovery, investment fraud recovery, financial scam recovery, regulatory assistance, CIRO regulated, Canada"
           isTransactional={false}
           structuredData={{
             "@context": "https://schema.org",
@@ -331,7 +331,7 @@ const ServicesPage: React.FC = () => {
               "name": "Recovery Office",
               "hasCredential": {
                 "@type": "EducationalOccupationalCredential",
-                "name": "FCA Authorization",
+                "name": "CIRO Authorization",
                 "credentialCategory": "Financial Services Authorization"
               }
             },
@@ -343,7 +343,7 @@ const ServicesPage: React.FC = () => {
             ],
             "areaServed": {
               "@type": "Country",
-              "name": "United Kingdom"
+              "name": "Canada"
             },
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
@@ -356,7 +356,7 @@ const ServicesPage: React.FC = () => {
                   "description": service.description
                 },
                 "price": service.pricing.initial,
-                "priceCurrency": "GBP"
+                "priceCurrency": "CAD"
               }))
             }
           }}

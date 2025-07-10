@@ -376,7 +376,7 @@ const PremiumHero: React.FC<PremiumHeroProps> = ({
               <TrustBadges variants={itemVariants}>
                 <TrustBadge>
                   <span className="icon">🛡️</span>
-                  FCA Regulated
+                  CIRO Regulated
                 </TrustBadge>
                 <TrustBadge>
                   <span className="icon">⚖️</span>
@@ -384,7 +384,7 @@ const PremiumHero: React.FC<PremiumHeroProps> = ({
                 </TrustBadge>
                 <TrustBadge>
                   <span className="icon">🏢</span>
-                  Manchester Based
+                  Toronto Based
                 </TrustBadge>
                 <TrustBadge>
                   <span className="icon">💰</span>

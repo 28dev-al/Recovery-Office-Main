@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { formatCurrencyCAD } from '../../utils/formatters';
 import { Helmet } from 'react-helmet-async';
 
 export const RegulatoryAssistancePage: React.FC = () => {
@@ -44,7 +45,7 @@ export const RegulatoryAssistancePage: React.FC = () => {
                 <StatLabel>Success Rate</StatLabel>
               </StatItem>
               <StatItem>
-                <StatNumber>£2.8M+</StatNumber>
+                <StatNumber>{formatCurrencyCAD(4200000).replace('.00', '')}+</StatNumber>
                 <StatLabel>Compensations Secured</StatLabel>
               </StatItem>
               <StatItem>
@@ -95,7 +96,7 @@ export const RegulatoryAssistancePage: React.FC = () => {
                   Professional representation for FCA complaints against banks, investment firms, and financial advisors. We handle complex cases involving mis-selling, poor advice, and regulatory breaches.
                 </CardDescription>
                 <ServiceStats>
-                  <StatLine>Average Compensation: £45,000</StatLine>
+                  <StatLine>Average Compensation: {formatCurrencyCAD(67500)}</StatLine>
                   <StatLine>Success Rate: 96%</StatLine>
                   <StatLine>Cases Handled: 320+</StatLine>
                 </ServiceStats>
@@ -108,7 +109,7 @@ export const RegulatoryAssistancePage: React.FC = () => {
                   Expert representation before the Financial Ombudsman Service (FOS) for banking disputes, insurance claims, and investment complaints with professional case preparation and advocacy.
                 </CardDescription>
                 <ServiceStats>
-                  <StatLine>Average Compensation: £38,000</StatLine>
+                  <StatLine>Average Compensation: {formatCurrencyCAD(57000)}</StatLine>
                   <StatLine>Success Rate: 92%</StatLine>
                   <StatLine>Cases Handled: 280+</StatLine>
                 </ServiceStats>
@@ -121,7 +122,7 @@ export const RegulatoryAssistancePage: React.FC = () => {
                   Comprehensive compliance advice for financial services firms, including FCA authorization, regulatory reporting, and compliance framework implementation for growing businesses.
                 </CardDescription>
                 <ServiceStats>
-                  <StatLine>Average Saving: £85,000</StatLine>
+                  <StatLine>Average Saving: {formatCurrencyCAD(127500)}</StatLine>
                   <StatLine>Success Rate: 98%</StatLine>
                   <StatLine>Firms Assisted: 150+</StatLine>
                 </ServiceStats>
@@ -211,14 +212,14 @@ export const RegulatoryAssistancePage: React.FC = () => {
             <TestimonialsGrid>
               <TestimonialCard>
                 <TestimonialText>
-                  "Recovery Office successfully challenged my bank\'s refusal to compensate for investment mis-selling. The FCA complaint resulted in £125,000 compensation plus costs. Their regulatory expertise was exceptional."
+                  "Recovery Office successfully challenged my bank's refusal to compensate for investment mis-selling. The CIRO complaint resulted in {formatCurrencyCAD(187500)} compensation plus costs. Their regulatory expertise was exceptional."
                 </TestimonialText>
                 <TestimonialAuthor>
                   <AuthorInfo>
                     <AuthorName>Robert Harrison</AuthorName>
-                    <AuthorLocation>Leeds, UK</AuthorLocation>
+                    <AuthorLocation>Toronto, ON</AuthorLocation>
                   </AuthorInfo>
-                  <CompensationAmount>Compensation: £125,000</CompensationAmount>
+                  <CompensationAmount>Compensation: {formatCurrencyCAD(187500)}</CompensationAmount>
                 </TestimonialAuthor>
               </TestimonialCard>
 
@@ -229,9 +230,9 @@ export const RegulatoryAssistancePage: React.FC = () => {
                 <TestimonialAuthor>
                   <AuthorInfo>
                     <AuthorName>Jennifer Walsh</AuthorName>
-                    <AuthorLocation>Birmingham, UK</AuthorLocation>
+                    <AuthorLocation>Vancouver, BC</AuthorLocation>
                   </AuthorInfo>
-                  <CompensationAmount>Settlement: £89,000</CompensationAmount>
+                  <CompensationAmount>Settlement: {formatCurrencyCAD(133500)}</CompensationAmount>
                 </TestimonialAuthor>
               </TestimonialCard>
 
@@ -242,9 +243,9 @@ export const RegulatoryAssistancePage: React.FC = () => {
                 <TestimonialAuthor>
                   <AuthorInfo>
                     <AuthorName>Michael Chen</AuthorName>
-                    <AuthorLocation>London, UK</AuthorLocation>
+                    <AuthorLocation>Calgary, AB</AuthorLocation>
                   </AuthorInfo>
-                  <CompensationAmount>Savings: £150,000</CompensationAmount>
+                  <CompensationAmount>Savings: {formatCurrencyCAD(225000)}</CompensationAmount>
                 </TestimonialAuthor>
               </TestimonialCard>
             </TestimonialsGrid>
@@ -330,7 +331,7 @@ export const RegulatoryAssistancePage: React.FC = () => {
             <PricingGrid>
               <PricingCard>
                 <PricingTitle>Free Consultation</PricingTitle>
-                <PricingPrice>£0</PricingPrice>
+                <PricingPrice>{formatCurrencyCAD(0)}</PricingPrice>
                 <PricingDescription>Initial regulatory case assessment</PricingDescription>
                 <PricingFeatures>
                   <Feature>✓ 48-hour case review</Feature>
@@ -363,7 +364,7 @@ export const RegulatoryAssistancePage: React.FC = () => {
 
               <PricingCard>
                 <PricingTitle>Compliance Advisory</PricingTitle>
-                <PricingPrice>£350/hr</PricingPrice>
+                <PricingPrice>{formatCurrencyCAD(525)}/hr</PricingPrice>
                 <PricingDescription>Ongoing regulatory compliance support</PricingDescription>
                 <PricingFeatures>
                   <Feature>✓ FCA authorization assistance</Feature>

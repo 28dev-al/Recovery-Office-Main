@@ -8,6 +8,7 @@ import { ConfirmationStep } from '../../../components/booking/steps/Confirmation
 import { ServiceData } from '../../../types/service';
 import { ClientInformation } from '../../../types/client';
 import { BookingTimeSlot } from '../../../types/booking.types';
+import { PREMIUM_COLORS } from '../../../design-system/tokens/colors.premium';
 
 interface Step {
   id: number;
@@ -18,23 +19,12 @@ interface Step {
 }
 
 export const ProfessionalBookingWizard: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedService, setSelectedService] = useState<ServiceData | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
   const [clientInfo, setClientInfo] = useState<ClientInformation | null>(null);
-
-  // 🇬🇧 ENGLISH LANGUAGE VERIFICATION - Add console debugging
-  console.log('🇬🇧 LANGUAGE CHECK:', i18n.language);
-  console.log('🇬🇧 Step 1 text:', t('booking.steps.selectService'));
-  console.log('🇬🇧 Step 2 text:', t('booking.steps.dateTime'));
-
-  if (i18n.language === 'en') {
-    console.log('🇬🇧 ENGLISH MODE - Steps should show English text');
-  } else if (i18n.language === 'de') {
-    console.log('🇩🇪 GERMAN MODE - Steps should show German text');
-  }
 
   // Enhanced validation function with proper state checking
   const validateStep = (stepNumber: number): boolean => {
@@ -201,17 +191,26 @@ export const ProfessionalBookingWizard: React.FC = () => {
 
   return (
     <WizardContainer>
-      <ProgressIndicator>
-        {steps.map((step) => (
-          <StepIndicator 
-            key={step.id}
-            active={step.isActive} 
-            completed={step.isCompleted}
-          >
-            {step.id}. {step.title}
-          </StepIndicator>
+      <ProgressContainer>
+        {steps.map((step, index) => (
+          <StepItem key={step.id}>
+            <StepIndicator 
+              active={step.isActive} 
+              completed={step.isCompleted}
+              onClick={() => validateStep(step.id) && setCurrentStep(step.id)}
+            >
+              <StepNumber active={step.isActive} completed={step.isCompleted}>
+                {step.isCompleted ? '✓' : step.id}
+              </StepNumber>
+              <StepLabel>
+                <StepTitle completed={step.isCompleted}>{step.title.split('.').pop()}</StepTitle>
+                <StepSubtitle>{step.subtitle}</StepSubtitle>
+              </StepLabel>
+            </StepIndicator>
+            {index < steps.length - 1 && <StepConnector completed={step.isCompleted} />}
+          </StepItem>
         ))}
-      </ProgressIndicator>
+      </ProgressContainer>
 
       <StepContainer>
         {renderStep()}
@@ -221,37 +220,132 @@ export const ProfessionalBookingWizard: React.FC = () => {
 };
 
 const WizardContainer = styled.div`
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
 `;
 
-const ProgressIndicator = styled.div`
+const ProgressContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 40px;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding: 0 10px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-left: 10px;
+  }
+`;
+
+const StepItem = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  
+  &:last-child {
+    width: auto;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StepIndicator = styled.div<{ active: boolean; completed: boolean }>`
-  padding: 12px 20px;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  cursor: ${props => (props.completed ? 'pointer' : props.active ? 'default' : 'not-allowed')};
+  transition: all 0.3s ease;
+  z-index: 2;
+`;
+
+const StepNumber = styled.div<{ active: boolean; completed: boolean }>`
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  margin-right: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  
+  ${({ active, completed }) => {
+    if (completed) {
+      return `
+        background: ${PREMIUM_COLORS.BASE_COLORS.gold[500]};
+        color: white;
+      `;
+    }
+    if (active) {
+      return `
+        background: ${PREMIUM_COLORS.BASE_COLORS.navy[500]};
+        color: white;
+      `;
+    }
+    return `
+      background: #e2e8f0;
+      color: #718096;
+      box-shadow: none;
+    `;
+  }}
+`;
+
+const StepLabel = styled.div`
+  @media (max-width: 768px) {
+    margin-left: 8px;
+  }
+`;
+
+const StepTitle = styled.span<{ completed: boolean }>`
+  display: block;
   font-weight: 600;
   font-size: 14px;
+  transition: color 0.3s ease;
+  color: ${props => (props.completed ? PREMIUM_COLORS.BASE_COLORS.gold[500] : PREMIUM_COLORS.BASE_COLORS.navy[500])};
+  
+  @media (max-width: 992px) {
+    font-size: 13px;
+  }
+`;
 
-  ${({ active, completed }) => {
-    if (completed) return 'background: #38a169; color: white;';
-    if (active) return 'background: #d69e2e; color: white;';
-    return 'background: #e2e8f0; color: #4a5568;';
-  }}
+const StepSubtitle = styled.span`
+  display: block;
+  font-size: 12px;
+  color: ${PREMIUM_COLORS.SEMANTIC_COLORS.text.tertiary};
+  
+  @media (max-width: 992px) {
+    display: none;
+  }
+`;
+
+const StepConnector = styled.div<{ completed: boolean }>`
+  height: 2px;
+  background: ${props => (props.completed ? PREMIUM_COLORS.BASE_COLORS.gold[500] : '#e2e8f0')};
+  flex-grow: 1;
+  margin: 0 4px;
+  transition: background-color 0.3s ease;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const StepContainer = styled.div`
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
   min-height: 500px;
+  padding: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 `; 

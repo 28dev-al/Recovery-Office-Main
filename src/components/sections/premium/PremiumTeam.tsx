@@ -83,13 +83,36 @@ const MemberPhoto = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
     display: block;
     transition: transform 0.3s ease;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
     
     /* Professional centering and aspect ratio */
     margin-left: auto;
     margin-right: auto;
+    
+    /* Specific positioning for each team member based on their photo */
+    &[alt*="Alex Bianchi"] {
+      object-position: center 35%; /* Alex's photo needs more room for his face */
+    }
+    
+    &[alt*="Mark Marandola"] {
+      object-position: center 40%; /* Mark's photo composition needs different positioning */
+    }
+    
+    &[alt*="Jessica Davies"] {
+      object-position: center 25%; /* Jessica's photo works well with standard positioning */
+    }
+    
+    &[alt*="Claire Lee"] {
+      object-position: center 30%; /* Claire's photo needs slight adjustment */
+    }
+    
+    /* Fallback for any other photos */
+    &:not([alt*="Alex Bianchi"]):not([alt*="Mark Marandola"]):not([alt*="Jessica Davies"]):not([alt*="Claire Lee"]) {
+      object-position: center 25%;
+    }
   }
   
   ${TeamMemberCard}:hover & img {
@@ -379,27 +402,22 @@ export const PremiumTeam: React.FC<PremiumTeamProps> = ({
                 {expandedMember === member.id ? 'Hide details' : t('buttons.showCredentials', 'Show credentials & specialties')}
                 <ChevronIcon isOpen={expandedMember === member.id} />
               </DetailToggle>
+              
               {expandedMember === member.id && (
-                <Box data-id={`details-${member.id}`} style={{ marginTop: '1rem' }}>
+                <div id={`details-${member.id}`}>
                   <SpecialtiesList>
-                    {member.credentials.map((credential, credIndex) => (
-                      <Specialty key={credIndex}>{translateCredential(credential)}</Specialty>
+                    {member.credentials.map((credential, index) => (
+                      <Specialty key={index}>
+                        {translateCredential(credential)}
+                      </Specialty>
                     ))}
                   </SpecialtiesList>
-                  <ContactButton
-                    href={`mailto:${member.email}`}
-                    aria-label={`Contact ${member.name} directly by email`}
-                  >
+                  <ContactButton href={`mailto:${member.email}`}>
                     <EmailIcon />
-                    {t('buttons.contactDirectly', 'Contact directly')}
+                    {t('buttons.contact', 'Contact Specialist')}
                   </ContactButton>
-                </Box>
+                </div>
               )}
-              <SpecialtiesList>
-                {member.credentials.map((credential, credIndex) => (
-                  <Specialty key={credIndex}>{translateCredential(credential)}</Specialty>
-                ))}
-              </SpecialtiesList>
             </TeamMemberCard>
           ))}
         </TeamGrid>
@@ -407,5 +425,3 @@ export const PremiumTeam: React.FC<PremiumTeamProps> = ({
     </TeamSection>
   );
 };
-
-export default PremiumTeam; 

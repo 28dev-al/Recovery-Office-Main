@@ -1,4 +1,13 @@
 {
+  "company": {
+    "address": "{{address}}",
+    "email": "{{email}}",
+    "businessNumber": "{{businessNumber}}",
+    "registryId": "{{registryId}}",
+    "registeredOffice": "{{registeredOffice}}",
+    "regulatorPrimary": "{{regulatorPrimary}}",
+    "regulatorList": "{{regulatorList}}"
+  },
   "meta": {
     "title": "Recovery Office | UK Finanzielle Vermögensrückgewinnung",
     "description": "Spezialisierte Rückgewinnungsberatung für Verluste über £100.000. Führende Experten für Kryptowährungs-, Anlage- und Betrugsfälle.",
@@ -783,37 +792,38 @@
     "shareArticle": "Artikel teilen"
   },
   "footer": {
-    "tagline": "Professionelle Finanzielle Vermögensrückgewinnung",
-    "services": "Dienstleistungen",
-    "company": "Unternehmen",
-    "legal": "Rechtliches",
-    "contact": "Kontakt",
-    "aboutUs": "Über uns",
-    "ourTeam": "Unser Team",
-    "contactUs": "Kontakt",
-    "contactInformation": "Kontaktinformationen",
-    "resources": "Ressourcen",
-    "emergencySupport": "Notfall-Support",
-    "clientPortal": "Kundenportal",
-    "privacyPolicy": "Datenschutzrichtlinie",
-    "termsOfService": "Nutzungsbedingungen",
-    "hipaaCompliance": "HIPAA-Konformität",
+    "company": {
+      "title": "Unternehmen",
+      "name": "Recovery Office Canada",
+      "description": "Professionelle Vermögensrückgewinnungsspezialisten, die Kunden in ganz Kanada bedienen.",
+      "aboutUs": "Über uns",
+      "ourTeam": "Unser Team",
+      "contactUs": "Kontakt",
+      "bookConsultation": "Beratung buchen"
+    },
+    "services": {
+      "title": "Dienstleistungen",
+      "cryptocurrencyRecovery": "Kryptowährungs-Rückgewinnung",
+      "investmentFraudRecovery": "Anlagebetrug-Rückgewinnung",
+      "financialScamRecovery": "Finanzbetrug-Rückgewinnung",
+      "regulatoryComplaintAssistance": "Regulatorische Beschwerdehilfe"
+    },
+    "contactInformation": {
+      "title": "Kontaktinformationen",
+      "address": "Suite 2700, 1 First Canadian Place, Toronto, ON M5X 1A4",
+      "email": "contact@recovery-office.com"
+    },
+    "resources": {
+      "title": "Ressourcen",
+      "faq": "FAQ",
+      "blog": "Blog",
+      "emergencyConsultation": "Notfallberatung",
+      "clientPortal": "Kundenportal"
+    },
     "accessibility": "Barrierefreiheit",
-    "allRightsReserved": "Alle Rechte vorbehalten. Registriert in England und Wales",
-    "copyright": "© {{year}} Recovery Office Limited. Alle Rechte vorbehalten.",
-    "companiesHouse": "Companies House: 14587923",
-    "ico": "ICO-Registrierung: ZB405891",
-    "disclaimer": "Professionelle finanzielle Rückgewinnungsberatungsdienste",
-    "description": "Großbritanniens führende Finanzielle Vermögensrückgewinnungsberatung",
-    "regulatoryDisclaimer": "Reguliert von der Financial Conduct Authority. Recovery Office bietet professionelle finanzielle Vermögensrückgewinnungsdienste. Alle Rückgewinnungsoperationen werden innerhalb strenger rechtlicher Rahmen und regulatorischer Compliance-Standards durchgeführt.",
-    "fcaDisclaimer": "Recovery Office Ltd ist von der Financial Conduct Authority für regulierte Rückgewinnungsaktivitäten autorisiert und reguliert.",
-    "generalDisclaimer": "Recovery Office ist spezialisiert auf finanzielle Vermögensrückgewinnungsdienste. Obwohl wir hohe Erfolgsraten aufrechterhalten, hängen Rückgewinnungsergebnisse von den individuellen Fallumständen ab. Alle Beratungen sind vertraulich und wir arbeiten auf Basis 'keine Rückgewinnung, keine Gebühr' für qualifizierende Fälle. Recovery Office ist dem Ziel verpflichtet, Opfern von Finanzbetrug dabei zu helfen, ihre gestohlenen Vermögenswerte durch legale und ethische Mittel zurückzufordern.",
-    "newsletter": {
-      "title": "Newsletter abonnieren",
-      "placeholder": "Ihre E-Mail-Adresse",
-      "button": "Abonnieren",
-      "success": "Erfolgreich abonniert!"
-    }
+    "copyright": "© 2024 Recovery Office Canada. Alle Rechte vorbehalten. Eingetragen in Ontario, Kanada.",
+    "regulatoryDisclaimer": "Reguliert von CIRO. Recovery Office bietet professionelle finanzielle Vermögensrückgewinnungsdienste in ganz Kanada. Alle Operationen werden innerhalb kanadischer bundes- und provinzieller regulatorischer Rahmen durchgeführt.",
+    "generalDisclaimer": "Recovery Office ist spezialisiert auf finanzielle Vermögensrückgewinnungsdienste. Obwohl wir hohe Erfolgsraten aufrechterhalten, hängen Rückgewinnungsergebnisse von den individuellen Fallumständen ab. Alle Beratungen sind vertraulich und wir arbeiten auf Basis 'keine Rückgewinnung, keine Gebühr' für qualifizierende Fälle. Recovery Office ist dem Ziel verpflichtet, Opfern von Finanzbetrug dabei zu helfen, ihre gestohlenen Vermögenswerte durch legale und ethische Mittel zurückzufordern."
   },
   "common": {
     "loading": "Lädt...",
