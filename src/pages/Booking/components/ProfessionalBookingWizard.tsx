@@ -193,11 +193,12 @@ export const ProfessionalBookingWizard: React.FC = () => {
     <WizardContainer>
       <ProgressContainer>
         {steps.map((step, index) => (
-          <StepItem key={step.id}>
+          <StepItem key={step.id} isLast={index === steps.length - 1}>
             <StepIndicator 
               active={step.isActive} 
               completed={step.isCompleted}
               onClick={() => validateStep(step.id) && setCurrentStep(step.id)}
+              disabled={!validateStep(step.id)}
             >
               <StepNumber active={step.isActive} completed={step.isCompleted}>
                 {step.isCompleted ? '✓' : step.id}
@@ -220,58 +221,59 @@ export const ProfessionalBookingWizard: React.FC = () => {
 };
 
 const WizardContainer = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
+  width: 100%;
 `;
 
 const ProgressContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   position: relative;
   padding: 0 10px;
   
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 15px;
     margin-left: 10px;
+    margin-bottom: 40px;
   }
 `;
 
-const StepItem = styled.div`
+const StepItem = styled.div<{ isLast: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
-  width: 100%;
-  
-  &:last-child {
-    width: auto;
-  }
+  width: ${props => props.isLast ? 'auto' : '100%'};
   
   @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
-const StepIndicator = styled.div<{ active: boolean; completed: boolean }>`
+const StepIndicator = styled.div<{ active: boolean; completed: boolean; disabled: boolean }>`
   display: flex;
   align-items: center;
-  cursor: ${props => (props.completed ? 'pointer' : props.active ? 'default' : 'not-allowed')};
+  cursor: ${props => (props.disabled ? 'not-allowed' : props.completed ? 'pointer' : props.active ? 'default' : 'not-allowed')};
   transition: all 0.3s ease;
   z-index: 2;
+  opacity: ${props => props.disabled ? 0.6 : 1};
+  
+  &:hover {
+    transform: ${props => (!props.disabled && props.completed) ? 'translateY(-2px)' : 'none'};
+  }
 `;
 
 const StepNumber = styled.div<{ active: boolean; completed: boolean }>`
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
   margin-right: 12px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -305,19 +307,19 @@ const StepLabel = styled.div`
 
 const StepTitle = styled.span<{ completed: boolean }>`
   display: block;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 15px;
   transition: color 0.3s ease;
   color: ${props => (props.completed ? PREMIUM_COLORS.BASE_COLORS.gold[500] : PREMIUM_COLORS.BASE_COLORS.navy[500])};
   
   @media (max-width: 992px) {
-    font-size: 13px;
+    font-size: 14px;
   }
 `;
 
 const StepSubtitle = styled.span`
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   color: ${PREMIUM_COLORS.SEMANTIC_COLORS.text.tertiary};
   
   @media (max-width: 992px) {
@@ -340,12 +342,7 @@ const StepConnector = styled.div<{ completed: boolean }>`
 const StepContainer = styled.div`
   background: white;
   border-radius: 16px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
   min-height: 500px;
-  padding: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  
-  @media (max-width: 768px) {
-    padding: 20px;
-  }
+  overflow: hidden;
 `; 

@@ -285,9 +285,14 @@ const getServiceIcon = (serviceId: string | undefined, serviceName: string | und
 
 // Styled Components
 const SelectionContainer = styled.div`
+  width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 30px;
+  
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 const StepHeader = styled.div`
@@ -298,7 +303,7 @@ const StepHeader = styled.div`
 const StepTitle = styled.h2`
   font-size: 32px;
   color: #1a365d;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   font-weight: 700;
 `;
 
@@ -311,9 +316,13 @@ const StepDescription = styled.p`
 
 const ServicesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
   margin-bottom: 40px;
+  
+  @media (max-width: 650px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ServiceCard = styled.div<{ selected: boolean }>`
@@ -326,6 +335,9 @@ const ServiceCard = styled.div<{ selected: boolean }>`
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   &::after {
     content: '';
@@ -391,6 +403,7 @@ const ServiceDescription = styled.p`
   color: #6b7280;
   line-height: 1.6;
   margin-bottom: 24px;
+  flex-grow: 1;
 `;
 
 const ServiceDetails = styled.div`

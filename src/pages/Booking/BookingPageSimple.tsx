@@ -44,13 +44,15 @@ const Container = styled.div`
   max-width: 100vw;
   overflow-x: hidden;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 `;
 
 const HeroSection = styled.section`
   background: linear-gradient(135deg, ${PREMIUM_COLORS.BASE_COLORS.navy[500]} 0%, ${PREMIUM_COLORS.BASE_COLORS.navy[700]} 100%);
   color: white;
   text-align: center;
-  padding: 80px 20px 60px;
+  padding: 80px 20px 120px;
   position: relative;
   overflow: hidden;
   
@@ -91,12 +93,17 @@ const HeroSubtitle = styled.p`
   font-weight: 300;
 `;
 
+const TrustSignalsContainer = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+`;
+
 const TrustSignals = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  max-width: 1000px;
-  margin: 0 auto;
   
   @media (max-width: 960px) {
     grid-template-columns: repeat(2, 1fr);
@@ -140,13 +147,14 @@ const TrustLabel = styled.div`
 
 const BookingContent = styled.div`
   max-width: 1200px;
-  margin: -80px auto 0;
+  margin: -60px auto 0;
   padding: 0 20px 100px;
   position: relative;
   z-index: 2;
+  flex-grow: 1;
   
   @media (max-width: 768px) {
-    margin-top: -60px;
+    margin-top: -40px;
   }
 `;
 
@@ -400,6 +408,22 @@ const ComplianceTitle = styled.h3`
   text-fill-color: transparent;
 `;
 
+const ComplianceInfo = styled.div`
+  margin: 30px auto;
+  max-width: 800px;
+`;
+
+const ComplianceText = styled.p`
+  margin: 0 0 15px;
+  font-size: 16px;
+  line-height: 1.6;
+  
+  strong {
+    color: ${PREMIUM_COLORS.BASE_COLORS.gold[500]};
+    font-weight: 600;
+  }
+`;
+
 const ComplianceGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -438,6 +462,15 @@ const ComplianceValue = styled.div`
 const BookingWizardContainer = styled.div`
   position: relative;
   margin-top: 60px;
+  background: white;
+  border-radius: 24px;
+  padding: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  
+  @media (max-width: 768px) {
+    padding: 30px 20px;
+  }
 `;
 
 const WizardHeader = styled.div`
@@ -450,13 +483,26 @@ const WizardTitle = styled.h2`
   font-weight: 800;
   color: ${PREMIUM_COLORS.BASE_COLORS.navy[500]};
   margin-bottom: 16px;
+  position: relative;
+  
+  &::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background: ${PREMIUM_COLORS.BASE_COLORS.gold[500]};
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
 `;
 
 const WizardSubtitle = styled.p`
   font-size: 18px;
   color: ${PREMIUM_COLORS.SEMANTIC_COLORS.text.secondary};
   max-width: 650px;
-  margin: 0 auto;
+  margin: 25px auto 0;
   line-height: 1.6;
 `;
 
@@ -514,29 +560,31 @@ export const BookingPageSimple: React.FC = () => {
       
       <Container>
         <HeroSection>
-          <HeroTitle>{t('booking.title', 'Book Your Financial Recovery Consultation')}</HeroTitle>
+          <HeroTitle>{t('booking.title', 'Book Your Consultation')}</HeroTitle>
           <HeroSubtitle>
-            {t('booking.subtitle', 'Secure online booking with CIRO regulated specialists. Free initial assessment with 24-hour response time.')}
+            {t('booking.subtitle', 'Schedule a confidential consultation with our experts')}
           </HeroSubtitle>
           
-          <TrustSignals>
-            <TrustItem>
-              <TrustNumber>{t('booking.trust.ciroRegulated', 'CIRO')}</TrustNumber>
-              <TrustLabel>Regulated Firm</TrustLabel>
-            </TrustItem>
-            <TrustItem>
-              <TrustNumber>$750M+ CAD</TrustNumber>
-              <TrustLabel>{t('booking.trust.assetsRecovered', 'Assets Recovered')}</TrustLabel>
-            </TrustItem>
-            <TrustItem>
-              <TrustNumber>98%</TrustNumber>
-              <TrustLabel>{t('booking.trust.satisfaction', 'Client Satisfaction')}</TrustLabel>
-            </TrustItem>
-            <TrustItem>
-              <TrustNumber>24h</TrustNumber>
-              <TrustLabel>Response Time</TrustLabel>
-            </TrustItem>
-          </TrustSignals>
+          <TrustSignalsContainer>
+            <TrustSignals>
+              <TrustItem>
+                <TrustNumber>{t('booking.trust.ciroRegulated', 'CIRO')}</TrustNumber>
+                <TrustLabel>Regulated Firm</TrustLabel>
+              </TrustItem>
+              <TrustItem>
+                <TrustNumber>$750M+ CAD</TrustNumber>
+                <TrustLabel>{t('booking.trust.assetsRecovered', 'Assets Recovered')}</TrustLabel>
+              </TrustItem>
+              <TrustItem>
+                <TrustNumber>98%</TrustNumber>
+                <TrustLabel>{t('booking.trust.satisfaction', 'Client Satisfaction')}</TrustLabel>
+              </TrustItem>
+              <TrustItem>
+                <TrustNumber>24h</TrustNumber>
+                <TrustLabel>Response Time</TrustLabel>
+              </TrustItem>
+            </TrustSignals>
+          </TrustSignalsContainer>
         </HeroSection>
 
         <BookingContent>
@@ -546,42 +594,42 @@ export const BookingPageSimple: React.FC = () => {
               <BenefitItem>
                 <BenefitIcon>✓</BenefitIcon>
                 <BenefitText>
-                  <BenefitTitle>Free Initial Consultation:</BenefitTitle>
+                  <BenefitTitle>Free Initial Consultation</BenefitTitle>
                   <BenefitDescription>{t('booking.benefits.freeConsultation', 'No obligation 60-minute assessment')}</BenefitDescription>
                 </BenefitText>
               </BenefitItem>
               <BenefitItem>
                 <BenefitIcon>🏛️</BenefitIcon>
                 <BenefitText>
-                  <BenefitTitle>CIRO Regulated Service:</BenefitTitle>
+                  <BenefitTitle>CIRO Regulated Service</BenefitTitle>
                   <BenefitDescription>{t('booking.benefits.ciroRegulated', 'Fully authorized financial recovery specialists')}</BenefitDescription>
                 </BenefitText>
               </BenefitItem>
               <BenefitItem>
                 <BenefitIcon>⚡</BenefitIcon>
                 <BenefitText>
-                  <BenefitTitle>24-Hour Response:</BenefitTitle>
+                  <BenefitTitle>24-Hour Response</BenefitTitle>
                   <BenefitDescription>{t('booking.benefits.fastResponse', 'Immediate confirmation and case assignment')}</BenefitDescription>
                 </BenefitText>
               </BenefitItem>
               <BenefitItem>
                 <BenefitIcon>💰</BenefitIcon>
                 <BenefitText>
-                  <BenefitTitle>Success-Based Fees:</BenefitTitle>
+                  <BenefitTitle>Success-Based Fees</BenefitTitle>
                   <BenefitDescription>{t('booking.benefits.successFees', 'Only pay when we recover your assets')}</BenefitDescription>
                 </BenefitText>
               </BenefitItem>
               <BenefitItem>
                 <BenefitIcon>🔒</BenefitIcon>
                 <BenefitText>
-                  <BenefitTitle>Absolute Confidentiality:</BenefitTitle>
+                  <BenefitTitle>Absolute Confidentiality</BenefitTitle>
                   <BenefitDescription>{t('booking.benefits.confidential', 'Bank-level security and discretion')}</BenefitDescription>
                 </BenefitText>
               </BenefitItem>
               <BenefitItem>
                 <BenefitIcon>📈</BenefitIcon>
                 <BenefitText>
-                  <BenefitTitle>Proven Results:</BenefitTitle>
+                  <BenefitTitle>Proven Results</BenefitTitle>
                   <BenefitDescription>{t('booking.benefits.proven', '$750M+ CAD recovered for clients since 2019')}</BenefitDescription>
                 </BenefitText>
               </BenefitItem>
@@ -620,9 +668,11 @@ export const BookingPageSimple: React.FC = () => {
 
           <ComplianceSection id="booking-compliance-section">
             <ComplianceTitle>Professional Credentials & Compliance</ComplianceTitle>
-            <p><strong>CIRO Regulated</strong> - Business Number: <strong>877332510</strong></p>
-            <p><strong>$750M+ CAD Recovered</strong> for clients since 2019</p>
-            <p><strong>98% Client Satisfaction</strong> rate with verified reviews</p>
+            <ComplianceInfo>
+              <ComplianceText><strong>CIRO Regulated</strong> - Business Number: <strong>877332510</strong></ComplianceText>
+              <ComplianceText><strong>$750M+ CAD Recovered</strong> for clients since 2019</ComplianceText>
+              <ComplianceText><strong>98% Client Satisfaction</strong> rate with verified reviews</ComplianceText>
+            </ComplianceInfo>
             
             <ComplianceGrid>
               <ComplianceItem>
